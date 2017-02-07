@@ -30,8 +30,11 @@
 \documentclass[ twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% letterpaper a4paper
                 footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
                 BCOR=5mm,paper=a4,fontsize=11pt,%11pt,a4paper,%
-                ngerman,american,%
+                french,english,%
                 ]{scrreprt}
+
+%\includeonly{Chapters/Chapter02}
+
 
 %********************************************************************
 % Note: Make all your adjustments in here
@@ -55,7 +58,7 @@
 \begin{document}
 \frenchspacing
 \raggedbottom
-\selectlanguage{american} % american ngerman
+\selectlanguage{french} % american ngerman
 %\renewcommand*{\bibname}{new name}
 %\setbibpreamble{}
 \pagenumbering{roman}
@@ -63,11 +66,14 @@
 %********************************************************************
 % Frontmatter
 %*******************************************************
-\include{FrontBackmatter/DirtyTitlepage}
+
+\includepdf{couverture/1ere.pdf} 
+
+%\include{FrontBackmatter/DirtyTitlepage}
 \include{FrontBackmatter/Titlepage}
 \include{FrontBackmatter/Titleback}
 \cleardoublepage\include{FrontBackmatter/Dedication}
-%\cleardoublepage\include{FrontBackmatter/Foreword}
+\cleardoublepage\include{FrontBackmatter/Foreword}
 \cleardoublepage\include{FrontBackmatter/Abstract}
 \cleardoublepage\include{FrontBackmatter/Publications}
 \cleardoublepage\include{FrontBackmatter/Acknowledgments}
@@ -111,5 +117,9 @@ da. Le usate medical addresses pro, europa origine sanctificate nos se.}
 % ********************************************************************
 % Game Over: Restore, Restart, or Quit?
 %*******************************************************
+
+\includepdf{couverture/4eme.pdf} 
+
+
 \end{document}
 % ********************************************************************

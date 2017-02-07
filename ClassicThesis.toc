@@ -1,10 +1,14 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
-\select@language {american}
+\select@language {english}
 \defcounter {refsection}{0}\relax 
 \vspace {-\cftbeforepartskip }
 \defcounter {refsection}{0}\relax 
-\select@language {american}
+\select@language {french}
+\defcounter {refsection}{0}\relax 
+\select@language {english}
+\defcounter {refsection}{0}\relax 
+\select@language {french}
 \defcounter {refsection}{0}\relax 
 \contentsline {part}{\numberline {i}\spacedlowsmallcaps {Some Kind of Manual}}{1}{part.1}
 \defcounter {refsection}{0}\relax 
@@ -68,4 +72,4 @@
 \defcounter {refsection}{0}\relax 
 \vspace {\beforebibskip }
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{23}{dummy.7}
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliographie}}{23}{dummy.7}
