@@ -1,53 +1,51 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.24)  17 MAR 2017 16:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.7)  20 MAR 2017 16:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **ClassicThesis.tex
 (./ClassicThesis.tex
-LaTeX2e <2016/03/31>
-Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/fix-cm.sty
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 7 language(s) loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/fix-cm.sty
 Package: fix-cm 2015/01/14 v1.1t fixes to LaTeX
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 ))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrreprt.cls
-Document Class: scrreprt 2016/05/10 v3.20 KOMA-Script document class (report)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrkbase.sty
-Package: scrkbase 2016/05/10 v3.20 KOMA-Script package (KOMA-Script-dependent b
-asics and keyval usage)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrbase.sty
-Package: scrbase 2016/05/10 v3.20 KOMA-Script package (KOMA-Script-independent 
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrreprt.cls
+Document Class: scrreprt 2015/10/03 v3.19a KOMA-Script document class (report)
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrkbase.sty
+Package: scrkbase 2015/10/03 v3.19a KOMA-Script package (KOMA-Script-dependent 
 basics and keyval usage)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/keyval.sty
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrbase.sty
+Package: scrbase 2015/10/03 v3.19a KOMA-Script package (KOMA-Script-independent
+ basics and keyval usage)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrlfile.sty
-Package: scrlfile 2016/05/10 v3.20 KOMA-Script package (loading files)
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrlfile.sty
+Package: scrlfile 2015/10/03 v3.19a KOMA-Script package (loading files)
 
-Package scrlfile, 2016/05/10 v3.20 KOMA-Script package (loading files)
+Package scrlfile, 2015/10/03 v3.19a KOMA-Script package (loading files)
                   Copyright (C) Markus Kohm
 
-))) (/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/tocbasic.sty
-Package: tocbasic 2016/05/10 v3.20 KOMA-Script package (handling toc-files)
-\scr@dte@tocline@numberwidth=\skip41
-\scr@dte@tocline@numbox=\box26
+))) (/usr/share/texlive/texmf-dist/tex/latex/koma-script/tocbasic.sty
+Package: tocbasic 2015/10/03 v3.19a KOMA-Script package (handling toc-files)
 )
 Package tocbasic Info: omitting babel extension for `toc'
 (tocbasic)             because of feature `nobabel' available
-(tocbasic)             for `toc' on input line 132.
+(tocbasic)             for `toc' on input line 125.
 Package tocbasic Info: omitting babel extension for `lof'
 (tocbasic)             because of feature `nobabel' available
-(tocbasic)             for `lof' on input line 133.
+(tocbasic)             for `lof' on input line 126.
 Package tocbasic Info: omitting babel extension for `lot'
 (tocbasic)             because of feature `nobabel' available
-(tocbasic)             for `lot' on input line 134.
-Package tocbasic Info: defining new hook before heading of `' on input line 160
-5.
+(tocbasic)             for `lot' on input line 127.
+Package tocbasic Info: defining new hook before heading of `' on input line 158
+8.
 Class scrreprt Info: You've used standard option `openright'.
 (scrreprt)           This is correct!
 (scrreprt)           Internally I'm using `open=right'.
@@ -61,25 +59,25 @@ Class scrreprt Info: You've used standard option `abstractoff'.
 (scrreprt)           you'd have to use `abstract=false' there
 (scrreprt)           instead of `abstractoff', too.
 Class scrreprt Info: File `scrsize11pt.clo' used to setup font sizes on input l
-ine 2265.
+ine 2248.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
-File: scrsize11pt.clo 2016/05/10 v3.20 KOMA-Script font size class option (11pt
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
+File: scrsize11pt.clo 2015/10/03 v3.19a KOMA-Script font size class option (11p
+t)
 )
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/typearea.sty
-Package: typearea 2016/05/10 v3.20 KOMA-Script package (type area)
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/typearea.sty
+Package: typearea 2015/10/03 v3.19a KOMA-Script package (type area)
 
-Package typearea, 2016/05/10 v3.20 KOMA-Script package (type area)
+Package typearea, 2015/10/03 v3.19a KOMA-Script package (type area)
                   Copyright (C) Frank Neukam, 1992-1994
                   Copyright (C) Markus Kohm, 1994-
 
-\ta@bcor=\skip42
+\ta@bcor=\skip41
 \ta@div=\count79
-\ta@hblk=\skip43
-\ta@vblk=\skip44
-\ta@temp=\skip45
-\footheight=\skip46
+\ta@hblk=\skip42
+\ta@vblk=\skip43
+\ta@temp=\skip44
+\footheight=\skip45
 Package typearea Info: These are the values describing the layout:
 (typearea)             DIV  = 10
 (typearea)             BCOR = 14.22636pt
@@ -96,7 +94,7 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \topskip        = 11.0pt
 (typearea)              \footskip       = 47.6pt
 (typearea)              \baselineskip   = 13.6pt
-(typearea)              on input line 1528.
+(typearea)              on input line 1509.
 )
 \c@part=\count80
 \c@chapter=\count81
@@ -105,36 +103,28 @@ Package typearea Info: These are the values describing the layout:
 \c@subsubsection=\count84
 \c@paragraph=\count85
 \c@subparagraph=\count86
-\scr@dte@part@maxnumwidth=\skip47
-\scr@dte@chapter@maxnumwidth=\skip48
-\scr@dte@section@maxnumwidth=\skip49
-\scr@dte@subsection@maxnumwidth=\skip50
-\scr@dte@subsubsection@maxnumwidth=\skip51
-\scr@dte@paragraph@maxnumwidth=\skip52
-\scr@dte@subparagraph@maxnumwidth=\skip53
-LaTeX Info: Redefining \textsubscript on input line 4769.
-\abovecaptionskip=\skip54
-\belowcaptionskip=\skip55
-\c@pti@nb@sid@b@x=\box27
+LaTeX Info: Redefining \textsubscript on input line 4652.
+\abovecaptionskip=\skip46
+\belowcaptionskip=\skip47
+\c@pti@nb@sid@b@x=\box26
 \c@figure=\count87
 \c@table=\count88
-Class scrreprt Info: Redefining `\numberline' on input line 5764.
 \bibindent=\dimen102
 ) (./classicthesis-config.tex
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/utf8.def
-File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+File: utf8.def 2015/12/03 v1.1r UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/t1enc.dfu
-File: t1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
+File: t1enc.dfu 2015/12/03 v1.1r UTF-8 support for inputenc
    defining Unicode char U+00A0 (decimal 160)
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -346,15 +336,11 @@ File: t1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
    defining Unicode char U+0219 (decimal 537)
    defining Unicode char U+021A (decimal 538)
    defining Unicode char U+021B (decimal 539)
-   defining Unicode char U+1E02 (decimal 7682)
-   defining Unicode char U+1E03 (decimal 7683)
+   defining Unicode char U+01E02 (decimal 7682)
+   defining Unicode char U+01E03 (decimal 7683)
    defining Unicode char U+200C (decimal 8204)
-   defining Unicode char U+2010 (decimal 8208)
-   defining Unicode char U+2011 (decimal 8209)
-   defining Unicode char U+2012 (decimal 8210)
    defining Unicode char U+2013 (decimal 8211)
    defining Unicode char U+2014 (decimal 8212)
-   defining Unicode char U+2015 (decimal 8213)
    defining Unicode char U+2018 (decimal 8216)
    defining Unicode char U+2019 (decimal 8217)
    defining Unicode char U+201A (decimal 8218)
@@ -370,8 +356,8 @@ File: t1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/ot1enc.dfu
-File: ot1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
+File: ot1enc.dfu 2015/12/03 v1.1r UTF-8 support for inputenc
    defining Unicode char U+00A0 (decimal 160)
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -411,8 +397,8 @@ File: ot1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
 Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omsenc.dfu
-File: omsenc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
+File: omsenc.dfu 2015/12/03 v1.1r UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
    defining Unicode char U+00B7 (decimal 183)
@@ -427,8 +413,8 @@ Now handling font encoding U ...
 Now handling font encoding TS1 ...
 ... processing UTF-8 mapping file for font encoding TS1
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/ts1enc.dfu
-File: ts1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.dfu
+File: ts1enc.dfu 2015/12/03 v1.1r UTF-8 support for inputenc
    defining Unicode char U+00A2 (decimal 162)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00A4 (decimal 164)
@@ -511,81 +497,82 @@ File: ts1enc.dfu 2016/02/28 v1.1s UTF-8 support for inputenc
    defining Unicode char U+2423 (decimal 9251)
 ))
 \c@dummy=\count89
-\abcd=\skip56
+\abcd=\skip48
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count90
 )
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/dvipsnam.def
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
 ))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2016/04/19 v0.5f Insert pages of external PDF documents (AM)
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2015/09/18 v0.5d Insert pages of external PDF documents (AM)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/ifthen.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/calc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count91
 \calc@Bcount=\count92
 \calc@Adimen=\dimen103
 \calc@Bdimen=\dimen104
-\calc@Askip=\skip57
-\calc@Bskip=\skip58
+\calc@Askip=\skip49
+\calc@Bskip=\skip50
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count93
-\calc@Cskip=\skip59
+\calc@Cskip=\skip51
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+(/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2015/07/21 v2.0g eso-pic (RN)
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/atbegshi.sty
-Package: atbegshi 2016/05/16 v1.17 At begin shipout hook (HO)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/atbegshi.sty
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
 )))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2016/05/09 v1.0r Standard LaTeX Graphics (DPC,SPQR)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/trig.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-File: graphics.cfg 2016/01/02 v1.10 sample graphics configuration
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 96.
+Package graphics Info: Driver file: pdftex.def on input line 95.
 )
 \Gin@req@height=\dimen105
 \Gin@req@width=\dimen106
@@ -593,405 +580,342 @@ Package graphics Info: Driver file: pdftex.def on input line 96.
 \AM@pagewidth=\dimen107
 \AM@pageheight=\dimen108
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/pdfpages/pppdftex.def
-File: pppdftex.def 2016/04/19 v0.5f Pdfpages driver for pdfTeX (AM)
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
+File: pppdftex.def 2015/09/18 v0.5d Pdfpages driver for pdfTeX (AM)
 )
-\AM@pagebox=\box28
-\AM@global@opts=\toks17
-\AM@toc@title=\toks18
+\AM@pagebox=\box27
+\AM@toc@title=\toks17
 \c@AM@survey=\count94
-\AM@templatesizebox=\box29
+\AM@templatesizebox=\box28
 )
-(/usr/local/texlive/2016/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2016/04/23 3.9r The Babel package
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2016/02/24 3.9q The Babel package
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/babel-french/frenchb.ldf
-Language: frenchb 2016/05/14 v3.2c French support from the babel system
+(/usr/share/texlive/texmf-dist/tex/generic/babel-french/frenchb.ldf
+Language: frenchb 2016/02/13 v3.1l French support from the babel system
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2016/04/23 3.9r Babel common definitions
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2016/02/24 3.9q Babel common definitions
 \babel@savecnt=\count95
 \U@D=\dimen109
 )
 \l@acadian = a dialect from \language\l@french 
 \l@canadien = a dialect from \language\l@french 
-\FB@nonchar=\count96
-\FBcolonskip=\skip60
-\FBthinskip=\skip61
-Package babel Info: Making : an active character on input line 365.
-Package babel Info: Making ; an active character on input line 366.
-Package babel Info: Making ! an active character on input line 367.
-Package babel Info: Making ? an active character on input line 368.
-\FBguillskip=\skip62
-\FBguill@level=\count97
-\FB@everypar=\toks19
+\FBcolonskip=\skip52
+\FBthinskip=\skip53
+Package babel Info: Making : an active character on input line 342.
+Package babel Info: Making ; an active character on input line 343.
+Package babel Info: Making ! an active character on input line 344.
+Package babel Info: Making ? an active character on input line 345.
+\FBguillskip=\skip54
+\FBguill@level=\count96
+\FB@everypar=\toks18
 \FB@Mht=\dimen110
-\std@mcc=\count98
-\dec@mcc=\count99
-\listindentFB=\skip63
-\labelwidthFB=\skip64
-\leftmarginFB=\skip65
+\std@mcc=\count97
+\dec@mcc=\count98
+\listindentFB=\skip55
+\labelwidthFB=\skip56
+\leftmarginFB=\skip57
 \parindentFFN=\dimen111
-\FBfnindent=\skip66
 )
-(/usr/local/texlive/2016/texmf-dist/tex/generic/babel-english/english.ldf
+(/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
 Language: english 2012/08/20 v3.3p English support from the babel system
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/carlisle/scalefnt.sty)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/csquotes/csquotes.sty
+(/usr/share/texlive/texmf-dist/tex/latex/carlisle/scalefnt.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2016/01/31 v5.1g context-sensitive quotations (JAW)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count100
+\etb@tempcnta=\count99
 )
-\csq@reset=\count101
-\csq@gtype=\count102
-\csq@glevel=\count103
-\csq@qlevel=\count104
-\csq@maxlvl=\count105
-\csq@tshold=\count106
-\csq@ltx@everypar=\toks20
+\csq@reset=\count100
+\csq@gtype=\count101
+\csq@glevel=\count102
+\csq@qlevel=\count103
+\csq@maxlvl=\count104
+\csq@tshold=\count105
+\csq@ltx@everypar=\toks19
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/csquotes/csquotes.def
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2016/01/31 v5.1g csquotes generic definitions (JAW)
 )
 Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
 Package csquotes Info: ... configuration file loaded successfully.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/csquotes/csquotes.cfg
+(/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.cfg
 File: csquotes.cfg 
 ))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/biblatex.sty
-Package: biblatex 2016/05/14 v3.4 programmable bibliographies (PK/JW/AB)
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex.sty
+Package: biblatex 2016/03/03 v3.3 programmable bibliographies (PK/JW/AB)
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2013/04/04 v0.2 Provides if(tex) conditional for PDFTeX, XeTeX, 
-and LuaTeX
-)
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
-)
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex_legacy.sty
+Package: biblatex_legacy 2016/03/03 v3.3 programmable bibliographies (bibtex) (
+PK/JW/AB)
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
-)
-Package pdftexcmds Info: LuaTeX not detected.
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
-
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/etexcmds.sty
-Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-)))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/logreq/logreq.sty
+(/usr/share/texlive/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count107
+\lrq@indent=\count106
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/logreq/logreq.def
+(/usr/share/texlive/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/url/url.sty
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-(/usr/local/texlive/2016/texmf-dist/tex/generic/xstring/xstring.sty
-(/usr/local/texlive/2016/texmf-dist/tex/generic/xstring/xstring.tex
-\@xs@message=\write3
-\integerpart=\count108
-\decimalpart=\count109
-)
-Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
-)
-\c@tabx@nest=\count110
-\c@listtotal=\count111
-\c@listcount=\count112
-\c@liststart=\count113
-\c@liststop=\count114
-\c@citecount=\count115
-\c@citetotal=\count116
-\c@multicitecount=\count117
-\c@multicitetotal=\count118
-\c@instcount=\count119
-\c@maxnames=\count120
-\c@minnames=\count121
-\c@maxitems=\count122
-\c@minitems=\count123
-\c@citecounter=\count124
-\c@savedcitecounter=\count125
-\c@uniquelist=\count126
-\c@uniquename=\count127
-\c@refsection=\count128
-\c@refsegment=\count129
-\c@maxextratitle=\count130
-\c@maxextratitleyear=\count131
-\c@maxextrayear=\count132
-\c@maxextraalpha=\count133
-\c@abbrvpenalty=\count134
-\c@highnamepenalty=\count135
-\c@lownamepenalty=\count136
-\c@maxparens=\count137
-\c@parenlevel=\count138
-\blx@tempcnta=\count139
-\blx@tempcntb=\count140
-\blx@tempcntc=\count141
-\blx@maxsection=\count142
-\blx@maxsegment@0=\count143
-\blx@notetype=\count144
-\blx@parenlevel@text=\count145
-\blx@parenlevel@foot=\count146
-\blx@sectionciteorder@0=\count147
-\labelnumberwidth=\skip67
-\labelalphawidth=\skip68
-\biblabelsep=\skip69
-\bibitemsep=\skip70
-\bibnamesep=\skip71
-\bibinitsep=\skip72
-\bibparsep=\skip73
-\bibhang=\skip74
-\blx@bcfin=\read1
-\blx@bcfout=\write4
-\c@mincomprange=\count148
-\c@maxcomprange=\count149
-\c@mincompwidth=\count150
-Package biblatex Info: Trying to load biblatex default data model...
-Package biblatex Info: ... file 'blx-dm.def' found.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/blx-dm.def)
-Package biblatex Info: Trying to load biblatex style data model...
-Package biblatex Info: ... file 'numeric-comp.dbx' not found.
-Package biblatex Info: Trying to load biblatex custom data model...
-Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count151
-\c@savedafterword=\count152
-\c@annotator=\count153
-\c@savedannotator=\count154
-\c@author=\count155
-\c@savedauthor=\count156
-\c@bookauthor=\count157
-\c@savedbookauthor=\count158
-\c@commentator=\count159
-\c@savedcommentator=\count160
-\c@editor=\count161
-\c@savededitor=\count162
-\c@editora=\count163
-\c@savededitora=\count164
-\c@editorb=\count165
-\c@savededitorb=\count166
-\c@editorc=\count167
-\c@savededitorc=\count168
-\c@foreword=\count169
-\c@savedforeword=\count170
-\c@holder=\count171
-\c@savedholder=\count172
-\c@introduction=\count173
-\c@savedintroduction=\count174
-\c@namea=\count175
-\c@savednamea=\count176
-\c@nameb=\count177
-\c@savednameb=\count178
-\c@namec=\count179
-\c@savednamec=\count180
-\c@translator=\count181
-\c@savedtranslator=\count182
-\c@shortauthor=\count183
-\c@savedshortauthor=\count184
-\c@shorteditor=\count185
-\c@savedshorteditor=\count186
-\c@labelname=\count187
-\c@savedlabelname=\count188
-\c@institution=\count189
-\c@savedinstitution=\count190
-\c@lista=\count191
-\c@savedlista=\count192
-\c@listb=\count193
-\c@savedlistb=\count194
-\c@listc=\count195
-\c@savedlistc=\count196
-\c@listd=\count197
-\c@savedlistd=\count198
-\c@liste=\count199
-\c@savedliste=\count266
-\c@listf=\count267
-\c@savedlistf=\count268
-\c@location=\count269
-\c@savedlocation=\count270
-\c@organization=\count271
-\c@savedorganization=\count272
-\c@origlocation=\count273
-\c@savedoriglocation=\count274
-\c@origpublisher=\count275
-\c@savedorigpublisher=\count276
-\c@publisher=\count277
-\c@savedpublisher=\count278
-\c@language=\count279
-\c@savedlanguage=\count280
-\c@pageref=\count281
-\c@savedpageref=\count282
-\shorthandwidth=\skip75
-\shortjournalwidth=\skip76
-\shortserieswidth=\skip77
-\shorttitlewidth=\skip78
-\shortauthorwidth=\skip79
-\shorteditorwidth=\skip80
+\c@tabx@nest=\count107
+\c@listtotal=\count108
+\c@listcount=\count109
+\c@liststart=\count110
+\c@liststop=\count111
+\c@citecount=\count112
+\c@citetotal=\count113
+\c@multicitecount=\count114
+\c@multicitetotal=\count115
+\c@instcount=\count116
+\c@maxnames=\count117
+\c@minnames=\count118
+\c@maxitems=\count119
+\c@minitems=\count120
+\c@citecounter=\count121
+\c@savedcitecounter=\count122
+\c@uniquelist=\count123
+\c@uniquename=\count124
+\c@refsection=\count125
+\c@refsegment=\count126
+\c@maxextrayear=\count127
+\c@maxextraalpha=\count128
+\c@abbrvpenalty=\count129
+\c@highnamepenalty=\count130
+\c@lownamepenalty=\count131
+\c@maxparens=\count132
+\c@parenlevel=\count133
+\blx@tempcnta=\count134
+\blx@tempcntb=\count135
+\blx@tempcntc=\count136
+\blx@maxsection=\count137
+\blx@maxsegment=\count138
+\blx@notetype=\count139
+\blx@parenlevel@text=\count140
+\blx@parenlevel@foot=\count141
+\labelnumberwidth=\skip58
+\labelalphawidth=\skip59
+\shorthandwidth=\skip60
+\biblabelsep=\skip61
+\bibitemsep=\skip62
+\bibnamesep=\skip63
+\bibinitsep=\skip64
+\bibparsep=\skip65
+\bibhang=\skip66
+\blx@auxin=\read1
+\blx@auxout=\write3
+\c@mincomprange=\count142
+\c@maxcomprange=\count143
+\c@mincompwidth=\count144
+\c@labelname=\count145
+\c@savedlabelname=\count146
+\c@author=\count147
+\c@savedauthor=\count148
+\c@shortauthor=\count149
+\c@savedshortauthor=\count150
+\c@editor=\count151
+\c@savededitor=\count152
+\c@editora=\count153
+\c@savededitora=\count154
+\c@editorb=\count155
+\c@savededitorb=\count156
+\c@editorc=\count157
+\c@savededitorc=\count158
+\c@shorteditor=\count159
+\c@savedshorteditor=\count160
+\c@bookauthor=\count161
+\c@savedbookauthor=\count162
+\c@translator=\count163
+\c@savedtranslator=\count164
+\c@annotator=\count165
+\c@savedannotator=\count166
+\c@commentator=\count167
+\c@savedcommentator=\count168
+\c@introduction=\count169
+\c@savedintroduction=\count170
+\c@foreword=\count171
+\c@savedforeword=\count172
+\c@afterword=\count173
+\c@savedafterword=\count174
+\c@holder=\count175
+\c@savedholder=\count176
+\c@namea=\count177
+\c@savednamea=\count178
+\c@nameb=\count179
+\c@savednameb=\count180
+\c@namec=\count181
+\c@savednamec=\count182
+\c@institution=\count183
+\c@savedinstitution=\count184
+\c@language=\count185
+\c@savedlanguage=\count186
+\c@location=\count187
+\c@savedlocation=\count188
+\c@organization=\count189
+\c@savedorganization=\count190
+\c@origlocation=\count191
+\c@savedoriglocation=\count192
+\c@origpublisher=\count193
+\c@savedorigpublisher=\count194
+\c@pageref=\count195
+\c@savedpageref=\count196
+\c@publisher=\count197
+\c@savedpublisher=\count198
+\c@lista=\count199
+\c@savedlista=\count266
+\c@listb=\count267
+\c@savedlistb=\count268
+\c@listc=\count269
+\c@savedlistc=\count270
+\c@listd=\count271
+\c@savedlistd=\count272
+\c@liste=\count273
+\c@savedliste=\count274
+\c@listf=\count275
+\c@savedlistf=\count276
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/blx-compat.def
-File: blx-compat.def 2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
-)
-Package biblatex Info: Trying to load BibTeX backend compatibility...
-Package biblatex Info: ... file 'blx-bibtex.def' found.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/blx-bibtex.def
-File: blx-bibtex.def 2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
-
-
-Package biblatex Warning: Using fall-back BibTeX(8) backend:
-(biblatex)                functionality may be reduced/unavailable.
-
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2016/03/03 v3.3 biblatex compatibility (PK/JW/AB)
 )
 Package biblatex Info: Trying to load generic definitions...
-Package biblatex Info: ... file 'biblatex.def' found.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/biblatex.def
-File: biblatex.def 2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
-\c@textcitecount=\count283
-\c@textcitetotal=\count284
-\c@textcitemaxnames=\count285
-\c@biburlnumpenalty=\count286
-\c@biburlucpenalty=\count287
-\c@biburllcpenalty=\count288
-\c@smartand=\count289
+Package biblatex Info: ... file 'biblatex_legacy.def' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex_legacy.def
+File: biblatex_legacy.def 
+\c@textcitecount=\count277
+\c@textcitetotal=\count278
+\c@textcitemaxnames=\count279
+\c@biburlnumpenalty=\count280
+\c@biburlucpenalty=\count281
+\c@biburllcpenalty=\count282
+\c@smartand=\count283
 )
 Package biblatex Info: Trying to load natbib compatibility...
 Package biblatex Info: ... file 'blx-natbib.def' found.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/blx-natbib.def
-File: blx-natbib.def 2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/blx-natbib.def
+File: blx-natbib.def 2016/03/03 v3.3 biblatex compatibility (PK/JW/AB)
 )
-Package biblatex Info: Trying to load bibliography style 'numeric-comp'...
-Package biblatex Info: ... file 'numeric-comp.bbx' found.
+Package biblatex Info: Trying to load bibliography style 'authoryear-comp'...
+Package biblatex Info: ... file 'authoryear-comp.bbx' found.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/bbx/numeric-comp.bbx
-File: numeric-comp.bbx 2016/05/14 v3.4 biblatex bibliography style (PK/JW/AB)
-Package biblatex Info: Trying to load bibliography style 'numeric'...
-Package biblatex Info: ... file 'numeric.bbx' found.
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/bbx/authoryear-comp.bbx
+File: authoryear-comp.bbx 2016/03/03 v3.3 biblatex bibliography style (PK/JW/AB
+)
+Package biblatex Info: Trying to load bibliography style 'authoryear'...
+Package biblatex Info: ... file 'authoryear.bbx' found.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
-File: numeric.bbx 2016/05/14 v3.4 biblatex bibliography style (PK/JW/AB)
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/bbx/authoryear.bbx
+File: authoryear.bbx 2016/03/03 v3.3 biblatex bibliography style (PK/JW/AB)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-File: standard.bbx 2016/05/14 v3.4 biblatex bibliography style (PK/JW/AB)
-\c@bbx:relatedcount=\count290
-\c@bbx:relatedtotal=\count291
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+File: standard.bbx 2016/03/03 v3.3 biblatex bibliography style (PK/JW/AB)
+\c@bbx:relatedcount=\count284
+\c@bbx:relatedtotal=\count285
 )))
-Package biblatex Info: Trying to load citation style 'numeric-comp'...
-Package biblatex Info: ... file 'numeric-comp.cbx' found.
+Package biblatex Info: Trying to load citation style 'authoryear-comp'...
+Package biblatex Info: ... file 'authoryear-comp.cbx' found.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/cbx/numeric-comp.cbx
-File: numeric-comp.cbx 2016/05/14 v3.4 biblatex citation style (PK/JW/AB)
-\c@cbx@tempcnta=\count292
-\c@cbx@tempcntb=\count293
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/cbx/authoryear-comp.cbx
+File: authoryear-comp.cbx 2016/03/03 v3.3 biblatex citation style (PK/JW/AB)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
 Package biblatex Info: Redefining '\footcitetext'.
 Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\supercite'.
 Package biblatex Info: Redefining '\textcite'.
 Package biblatex Info: Redefining '\textcites'.
 Package biblatex Info: Redefining '\cites'.
 Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\footcites'.
+Package biblatex Info: Redefining '\footcitetexts'.
 Package biblatex Info: Redefining '\smartcites'.
 )
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/biblatex.cfg
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/biblatex.cfg
 File: biblatex.cfg 
-))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2016/03/10 v2.15b AMS math features
-\@mathmargin=\skip81
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/03/03 v2.15a AMS math features
+\@mathmargin=\skip67
 
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks21
+\@emptytoks=\toks20
 \ex@=\dimen112
 ))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsbsy.sty
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen113
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 2016/03/08 v2.02 operator names
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count294
+\inf@bad=\count286
 LaTeX Info: Redefining \frac on input line 199.
-\uproot@=\count295
-\leftroot@=\count296
+\uproot@=\count287
+\leftroot@=\count288
 LaTeX Info: Redefining \overline on input line 297.
-\classnum@=\count297
-\DOTSCASE@=\count298
+\classnum@=\count289
+\DOTSCASE@=\count290
 LaTeX Info: Redefining \ldots on input line 394.
 LaTeX Info: Redefining \dots on input line 397.
 LaTeX Info: Redefining \cdots on input line 518.
-\Mathstrutbox@=\box30
-\strutbox@=\box31
+\Mathstrutbox@=\box29
+\strutbox@=\box30
 \big@size=\dimen114
-LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
-\macc@depth=\count299
-\c@MaxMatrixCols=\count300
+LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
+\macc@depth=\count291
+\c@MaxMatrixCols=\count292
 \dotsspace@=\muskip11
-\c@parentequation=\count301
-\dspbrk@lvl=\count302
-\tag@help=\toks22
-\row@=\count303
-\column@=\count304
-\maxfields@=\count305
-\andhelp@=\toks23
+\c@parentequation=\count293
+\dspbrk@lvl=\count294
+\tag@help=\toks21
+\row@=\count295
+\column@=\count296
+\maxfields@=\count297
+\andhelp@=\toks22
 \eqnshift@=\dimen115
 \alignsep@=\dimen116
 \tagshift@=\dimen117
 \tagwidth@=\dimen118
 \totwidth@=\dimen119
 \lineht@=\dimen120
-\@envbody=\toks24
-\multlinegap=\skip82
-\multlinetaggap=\skip83
-\mathdisplay@stack=\toks25
-LaTeX Info: Redefining \[ on input line 2739.
-LaTeX Info: Redefining \] on input line 2740.
+\@envbody=\toks23
+\multlinegap=\skip68
+\multlinetaggap=\skip69
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2735.
+LaTeX Info: Redefining \] on input line 2736.
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/t1enc.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 ))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -1006,7 +930,7 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
 )
@@ -1074,54 +998,633 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrhack.sty
-Package: scrhack 2016/05/10 v3.20 KOMA-Script package 
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrhack.sty
+Package: scrhack 2015/10/03 v3.19a KOMA-Script package 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mparhack/mparhack.sty
+Package: mparhack 2005/04/17 v1.4 (T. Sgouros and S. Ulrich)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fixltx2e.sty
+Package: fixltx2e 2015/06/22 v2.0b fixes to LaTeX (obsolete)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/xpatch/xpatch.sty
-(/usr/local/texlive/2016/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2016/05/18 v6512 L3 programming layer (loader) 
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/l3kernel/expl3-code.tex
-Package: expl3 2016/05/18 v6512 L3 programming layer (code)
-L3 Module: l3bootstrap 2016/02/12 v6412 L3 Bootstrap code
-L3 Module: l3names 2016/03/11 v6433 L3 Namespace for primitives
+Package fixltx2e Warning: fixltx2e is not required with releases after 2015
+(fixltx2e)                All fixes are now in the LaTeX kernel.
+(fixltx2e)                See the latexrelease package for details.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/acronym/acronym.sty
+Package: acronym 2015/03/21 v1.41 Support for acronyms (Tobias Oetiker)
+
+(/usr/share/texlive/texmf-dist/tex/latex/bigfoot/suffix.sty
+Package: suffix 2006/07/15 1.5a Variant command support
+)
+(/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.tex
+\@xs@message=\write4
+\integerpart=\count298
+\decimalpart=\count299
+)
+Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
+)
+\AC@clearlist=\toks25
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2014/10/28 v2.10 `tabularx' package (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen121
+\extrarowheight=\dimen122
+\NC@list=\toks26
+\extratabsurround=\skip70
+\backup@length=\skip71
+)
+\TX@col@width=\dimen123
+\TX@old@table=\dimen124
+\TX@old@col=\dimen125
+\TX@target=\dimen126
+\TX@delta=\dimen127
+\TX@cols=\count300
+\TX@ftn=\toks27
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/02/04 v1.7-139 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen128
+\captionmargin@=\dimen129
+\captionwidth=\dimen130
+\caption@tempdima=\dimen131
+\caption@indent=\dimen132
+\caption@parindent=\dimen133
+\caption@hangindent=\dimen134
+Package caption Info: The definition of \@makecaption has been changed,
+(caption)             frenchb will NOT customize it.
+)
+Package caption Info: KOMA-Script document class.
+\c@ContinuedFloat=\count301
+)
+(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+\c@KVtest=\count302
+\sf@farskip=\skip72
+\sf@captopadj=\dimen135
+\sf@capskip=\skip73
+\sf@nearskip=\skip74
+\c@subfigure=\count303
+\c@subfigure@save=\count304
+\c@lofdepth=\count305
+\c@subtable=\count306
+\c@subtable@save=\count307
+\c@lotdepth=\count308
+\sf@top=\skip75
+\sf@bottom=\skip76
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count309
+\lst@gtempboxa=\box31
+\lst@token=\toks28
+\lst@length=\count310
+\lst@currlwidth=\dimen136
+\lst@column=\count311
+\lst@pos=\count312
+\lst@lostspace=\dimen137
+\lst@width=\dimen138
+\lst@newlines=\count313
+\lst@lineno=\count314
+\lst@maxwidth=\dimen139
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count315
+\lst@skipnumbers=\count316
+\lst@framebox=\box32
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package scrhack Info: loading listings hack on input line 151.
+
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/listings.hak
+File: listings.hak 2015/10/03 v3.19a KOMA-Script package (hacking package listi
+ngs)
+Package tocbasic Info: setting babel extension for `lol' on input line 137.
+Package scrhack Info: redefining \lstlistoflistings on input line 137.
+)
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
+File: lstlang3.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
+File: lstlang3.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
+File: lstlang3.sty 2015/06/04 1.6 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+)
+Package scrhack Info: hyperref hack deactivated because of
+(scrhack)             detection of KOMA-Script class, that doesn't
+(scrhack)             need that hack, on input line 180.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package hobsub Info: Skipping package `atbegshi' (already loaded).
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+)
+\@linkdim=\dimen140
+\Hy@linkcounter=\count317
+\Hy@pagecounter=\count318
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count319
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Option `hyperfootnotes' set `false' on input line 4319.
+Package hyperref Info: Option `pdfpagelabels' set `true' on input line 4319.
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count320
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen141
+\Fld@menulength=\count321
+\Field@Width=\dimen142
+\Fld@charsize=\dimen143
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring OFF on input line 6315.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count322
+\c@Item=\count323
+)
+
+Package hyperref Message: Driver: hpdftex.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count324
+\c@bookmark@seq@number=\count325
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip77
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 205.
+Package hyperref Info: Option `linktocpage' set `true' on input line 205.
+Package hyperref Info: Option `breaklinks' set `true' on input line 205.
+Package hyperref Info: Option `pageanchor' set `true' on input line 205.
+Package hyperref Info: Option `plainpages' set `false' on input line 205.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 205.
+
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 205.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 205.
+
+(./classicthesis.sty
+Package: classicthesis 2015/09/06 v4.2 Typographic style for a classic-looking 
+thesis
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/mathpazo.sty
+Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
+\symupright=\mathgroup4
+)
+(/usr/share/texlive/texmf-dist/tex/latex/bera/beramono.sty
+Package: beramono 2004/01/31 (WaS)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/eulervm/eulervm.sty
+Package: eulervm 2005/01/11 v4.0 (WaS)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2013/05/23 v2.5a Micro-typographical refinements (RS)
+\MT@toks=\toks29
+\MT@count=\count326
+LaTeX Info: Redefining \textls on input line 766.
+\MT@outer@kern=\dimen144
+LaTeX Info: Redefining \textmicrotypecontext on input line 1285.
+\MT@listname@count=\count327
+
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2013/05/23 v2.5a Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 915.
+LaTeX Info: Redefining \lslig on input line 915.
+\MT@outer@space=\skip78
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2013/05/23 v2.5a microtype main configuration file (RS)
+))
+Package classicthesis Info: A4 paper, Palatino or other on input line 272.
+Package typearea Info: These are the values describing the layout:
+(typearea)             DIV  = areaset
+(typearea)             BCOR = 14.22636pt
+(typearea)             \paperwidth      = 597.50793pt
+(typearea)              \textwidth      = 336.0pt
+(typearea)              \evensidemargin = 92.58438pt
+(typearea)              \oddsidemargin  = 24.38356pt
+(typearea)             \paperheight     = 845.04694pt
+(typearea)              \textheight     = 666.04997pt
+(typearea)              \topmargin      = -40.58768pt
+(typearea)              \headheight     = 15.95pt
+(typearea)              \headsep        = 20.40001pt
+(typearea)              \topskip        = 11.0pt
+(typearea)              \footskip       = 47.60002pt
+(typearea)              \baselineskip   = 13.6pt
+(typearea)              on input line 272.
+
+(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen145
+\lightrulewidth=\dimen146
+\cmidrulewidth=\dimen147
+\belowrulesep=\dimen148
+\belowbottomsep=\dimen149
+\aboverulesep=\dimen150
+\abovetopsep=\dimen151
+\cmidrulesep=\dimen152
+\cmidrulekern=\dimen153
+\defaultaddspace=\dimen154
+\@cmidla=\count328
+\@cmidlb=\count329
+\@aboverulesep=\dimen155
+\@belowrulesep=\dimen156
+\@thisruleclass=\count330
+\@lastruleclass=\count331
+\@thisrulewidth=\dimen157
+)
+(/usr/share/texlive/texmf-dist/tex/latex/textcase/textcase.sty
+Package: textcase 2004/10/07 v0.07 Text only upper/lower case changing (DPC)
+)
+Package classicthesis Info: Using pdftex/microtype for character spacing.Make s
+ure your pdftex is version 1.40 or higher. on input line 345.
+
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrlayer-scrpage.sty
+Package: scrlayer-scrpage 2015/10/03 v3.19a KOMA-Script package (end user inter
+face for scrlayer)
+
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrlayer.sty
+Package: scrlayer 2015/10/03 v3.19a KOMA-Script package (defining layers and pa
+ge styles)
+Package scrlayer Info: Using already defined \footheight
+(scrlayer)             hoping, that this is a length and
+(scrlayer)             not only a macro on input line 107.
+Package scrlayer Info: patching LaTeX kernel macro \pagestyle on input line 197
+5.
+)
+Package scrlayer-scrpage Info: deactivating warning for font element
+(scrlayer-scrpage)             `pagefoot' on input line 1191.
+)
+Package scrlayer-scrpage Info: auto-selection of `pagestyleset=KOMA-Script'.
+
+1: section
+1: chapter
+1: chapter
+1: section
+
+Class scrreprt Warning: Usage of package `titlesec' together
+(scrreprt)              with a KOMA-Script class is not recommended.
+(scrreprt)              I'd suggest to use the package only
+(scrreprt)              if you really need it, because it breaks several
+(scrreprt)              KOMA-Script features, i.e., option `headings' and
+(scrreprt)              the extended optional argument of the section
+(scrreprt)              commands.
+(scrreprt)              Nevertheless, using requested
+(scrreprt)              package `titlesec' on input line 378.
+
+(/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2016/03/15 v2.10.1 Sectioning titles
+\ttl@box=\box33
+\beforetitleunit=\skip79
+\aftertitleunit=\skip80
+\ttl@plus=\dimen158
+\ttl@minus=\dimen159
+\ttl@toksa=\toks30
+\titlewidth=\dimen160
+\titlewidthlast=\dimen161
+\titlewidthfirst=\dimen162
+
+
+Package titlesec Warning: Non standard sectioning command detected
+(titlesec)                Using default spacing and no format.
+
+
+Package titlesec Warning: Non standard sectioning command detected
+(titlesec)                Using default spacing and no format.
+
+
+Package titlesec Warning: Non standard sectioning command detected
+(titlesec)                Using default spacing and no format.
+
+
+Package titlesec Warning: Non standard sectioning command detected
+(titlesec)                Using default spacing and no format.
+
+
+Package titlesec Warning: Non standard sectioning command detected
+(titlesec)                Using default spacing and no format.
+
+)
+Class scrreprt Info: Deactivating the `titlesec` workaround,
+(scrreprt)           because package is newer than expected on input line 378.
+ (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
+Package: tocloft 2013/05/02 v2.3f parameterised ToC, etc., typesetting
+Package tocloft Info: The document has chapter divisions on input line 44.
+\cftparskip=\skip81
+\cftbeforetoctitleskip=\skip82
+\cftaftertoctitleskip=\skip83
+\cftbeforepartskip=\skip84
+\cftpartnumwidth=\skip85
+\cftpartindent=\skip86
+\cftbeforechapskip=\skip87
+\cftchapindent=\skip88
+\cftchapnumwidth=\skip89
+\cftbeforesecskip=\skip90
+\cftsecindent=\skip91
+\cftsecnumwidth=\skip92
+\cftbeforesubsecskip=\skip93
+\cftsubsecindent=\skip94
+\cftsubsecnumwidth=\skip95
+\cftbeforesubsubsecskip=\skip96
+\cftsubsubsecindent=\skip97
+\cftsubsubsecnumwidth=\skip98
+\cftbeforeparaskip=\skip99
+\cftparaindent=\skip100
+\cftparanumwidth=\skip101
+\cftbeforesubparaskip=\skip102
+\cftsubparaindent=\skip103
+\cftsubparanumwidth=\skip104
+\cftbeforeloftitleskip=\skip105
+\cftafterloftitleskip=\skip106
+\cftbeforefigskip=\skip107
+\cftfigindent=\skip108
+\cftfignumwidth=\skip109
+\cftbeforelottitleskip=\skip110
+\cftafterlottitleskip=\skip111
+\cftbeforetabskip=\skip112
+\cfttabindent=\skip113
+\cfttabnumwidth=\skip114
+\cftbeforesubfigskip=\skip115
+\cftsubfigindent=\skip116
+\cftsubfignumwidth=\skip117
+\cftbeforesubtabskip=\skip118
+\cftsubtabindent=\skip119
+\cftsubtabnumwidth=\skip120
+)
+\newnumberwidth=\skip121
+\beforebibskip=\skip122
+\newchnumberwidth=\skip123
+\figurelabelwidth=\skip124
+\tablelabelwidth=\skip125
+\c@listings=\count332
+\cftbeforelistingsskip=\skip126
+\cftlistingsindent=\skip127
+\cftlistingsnumwidth=\skip128
+\c@loldepth=\count333
+\cftbeforeloltitleskip=\skip129
+\cftafterloltitleskip=\skip130
+\listingslabelwidth=\skip131
+
+Using KOMA-command "deffootnote" for footnote setup
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrtime.sty
+Package: scrtime 2015/10/03 v3.19a KOMA-Script package (time of LaTeX run)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/ms/prelim2e.sty
+Package: prelim2e 2009/05/29 v1.3 prelim2e Package (MS)
+
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everyshi.sty
+Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/carlisle/remreset.sty)))
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'english'.
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2016/03/03 v3.3 biblatex localization (PK/JW/AB)
+)
+(./ClassicThesis.aux
+Package biblatex Info: Trying to load language 'french'...
+Package biblatex Info: ... file 'french.lbx' found.
+
+(/usr/share/texlive/texmf-dist/tex/latex/biblatex/lbx/french.lbx
+File: french.lbx 2016/03/03 v3.3 biblatex localization (PK/JW/AB)
+)
+(./FrontBackmatter/Titlepage.aux) (./FrontBackmatter/Titleback.aux)
+(./FrontBackmatter/Dedication.aux) (./FrontBackmatter/Abstract.aux)
+(./FrontBackmatter/Acknowledgments.aux) (./FrontBackmatter/Contents.aux)
+(./Chapters/Chapter01.aux) (./Chapters/Chapter02.aux) (./Chapters/Chapter03.aux
+) (./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Declaration.aux)
+(./FrontBackmatter/Colophon.aux))
+\openout1 = `ClassicThesis.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Try loading font information for T1+pplj on input line 60.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pplj.fd
+File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
+)
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count334
+\scratchdimen=\dimen163
+\scratchbox=\box34
+\nofMPsegments=\count335
+\nofMParguments=\count336
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count337
+\MPscratchDim=\dimen164
+\MPnumerator=\count338
+\makeMPintoPDFobject=\count339
+\everyMPtoPDFconversion=\toks32
+)
+\AtBeginShipoutBox=\box35
+ (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
+Package: pdflscape 2008/08/11 v0.10 Display of landscape pages in PDF (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+Package scrhack Info: loading lscape hack on input line 75.
+
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/lscape.hak
+File: lscape.hak 2015/10/03 v3.19a KOMA-Script package (hacking package lscape)
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/xpatch/xpatch.sty
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2016/01/19 v6377 L3 programming layer (loader) 
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3-code.tex
+Package: expl3 2016/01/19 v6377 L3 programming layer (code)
+L3 Module: l3bootstrap 2016/01/01 v6339 L3 Bootstrap code
+L3 Module: l3names 2015/12/21 v6328 L3 Namespace for primitives
 L3 Module: l3basics 2015/11/22 v6315 L3 Basic definitions
 L3 Module: l3expan 2015/09/10 v5983 L3 Argument expansion
-L3 Module: l3tl 2016/03/26 v6465 L3 Token lists
-L3 Module: l3str 2016/03/24 v6441 L3 Strings
+L3 Module: l3tl 2015/09/29 v6121 L3 Token lists
+L3 Module: l3str 2016/01/03 v6357 L3 Strings
 L3 Module: l3seq 2015/08/05 v5777 L3 Sequences and stacks
-L3 Module: l3int 2016/03/24 v6441 L3 Integers
-\c_max_int=\count306
-\l_tmpa_int=\count307
-\l_tmpb_int=\count308
-\g_tmpa_int=\count309
-\g_tmpb_int=\count310
+L3 Module: l3int 2016/01/05 v6366 L3 Integers
+\c_max_int=\count340
+\l_tmpa_int=\count341
+\l_tmpb_int=\count342
+\g_tmpa_int=\count343
+\g_tmpb_int=\count344
 L3 Module: l3quark 2015/08/17 v5855 L3 Quarks
 L3 Module: l3prg 2015/11/01 v6216 L3 Control structures
-\g__prg_map_int=\count311
+\g__prg_map_int=\count345
 L3 Module: l3clist 2015/09/02 v5901 L3 Comma separated lists
-L3 Module: l3token 2016/04/03 v6470 L3 Experimental token manipulation
+L3 Module: l3token 2015/11/11 v6249 L3 Experimental token manipulation
 L3 Module: l3prop 2016/01/05 v6366 L3 Property lists
-L3 Module: l3msg 2016/03/26 v6464 L3 Messages
-L3 Module: l3file 2016/03/25 v6458 L3 File and I/O operations
-\l_iow_line_count_int=\count312
-\l__iow_target_count_int=\count313
-\l__iow_current_line_int=\count314
-\l__iow_current_word_int=\count315
-\l__iow_current_indentation_int=\count316
+L3 Module: l3msg 2015/09/28 v6113 L3 Messages
+L3 Module: l3file 2015/12/03 v6317 L3 File and I/O operations
+\l_iow_line_count_int=\count346
+\l__iow_target_count_int=\count347
+\l__iow_current_line_int=\count348
+\l__iow_current_word_int=\count349
+\l__iow_current_indentation_int=\count350
 L3 Module: l3skip 2016/01/05 v6366 L3 Dimensions and skips
-\c_zero_dim=\dimen121
-\c_max_dim=\dimen122
-\l_tmpa_dim=\dimen123
-\l_tmpb_dim=\dimen124
-\g_tmpa_dim=\dimen125
-\g_tmpb_dim=\dimen126
-\c_zero_skip=\skip84
-\c_max_skip=\skip85
-\l_tmpa_skip=\skip86
-\l_tmpb_skip=\skip87
-\g_tmpa_skip=\skip88
-\g_tmpb_skip=\skip89
+\c_zero_dim=\dimen165
+\c_max_dim=\dimen166
+\l_tmpa_dim=\dimen167
+\l_tmpb_dim=\dimen168
+\g_tmpa_dim=\dimen169
+\g_tmpb_dim=\dimen170
+\c_zero_skip=\skip132
+\c_max_skip=\skip133
+\l_tmpa_skip=\skip134
+\l_tmpb_skip=\skip135
+\g_tmpa_skip=\skip136
+\g_tmpb_skip=\skip137
 \c_zero_muskip=\muskip12
 \c_max_muskip=\muskip13
 \l_tmpa_muskip=\muskip14
@@ -1129,79 +1632,78 @@ L3 Module: l3skip 2016/01/05 v6366 L3 Dimensions and skips
 \g_tmpa_muskip=\muskip16
 \g_tmpb_muskip=\muskip17
 L3 Module: l3keys 2015/11/17 v6284 L3 Key-value interfaces
-\g__keyval_level_int=\count317
-\l_keys_choice_int=\count318
-L3 Module: l3fp 2016/03/26 v6465 L3 Floating points
-\c__fp_leading_shift_int=\count319
-\c__fp_middle_shift_int=\count320
-\c__fp_trailing_shift_int=\count321
-\c__fp_big_leading_shift_int=\count322
-\c__fp_big_middle_shift_int=\count323
-\c__fp_big_trailing_shift_int=\count324
-\c__fp_Bigg_leading_shift_int=\count325
-\c__fp_Bigg_middle_shift_int=\count326
-\c__fp_Bigg_trailing_shift_int=\count327
+\g__keyval_level_int=\count351
+\l_keys_choice_int=\count352
+L3 Module: l3fp 2015/08/25 v5890 L3 Floating points
+\c__fp_leading_shift_int=\count353
+\c__fp_middle_shift_int=\count354
+\c__fp_trailing_shift_int=\count355
+\c__fp_big_leading_shift_int=\count356
+\c__fp_big_middle_shift_int=\count357
+\c__fp_big_trailing_shift_int=\count358
+\c__fp_Bigg_leading_shift_int=\count359
+\c__fp_Bigg_middle_shift_int=\count360
+\c__fp_Bigg_trailing_shift_int=\count361
 L3 Module: l3box 2015/08/09 v5822 L3 Experimental boxes
-\c_empty_box=\box32
-\l_tmpa_box=\box33
-\l_tmpb_box=\box34
-\g_tmpa_box=\box35
-\g_tmpb_box=\box36
-L3 Module: l3coffins 2016/05/17 v6508 L3 Coffin code layer
-\l__coffin_internal_box=\box37
-\l__coffin_internal_dim=\dimen127
-\l__coffin_offset_x_dim=\dimen128
-\l__coffin_offset_y_dim=\dimen129
-\l__coffin_x_dim=\dimen130
-\l__coffin_y_dim=\dimen131
-\l__coffin_x_prime_dim=\dimen132
-\l__coffin_y_prime_dim=\dimen133
-\c_empty_coffin=\box38
-\l__coffin_aligned_coffin=\box39
-\l__coffin_aligned_internal_coffin=\box40
-\l_tmpa_coffin=\box41
-\l_tmpb_coffin=\box42
-\l__coffin_display_coffin=\box43
-\l__coffin_display_coord_coffin=\box44
-\l__coffin_display_pole_coffin=\box45
-\l__coffin_display_offset_dim=\dimen134
-\l__coffin_display_x_dim=\dimen135
-\l__coffin_display_y_dim=\dimen136
+\c_empty_box=\box36
+\l_tmpa_box=\box37
+\l_tmpb_box=\box38
+\g_tmpa_box=\box39
+\g_tmpb_box=\box40
+L3 Module: l3coffins 2015/08/06 v5789 L3 Coffin code layer
+\l__coffin_internal_box=\box41
+\l__coffin_internal_dim=\dimen171
+\l__coffin_offset_x_dim=\dimen172
+\l__coffin_offset_y_dim=\dimen173
+\l__coffin_x_dim=\dimen174
+\l__coffin_y_dim=\dimen175
+\l__coffin_x_prime_dim=\dimen176
+\l__coffin_y_prime_dim=\dimen177
+\c_empty_coffin=\box42
+\l__coffin_aligned_coffin=\box43
+\l__coffin_aligned_internal_coffin=\box44
+\l_tmpa_coffin=\box45
+\l_tmpb_coffin=\box46
+\l__coffin_display_coffin=\box47
+\l__coffin_display_coord_coffin=\box48
+\l__coffin_display_pole_coffin=\box49
+\l__coffin_display_offset_dim=\dimen178
+\l__coffin_display_x_dim=\dimen179
+\l__coffin_display_y_dim=\dimen180
 L3 Module: l3color 2014/08/23 v5354 L3 Experimental color support
 L3 Module: l3sys 2015/09/25 v6087 L3 Experimental system/runtime functions
-L3 Module: l3candidates 2016/05/13 v6484 L3 Experimental additions to l3kernel
-\l__box_top_dim=\dimen137
-\l__box_bottom_dim=\dimen138
-\l__box_left_dim=\dimen139
-\l__box_right_dim=\dimen140
-\l__box_top_new_dim=\dimen141
-\l__box_bottom_new_dim=\dimen142
-\l__box_left_new_dim=\dimen143
-\l__box_right_new_dim=\dimen144
-\l__box_internal_box=\box46
-\l__coffin_bounding_shift_dim=\dimen145
-\l__coffin_left_corner_dim=\dimen146
-\l__coffin_right_corner_dim=\dimen147
-\l__coffin_bottom_corner_dim=\dimen148
-\l__coffin_top_corner_dim=\dimen149
-\l__coffin_scaled_total_height_dim=\dimen150
-\l__coffin_scaled_width_dim=\dimen151
-L3 Module: l3luatex 2016/03/26 v6465 L3 Experimental LuaTeX-specific functions
+L3 Module: l3candidates 2016/01/14 v6376 L3 Experimental additions to l3kernel
+\l__box_top_dim=\dimen181
+\l__box_bottom_dim=\dimen182
+\l__box_left_dim=\dimen183
+\l__box_right_dim=\dimen184
+\l__box_top_new_dim=\dimen185
+\l__box_bottom_new_dim=\dimen186
+\l__box_left_new_dim=\dimen187
+\l__box_right_new_dim=\dimen188
+\l__box_internal_box=\box50
+\l__coffin_bounding_shift_dim=\dimen189
+\l__coffin_left_corner_dim=\dimen190
+\l__coffin_right_corner_dim=\dimen191
+\l__coffin_bottom_corner_dim=\dimen192
+\l__coffin_top_corner_dim=\dimen193
+\l__coffin_scaled_total_height_dim=\dimen194
+\l__coffin_scaled_width_dim=\dimen195
+L3 Module: l3luatex 2015/11/11 v6250 L3 Experimental LuaTeX-specific functions
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
-File: l3pdfmode.def 2016/03/26 v6465 L3 Experimental driver: PDF mode
-\l__driver_color_stack_int=\count328
-\l__driver_tmp_box=\box47
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
+File: l3pdfmode.def 2015/11/11 v6250 L3 Experimental driver: PDF mode
+\l__driver_color_stack_int=\count362
 ))
 Package: xpatch 2012/10/02 v0.3 Extending etoolbox patching commands
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2016/05/18 v6512 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count329
-\l__xparse_m_args_int=\count330
-\l__xparse_mandatory_args_int=\count331
-\l__xparse_processor_int=\count332
-\l__xparse_v_nesting_int=\count333
+(/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2016/01/19 v6377 L3 Experimental document command parser
+\l__xparse_current_arg_int=\count363
+\l__xparse_m_args_int=\count364
+\l__xparse_mandatory_args_int=\count365
+\l__xparse_processor_int=\count366
+\l__xparse_v_nesting_int=\count367
 )
 .................................................
 . LaTeX info: "xparse/define-command"
@@ -1383,636 +1885,53 @@ Package: xparse 2016/05/18 v6512 L3 Experimental document command parser
 . 
 . Defining command \xshowbibdriver with sig. 'm' on line 193.
 .................................................
-))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/xspace.sty
-Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/mparhack/mparhack.sty
-Package: mparhack 2005/04/17 v1.4 (T. Sgouros and S. Ulrich)
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/fixltx2e.sty
-Package: fixltx2e 2015/06/22 v2.0b fixes to LaTeX (obsolete)
-
-
-Package fixltx2e Warning: fixltx2e is not required with releases after 2015
-(fixltx2e)                All fixes are now in the LaTeX kernel.
-(fixltx2e)                See the latexrelease package for details.
-
-) (/usr/local/texlive/2016/texmf-dist/tex/latex/acronym/acronym.sty
-Package: acronym 2015/03/21 v1.41 Support for acronyms (Tobias Oetiker)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/bigfoot/suffix.sty
-Package: suffix 2006/07/15 1.5a Variant command support
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/relsize/relsize.sty
-Package: relsize 2013/03/29 ver 4.1
-)
-\AC@clearlist=\toks26
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/tabularx.sty
-Package: tabularx 2016/02/03 v2.11 `tabularx' package (DPC)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/array.sty
-Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
-\col@sep=\dimen152
-\extrarowheight=\dimen153
-\NC@list=\toks27
-\extratabsurround=\skip90
-\backup@length=\skip91
-)
-\TX@col@width=\dimen154
-\TX@old@table=\dimen155
-\TX@old@col=\dimen156
-\TX@target=\dimen157
-\TX@delta=\dimen158
-\TX@cols=\count334
-\TX@ftn=\toks28
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2016/02/04 v1.7-139 caption3 kernel (AR)
-Package caption3 Info: TeX engine: e-TeX on input line 67.
-\captionmargin=\dimen159
-\captionmargin@=\dimen160
-\captionwidth=\dimen161
-\caption@tempdima=\dimen162
-\caption@indent=\dimen163
-\caption@parindent=\dimen164
-\caption@hangindent=\dimen165
-Package caption Info: The definition of \@makecaption has been changed,
-(caption)             frenchb will NOT customize it.
-)
-Package caption Info: KOMA-Script document class.
-\c@ContinuedFloat=\count335
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/subfig/subfig.sty
-Package: subfig 2005/06/28 ver: 1.3 subfig package
-\c@KVtest=\count336
-\sf@farskip=\skip92
-\sf@captopadj=\dimen166
-\sf@capskip=\skip93
-\sf@nearskip=\skip94
-\c@subfigure=\count337
-\c@subfigure@save=\count338
-\c@lofdepth=\count339
-\c@subtable=\count340
-\c@subtable@save=\count341
-\c@lotdepth=\count342
-\sf@top=\skip95
-\sf@bottom=\skip96
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count343
-\lst@gtempboxa=\box48
-\lst@token=\toks29
-\lst@length=\count344
-\lst@currlwidth=\dimen167
-\lst@column=\count345
-\lst@pos=\count346
-\lst@lostspace=\dimen168
-\lst@width=\dimen169
-\lst@newlines=\count347
-\lst@lineno=\count348
-\lst@maxwidth=\dimen170
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count349
-\lst@skipnumbers=\count350
-\lst@framebox=\box49
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2015/06/04 1.6 listings configuration
-))
-Package scrhack Info: loading listings hack on input line 150.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/listings.hak
-File: listings.hak 2016/05/10 v3.20 KOMA-Script package (hacking package listin
-gs)
-Package tocbasic Info: setting babel extension for `lol' on input line 137.
-Package scrhack Info: redefining \lstlistoflistings on input line 137.
-)
-Package: listings 2015/06/04 1.6 (Carsten Heinz)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2015/06/04 1.6 listings language file
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-)
-Package scrhack Info: hyperref hack deactivated because of
-(scrhack)             detection of KOMA-Script class, that doesn't
-(scrhack)             need that hack, on input line 179.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2016/05/05 v6.83n Hypertext links for LaTeX
-
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
-Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
-
-
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
-Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
-Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
-Package hobsub Info: Skipping package `infwarerr' (already loaded).
-Package hobsub Info: Skipping package `ltxcmds' (already loaded).
-Package hobsub Info: Skipping package `ifluatex' (already loaded).
-Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
-Package ifvtex Info: VTeX not detected.
-Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
-Package hobsub Info: Skipping package `ifpdf' (already loaded).
-Package hobsub Info: Skipping package `etexcmds' (already loaded).
-Package hobsub Info: Skipping package `kvsetkeys' (already loaded).
-Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
-Package hobsub Info: Skipping package `pdftexcmds' (already loaded).
-Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
-Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
-)
-Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
-Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
-)
-Package hobsub Info: Skipping package `hobsub' (already loaded).
-Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
-Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
-Package: xcolor-patch 2016/05/16 xcolor patch
-Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
-Package hobsub Info: Skipping package `atbegshi' (already loaded).
-Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
-Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
-)
-(/usr/local/texlive/2016/texmf-dist/tex/generic/ifxetex/ifxetex.sty
-Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/auxhook.sty
-Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
-)
-\@linkdim=\dimen171
-\Hy@linkcounter=\count351
-\Hy@pagecounter=\count352
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2016/05/05 v6.83n Hyperref: PDFDocEncoding definition (HO)
-Now handling font encoding PD1 ...
-... no UTF-8 mapping file for font encoding PD1
-)
-\Hy@SavedSpaceFactor=\count353
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/latexconfig/hyperref.cfg
-File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
-)
-Package hyperref Info: Option `hyperfootnotes' set `false' on input line 4322.
-Package hyperref Info: Option `pdfpagelabels' set `true' on input line 4322.
-Package hyperref Info: Hyper figures OFF on input line 4446.
-Package hyperref Info: Link nesting OFF on input line 4451.
-Package hyperref Info: Hyper index ON on input line 4454.
-Package hyperref Info: Plain pages OFF on input line 4461.
-Package hyperref Info: Backreferencing OFF on input line 4466.
-Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4691.
-\c@Hy@tempcnt=\count354
-LaTeX Info: Redefining \url on input line 5044.
-\XeTeXLinkMargin=\dimen172
-\Fld@menulength=\count355
-\Field@Width=\dimen173
-\Fld@charsize=\dimen174
-Package hyperref Info: Hyper figures OFF on input line 6298.
-Package hyperref Info: Link nesting OFF on input line 6303.
-Package hyperref Info: Hyper index ON on input line 6306.
-Package hyperref Info: backreferencing OFF on input line 6313.
-Package hyperref Info: Link coloring OFF on input line 6318.
-Package hyperref Info: Link coloring with OCG OFF on input line 6323.
-Package hyperref Info: PDF/A mode OFF on input line 6328.
-LaTeX Info: Redefining \ref on input line 6368.
-LaTeX Info: Redefining \pageref on input line 6372.
-\Hy@abspage=\count356
-\c@Item=\count357
-)
-
-Package hyperref Message: Driver: hpdftex.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2016/05/05 v6.83n Hyperref driver for pdfTeX
-\Fld@listcount=\count358
-\c@bookmark@seq@number=\count359
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
-Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-82.
-)
-\Hy@SectionHShift=\skip97
-)
-Package hyperref Info: Option `colorlinks' set `true' on input line 204.
-Package hyperref Info: Option `linktocpage' set `true' on input line 204.
-Package hyperref Info: Option `breaklinks' set `true' on input line 204.
-Package hyperref Info: Option `pageanchor' set `true' on input line 204.
-Package hyperref Info: Option `plainpages' set `false' on input line 204.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 204.
-
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 204.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 204.
-
-(./classicthesis.sty
-Package: classicthesis 2015/09/06 v4.2 Typographic style for a classic-looking 
-thesis
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/mathpazo.sty
-Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
-\symupright=\mathgroup4
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/bera/beramono.sty
-Package: beramono 2004/01/31 (WaS)
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/eulervm/eulervm.sty
-Package: eulervm 2005/01/11 v4.0 (WaS)
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2016/05/14 v2.6a Micro-typographical refinements (RS)
-\MT@toks=\toks30
-\MT@count=\count360
-LaTeX Info: Redefining \textls on input line 774.
-\MT@outer@kern=\dimen175
-LaTeX Info: Redefining \textmicrotypecontext on input line 1310.
-\MT@listname@count=\count361
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2016/05/14 v2.6a Definitions specific to pdftex (RS)
-
-LaTeX Info: Redefining \lsstyle on input line 916.
-LaTeX Info: Redefining \lslig on input line 916.
-\MT@outer@space=\skip98
-)
-Package microtype Info: Loading configuration file microtype.cfg.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2016/05/14 v2.6a microtype main configuration file (RS)
-))
-Package classicthesis Info: A4 paper, Palatino or other on input line 272.
-Package typearea Info: These are the values describing the layout:
-(typearea)             DIV  = areaset
-(typearea)             BCOR = 14.22636pt
-(typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 336.0pt
-(typearea)              \evensidemargin = 92.58438pt
-(typearea)              \oddsidemargin  = 24.38356pt
-(typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 666.04997pt
-(typearea)              \topmargin      = -40.58768pt
-(typearea)              \headheight     = 15.95pt
-(typearea)              \headsep        = 20.40001pt
-(typearea)              \topskip        = 11.0pt
-(typearea)              \footskip       = 47.60002pt
-(typearea)              \baselineskip   = 13.6pt
-(typearea)              on input line 272.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2016/04/27 v1.618033 publication quality tables
-\heavyrulewidth=\dimen176
-\lightrulewidth=\dimen177
-\cmidrulewidth=\dimen178
-\belowrulesep=\dimen179
-\belowbottomsep=\dimen180
-\aboverulesep=\dimen181
-\abovetopsep=\dimen182
-\cmidrulesep=\dimen183
-\cmidrulekern=\dimen184
-\defaultaddspace=\dimen185
-\@cmidla=\count362
-\@cmidlb=\count363
-\@aboverulesep=\dimen186
-\@belowrulesep=\dimen187
-\@thisruleclass=\count364
-\@lastruleclass=\count365
-\@thisrulewidth=\dimen188
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/textcase/textcase.sty
-Package: textcase 2004/10/07 v0.07 Text only upper/lower case changing (DPC)
-)
-Package classicthesis Info: Using pdftex/microtype for character spacing.Make s
-ure your pdftex is version 1.40 or higher. on input line 345.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrlayer-scrpage.sty
-Package: scrlayer-scrpage 2016/05/10 v3.20 KOMA-Script package (end user interf
-ace for scrlayer)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrlayer.sty
-Package: scrlayer 2016/05/10 v3.20 KOMA-Script package (defining layers and pag
-e styles)
-Package scrlayer Info: Using already defined \footheight
-(scrlayer)             hoping, that this is a length and
-(scrlayer)             not only a macro on input line 107.
-Package scrlayer Info: patching LaTeX kernel macro \pagestyle on input line 197
-5.
-)
-Package scrlayer-scrpage Info: deactivating warning for font element
-(scrlayer-scrpage)             `pagefoot' on input line 1191.
-)
-Package scrlayer-scrpage Info: auto-selection of `pagestyleset=KOMA-Script'.
-
-1: section
-1: chapter
-1: chapter
-1: section
-
-Class scrreprt Warning: Usage of package `titlesec' together
-(scrreprt)              with a KOMA-Script class is not recommended.
-(scrreprt)              I'd suggest to use the package only
-(scrreprt)              if you really need it, because it breaks several
-(scrreprt)              KOMA-Script features, i.e., option `headings' and
-(scrreprt)              the extended optional argument of the section
-(scrreprt)              commands.
-(scrreprt)              Nevertheless, using requested
-(scrreprt)              package `titlesec' on input line 378.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/titlesec/titlesec.sty
-Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
-\ttl@box=\box50
-\beforetitleunit=\skip99
-\aftertitleunit=\skip100
-\ttl@plus=\dimen189
-\ttl@minus=\dimen190
-\ttl@toksa=\toks31
-\titlewidth=\dimen191
-\titlewidthlast=\dimen192
-\titlewidthfirst=\dimen193
-
-
-Package titlesec Warning: Non standard sectioning command detected
-(titlesec)                Using default spacing and no format.
-
-
-Package titlesec Warning: Non standard sectioning command detected
-(titlesec)                Using default spacing and no format.
-
-
-Package titlesec Warning: Non standard sectioning command detected
-(titlesec)                Using default spacing and no format.
-
-
-Package titlesec Warning: Non standard sectioning command detected
-(titlesec)                Using default spacing and no format.
-
-
-Package titlesec Warning: Non standard sectioning command detected
-(titlesec)                Using default spacing and no format.
-
-)
-
-Package scrreprt Warning: Activating an ugly workaround for a missing
-(scrreprt)                feature of package `titlesec` on input line 378.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/tocloft/tocloft.sty
-Package: tocloft 2013/05/02 v2.3f parameterised ToC, etc., typesetting
-Package tocloft Info: The document has chapter divisions on input line 44.
-\cftparskip=\skip101
-\cftbeforetoctitleskip=\skip102
-\cftaftertoctitleskip=\skip103
-\cftbeforepartskip=\skip104
-\cftpartnumwidth=\skip105
-\cftpartindent=\skip106
-\cftbeforechapskip=\skip107
-\cftchapindent=\skip108
-\cftchapnumwidth=\skip109
-\cftbeforesecskip=\skip110
-\cftsecindent=\skip111
-\cftsecnumwidth=\skip112
-\cftbeforesubsecskip=\skip113
-\cftsubsecindent=\skip114
-\cftsubsecnumwidth=\skip115
-\cftbeforesubsubsecskip=\skip116
-\cftsubsubsecindent=\skip117
-\cftsubsubsecnumwidth=\skip118
-\cftbeforeparaskip=\skip119
-\cftparaindent=\skip120
-\cftparanumwidth=\skip121
-\cftbeforesubparaskip=\skip122
-\cftsubparaindent=\skip123
-\cftsubparanumwidth=\skip124
-\cftbeforeloftitleskip=\skip125
-\cftafterloftitleskip=\skip126
-\cftbeforefigskip=\skip127
-\cftfigindent=\skip128
-\cftfignumwidth=\skip129
-\cftbeforelottitleskip=\skip130
-\cftafterlottitleskip=\skip131
-\cftbeforetabskip=\skip132
-\cfttabindent=\skip133
-\cfttabnumwidth=\skip134
-\cftbeforesubfigskip=\skip135
-\cftsubfigindent=\skip136
-\cftsubfignumwidth=\skip137
-\cftbeforesubtabskip=\skip138
-\cftsubtabindent=\skip139
-\cftsubtabnumwidth=\skip140
-)
-\newnumberwidth=\skip141
-\beforebibskip=\skip142
-\newchnumberwidth=\skip143
-\figurelabelwidth=\skip144
-\tablelabelwidth=\skip145
-\c@listings=\count366
-\cftbeforelistingsskip=\skip146
-\cftlistingsindent=\skip147
-\cftlistingsnumwidth=\skip148
-\c@loldepth=\count367
-\cftbeforeloltitleskip=\skip149
-\cftafterloltitleskip=\skip150
-\listingslabelwidth=\skip151
-
-Using KOMA-command "deffootnote" for footnote setup
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrtime.sty
-Package: scrtime 2016/05/10 v3.20 KOMA-Script package (time of LaTeX run)
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/ms/prelim2e.sty
-Package: prelim2e 2009/05/29 v1.3 prelim2e Package (MS)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/ms/everyshi.sty
-Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
-))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/carlisle/remreset.sty)))
-Package csquotes Info: Checking for multilingual support...
-Package csquotes Info: ... found 'babel' package.
-Package csquotes Info: Adjusting default style.
-Package csquotes Info: Redefining alias 'default' -> 'english'.
-Package biblatex Info: Trying to load language 'english'...
-Package biblatex Info: ... file 'english.lbx' found.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2016/05/14 v3.4 biblatex localization (PK/JW/AB)
-)
-Package biblatex Info: Trying to load language 'frenchb'...
-Package biblatex Info: ... file 'frenchb.lbx' not found.
-
-
-Package biblatex Warning: Language 'frenchb' not supported.
-(biblatex)                Using fallback language 'english' on input line 58.
-
-(./ClassicThesis.aux
-Package biblatex Info: Trying to load language 'french'...
-Package biblatex Info: ... file 'french.lbx' found.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/biblatex/lbx/french.lbx
-File: french.lbx 2016/05/14 v3.4 biblatex localization (PK/JW/AB)
-)
-(./FrontBackmatter/Titlepage.aux) (./FrontBackmatter/Titleback.aux)
-(./FrontBackmatter/Dedication.aux) (./FrontBackmatter/Foreword.aux)
-(./FrontBackmatter/Abstract.aux) (./FrontBackmatter/Publications.aux)
-(./FrontBackmatter/Acknowledgments.aux) (./FrontBackmatter/Contents.aux)
-(./Chapters/Chapter00.aux) (./Chapters/Chapter01.aux
-
-LaTeX Warning: Label `fig:cmb' multiply defined.
-
-
-LaTeX Warning: Label `fig:cmb' multiply defined.
-
-
-LaTeX Warning: Label `fig:cmb' multiply defined.
-
-) (./Chapters/Chapter02.aux
-
-LaTeX Warning: Label `ch:introduction' multiply defined.
-
-) (./Chapters/Chapter03.aux) (./FrontBackmatter/Bibliography.aux)
-(./FrontBackmatter/Declaration.aux) (./FrontBackmatter/Colophon.aux))
-\openout1 = `ClassicThesis.aux'.
-
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Try loading font information for T1+pplj on input line 58.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/t1pplj.fd
-File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
-)
-(/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count368
-\scratchdimen=\dimen194
-\scratchbox=\box51
-\nofMPsegments=\count369
-\nofMParguments=\count370
-\everyMPshowfont=\toks32
-\MPscratchCnt=\count371
-\MPscratchDim=\dimen195
-\MPnumerator=\count372
-\makeMPintoPDFobject=\count373
-\everyMPtoPDFconversion=\toks33
-)
-\AtBeginShipoutBox=\box52
- (/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
-)
-Package grfext Info: Graphics extension search list:
-(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 456.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/pdflscape.sty
-Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/lscape.sty
-Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-)
-Package scrhack Info: loading lscape hack on input line 76.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/lscape.hak
-File: lscape.hak 2016/05/10 v3.20 KOMA-Script package (hacking package lscape)
 Package scrhack Info: \landscape patched to make \textheight change optional on
- input line 90.
-\scrh@LT@textheight=\skip152
+ input line 91.
+\scrh@LT@textheight=\skip138
 )
-Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+Package pdflscape Info: Auto-detected driver: pdftex on input line 80.
 )
-LaTeX Info: Redefining \degres on input line 58.
-LaTeX Info: Redefining \dots on input line 58.
-LaTeX Info: Redefining \up on input line 58.
+LaTeX Info: Redefining \degres on input line 60.
+LaTeX Info: Redefining \dots on input line 60.
+LaTeX Info: Redefining \up on input line 60.
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Data encoding 'ascii' specified.
 (biblatex)             No need to reencode data.
-Package biblatex Info: Input encoding 'utf8' specified.
-Package biblatex Info: Data encoding 'ascii' specified.
-(biblatex)             No need to reencode data.
-\openout4 = `ClassicThesis-blx.bib'.
+\openout3 = `ClassicThesis-blx.bib'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'ClassicThesis.bbl' not found.
+Package biblatex Info: ... file 'ClassicThesis.bbl' found.
 
-No file ClassicThesis.bbl.
-Package biblatex Info: ... file 'ClassicThesis1-blx.bbl' not found.
-No file ClassicThesis1-blx.bbl.
-Package biblatex Info: Reference section=0 on input line 58.
-Package biblatex Info: Reference segment=0 on input line 58.
+(./ClassicThesis.bbl)
+Package biblatex Info: Reference section=0 on input line 60.
+Package biblatex Info: Reference segment=0 on input line 60.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count374
-Package scrhack Info: undefining \float@addtolists on input line 58.
-Package hyperref Info: Link coloring ON on input line 58.
-(/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
+\c@lstlisting=\count368
+Package scrhack Info: undefining \float@addtolists on input line 60.
+Package hyperref Info: Link coloring ON on input line 60.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
-(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
-Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count375
+\c@section@level=\count369
 )
-LaTeX Info: Redefining \ref on input line 58.
-LaTeX Info: Redefining \pageref on input line 58.
-LaTeX Info: Redefining \nameref on input line 58.
+LaTeX Info: Redefining \ref on input line 60.
+LaTeX Info: Redefining \pageref on input line 60.
+LaTeX Info: Redefining \nameref on input line 60.
 
 (./ClassicThesis.out) (./ClassicThesis.out)
 \@outlinefile=\write5
 \openout5 = `ClassicThesis.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 58.
+LaTeX Info: Redefining \microtypecontext on input line 60.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -2021,47 +1940,47 @@ Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-ppl.cfg
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
 ABD: EveryShipout initializing macros
-<couverture/1ere.pdf, id=204, 597.23125pt x 845.1575pt>
+<couverture/1ere.pdf, id=224, 597.23125pt x 845.1575pt>
 File: couverture/1ere.pdf Graphic file (type pdf)
 
 <use couverture/1ere.pdf>
-Package pdftex.def Info: couverture/1ere.pdf used on input line 70.
+Package pdftex.def Info: couverture/1ere.pdf used on input line 74.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: couverture/1ere.pdf Graphic file (type pdf)
  <use couverture/1ere.pdf>
-Package pdftex.def Info: couverture/1ere.pdf used on input line 70.
+Package pdftex.def Info: couverture/1ere.pdf used on input line 74.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
-<couverture/1ere.pdf, id=207, page=1, 597.23125pt x 845.1575pt>
+<couverture/1ere.pdf, id=227, page=1, 597.23125pt x 845.1575pt>
 File: couverture/1ere.pdf Graphic file (type pdf)
 
 <use couverture/1ere.pdf, page 1>
-Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 70.
+Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 74.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: couverture/1ere.pdf Graphic file (type pdf)
  <use couverture/1ere.pdf, page 1>
-Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 70.
+Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 74.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: couverture/1ere.pdf Graphic file (type pdf)
 
 <use couverture/1ere.pdf, page 1>
-Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 70.
+Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 74.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: couverture/1ere.pdf Graphic file (type pdf)
  <use couverture/1ere.pdf, page 1>
-Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 70.
+Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 74.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 70.
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 74.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/bera/t1fvm.fd
+(/usr/share/texlive/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 7.65005pt on input line 70.
+(Font)              scaled to size 7.65005pt on input line 74.
 Package microtype Info: Loading generic settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -2069,21 +1988,19 @@ Package microtype Info: Loading generic settings for font family
 File: couverture/1ere.pdf Graphic file (type pdf)
 
 <use couverture/1ere.pdf, page 1>
-Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 70.
+Package pdftex.def Info: couverture/1ere.pdf, page1 used on input line 74.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
  [1
 
-{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./couve
-rture/1ere.pdf>]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./couverture/1ere.pdf>]
 \openout2 = `FrontBackmatter/Titlepage.aux'.
 
-
-(./FrontBackmatter/Titlepage.tex [2
+ (./FrontBackmatter/Titlepage.tex [2
 
 
 
 ]
-<img/index.png, id=256, 1559.8275pt x 1053.9375pt>
+<img/index.png, id=276, 1559.8275pt x 1053.9375pt>
 File: img/index.png Graphic file (type png)
  <use img/index.png>
 Package pdftex.def Info: img/index.png used on input line 22.
@@ -2094,7 +2011,7 @@ Package pdftex.def Info: img/index.png used on input line 22.
  (./FrontBackmatter/Titleback.tex
 LaTeX Font Info:    Try loading font information for TS1+pplj on input line 8.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ts1pplj.fd
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pplj.fd
 File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 )
 Overfull \hbox (3.4524pt too wide) in paragraph at lines 7--9
@@ -2118,38 +2035,35 @@ e reio-ni-za-tion, \T1/pplj/m/n/10.95 Ap-pli-ca-tion au groupe
 
 
 ]
-\openout2 = `FrontBackmatter/Foreword.aux'.
-
-
-No file FrontBackmatter/Foreword.tex.
 \openout2 = `FrontBackmatter/Abstract.aux'.
 
-(./FrontBackmatter/Abstract.tex)
-LaTeX Font Info:    Try loading font information for U+zeur on input line 77.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/eulervm/uzeur.fd
+(./FrontBackmatter/Abstract.tex)
+LaTeX Font Info:    Try loading font information for U+zeur on input line 81.
+
+(/usr/share/texlive/texmf-dist/tex/latex/eulervm/uzeur.fd
 File: uzeur.fd 2005/01/11 v4.0 (WaS)
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-eur.cfg
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-eur.cfg
 File: mt-eur.cfg 2006/07/31 v1.1 microtype config. file: AMS Euler Roman (RS)
 )
-LaTeX Font Info:    Try loading font information for U+zeus on input line 77.
+LaTeX Font Info:    Try loading font information for U+zeus on input line 81.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/eulervm/uzeus.fd
+(/usr/share/texlive/texmf-dist/tex/latex/eulervm/uzeus.fd
 File: uzeus.fd 2005/01/11 v4.0 (WaS)
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-eus.cfg
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-eus.cfg
 File: mt-eus.cfg 2006/07/28 v1.2 microtype config. file: AMS Euler Script (RS)
 )
-LaTeX Font Info:    Try loading font information for U+zeuex on input line 77.
+LaTeX Font Info:    Try loading font information for U+zeuex on input line 81.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/eulervm/uzeuex.fd
+(/usr/share/texlive/texmf-dist/tex/latex/eulervm/uzeuex.fd
 File: uzeuex.fd 2005/01/11 v4.0 (WaS)
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 77.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 81.
 
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 Package microtype Info: Loading generic settings for font family
@@ -2158,77 +2072,29 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
  [7
 
-
-
-
-
 pdfTeX warning (ext4): destination with the same identifier (name{Abstract.1}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.77 ...ublepage\include{FrontBackmatter/Abstract}
+l.81 ...ublepage\include{FrontBackmatter/Abstract}
                                                   ] [8
-
-
-
-]
-\openout2 = `FrontBackmatter/Publications.aux'.
-
-
-(./FrontBackmatter/Publications.tex
-\blx@maxsegment@1=\count376
-\blx@sectionciteorder@1=\count377
-Package biblatex Info: Reference section=1 on input line 10.
-\openout4 = `ClassicThesis1-blx.aux'.
-
-Package biblatex Info: Setting label 'refsection:1' on input line 10.
-
-
-LaTeX Warning: Empty bibliography on input line 13.
-
-Package biblatex Info: Reference section=0 on input line 14.
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 9.30756pt on input line 16.
-)
-Overfull \hbox (8.56828pt too wide) in paragraph at lines 16--78
-[]\T1/pplj/m/it/10.95 Attention \T1/pplj/m/n/10.95 : This re-quires a se-pa-rat
-e run of \T1/fvm/m/n/10.95 bibtex \T1/pplj/m/n/10.95 for your \T1/fvm/m/n/10.95
- refsection\T1/pplj/m/n/10.95 ,
- []
-
-[9
-
-
-
-] [10
 
 
 
 ]
 \openout2 = `FrontBackmatter/Acknowledgments.aux'.
 
- (./FrontBackmatter/Acknowledgments.tex
-LaTeX Font Info:    Font shape `T1/pplj/m/sl' in size <10.95> not available
-(Font)              Font shape `T1/pplj/m/it' tried instead on input line 6.
 
-
-LaTeX Warning: Citation 'knuth:1974' on page 11 undefined on input line 11.
-
-LaTeX Font Info:    Font shape `T1/pplj/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/pplj/b/n' tried instead on input line 11.
-
-LaTeX Warning: Citation 'knuth:1974' on page 11 undefined on input line 11.
-
-
+(./FrontBackmatter/Acknowledgments.tex
 Overfull \hbox (2.90268pt too wide) in paragraph at lines 27--37
 []\T1/pplj/m/n/10.95 Regarding the ty-po-gra-phy and other help, many thanks go
  to Marco
  []
 
-) [11
+) [9
 
-] [12
+] [10
 
 
 
@@ -2242,7 +2108,11 @@ Package tocbasic Info: character protrusion at toc deactivated on input line 11
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10.95'.
 (microtype)             Ignoring protrusion settings for this character.
-)
+ [11
+
+
+
+])
 \tf@toc=\write6
 \openout6 = `ClassicThesis.toc'.
 
@@ -2251,16 +2121,22 @@ Package microtype Info: Character `029' is missing
 1: chapter
 1: chapter
 1: section
-[13
-
-
-
-]
+[12]
 Package tocbasic Info: character protrusion at lof deactivated on input line 31
 .
  (./ClassicThesis.lof
-Overfull \hbox (19.24057pt too wide) in paragraph at lines 15--15
+Overfull \hbox (19.24057pt too wide) in paragraph at lines 17--17
  [][] []\T1/pplj/m/n/10.95 Hubble Ul-tra Deep Field 2014. Image NASA []  
+ []
+
+
+Overfull \hbox (1.08089pt too wide) in paragraph at lines 23--23
+ \T1/pplj/m/n/10.95 uni-ver-sité de Mont-réal Image Wi-ki-pé-dia []  
+ []
+
+
+Overfull \hbox (19.06535pt too wide) in paragraph at lines 29--29
+ \T1/pplj/m/n/10.95 tant un tun-nel gun pe-ter-son. Image fan et al. []  
  []
 
 )
@@ -2277,19 +2153,13 @@ Package tocbasic Info: character protrusion at lot deactivated on input line 42
 \tf@lol=\write9
 \openout9 = `ClassicThesis.lol'.
 
-) [14
+) [13
 
-]
-\openout2 = `Chapters/Chapter00.aux'.
-
-
-No file Chapters/Chapter00.tex.
-[1
+] [14
 
 
 
-
-
+] [1
 
 
 
@@ -2297,97 +2167,116 @@ No file Chapters/Chapter00.tex.
 ] [2]
 \openout2 = `Chapters/Chapter01.aux'.
 
- (./Chapters/Chapter01.tex
+
+(./Chapters/Chapter01.tex
 chapter 1.
-<img/01/hudf.jpeg, id=383, 1284.8pt x 1173.38374pt>
-File: img/01/hudf.jpeg Graphic file (type jpg)
- <use img/01/hudf.jpeg>
-Package pdftex.def Info: img/01/hudf.jpeg used on input line 39.
-(pdftex.def)             Requested size: 319.19897pt x 291.51897pt.
+<img/01/hubble_law.jpg, id=415, 308.352pt x 260.6538pt>
+File: img/01/hubble_law.jpg Graphic file (type jpg)
+
+<use img/01/hubble_law.jpg>
+Package pdftex.def Info: img/01/hubble_law.jpg used on input line 40.
+(pdftex.def)             Requested size: 319.19897pt x 269.82864pt.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
+
+<img/01/hudf.jpeg, id=416, 1284.8pt x 1173.38374pt>
+File: img/01/hudf.jpeg Graphic file (type jpg)
+ <use img/01/hudf.jpeg>
+Package pdftex.def Info: img/01/hudf.jpeg used on input line 53.
+(pdftex.def)             Requested size: 319.19897pt x 291.51897pt.
 
 [3
 
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 56--60
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
 
  []
 
-<img/01/Cmbr.pdf, id=392, 481.8pt x 385.44pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 75--76
+
+ []
+
+<img/01/Cmbr.pdf, id=427, 481.8pt x 385.44pt>
 File: img/01/Cmbr.pdf Graphic file (type pdf)
  <use img/01/Cmbr.pdf>
-Package pdftex.def Info: img/01/Cmbr.pdf used on input line 64.
+Package pdftex.def Info: img/01/Cmbr.pdf used on input line 85.
 (pdftex.def)             Requested size: 319.19897pt x 255.36748pt.
 
-<img/01/CMB.jpeg, id=393, 1927.2pt x 963.6pt>
+<img/01/CMB.jpeg, id=429, 1927.2pt x 963.6pt>
 File: img/01/CMB.jpeg Graphic file (type jpg)
  <use img/01/CMB.jpeg>
-Package pdftex.def Info: img/01/CMB.jpeg used on input line 71.
+Package pdftex.def Info: img/01/CMB.jpeg used on input line 100.
 (pdftex.def)             Requested size: 319.19897pt x 159.58997pt.
+ [4 <./img/01/hubble_law.jpg>]
+<img/01/harmoniques_spheriques.jpeg, id=435, 1027.84pt x 770.88pt>
+File: img/01/harmoniques_spheriques.jpeg Graphic file (type jpg)
 
-<img/01/CMB_power_spectrum.png, id=394, 527.0892pt x 314.1336pt>
+<use img/01/harmoniques_spheriques.jpeg>
+Package pdftex.def Info: img/01/harmoniques_spheriques.jpeg used on input line 
+123.
+(pdftex.def)             Requested size: 319.19897pt x 239.39378pt.
+
+<img/01/CMB_power_spectrum.png, id=437, 527.0892pt x 314.1336pt>
 File: img/01/CMB_power_spectrum.png Graphic file (type png)
 
 <use img/01/CMB_power_spectrum.png>
-Package pdftex.def Info: img/01/CMB_power_spectrum.png used on input line 79.
+Package pdftex.def Info: img/01/CMB_power_spectrum.png used on input line 147.
 (pdftex.def)             Requested size: 319.19897pt x 190.24074pt.
- [4 <./img/01/hudf.jpeg>] [5 <./img/01/Cmbr.pdf> <./img/01/CMB.jpeg>] [6 <./img
-/01/CMB_power_spectrum.png>]) [7]
+ [5 <./img/01/hudf.jpeg>]
+<img/01/table_planck.pdf, id=450, 1040.88875pt x 860.21375pt>
+File: img/01/table_planck.pdf Graphic file (type pdf)
+
+<use img/01/table_planck.pdf>
+Package pdftex.def Info: img/01/table_planck.pdf used on input line 166.
+(pdftex.def)             Requested size: 319.19897pt x 263.78896pt.
+ [6 <./img/01/Cmbr.pdf> <./img/01/CMB.jpeg>]
+[7 <./img/01/harmoniques_spheriques.jpeg>]
+<img/01/quasar_spectre.pdf, id=470, 597.50786pt x 845.04686pt>
+File: img/01/quasar_spectre.pdf Graphic file (type pdf)
+
+<use img/01/quasar_spectre.pdf>
+Package pdftex.def Info: img/01/quasar_spectre.pdf used on input line 214.
+(pdftex.def)             Requested size: 319.19897pt x 451.43155pt.
+) [8 <./img/01/CMB_power_spectrum.png>] [9 <./img/01/table_planck.pdf>] [10 <./
+img/01/quasar_spectre.pdf>]
 \openout2 = `Chapters/Chapter02.aux'.
 
 
-(./Chapters/Chapter02.tex [8
+(./Chapters/Chapter02.tex
+chapter 2.
+
+Overfull \hbox (0.24123pt too wide) in paragraph at lines 43--44
+[]\T1/pplj/m/n/10.95 principes de bases en-noncé dans Pen (1997) and Bert-schin
+-ger (2001). 
+ []
+
+[11
 
 
 
 
 ]
-chapter 2.
+Underfull \hbox (badness 10000) in paragraph at lines 62--68
 
-Overfull \hbox (0.24123pt too wide) in paragraph at lines 40--41
-[]\T1/pplj/m/n/10.95 principes de bases en-noncé dans Pen (1997) and Bert-schin
--ger (2001). 
  []
 
-[9]) [10] [11
+[12]) [13] [14
 
 
 
+] [15
 
 
-] [12]
+] [16]
 \openout2 = `Chapters/Chapter03.aux'.
 
  (./Chapters/Chapter03.tex
 chapter 3.
-) [13
-
-
-
-] [14
-
-
-
-] [15] [16]
-\openout2 = `FrontBackmatter/Bibliography.aux'.
-
- (./FrontBackmatter/Bibliography.tex)
-
-LaTeX Warning: Empty bibliography on input line 12.
-
-\openout2 = `FrontBackmatter/Declaration.aux'.
-
-(./FrontBackmatter/Declaration.tex) [17
-
-
-
-
-
-
+) [17
 
 
 
@@ -2395,155 +2284,168 @@ LaTeX Warning: Empty bibliography on input line 12.
 
 
 
+] [19] [20]
+\openout2 = `FrontBackmatter/Bibliography.aux'.
+
+ (./FrontBackmatter/Bibliography.tex)
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 9.30756pt on input line 12.
+ [21
+
+
+
+
+
+] [22
+
+
+
+]
+\openout2 = `FrontBackmatter/Declaration.aux'.
+
+
+(./FrontBackmatter/Declaration.tex) [23
+
+
+
+] [24
+
+
+
 ]
 \openout2 = `FrontBackmatter/Colophon.aux'.
 
  (./FrontBackmatter/Colophon.tex)
-[19
+[25
 
-] <couverture/4eme.pdf, id=477, 597.23125pt x 845.1575pt>
+] <couverture/4eme.pdf, id=581, 597.23125pt x 845.1575pt>
 File: couverture/4eme.pdf Graphic file (type pdf)
 
 <use couverture/4eme.pdf>
-Package pdftex.def Info: couverture/4eme.pdf used on input line 134.
+Package pdftex.def Info: couverture/4eme.pdf used on input line 138.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: couverture/4eme.pdf Graphic file (type pdf)
  <use couverture/4eme.pdf>
-Package pdftex.def Info: couverture/4eme.pdf used on input line 134.
+Package pdftex.def Info: couverture/4eme.pdf used on input line 138.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
-<couverture/4eme.pdf, id=480, page=1, 597.23125pt x 845.1575pt>
+<couverture/4eme.pdf, id=584, page=1, 597.23125pt x 845.1575pt>
 File: couverture/4eme.pdf Graphic file (type pdf)
 
 <use couverture/4eme.pdf, page 1>
-Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 134.
+Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 138.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: couverture/4eme.pdf Graphic file (type pdf)
  <use couverture/4eme.pdf, page 1>
-Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 134.
+Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 138.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: couverture/4eme.pdf Graphic file (type pdf)
 
 <use couverture/4eme.pdf, page 1>
-Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 134.
+Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 138.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: couverture/4eme.pdf Graphic file (type pdf)
  <use couverture/4eme.pdf, page 1>
-Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 134.
+Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 138.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: couverture/4eme.pdf Graphic file (type pdf)
 
 <use couverture/4eme.pdf, page 1>
-Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 134.
+Package pdftex.def Info: couverture/4eme.pdf, page1 used on input line 138.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
- [20
+ [26
 
  <./couverture/4eme.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 137.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 137.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 141.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 141.
 
 (./ClassicThesis.aux (./FrontBackmatter/Titlepage.aux)
 (./FrontBackmatter/Titleback.aux) (./FrontBackmatter/Dedication.aux)
-(./FrontBackmatter/Foreword.aux) (./FrontBackmatter/Abstract.aux)
-(./FrontBackmatter/Publications.aux) (./FrontBackmatter/Acknowledgments.aux)
-(./FrontBackmatter/Contents.aux) (./Chapters/Chapter00.aux)
-(./Chapters/Chapter01.aux) (./Chapters/Chapter02.aux) (./Chapters/Chapter03.aux
-) (./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Declaration.aux)
+(./FrontBackmatter/Abstract.aux) (./FrontBackmatter/Acknowledgments.aux)
+(./FrontBackmatter/Contents.aux) (./Chapters/Chapter01.aux)
+(./Chapters/Chapter02.aux) (./Chapters/Chapter03.aux)
+(./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Declaration.aux)
 (./FrontBackmatter/Colophon.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 137.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 141.
 
 
  *File List*
   fix-cm.sty    2015/01/14 v1.1t fixes to LaTeX
   ts1enc.def    2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
-scrreprt.cls    2016/05/10 v3.20 KOMA-Script document class (report)
-scrkbase.sty    2016/05/10 v3.20 KOMA-Script package (KOMA-Script-dependent bas
-ics and keyval usage)
- scrbase.sty    2016/05/10 v3.20 KOMA-Script package (KOMA-Script-independent b
-asics and keyval usage)
+scrreprt.cls    2015/10/03 v3.19a KOMA-Script document class (report)
+scrkbase.sty    2015/10/03 v3.19a KOMA-Script package (KOMA-Script-dependent ba
+sics and keyval usage)
+ scrbase.sty    2015/10/03 v3.19a KOMA-Script package (KOMA-Script-independent 
+basics and keyval usage)
   keyval.sty    2014/10/28 v1.15 key=value parser (DPC)
-scrlfile.sty    2016/05/10 v3.20 KOMA-Script package (loading files)
-tocbasic.sty    2016/05/10 v3.20 KOMA-Script package (handling toc-files)
-scrsize11pt.clo    2016/05/10 v3.20 KOMA-Script font size class option (11pt)
-typearea.sty    2016/05/10 v3.20 KOMA-Script package (type area)
+scrlfile.sty    2015/10/03 v3.19a KOMA-Script package (loading files)
+tocbasic.sty    2015/10/03 v3.19a KOMA-Script package (handling toc-files)
+scrsize11pt.clo    2015/10/03 v3.19a KOMA-Script font size class option (11pt)
+typearea.sty    2015/10/03 v3.19a KOMA-Script package (type area)
 classicthesis-config.tex
 inputenc.sty    2015/03/17 v1.2c Input encoding file
-    utf8.def    2016/02/28 v1.1s UTF-8 support for inputenc
-   t1enc.dfu    2016/02/28 v1.1s UTF-8 support for inputenc
-  ot1enc.dfu    2016/02/28 v1.1s UTF-8 support for inputenc
-  omsenc.dfu    2016/02/28 v1.1s UTF-8 support for inputenc
-  ts1enc.dfu    2016/02/28 v1.1s UTF-8 support for inputenc
-  xcolor.sty    2016/05/11 v2.12 LaTeX color extensions (UK)
-   color.cfg    2016/01/02 v1.6 sample color configuration
+    utf8.def    2015/12/03 v1.1r UTF-8 support for inputenc
+   t1enc.dfu    2015/12/03 v1.1r UTF-8 support for inputenc
+  ot1enc.dfu    2015/12/03 v1.1r UTF-8 support for inputenc
+  omsenc.dfu    2015/12/03 v1.1r UTF-8 support for inputenc
+  ts1enc.dfu    2015/12/03 v1.1r UTF-8 support for inputenc
+  xcolor.sty    2007/01/21 v2.11 LaTeX color extensions (UK)
+   color.cfg    2007/01/18 v1.5 color configuration of teTeX/TeXLive
   pdftex.def    2011/05/27 v0.06d Graphics/color for pdfTeX
-infwarerr.sty    2016/05/16 v1.4 Providing info/warning/error messages (HO)
- ltxcmds.sty    2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+infwarerr.sty    2010/04/08 v1.3 Providing info/warning/error messages (HO)
+ ltxcmds.sty    2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 dvipsnam.def    2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
-pdfpages.sty    2016/04/19 v0.5f Insert pages of external PDF documents (AM)
+pdfpages.sty    2015/09/18 v0.5d Insert pages of external PDF documents (AM)
   ifthen.sty    2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
     calc.sty    2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
  eso-pic.sty    2015/07/21 v2.0g eso-pic (RN)
-atbegshi.sty    2016/05/16 v1.17 At begin shipout hook (HO)
-   ifpdf.sty    2016/05/14 v3.1 Provides the ifpdf switch
+atbegshi.sty    2011/10/05 v1.16 At begin shipout hook (HO)
+   ifpdf.sty    2011/01/30 v2.3 Provides the ifpdf switch (HO)
 graphicx.sty    2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
-graphics.sty    2016/05/09 v1.0r Standard LaTeX Graphics (DPC,SPQR)
+graphics.sty    2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
     trig.sty    2016/01/03 v1.10 sin cos tan (DPC)
-graphics.cfg    2016/01/02 v1.10 sample graphics configuration
-pppdftex.def    2016/04/19 v0.5f Pdfpages driver for pdfTeX (AM)
-   babel.sty    2016/04/23 3.9r The Babel package
- frenchb.ldf    2016/05/14 v3.2c French support from the babel system
+graphics.cfg    2010/04/23 v1.9 graphics configuration of TeX Live
+pppdftex.def    2015/09/18 v0.5d Pdfpages driver for pdfTeX (AM)
+   babel.sty    2016/02/24 3.9q The Babel package
+ frenchb.ldf    2016/02/13 v3.1l French support from the babel system
  english.ldf    2012/08/20 v3.3p English support from the babel system
 scalefnt.sty    
 csquotes.sty    2016/01/31 v5.1g context-sensitive quotations (JAW)
 etoolbox.sty    2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
 csquotes.def    2016/01/31 v5.1g csquotes generic definitions (JAW)
 csquotes.cfg    
-biblatex.sty    2016/05/14 v3.4 programmable bibliographies (PK/JW/AB)
-   iftex.sty    2013/04/04 v0.2 Provides if(tex) conditional for PDFTeX, XeTeX,
- and LuaTeX
-pdftexcmds.sty    2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO)
-ifluatex.sty    2016/05/16 v1.4 Provides the ifluatex switch (HO)
-kvoptions.sty    2016/05/16 v3.12 Key value format for package options (HO)
-kvsetkeys.sty    2016/05/16 v1.17 Key value parser (HO)
-etexcmds.sty    2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+biblatex.sty    2016/03/03 v3.3 programmable bibliographies (PK/JW/AB)
+biblatex_legacy.sty    2016/03/03 v3.3 programmable bibliographies (bibtex) (PK
+/JW/AB)
   logreq.sty    2010/08/04 v1.0 xml request logger
   logreq.def    2010/08/04 v1.0 logreq spec v1.0
      url.sty    2013/09/16  ver 3.4  Verb mode for urls, etc.
- xstring.sty    2013/10/13  v1.7c  String manipulations (C Tellechea)
-  blx-dm.def
-numeric-comp.dbx
-biblatex-dm.cfg
-blx-compat.def    2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
-blx-bibtex.def    2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
-biblatex.def    2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
-blx-natbib.def    2016/05/14 v3.4 biblatex compatibility (PK/JW/AB)
-standard.bbx    2016/05/14 v3.4 biblatex bibliography style (PK/JW/AB)
- numeric.bbx    2016/05/14 v3.4 biblatex bibliography style (PK/JW/AB)
-numeric-comp.bbx    2016/05/14 v3.4 biblatex bibliography style (PK/JW/AB)
-numeric-comp.cbx    2016/05/14 v3.4 biblatex citation style (PK/JW/AB)
+blx-compat.def    2016/03/03 v3.3 biblatex compatibility (PK/JW/AB)
+biblatex_legacy.def    
+blx-natbib.def    2016/03/03 v3.3 biblatex compatibility (PK/JW/AB)
+standard.bbx    2016/03/03 v3.3 biblatex bibliography style (PK/JW/AB)
+authoryear.bbx    2016/03/03 v3.3 biblatex bibliography style (PK/JW/AB)
+authoryear-comp.bbx    2016/03/03 v3.3 biblatex bibliography style (PK/JW/AB)
+authoryear-comp.cbx    2016/03/03 v3.3 biblatex citation style (PK/JW/AB)
 biblatex.cfg    
- amsmath.sty    2016/03/10 v2.15b AMS math features
+ amsmath.sty    2016/03/03 v2.15a AMS math features
  amstext.sty    2000/06/29 v2.01 AMS text
   amsgen.sty    1999/11/30 v2.0 generic functions
   amsbsy.sty    1999/11/29 v1.2d Bold Symbols
-  amsopn.sty    2016/03/08 v2.02 operator names
+  amsopn.sty    1999/12/14 v2.01 operator names
  fontenc.sty
    t1enc.def    2005/09/27 v1.99g Standard LaTeX file
 textcomp.sty    2005/09/27 v1.99g Standard LaTeX package
   ts1enc.def    2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
- scrhack.sty    2016/05/10 v3.20 KOMA-Script package 
-  xpatch.sty    2012/10/02 v0.3 Extending etoolbox patching commands
-   expl3.sty    2016/05/18 v6512 L3 programming layer (loader) 
-expl3-code.tex    2016/05/18 v6512 L3 programming layer 
-l3pdfmode.def    2016/03/26 v6465 L3 Experimental driver: PDF mode
-  xparse.sty    2016/05/18 v6512 L3 Experimental document command parser
+ scrhack.sty    2015/10/03 v3.19a KOMA-Script package 
   xspace.sty    2014/10/28 v1.13 Space after command names (DPC,MH)
 mparhack.sty    2005/04/17 v1.4 (T. Sgouros and S. Ulrich)
 fixltx2e.sty    2015/06/22 v2.0b fixes to LaTeX (obsolete)
  acronym.sty    2015/03/21 v1.41 Support for acronyms (Tobias Oetiker)
   suffix.sty    2006/07/15 1.5a Variant command support
+ xstring.sty    2013/10/13  v1.7c  String manipulations (C Tellechea)
  relsize.sty    2013/03/29 ver 4.1
-tabularx.sty    2016/02/03 v2.11 `tabularx' package (DPC)
+tabularx.sty    2014/10/28 v2.10 `tabularx' package (DPC)
    array.sty    2014/10/28 v2.4c Tabular extension package (FMi)
  caption.sty    2016/02/21 v3.3-144 Customizing captions (AR)
 caption3.sty    2016/02/04 v1.7-139 caption3 kernel (AR)
@@ -2551,8 +2453,8 @@ caption3.sty    2016/02/04 v1.7-139 caption3 kernel (AR)
 listings.sty    2015/06/04 1.6 (Carsten Heinz)
  lstmisc.sty    2015/06/04 1.6 (Carsten Heinz)
 listings.cfg    2015/06/04 1.6 listings configuration
-listings.hak    2016/05/10 v3.20 KOMA-Script package (hacking package listings)
-
+listings.hak    2015/10/03 v3.19a KOMA-Script package (hacking package listings
+)
 lstlang1.sty    2015/06/04 1.6 listings language file
 lstlang2.sty    2015/06/04 1.6 listings language file
 lstlang3.sty    2015/06/04 1.6 listings language file
@@ -2563,62 +2465,72 @@ lstlang1.sty    2015/06/04 1.6 listings language file
 lstlang2.sty    2015/06/04 1.6 listings language file
 lstlang3.sty    2015/06/04 1.6 listings language file
  lstmisc.sty    2015/06/04 1.6 (Carsten Heinz)
-hyperref.sty    2016/05/05 v6.83n Hypertext links for LaTeX
-hobsub-hyperref.sty    2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
-hobsub-generic.sty    2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
-  hobsub.sty    2016/05/16 v1.14 Construct package bundles (HO)
-  ifvtex.sty    2016/05/16 v1.6 Detect VTeX and its facilities (HO)
- intcalc.sty    2016/05/16 v1.2 Expandable calculations with integers (HO)
-kvdefinekeys.sty    2016/05/16 v1.4 Define keys (HO)
-pdfescape.sty    2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
-bigintcalc.sty    2016/05/16 v1.4 Expandable calculations on big integers (HO)
-  bitset.sty    2016/05/16 v1.2 Handle bit-vector datatype (HO)
-uniquecounter.sty    2016/05/16 v1.3 Provide unlimited unique counter (HO)
-letltxmacro.sty    2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
- hopatch.sty    2016/05/16 v1.3 Wrapper for package hooks (HO)
-xcolor-patch.sty    2016/05/16 xcolor patch
-atveryend.sty    2016/05/16 v1.9 Hooks at the very end of document (HO)
-refcount.sty    2016/05/16 v3.5 Data extraction from label references (HO)
- hycolor.sty    2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+hyperref.sty    2012/11/06 v6.83m Hypertext links for LaTeX
+hobsub-hyperref.sty    2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+hobsub-generic.sty    2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+  hobsub.sty    2012/05/28 v1.13 Construct package bundles (HO)
+ifluatex.sty    2010/03/01 v1.3 Provides the ifluatex switch (HO)
+  ifvtex.sty    2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+ intcalc.sty    2007/09/27 v1.1 Expandable calculations with integers (HO)
+etexcmds.sty    2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+kvsetkeys.sty    2012/04/25 v1.16 Key value parser (HO)
+kvdefinekeys.sty    2011/04/07 v1.3 Define keys (HO)
+pdftexcmds.sty    2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO)
+pdfescape.sty    2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+bigintcalc.sty    2012/04/08 v1.3 Expandable calculations on big integers (HO)
+  bitset.sty    2011/01/30 v1.1 Handle bit-vector datatype (HO)
+uniquecounter.sty    2011/01/30 v1.2 Provide unlimited unique counter (HO)
+letltxmacro.sty    2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+ hopatch.sty    2012/05/28 v1.2 Wrapper for package hooks (HO)
+xcolor-patch.sty    2011/01/30 xcolor patch
+atveryend.sty    2011/06/30 v1.8 Hooks at the very end of document (HO)
+refcount.sty    2011/10/16 v3.4 Data extraction from label references (HO)
+ hycolor.sty    2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
  ifxetex.sty    2010/09/12 v0.6 Provides ifxetex conditional
- auxhook.sty    2016/05/16 v1.4 Hooks for auxiliary files (HO)
-  pd1enc.def    2016/05/05 v6.83n Hyperref: PDFDocEncoding definition (HO)
+ auxhook.sty    2011/03/04 v1.3 Hooks for auxiliary files (HO)
+kvoptions.sty    2011/06/30 v3.11 Key value format for package options (HO)
+  pd1enc.def    2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 hyperref.cfg    2002/06/06 v1.2 hyperref configuration of TeXLive
- hpdftex.def    2016/05/05 v6.83n Hyperref driver for pdfTeX
-rerunfilecheck.sty    2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+ hpdftex.def    2012/11/06 v6.83m Hyperref driver for pdfTeX
+rerunfilecheck.sty    2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 classicthesis.sty    2015/09/06 v4.2 Typographic style for a classic-looking th
 esis
 mathpazo.sty    2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
 beramono.sty    2004/01/31 (WaS)
  eulervm.sty    2005/01/11 v4.0 (WaS)
-microtype.sty    2016/05/14 v2.6a Micro-typographical refinements (RS)
-microtype-pdftex.def    2016/05/14 v2.6a Definitions specific to pdftex (RS)
-microtype.cfg    2016/05/14 v2.6a microtype main configuration file (RS)
-booktabs.sty    2016/04/27 v1.618033 publication quality tables
+microtype.sty    2013/05/23 v2.5a Micro-typographical refinements (RS)
+microtype-pdftex.def    2013/05/23 v2.5a Definitions specific to pdftex (RS)
+microtype.cfg    2013/05/23 v2.5a microtype main configuration file (RS)
+booktabs.sty    2005/04/14 v1.61803 publication quality tables
 textcase.sty    2004/10/07 v0.07 Text only upper/lower case changing (DPC)
-scrlayer-scrpage.sty    2016/05/10 v3.20 KOMA-Script package (end user interfac
-e for scrlayer)
-scrlayer.sty    2016/05/10 v3.20 KOMA-Script package (defining layers and page 
-styles)
-titlesec.sty    2016/03/21 v2.10.2 Sectioning titles
+scrlayer-scrpage.sty    2015/10/03 v3.19a KOMA-Script package (end user interfa
+ce for scrlayer)
+scrlayer.sty    2015/10/03 v3.19a KOMA-Script package (defining layers and page
+ styles)
+titlesec.sty    2016/03/15 v2.10.1 Sectioning titles
  tocloft.sty    2013/05/02 v2.3f parameterised ToC, etc., typesetting
- scrtime.sty    2016/05/10 v3.20 KOMA-Script package (time of LaTeX run)
+ scrtime.sty    2015/10/03 v3.19a KOMA-Script package (time of LaTeX run)
 prelim2e.sty    2009/05/29 v1.3 prelim2e Package (MS)
 everyshi.sty    2001/05/15 v3.00 EveryShipout Package (MS)
 remreset.sty    
- english.lbx    2016/05/14 v3.4 biblatex localization (PK/JW/AB)
- frenchb.lbx
-  french.lbx    2016/05/14 v3.4 biblatex localization (PK/JW/AB)
+ english.lbx    2016/03/03 v3.3 biblatex localization (PK/JW/AB)
+  french.lbx    2016/03/03 v3.3 biblatex localization (PK/JW/AB)
   t1pplj.fd    2004/09/06 font definitions for T1/pplj.
 supp-pdf.mkii
-epstopdf-base.sty    2016/05/15 v2.6 Base part for package epstopdf
-  grfext.sty    2016/05/16 v1.2 Manage graphics extensions (HO)
+epstopdf-base.sty    2010/02/09 v2.5 Base part for package epstopdf
+  grfext.sty    2010/08/19 v1.1 Manage graphics extensions (HO)
 epstopdf-sys.cfg    2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-pdflscape.sty    2016/05/14 v0.11 Display of landscape pages in PDF (HO)
+pdflscape.sty    2008/08/11 v0.10 Display of landscape pages in PDF (HO)
   lscape.sty    2000/10/22 v3.01 Landscape Pages (DPC)
-  lscape.hak    2016/05/10 v3.20 KOMA-Script package (hacking package lscape)
+  lscape.hak    2015/10/03 v3.19a KOMA-Script package (hacking package lscape)
+  xpatch.sty    2012/10/02 v0.3 Extending etoolbox patching commands
+   expl3.sty    2016/01/19 v6377 L3 programming layer (loader) 
+expl3-code.tex    2016/01/19 v6377 L3 programming layer 
+l3pdfmode.def    2015/11/11 v6250 L3 Experimental driver: PDF mode
+  xparse.sty    2016/01/19 v6377 L3 Experimental document command parser
+ClassicThesis.bbl
  nameref.sty    2012/10/27 v2.43 Cross-referencing by name of section
-gettitlestring.sty    2016/05/16 v1.5 Cleanup title references (HO)
+gettitlestring.sty    2010/12/03 v1.4 Cleanup title references (HO)
 ClassicThesis.out
 ClassicThesis.out
   mt-ppl.cfg    2005/11/16 v1.6 microtype config. file: Palatino (RS)
@@ -2639,14 +2551,17 @@ FrontBackmatter/Abstract.tex
   mt-eus.cfg    2006/07/28 v1.2 microtype config. file: AMS Euler Script (RS)
   uzeuex.fd    2005/01/11 v4.0 (WaS)
  ot1zplm.fd    2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
-FrontBackmatter/Publications.tex
 FrontBackmatter/Acknowledgments.tex
 FrontBackmatter/Contents.tex
 Chapters/Chapter01.tex
+img/01/hubble_law.jpg
 img/01/hudf.jpeg
 img/01/Cmbr.pdf
 img/01/CMB.jpeg
+img/01/harmoniques_spheriques.jpeg
 img/01/CMB_power_spectrum.png
+img/01/table_planck.pdf
+img/01/quasar_spectre.pdf
 Chapters/Chapter02.tex
 Chapters/Chapter03.tex
 FrontBackmatter/Bibliography.tex
@@ -2658,46 +2573,39 @@ couverture/4eme.pdf
 couverture/4eme.pdf
  ***********
 
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 137.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 141.
 Package rerunfilecheck Info: File `ClassicThesis.out' has not changed.
-(rerunfilecheck)             Checksum: 88F5CB86C2F0A5C47690D593D087CA1B;3393.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-
-Package biblatex Warning: Please (re)run BibTeX on the file(s):
-(biblatex)                ClassicThesis1-blx
-(biblatex)                ClassicThesis
-(biblatex)                and rerun LaTeX afterwards.
-
+(rerunfilecheck)             Checksum: 31B08DDB8C2A6AA1957B1F25F7E8562B;3799.
 Package logreq Info: Writing requests to 'ClassicThesis.run.xml'.
 \openout1 = `ClassicThesis.run.xml'.
 
- ) 
+ )
+(\end occurred when \iftrue on line 60 was incomplete) 
 Here is how much of TeX's memory you used:
- 32581 strings out of 493014
- 596085 string characters out of 6133350
- 1010957 words of memory out of 5000000
- 35407 multiletter control sequences out of 15000+600000
- 78865 words of font info for 106 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 69i,23n,98p,10515b,2737s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/amsfonts/euler/eurb10.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/fpl/fplbj8a.pfb></usr/local/texlive
-/2016/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/fpl/fplrij8a.pfb></usr/local/texlive/2016/texmf-dis
-t/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/
-type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/u
-rw/palatino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/pala
-tino/uplri8a.pfb>
-Output written on ClassicThesis.pdf (34 pages, 7647639 bytes).
+ 31275 strings out of 494883
+ 561935 string characters out of 6178694
+ 889757 words of memory out of 5000000
+ 33851 multiletter control sequences out of 15000+600000
+ 80359 words of font info for 125 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 68i,23n,96p,10485b,2733s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf
+-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/euler/euex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/euler/eufm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/euler/eufm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/eul
+er/eurb10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/euler/
+eurm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/euler/eur
+m7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/fpl/fplrij8a.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+urw/palatino/uplri8a.pfb>
+Output written on ClassicThesis.pdf (40 pages, 8630976 bytes).
 PDF statistics:
- 565 PDF objects out of 1000 (max. 8388607)
- 482 compressed objects within 5 object streams
- 108 named destinations out of 1000 (max. 500000)
- 17362 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 688 PDF objects out of 1000 (max. 8388607)
+ 584 compressed objects within 6 object streams
+ 129 named destinations out of 1000 (max. 500000)
+ 16398 words of extra memory for PDF output out of 17280 (max. 10000000)
 

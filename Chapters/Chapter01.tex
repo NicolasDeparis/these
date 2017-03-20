@@ -1,4 +1,4 @@
-\chapter{Introduction au modèle physique }\label{ch:introduction}
+\chapter{Introduction au modèle physique }\label{ch:introduction_physique}
 
 \section{Les piliers}
 
@@ -35,11 +35,25 @@ C'est celui vers lequel j'ai choisis de me diriger.
 découverte des galaxies\\
 découverte de l'expansion de l'univers
 
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/01/hubble_law.jpg} 
+        \caption{Hubble law. 
+%http://www.pnas.org/content/112/11/3173/F2.expansion.html
+        Image ESO}
+ 		\label{fig:hubble_law}
+\end{figure}
+
+\begin{equation}
+V = H_0 D
+\end{equation}
+
+
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/hudf.jpeg} 
         \caption{Hubble Ultra Deep Field 2014. 
         Image NASA}
- 		\label{fig:cmb}
+ 		\label{fig:hubbl_deep_field}
 \end{figure}
 
 \section{théorie - lCDM}
@@ -51,21 +65,36 @@ le CMB\\
 la reionization
 
 
-\section{observation -> le CMB}
+\section{Le CMB}
 
+
+\subsection{Observations}
 Penzias et Willson\\
-Corps noir parfait\\
-surface de dernière diffusion\\
-spectre de puissance\\
 
+\subsection{Théorie}
+surface de dernière diffusion\\
+
+
+\subsection{Température}
+Le cosmic Microwawe background se presente sous la forme du corp noir le plus parfait connus.
+Fig. \ref{fig:cmb_thermal_spectrum}
+T=2.73K
 
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/Cmbr.pdf} 
         \caption{Spectre thermique du CMB vue par le satellite Cosmic Background Explorer (COBE). 
         Image Wikipédia}
- 		\label{fig:cmb}
+ 		\label{fig:cmb_thermal_spectrum}
 \end{figure}
+
+
+
+
+\subsection{Spectre de puissance}
+
+Le CMB n'est pas uniforme, il presente de tres faibles fluctuations (1e-5)qui nous renseigne sur l'etat de l'univers au moment de son emission.
+Fig. \ref{fig:cmb_power_spectrum}
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/CMB.jpeg} 
@@ -75,20 +104,71 @@ spectre de puissance\\
 \end{figure}
 
 
+En decomposant ces fluctuations en harmoniques sphériques:
+Fig\,\ref{fig:harmoniques_spheriques}
+
+decomposition en multipoles
+%https://www.physicsforums.com/threads/can-someone-explain-angular-power-spectrum.309483/
+\begin{equation}
+ \frac{\Delta T(\theta,\phi)}{T} = \sum_{l>0} \sum_{m=-l}^l a_{lm} Y(\theta,\phi)_{lm}
+\end{equation}
+
+avec : 
+
+\begin{equation}
+a_{lm}= \int d\Omega(\theta,\phi) \Delta T (\theta,\phi) Y(\theta,\phi)_{lm}
+\end{equation}
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/01/harmoniques_spheriques.jpeg} 
+        \caption{
+        représentation des $Y(\theta,\phi)_{lm}$
+ Pierre Brassard, université de Montréal 
+%Spectre thermique du CMB vue par le satellite Cosmic Background Explorer (COBE). 
+        Image Wikipédia}
+ 		\label{fig:harmoniques_spheriques}
+\end{figure}
+
+
+\begin{equation}
+C_l = \frac{1}{2l+1} \sum_{m=-l}^l a_{lm} a_{lm}^*
+\end{equation}
+
+
+Et finalement, on obtient le spectre de puissance:
+
+\begin{equation}
+D_l = \frac{l (l+1) C_l }{2 \pi} 
+\end{equation}
+
+représenté Fig.\,\ref{fig:cmb_power_spectrum}
+
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/CMB_power_spectrum.png} 
         \caption{Spectre de puissance des fluctuation du CMB.
         Image ESA}
- 		\label{fig:cmb}
+ 		\label{fig:cmb_power_spectrum}
 \end{figure}
 
 
-\section{Théorie-> le CMB et le contenu de l'univers}
+\section{Le contenu de l'univers - (Théorie)}
 
 Pour simuler l'univers, on a besoin de savoir ce qu'il contient. 
 A partir du spectre de puissance, on peut déterminer les différentes composantes de l'univers (paramètres cosmologique).
 
 univers infini, homogène, isotrope
+
+
+%https://ned.ipac.caltech.edu/level5/Freedman2/Freed6.html
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/01/table_planck.pdf} 
+        \caption{Determination des parametres cosmologiques par la colaboration Planck.}
+ 		\label{fig:planck_parameters}
+\end{figure}
+
+\citep{planck_collaboration_planck_2016}
 
 \subsection{Energie noire}
 
@@ -128,7 +208,15 @@ les futures observations
 
 Quelles sont les preuves de la réionisation?
 
-spectre de quasar
+spectre de quasar\\
+tunnel gun peterson
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/01/quasar_spectre.pdf} 
+        \caption{Spectre de quasar a differents redshift presentant un tunnel gun peterson.
+        Image fan et al.}
+ 		\label{fig:spectre_quasar}
+\end{figure}
+
 
 polarisation du CMB
 
