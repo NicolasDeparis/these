@@ -10,76 +10,80 @@
 \defcounter {refsection}{0}\relax 
 \select@language {french}
 \defcounter {refsection}{0}\relax 
-\contentsline {part}{\numberline {i}\spacedlowsmallcaps {Introduction}}{3}{part.1}
+\contentsline {part}{\numberline {i}\spacedlowsmallcaps {Contexte}}{1}{part.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {1}\spacedlowsmallcaps {Introduction au mod\IeC {\`e}le physique }}{5}{chapter.1}
+\contentsline {chapter}{\numberline {1}\spacedlowsmallcaps {Introduction au mod\IeC {\`e}le physique }}{3}{chapter.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.1}observation -> Hubble}{5}{section.1.1}
+\contentsline {section}{\numberline {1.1}Les piliers}{3}{section.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.2}th\IeC {\'e}orie - lCDM}{5}{section.1.2}
+\contentsline {section}{\numberline {1.2}observation -> Hubble}{3}{section.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.3}observation -> le CMB}{5}{section.1.3}
+\contentsline {section}{\numberline {1.3}th\IeC {\'e}orie - lCDM}{4}{section.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.4}Th\IeC {\'e}orie-> le CMB et le contenu de l'univers}{5}{section.1.4}
+\contentsline {section}{\numberline {1.4}observation -> le CMB}{4}{section.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.1}Energie noire}{5}{subsection.1.4.1}
+\contentsline {section}{\numberline {1.5}Th\IeC {\'e}orie-> le CMB et le contenu de l'univers}{4}{section.1.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.2}Mati\IeC {\`e}re noire}{6}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.5.1}Energie noire}{5}{subsection.1.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.3}Baryon}{6}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {1.5.2}Mati\IeC {\`e}re noire}{5}{subsection.1.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.4}Radiation}{6}{subsection.1.4.4}
+\contentsline {subsection}{\numberline {1.5.3}Baryon}{6}{subsection.1.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.5}bilan}{6}{subsection.1.4.5}
+\contentsline {subsection}{\numberline {1.5.4}Radiation}{6}{subsection.1.5.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.5}Observation -> la reionization}{6}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.5}bilan}{6}{subsection.1.5.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.6}Th\IeC {\'e}orie -> La reionization}{6}{section.1.6}
+\contentsline {section}{\numberline {1.6}Observation -> la reionization}{6}{section.1.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.6.1}les principales question en suspend de l'\IeC {\'e}tude de la r\IeC {\'e}ionisation}{6}{subsection.1.6.1}
+\contentsline {section}{\numberline {1.7}Th\IeC {\'e}orie -> La reionization}{7}{section.1.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {2}\spacedlowsmallcaps {Introduction au mod\IeC {\`e}le num\IeC {\'e}rique}}{7}{chapter.2}
+\contentsline {subsection}{\numberline {1.7.1}les principales question en suspend de l'\IeC {\'e}tude de la r\IeC {\'e}ionisation}{7}{subsection.1.7.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.1}Les diff\IeC {\'e}rents types de codes}{7}{section.2.1}
+\contentsline {chapter}{\numberline {2}\spacedlowsmallcaps {Introduction au mod\IeC {\`e}le num\IeC {\'e}rique}}{9}{chapter.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.2}Gestion de la grille}{7}{section.2.2}
+\contentsline {section}{\numberline {2.1}Les diff\IeC {\'e}rents types de codes}{9}{section.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.3}Syst\IeC {\`e}me d'unit\IeC {\'e}s supercomobiles}{7}{section.2.3}
+\contentsline {section}{\numberline {2.2}Gestion de la grille}{9}{section.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.4}g\IeC {\'e}n\IeC {\'e}ration des conditions initiales}{7}{section.2.4}
+\contentsline {section}{\numberline {2.3}Syst\IeC {\`e}me d'unit\IeC {\'e}s supercomobiles}{9}{section.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.5}approximation de zeldovich}{7}{section.2.5}
+\contentsline {section}{\numberline {2.4}g\IeC {\'e}n\IeC {\'e}ration des conditions initiales}{9}{section.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.6}l'\IeC {\'e}quation de Poisson}{7}{section.2.6}
+\contentsline {section}{\numberline {2.5}Th\IeC {\'e}orie des perturbation lin\IeC {\'e}aire}{9}{section.2.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.7}Baryon}{8}{section.2.7}
+\contentsline {section}{\numberline {2.6}solveur de gravit\IeC {\'e}}{10}{section.2.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.8}La chimie}{8}{section.2.8}
+\contentsline {section}{\numberline {2.7}Baryon}{10}{section.2.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.9}radiation}{8}{section.2.9}
+\contentsline {section}{\numberline {2.8}La chimie}{10}{section.2.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.10}gestion du pas de temps}{8}{section.2.10}
+\contentsline {section}{\numberline {2.9}radiation}{10}{section.2.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.11}Mat\IeC {\'e}riel et parall\IeC {\'e}lisme}{8}{section.2.11}
+\contentsline {section}{\numberline {2.10}gestion du pas de temps}{10}{section.2.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.12}Les machines utilis\IeC {\'e}es}{8}{section.2.12}
+\contentsline {section}{\numberline {2.11}Mat\IeC {\'e}riel et parall\IeC {\'e}lisme}{10}{section.2.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.13}Gestion des entr\IeC {\'e}es sortie}{8}{section.2.13}
+\contentsline {section}{\numberline {2.12}Les machines utilis\IeC {\'e}es}{10}{section.2.12}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.14}Potentiel d'optimisation EMMA}{8}{section.2.14}
+\contentsline {section}{\numberline {2.13}Gestion des entr\IeC {\'e}es sortie}{10}{section.2.13}
 \defcounter {refsection}{0}\relax 
-\contentsline {part}{\numberline {ii}\spacedlowsmallcaps {The Showcase}}{9}{part.2}
+\contentsline {section}{\numberline {2.14}Potentiel d'optimisation EMMA}{10}{section.2.14}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {3}\spacedlowsmallcaps {Les etoiles}}{11}{chapter.3}
+\contentsline {part}{\numberline {ii}\spacedlowsmallcaps {Les \IeC {\'e}toiles}}{11}{part.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.1}La formation stellaire}{11}{section.3.1}
+\contentsline {chapter}{\numberline {3}\spacedlowsmallcaps {Les etoiles}}{13}{chapter.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.2}La vie radiative}{11}{section.3.2}
+\contentsline {section}{\numberline {3.1}La formation stellaire}{13}{section.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.3}le probl\IeC {\`e}me de la masse des \IeC {\'e}toiles}{11}{section.3.3}
+\contentsline {section}{\numberline {3.2}La vie radiative}{13}{section.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.4}Les supernovae}{11}{section.3.4}
+\contentsline {section}{\numberline {3.3}le probl\IeC {\`e}me de la masse des \IeC {\'e}toiles}{13}{section.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.4}Les supernovae}{13}{section.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{\numberline {iii}\spacedlowsmallcaps {Les cartes de reionizations}}{15}{part.3}
 \defcounter {refsection}{0}\relax 
 \vspace {\beforebibskip }
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliographie}}{13}{dummy.7}
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliographie}}{17}{dummy.7}
