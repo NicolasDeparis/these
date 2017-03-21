@@ -1,12 +1,51 @@
 \chapter{Introduction au modèle numérique}\label{ch:introduction}
 
-Les echelles de temps sont radicalement opposées entre la cosmo qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle. il faut considérer les simulations comme éphémère.
+Les echelles de temps sont radicalement opposées entre la cosmo qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle. 
+il faut considérer les simulations comme éphémère.
 
 Comment modéliser la reionization?
 
+\section{Les différents types de fluides cosmologique}
+
+Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles, la radiation ou le champ magnétique.
+Ces fluides sont de nature différentes et il n'y a pas de méthode permettant de suivre de manière optimale ces différentes physique.
+On distinguera principalement deux catégories de fluides: les fluides collisionnels et les non-collisionnels.
+
+\paragraph{Physique collisionnelle : } elle concerne principalement le gas.
+
+\paragraph{Physique non-collisionnelle : } elle concerne principalement la matière noire ou les étoiles.
+
+
+
 \section{Les différents types de codes}
 
-( introduction au différentes représentations (particules/grille) nécessaire pour la suite )
+Il existe conceptuellement deux principales façons de suivre un fluide dans l'espace.
+Ces deux approches sont dites \emph{Eulérienne} ou \emph{Lagrangienne}.
+
+\paragraph{Representation Lagrangienne : } 
+consiste a se placer au point de vue du fluide.
+On considère un élément de fluide pouvant se déplacer et/ou se dilater dans l'espace.
+On associera généralement les codes utilisant ce type de représentation avec une gestion de la physique sous forme de \emph{particules}.
+
+\paragraph{Representation Eulerrienne : } 
+consiste a se placer au point de vue de l'espace.
+On considère un élément d'espace et le bilan de matière entrant et sortant de chacune de ses interfaces.
+On associera généralement les codes utilisant ce type de représentation avec une gestion de la physique sous forme de \emph{grille}.
+
+EMMA utilise une représentation Lagrangienne pour simuler la matière noire et une représentation Eulerienne pour simuler le gas et la radiation.
+
+En lien direct avec ces deux familles de représentation physique, il existe deux principales famille de codes cosmologique : les codes SPH et les codes AMR.
+
+
+
+\paragraph{Smooth Particle Hydrodynamic (SPH) : } représente 
+
+\paragraph{Adaptive Mesh Reffinement (AMR) :  }
+
+%La représentation Lagrangienne la plus populaire (dans le domaine des simulations cosmologiques) est sans doute le \emph{Smouth Particle Hydrodynamics (SPH) }
+%Les volumes cosmologiques étant généralement cubique, les éléments de grille le sont généralement aussi.
+
+
 
 historique
 avantage inconvénient AMR vs SPH
@@ -21,12 +60,120 @@ gestion du raffinement
 cell linked list
 
 \section{Energie noire}
+représente la majore partie du contenu de l'univers mais est la plus simple a simuler.
+Lien direct avec le facteur d'expansion (mettre ref section).
+
+Il existe deux possibilités pour modéliser l'expansion de l'univers.
+La première consiste a considèrer un element de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, a y ajouter des élements.
+Le problème et que le cout numérique de la simulation croit entre autre avec le nombre d'éléments que l'on considère.
+La seconde possibilité est de faire varier la taille des éléments de calcul avec le facteur d'expansion.
+On appellera les longueurs ainsi exprimées des longueurs comobile.
+
+\begin{equation}
+r=a r'
+\end{equation}
+
+ou $r$ représente une longueur en unités physique et $r'$ en unités comobile.
+
+Ainsi un cube de 10 Mpc physique de coté, pris aujourd'hui, aura une taille de 10 Mpc comobile (cMpc) aujourd'hui, mais aussi a redshift z=9 ou sa taille physique ne sera plus que de de 1Mpc physique.
+
+De plus, il est généralement pratique de normaliser les grandeurs que l'on considère. 
+
+\begin{equation}
+r'=\tilde{r}r*
+\end{equation}
+ou $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
+
 
 \subsection{Système d'unités supercomobiles}
+La généralisation de ce principe a d'autre unités que la longueur est appeler système d'unités supercomobiles.
+\citep{martel_convenient_1998}
 
-le pas de temps
+Longueur:
+\begin{equation}
+\tilde{r}=\frac{r}{ar_*}
+\end{equation}
+
+Densité de matière:
+\begin{equation}
+\tilde{\rho}=\frac{\rho a^3}{\rho_*}
+\end{equation}
+
+Vitesse:
+\begin{equation}
+\tilde{v}=\frac{av}{v_*}
+\end{equation}
+
+Pas de temps:
+\begin{equation}
+\tilde{dt}=\frac{dt}{a^2t_*}
+\end{equation}
+
+Densité d'energie potentielle:
+\begin{equation}
+\tilde{\Phi}=\frac{a^2 \Phi}{\Phi_*}
+\end{equation}
+
+Pression:
+\begin{equation}
+\tilde{p}=\frac{a^5 p}{p_*}
+\end{equation}
+
+Densité d’énergie cinetique:
+\begin{equation}
+\tilde{\epsilon}=\frac{a^2 \epsilon}{\epsilon_*}
+\end{equation}
+
+Densité D’éléments:
+\begin{equation}
+\tilde{N}=a^3 N r_*^3
+\end{equation}
+
+Flux:
+\begin{equation}
+\tilde{F}=a^4 r_*^2 t_* F
+\end{equation}
+
+
+
+Facteurs de normalisation:
+\begin{equation}
+r_*=L (la taille de boite)
+\end{equation}
+
+\begin{equation}
+\rho_* = \bar{\rho} = \frac{3H_0^2 \Omega_0}{8\pi G}
+\end{equation}
+
+\begin{equation}
+t_* = \frac{2}{H_0 \sqrt{\Omega_m}}
+\end{equation}
+
+\begin{equation}
+v_* = \frac{r_*}{t_*}
+\end{equation}
+
+\begin{equation}
+\Phi_* = \frac{r_*^2}{t_*^2} = v_*^2
+\end{equation}
+
+\begin{equation}
+p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2
+\end{equation}
+
+\begin{equation}
+\epsilon_* = \frac{p_*}{\rho_*} = v_*^2
+\end{equation}
+
+
+
+
+\subsection{le pas de temps}
 
 \section{Matière noire}
+
+
+
 
 \subsection{génération des conditions initiales}
 
@@ -58,11 +205,66 @@ perte de linéarité a un certain moment -> nécessité des simulation numériqu
 
 
 \subsection{solveur de gravité}
+Fluide non collisionnel -> particule\\
+On cherche a obtenir le déplacement de ces particules -> 
 
-l'équation de Poisson \\
-les différentes méthodes pour la résoudre\\
+le système d'équation de Vlasov-Poisson :
+
+\begin{equation}
+\begin{cases}
+
+\frac{d{\bf x}_p}{dt} = {\bf v}_p, \\
+\frac{d{\bf v}_p}{dt} = -\nabla \phi , \\
+\Delta \phi= 4\pi G \rho.
+
+\end{cases}
+\label{eq:Ncorps}
+\end{equation}
+
+
+\paragraph{Particule-Particule : } c'est le méthode la plus directe pour calculer l'évolution d'un fluide non collisionnel. 
+Elle consiste, pour chaque particule, a sommer les contribution gravitationnelles de toutes les autres particules.
+Ce type de code dispose d'une très bonne précision mais la quantité de calcule évolue en ordre $O(N^2)$, ce qui fait que ce type de code est très coûteux.
+
+\begin{equation}
+\vec{F}_i=-\sum_{j\neq i} G \frac{G m_i m_j(\vec{r}_i - \vec{r}_j) }{ |\vec{r}_i - \vec{r}_j |^3}
+\end{equation}
+
+\paragraph{Particule-tree : } consiste a regrouper les particules loin de la particule courante en un amas aillant une interaction gravitationnelle commune
+% (Barnes & Hut 1986) 
+
+\paragraph{Particule-Mesh : } on projette les particules sur une grille
+%ENZO code, Bryan & Norman 1998
+RAMSES
+
 CIC\\
+
+l'équation de Poisson
+\begin{equation}
+\Delta \Phi = 4 \pi G \rho
+\end{equation}
+
+qui devient en système d'unité supercomobile:
+\begin{equation}
+\Delta \Phi = 6 a \delta
+\end{equation}
+avec le contraste de densité: 
+\begin{equation}
+\delta = \tilde{\rho} / < \tilde{\rho} > - 1 
+\end{equation}
+
+
+
+les différentes méthodes pour la résoudre\\
+FFT\
+
 Méthode jacobi\\
+\begin{equation}
+\Delta \Phi -S = \frac{d \Phi}{dt}
+\end{equation}
+
+Over relaxation\\
+Gauss siedel
 méthode multi grille\\
 le pas de temps\\
 
@@ -79,7 +281,7 @@ gestion du refroidissement
 
 \section{radiation}
 
-système d'équations a résoudres
+système d'équations a résoudre
 la méthode M1
 aton
 le cooling
