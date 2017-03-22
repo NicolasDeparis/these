@@ -52,12 +52,109 @@ avantage inconvénient AMR vs SPH
 introduction de la grille et de la méthode AMR
 
 \section{Gestion de la grille}
+%(nécessaire d'être positionné ici car la structure en arbre conditionne plusieur choix par la suite)
 
-(nécessaire d'être positionné ici car la structure en arbre conditionne plusieur choix par la suite)
+Dans le cas des simulations sur grille fixe, les données sont réparties en mémoire de façon ordonnée.
+Dans un espace en 3D, on accédera à une cellule contenant le point de coordonnées normées $(x,y,z)$ sur une grille de $N_x*N_y*N_z$ cellules, a l'aide de son identifiant Id dans le tableau en mémoire.
 
-Oct tree
-gestion du raffinement
-cell linked list
+\begin{equation}
+Id = i + j*N_x + k * N_x*N_y
+\end{equation}
+avec :
+\begin{equation}
+\begin{cases}
+i=\lfloor x \rfloor *N_x \\
+j=\lfloor y \rfloor*N_y \\
+j=\lfloor z \rfloor*N_z \\
+\end{cases}
+\end{equation}
+ou $\lfloor a \rfloor$ représente la partie entière de $a$.
+
+Les choses sont plus complexes dans le cas d'une grille adaptative.
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/AMR.pdf} 
+        \caption{AMR. 
+}
+ 		\label{fig:AMR}
+\end{figure}
+
+\subsubsection{Octree}
+fully threated tree description \citep{khokhlov_fully_1998-1}
+
+Vu que la grille est amenées a évoluer, il n'est plus possible d'avoir une position unique en mémoire associé à une position dans l'espace.
+
+La grille est composée de cellules non ordonnée.
+Pour créer un lien entre elle, il est nécessaire de stocker l'information de voisinage.
+cad que l'on a besoin de stocker 2*D pointeurs vers les cellules voisine.
+ une cellule contient la partie physique 
+
+Chaque cellule peut, sous certaine condition, etre subdivisée pour localement augmenter la résolution.
+Elle devient alors asociée a un \emph{Oct} a 3 dimension.
+
+Un oct est composé de 8 pointeurs vers ses 8 cellules filles, d'un pointeur vers sa cellule mère.
+
+On associera également les octs entre eux a l'aide d'une liste chainée. 
+Il est necessaire d'ajouter deux pointeurs a l'objet OCT : un vers l'oct précédent en mémoire et un vers l'oct suivant.
+
+
+\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures CELL et OCT de EMMA},label=lst:useless]
+struct CELL{
+  int id;            // permet de determiner la position de la cellule dans l'oct
+  struct OCT *parent // l'oct pere de la cellule
+  struct OCT *child; // si child est different de NULL alors la cellule est raffiner et child point vers l'oct enfant
+  struct PHYSIC *data; // pointeur vers la partie physique
+};
+
+struct OCT{
+  struct CELL cell[8]; // les 8 cellules de l'oct
+  struct CELL *nei[6]; // pointeurs sur les cellule voisines
+  struct CELL *parent; // cellule mere
+  struct OCT *next;    // oct suivant dans la liste chainee
+  struct OCT *prev;    // oct precedent dans la liste chainee
+  int level;           // niveau de l'oct
+};
+\end{lstlisting}
+
+
+
+
+
+\subsubsection{gestion du raffinement}
+différentes condition de raffinement.
+sur la matière noire\\
+semi Lagrangienne\\
+sur le gradient d'ionization\\
+sur le gradient de densité (shock)\\
+
+
+
+
+
+\subsubsection{Opérateurs de changement de grilles} \label{Opérateurs de changement de grilles}
+
+La \emph{restriction} consiste à dégrader la grille en résolution. La restriction la plus directe consiste à moyenner les cellules à dégrader. Par exemple, sur une grille à deux dimensions, pour diviser la résolution par deux, quatre cellules de la grille de départ devront être moyennées pour obtenir une nouvelle cellule de la grille à base résolution. \\
+
+La \emph{prolongation} consiste à augmenter la résolution d'une grille, la prolongation la plus directe consiste à injecter les valeurs de l'ancienne grille dans un certain nombre de cellules de la nouvelle grille. (fig \ref{Opérateurs de changement de grille})
+
+\begin{figure}[htbp]
+\begin{center}
+\subfloat[Restriction]{\includegraphics[scale=0.35]{img/02/Restriction.png}}
+\subfloat[Prolongation]{\includegraphics[scale=0.35]{img/02/Prolongation.png}}\\
+\subfloat[Niveau L  ]{\includegraphics[scale=0.35]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
+\subfloat[Niveau L-1]{\includegraphics[scale=0.35]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
+\caption{\textbf{Opérateurs de changement de grille.} Ils permettent de changer la résolution de la grille. Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.\\
+Le potentiel du point masse prend une forme de losange à cause des conditions périodiques.}
+\label{Opérateurs de changement de grille}
+\end{center}
+\end{figure}
+
+La prolongation et la restriction sont des opérateurs aisément parallélisables. Chaque cellule (ou paquet de huit cellules) est indépendante des autres et il est possible de ne changer la résolution que d'une partie de la grille sans en affecter le reste.\\
+
+Il existe principalement deux conditions sur les opérateurs de changement de grille. La première impose une certaine réciprocité entre eux, les opérateurs doivent être adjoints: il est nécessaire qu'après une prolongation, suivie d'une restriction la grille d'arrivée soit la même que la grille de départ. L'inverse n'est pas nécessairement vrai: après une restriction , de l'information est perdue et aucune prolongation ne pourra la recomposer. 
+La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
+
+
 
 \section{Energie noire}
 représente la majore partie du contenu de l'univers mais est la plus simple a simuler.
@@ -171,9 +268,7 @@ p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2
 \subsection{le pas de temps}
 
 \section{Matière noire}
-
-
-
+Ncorps
 
 \subsection{génération des conditions initiales}
 
@@ -205,8 +300,15 @@ perte de linéarité a un certain moment -> nécessité des simulation numériqu
 
 
 \subsection{solveur de gravité}
+Le sloveur que je connais le mieux.
+
 Fluide non collisionnel -> particule\\
-On cherche a obtenir le déplacement de ces particules -> 
+On cherche a obtenir la position des particules a chaque instant -> il nous faut leurs vitesse -> il nous faut leurs accélération -> il nous faut la force qui leur est appliquée.
+On peux obtenir cette force soit par calcul direct, soit par dérivation du potentiel.
+
+\begin{equation}
+\vec{F}=-\Delta \Phi
+\end{equation}
 
 le système d'équation de Vlasov-Poisson :
 
@@ -234,12 +336,34 @@ Ce type de code dispose d'une très bonne précision mais la quantité de calcul
 % (Barnes & Hut 1986) 
 
 \paragraph{Particule-Mesh : } on projette les particules sur une grille
-%ENZO code, Bryan & Norman 1998
+ENZO %code, Bryan & Norman 1998
 RAMSES
 
-CIC\\
+La méthode de projection des particules sur la grille n'est pas unique.
+On peut par exemple se contenter d'ajouter la masse de la particule dans la cellule a laquelle elle appartient.
+Cela donne un résultat très bruité.
+Une méthode d'ordre supérieure est appelé Cloud in cell (CIC)
 
-l'équation de Poisson
+\paragraph{Cloud in cell : } Le CIC consiste a considérer une étendue spatiale aux particules et a pondérée la masse appliqué au cellule par l'intersection de de son volume et de celui de la cellule.
+Fig\,\ref{fig:CIC}.
+On associe généralement une taille a la particule similaire a celle des cellule sur laquelle on la projette.
+Dans le cas ou L’étendue de la particule intersecte des cellules de différents niveaux on lui associera la taille de la plus grande cellule dans le but de lisser la transition entre les niveaux.
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/CIC.jpg} 
+        \caption{Cloud In Cell. 
+        %http://homepage.univie.ac.at/franz.vesely/cp_tut/nol2h/new/c6sm_s4lr.html
+}
+ 		\label{fig:CIC}
+\end{figure}
+
+Il existe des méthodes d'ordre supérieur avec des kernel plus complex que le top-hat du CIC comme par exemple des kernel en triangle ou en gausienne.
+%http://techfinder.stanford.edu/technology_detail.php?ID=30866
+
+Une fois la grille de densité générée nous pouvons calculer le potentiel.
+
+\subsubsection{l'équation de Poisson}
 \begin{equation}
 \Delta \Phi = 4 \pi G \rho
 \end{equation}
@@ -420,29 +544,6 @@ Cet algorithme est représenté graphiquement sur la figure \ref{Description du 
 En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. Un seul appel génère un cycle nommé cycle en V (fig. \ref{Description du V-cycle}), deux un cycle en W, etc... 
 
 			
-\subsubsection{Opérateurs de changement de grilles} \label{Opérateurs de changement de grilles}
-
-La \emph{restriction} consiste à dégrader la grille en résolution. La restriction la plus directe consiste à moyenner les cellules à dégrader. Par exemple, sur une grille à deux dimensions, pour diviser la résolution par deux, quatre cellules de la grille de départ devront être moyennées pour obtenir une nouvelle cellule de la grille à base résolution. \\
-
-La \emph{prolongation} consiste à augmenter la résolution d'une grille, la prolongation la plus directe consiste à injecter les valeurs de l'ancienne grille dans un certain nombre de cellules de la nouvelle grille. (fig \ref{Opérateurs de changement de grille})
-
-\begin{figure}[htbp]
-\begin{center}
-\subfloat[Restriction]{\includegraphics[scale=0.35]{img/02/Restriction.png}}
-\subfloat[Prolongation]{\includegraphics[scale=0.35]{img/02/Prolongation.png}}\\
-\subfloat[Niveau L  ]{\includegraphics[scale=0.35]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
-\subfloat[Niveau L+1]{\includegraphics[scale=0.35]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
-\caption{\textbf{Opérateurs de changement de grille.} Ils permettent de changer la résolution de la grille. Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.\\
-Le potentiel du point masse prend une forme de losange à cause des conditions périodiques.}
-\label{Opérateurs de changement de grille}
-\end{center}
-\end{figure}
-
-La prolongation et la restriction sont des opérateurs aisément parallélisables. Chaque cellule (ou paquet de huit cellules) est indépendante des autres et il est possible de ne changer la résolution que d'une partie de la grille sans en affecter le reste.\\
-
-Il existe principalement deux conditions sur les opérateurs de changement de grille. La première impose une certaine réciprocité entre eux, les opérateurs doivent être adjoints: il est nécessaire qu'après une prolongation, suivie d'une restriction la grille d'arrivée soit la même que la grille de départ. L'inverse n'est pas nécessairement vrai: après une restriction , de l'information est perdue et aucune prolongation ne pourra la recomposer. 
-La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
-
 
 
 
