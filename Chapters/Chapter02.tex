@@ -253,24 +253,220 @@ avec le contraste de densité:
 \delta = \tilde{\rho} / < \tilde{\rho} > - 1 
 \end{equation}
 
-
-
-les différentes méthodes pour la résoudre\\
-FFT\
-
-Méthode jacobi\\
+integration de l'equation de Poisson pour obtenir le potentiel
 \begin{equation}
-\Delta \Phi -S = \frac{d \Phi}{dt}
+\Delta \phi = 4\pi G \rho \longrightarrow \phi = \iint \Delta \phi = \iint 4\pi G \rho
 \end{equation}
 
-Over relaxation\\
-Gauss siedel
-méthode multi grille\\
+Pour cela, il existe principalement deux types de méthodes. La première est basée sur les Transformées de Fourier. Cette méthode, très rapide, utilise le fait que dans l'espace de Fourier, une intégrale se résume à une division par un nombre d'onde. Déterminer le champ de potentiel revient à : 
+\begin{itemize}
+\item Effectuer la transformée de Fourier de la densité
+\item Diviser par $k^2$
+\item Effectuer la transformée de Fourier inverse
+\end{itemize}
+
+\begin{equation}
+\rho_{(\vec{x})} \overset{FFT}{\longrightarrow}  \rho_{(\vec{k})} \times \frac{1}{k^2}  \overset{RFFT}{\longrightarrow}  \phi_{(\vec{x})}
+\end{equation}
+
+De par la nature des transformées de Fourier, le champ de densité doit être périodique pour que l'implémentation de cette technique ne se révèle pas trop complexe. Ce qui n'est pas un problème en simulation cosmologique, où les conditions de bords sont toujours périodiques mais est plus problématique lors de la simulation de structures isolées, telles les galaxies ou les amas de galaxies. Ensuite, les FFT nécessitent un échantillonnage régulier ce qui implique que cette méthode est incompatible avec les grilles adaptatives. Et dernièrement, le passage dans l'espace des fréquences nécessite des conditions de types plans parallèles lors parallélisation, conditions incompatible avec la gestion de grille utilisé par les code AMR dont \emph{Quartz} fait partie. \\
+
+Un autre type de méthode de résolution possible est une méthode itérative. Elle consiste à faire converger le potentiel à partir d'une condition initiale arbitraire. Ce type de méthode est plus lente que la méthode par FFT mais  permet d'utiliser tout type de conditions de bords, d'être facilement parallélisable et surtout est compatible avec les méthodes basées sur des grilles adaptatives. PAr la suite, c'est donc une méthode itérative et plus précisément une méthode \emph{Multigrille} qui à été développée.\\
+
+Le potentiel est alors dérivé pour obtenir la force ressentie dans chaque cellule. Il est ensuite aisé de calculer l'accélération subie par les particules de chaque cellule, et par intégration temporelle, leurs nouvelles positions et vitesses.
+
+Par analogie à l'équation de la chaleur par exemple, la densité correspond aux sources chaudes et le potentiel à la température, à $t=0$ les sources chaudes sont allumées et la chaleur se propage jusqu'a ce que le milieu ait atteint sa température d'équilibre. Ici, c'est donc la gravité qui se diffuse dans le milieu. \\
+
+
+\begin{equation}
+\dfrac{\partial \phi}{\partial t} = \Delta \Phi -S 
+\end{equation}
+
+
+\subsubsection{Méthode jacobi}
+
+
+La méthode de Jacobi est la façon la plus simple de relaxer ce type d'équation, elle consiste à utiliser directement la forme discrète de l'équation de Poisson modifiée. L'équation à intégrer est:
+
+\[ \dfrac{\phi^{t+1}_i - \phi^{t}_i}{\Delta t}  =  \Delta \phi_i^t - 4 \pi G \rho^t_i \]
+
+où, à 3 dimensions, le Laplacien s'exprime :
+
+\[ \Delta \phi_i^t = \dfrac{\phi_{x+1,y,z}^t  + \phi_{x-1,y,z}^t + \phi_{x,y+1,z}^t  + \phi_{x,y-1,z}^t + \phi_{x,y,z+1}^t + \phi_{x,y,z-1}^t	- 6\phi_{x,y,z}^t}{\Delta x ^2} \]
+		
+Le principal avantage de cette méthode est sa parallélisation triviale. 
+Elle ne nécessite de connaître l'état du système qu'au temps $t$. 
+Ansi, chaque fils d'exécution parallèle (thread) est indépendant et n'a pas d'information à communiquer aux autres .
+
+
+
+\subsubsection{Gauss Seidel}
+Gauss-Seidel est une amélioration de Jacobi. Au lieu d'utiliser, à chaque pas de temps, les valeurs de la grille au niveau précédent, cette méthode consiste à toujours utiliser la valeur la plus à jour disponible. Une fois $\phi^{t+1}_0$ calculé à l'aide de $\phi^{t}_i$, la valeur de $\phi^{t+1}_1$ n'est pas calculée à l'aide de $\phi^{t}_0$ mais avec $\phi^{t+1}_0$. En utilisant toujours la valeur la mieux estimée, cette méthode accélère la convergence. L'intégration temporelle ne change pas, mais l'intégration spatiale devient: 
+
+\[ \Delta \phi_i^t = \dfrac{\phi_{x+1,y,z}^t  + \phi_{x-1,y,z}^\mathbf{t+1} + \phi_{x,y+1,z}^t  + \phi_{x,y-1,z}^\mathbf{t+1} + \phi_{x,y,z+1}^t + \phi_{x,y,z-1}^\mathbf{t+1}	- 6\phi_{x,y,z}^t}{\Delta x ^2} \]
+
+La parallélisation de cette méthode est plus compliquée que dans le cas de Jacobi. La détermination de la valeur de chaque cellule nécessite de connaître l'état le plus à jour de ses voisins et donc de faire passer de l'information entre les threads.
+ Cependant, une méthode nommée Gauss-Seidel Rouge-Noir permet une parallélisation sur multiprocesseurs en séparant l'espace en un damier de couleurs. Chaque processeur ne calcule alors qu'une seule couleur. Le premier processeur calcul par exemple les cases blanches de l'échiquier à partir de $\phi_i^t$, puis le second calcul le cases noires à partir des cases blanches déterminé par le premier.
+
+
+\subsubsection{Sur-relaxation successive (SOR)}
+La méthode de sur-relaxation successive consiste à appliquer un coefficient à la méthode de Gauss-Seidel (ou de Jacobi, en fonction de la méthode de dérivation spatiale) pour sur-estimer l'évolution de la convergence et ainsi l'accélérer. l'équation à intégrer devient:
+\[ \phi^{t+1}_i = \phi^{t}_i + \omega  \Delta t \left (\Delta \phi_i^t - 4 \pi G \rho^t_i \right )  \]
+où $\omega \in \left] 0,2 \right [$ est le paramètre de sur-relaxation.
+\begin{itemize}
+\item lorsque $\omega <1$ La méthode est dite de sous relaxation.
+\item lorsque $\omega =1$ La méthode devient celle de Gauss-Seidel.
+\item lorsque $\omega >1$ La méthode est dite de sur relaxation.
+\end{itemize}
+Il existe des moyens analytiques pour déterminer la valeur optimale de $\omega$ mais très souvent cette valeur est déterminée empiriquement à partir d'une série de tests. $\omega = 1,2$ est très souvent utilisé.
+%L'expression de cette méthode apparait généralement dans la litterature sous la forme:
+
+
+\subsubsection{Condition d'arrêt}
+Ces méthodes sont itérées jusqu’à ce qu'un certain critère convergence soit respecté. Le critère le plus couramment utilisé consiste à mesurer l'évolution de la convergence en comparant sa valeur au temps $t$ à celle au temps $t+1$.
+\[ \phi^{t+1}_i - \phi^{t}_i < \epsilon \]
+ou, de manière équivalente:
+\[ \Delta \phi_i^t - 4 \pi G \rho^t_i< \epsilon \]
+
+Pour prendre en compte la possibilité que le potentiel ait convergé sur une partie du domaine seulement, et pour ne pas stopper le processus trop tôt, c'est le module de cette expression qui est considéré. De plus il est d'usage de normaliser ce module par la source que l'on considère.
+
+\[\dfrac{ \sqrt{  \sum_i \left (  \Delta \phi_i^t \right )^2 - \left (4 \pi G \rho^t_i  \right )^2 } }{\sqrt{  \sum_i  \left (4 \pi G \rho^t_i  \right )^2 } } < \epsilon \]
+
+A cette condition est ajouté un nombre d'itérations maximum fixe pour éviter les problèmes de boucles infinies lorsque le potentiel n'arrive pas à converger (oscillation autour d'une valeur d'équilibre par exemple).
+
+\subsubsection{Multigrille}
+Cette seconde technique, plus efficace encore, consiste à travailler non pas sur la grandeur elle même, mais sur l'erreur effectuée dans l'estimation de cette grandeur.
+
+Elle utilise la linéarité de l'opérateur Laplacien: 
+ 
+Si l'équation à résoudre est de la forme : 
+\[ \mathcal{L} u = f \]
+Sa forme discrète est :\\
+\[ \mathcal{L}_h u_h = f_h \]
+si $\tilde{u_h}$ correspond à une estimation de la solution et $u_h$ à la solution exacte, l'erreur est alors la différence entre les deux : 
+\[ v_h = u_h - \tilde{u_h} \]
+le résidu est défini comme:
+\[ d_h = \mathcal{L}_h \tilde{u_h} - f_h \]
+comme $\mathcal{L}_h$ est linéaire:
+\[ \mathcal{L}_h u_h = \mathcal{L}_h (v_h + \tilde{u_h} ) = \mathcal{L}_h v_h +\mathcal{L}_h \tilde{u_h} \]
+\[ f_h   = \mathcal{L}_h \tilde{u_h} - d_h\]
+et finalement :
+\[ \mathcal{L}_h v_h = -d_h \]
+
+L'équation à résoudre est alors modifiée en considérant que l'inconnue n'est plus le potentiel mais l'erreur commise sur son estimation. Le terme source n'est plus la densité mais la densité moins son estimation grossière.\\
+
+
+Le cycle consiste à lisser (relaxer quelques fois) le potentiel à pleine résolution, les petites échelles vont alors rapidement converger, à calculer ensuite l'erreur commise à ce stade. L'erreur est dégradée à plus basse résolution, elle ne contient alors que de l'information sur les basses fréquences de la grille de départ, les hautes fréquences de la grille à pleine résolution ont été supprimées par la dégradation. Cette perte d'information sur les hautes fréquences n'est pas problématique car les hautes fréquences ont déjà convergé l'erreur est donc petite (voir nulle) aux hautes fréquence et est maximale aux basses. Les hautes fréquences de cette nouvelle grille correspondent alors à des fréquences plus basses et donc plus difficiles à faire converger sur le grille globale. La solution exacte de l'équation de l'erreur est calculée par itération (relaxée jusqu'a convergence) à partir des résidus sur cette petite grille. Le potentiel précédemment estimé est alors corrigé de l'erreur exacte interpolée à pleine résolution en utilisant:
+\[ \tilde{u}_h^{new} = \tilde{u_h} + v_h \]
+Le potentiel corrigé est alors lissé par quelques dernières itérations.\\
+
+Ce cycle peut être résumé ainsi:
+
+
+\begin{tabular}{ll}
+Lisser 		& 	$ \mathcal{L} u_h = f_h $\\
+Calculer	&	$ d_h = \mathcal{L}_h \tilde{u_h} - f_h $\\
+Restreindre	&	$ d_H = Rd_h$\\
+Résoudre	&	$ \mathcal{L} v_H = -d_H $\\
+Interpoler	&	$ v_h = Pv_H$\\
+Corriger	&	$ \tilde{u}_h^{new} = \tilde{u_h} + v_h$\\
+Lisser		&	$ \mathcal{L} u_h = f_h $
+\end{tabular} 
+
+
+
+A partir de la méthode deux grilles, rien n'empêche d'estimer l'erreur sur l'erreur par la même méthode, ce processus peut être utilisé récursivement pour générer tout un ensemble de sous grilles et ainsi accélérer encore la convergence.\\
+
+L'algorithme devient alors:\\
+
+MG(level, $u_h$, $f_h$)
+\begin{itemize}	
+\item 	si level = level min:
+\item[]	\begin{tabular}{ll}
+		Résoudre & $\mathcal{L} u_h = f_h $
+		\end{tabular}
+\item 	sinon:
+\item[]	\begin{tabular}{ll}
+		Lisser 		& 	$ \mathcal{L} u_h = f_h $\\
+		Calculer	&	$ d_h = \mathcal{L}_h \tilde{u_h} - f_h $\\
+		Restreindre	&	$ d_H = Rd_h$\\
+		Appeler 	&	MG(level-1, $v_H$, $-d_H$) \\
+		Interpoler	&	$ v_h = Pv_H$\\
+		Corriger	&	$ \tilde{u}_h^{new} = \tilde{u_h} + v_h$\\
+		Lisser		&	$ \mathcal{L} u_h = f_h $
+		\end{tabular} 
+\end{itemize}
+
+Où la taille de la grille au niveau "level" est de $2^{3level}$ ( si level = 9, la taille de la grille est de $512^3$ ). $h$ est le pas de la grille au niveau "level" et $H = 2h$. Les opérateurs $P$ et $R$ sont les opérateurs de prolongation et de restriction explicité section \ref{Opérateurs de changement de grilles}
+Cet algorithme est représenté graphiquement sur la figure \ref{Description du V-cycle}.
+
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.35]{img/02/multigrid.png}
+\caption{\textbf{Vue des différents niveaux de grilles.} Image extraite de \href{http://MGNet.org}{MGNet.org} }
+\label{Vue des différents niveaux de grilles}
+\end{center}
+\end{figure}	
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=0.35]{img/02/Vcycle.png}
+\caption{\textbf{Description du V-cycle.} Image extraite de \href{http://MGNet.org}{MGNet.org}}
+\label{Description du V-cycle}
+\end{center}
+\end{figure}		
+
+En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. Un seul appel génère un cycle nommé cycle en V (fig. \ref{Description du V-cycle}), deux un cycle en W, etc... 
+
+			
+\subsubsection{Opérateurs de changement de grilles} \label{Opérateurs de changement de grilles}
+
+La \emph{restriction} consiste à dégrader la grille en résolution. La restriction la plus directe consiste à moyenner les cellules à dégrader. Par exemple, sur une grille à deux dimensions, pour diviser la résolution par deux, quatre cellules de la grille de départ devront être moyennées pour obtenir une nouvelle cellule de la grille à base résolution. \\
+
+La \emph{prolongation} consiste à augmenter la résolution d'une grille, la prolongation la plus directe consiste à injecter les valeurs de l'ancienne grille dans un certain nombre de cellules de la nouvelle grille. (fig \ref{Opérateurs de changement de grille})
+
+\begin{figure}[htbp]
+\begin{center}
+\subfloat[Restriction]{\includegraphics[scale=0.35]{img/02/Restriction.png}}
+\subfloat[Prolongation]{\includegraphics[scale=0.35]{img/02/Prolongation.png}}\\
+\subfloat[Niveau L  ]{\includegraphics[scale=0.35]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
+\subfloat[Niveau L+1]{\includegraphics[scale=0.35]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
+\caption{\textbf{Opérateurs de changement de grille.} Ils permettent de changer la résolution de la grille. Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.\\
+Le potentiel du point masse prend une forme de losange à cause des conditions périodiques.}
+\label{Opérateurs de changement de grille}
+\end{center}
+\end{figure}
+
+La prolongation et la restriction sont des opérateurs aisément parallélisables. Chaque cellule (ou paquet de huit cellules) est indépendante des autres et il est possible de ne changer la résolution que d'une partie de la grille sans en affecter le reste.\\
+
+Il existe principalement deux conditions sur les opérateurs de changement de grille. La première impose une certaine réciprocité entre eux, les opérateurs doivent être adjoints: il est nécessaire qu'après une prolongation, suivie d'une restriction la grille d'arrivée soit la même que la grille de départ. L'inverse n'est pas nécessairement vrai: après une restriction , de l'information est perdue et aucune prolongation ne pourra la recomposer. 
+La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
+
+
+
+
 le pas de temps\\
 
 \section{Baryon}
 
 système d'équations a résoudres
+
+\begin{equation}
+\begin{cases}
+
+\rm{ \frac{ \partial \rho }{ \partial t } + \nabla \cdot (\rho v) = 0}, \\
+\\
+\rm{ \frac{ \partial }{ \partial t } (\rho v) + \nabla \cdot (\rho v \otimes v ) \nabla p = -\rho\nabla \phi }, \\
+\\
+\rm{ \frac{ \partial e }{ \partial t } + \nabla \cdot [ \rho v (e+p/\rho) ] = -\rho v \cdot \nabla \phi },
+
+\end{cases}
+\end{equation}
+\label{eq:hydro}
+
+
+
 solveur hydro
 partie la plus intensive en calcul
 le pas de temps
