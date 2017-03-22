@@ -396,11 +396,12 @@
         {\relax}{\mbox{}\oldmarginpar{\vspace*{-3\baselineskip}\color{halfgray}\chapterNumber\thechapter}}{0pt}%
         {\raggedright\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\titlerule]% 
     }
+    
     % sections \FloatBarrier
-    \titleformat{\section}[display]%
-        {\relax}{\textsc{\MakeTextLowercase{\thesection}}}{1em}{\spacedlowsmallcaps}
+    \titleformat{\section}[block]
+		{\relax}{\textsc{\MakeTextLowercase{\thesection}}}{1em}{\spacedlowsmallcaps}
     % subsections
-    \titleformat{\subsection}[display]%
+    \titleformat{\subsection}
         {\relax}{\textsc{\MakeTextLowercase{\thesubsection}}}{1em}{\normalsize\itshape}
     % subsubsections
     \titleformat{\subsubsection}
@@ -413,7 +414,7 @@
     % spacing
     \ifthenelse{\boolean{@nochapters}}%
         {\relax}%
-        {\titlespacing*{\chapter}{0pt}{1\baselineskip}{1.2\baselineskip}}
+        {\titlespacing*{\chapter}{0pt}{2\baselineskip}{4\baselineskip}}
     \titlespacing*{\section}{0pt}{1.25\baselineskip}{1\baselineskip} 
     \titlespacing*{\subsection}{0pt}{1.25\baselineskip}{1\baselineskip}
     \titlespacing*{\paragraph}{0pt}{1\baselineskip}{1\baselineskip}
