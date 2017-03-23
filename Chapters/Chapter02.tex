@@ -465,7 +465,7 @@ Elle utilise la linéarité de l'opérateur Laplacien:
  
 Si l'équation à résoudre est de la forme : 
 \[ \mathcal{L} u = f \]
-Sa forme discrète est :\\
+Sa forme discrète est :
 \[ \mathcal{L}_h u_h = f_h \]
 si $\tilde{u_h}$ correspond à une estimation de la solution et $u_h$ à la solution exacte, l'erreur est alors la différence entre les deux : 
 \[ v_h = u_h - \tilde{u_h} \]
@@ -577,6 +577,82 @@ le pas de temps
 gestion du refroidissement
 
 \section{radiation}
+
+\subsection{Les equations}
+\begin{equation}
+\frac{1}{c} \frac{\partial I_\nu}{\partial t} + \vec{n}\cdot \vec{\nabla} I_\nu = \eta_\nu - \kappa_\nu I_\nu 
+\end{equation}
+Avec: $I_\nu(\vec{x},\vec{n},t)$ l'intensité spécifique
+$\eta_\nu(\vec{x},\vec{n},t)$ la source de rayonnement
+
+et le coefficient d'absorption $\kappa_\nu(\vec{x},\vec{n},t) = \sigma_\nu n_H$ 
+$\sigma_\nu$ la section efficace de photoionisation de l'H neutre et $n_H$ la densité d'H neutre
+
+
+\begin{equation}
+\begin{cases}
+
+\frac{ \partial N_\nu }{ \partial t } + \vec{\nabla} \cdot \vec{F}_\nu = -\kappa_\nu c  N_\nu + S_\nu,\\
+
+\frac{ \partial \vec{F} }{ \partial t } + c^2 \vec{\nabla} P_\nu = -\kappa_\nu c \vec{F}_\nu ,
+
+\end{cases}
+\label{eq:densite_energie}
+\end{equation}
+
+$\vec{F}_\nu$ le flux radiatif
+
+$P_\nu $ la pression radiative
+
+et 
+
+$S_\nu = \dot{N}_\nu^* + \dot{N}_\nu^{rec}$ etant le taux d'emission de photon due aux sources $\dot{N}_\nu^*$ et a la recombinaison $ \dot{N}_\nu^{rec}$
+
+
+\subsection{approximation M1}
+La fermeture du système se fait par l’intermédiaire de l’équation
+d’état, avec le tenseur d’Eddington, D :
+
+\begin{equation}
+ P_\nu = D N\nu ,
+\label{eq:fermeture}
+\end{equation}
+
+où D est approximé par le modèle M1 \citep{levermore1984,gonzalez2005} :
+
+\begin{equation}
+\begin{cases}
+
+D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{n} , \\
+\\
+\chi(\vec{f}_\nu) = \frac{ 3+4 |\vec{f}_\nu|^2 }{5+2\sqrt{4-3|\vec{f}_\nu|^2}} , \\
+\\
+\vec{f}_\nu = \frac{ \vec{F}_\nu }{c N\nu }  ,
+
+\end{cases}
+\label{eq:tenseur}
+\end{equation}
+
+
+\subsection{discretisation}
+\begin{equation}
+\rm{ \frac{\partial U}{\partial t} + \nabla \cdot (F(U)) = S(U), }
+\label{eq:rad_generale}
+\end{equation}
+
+avec $\rm{U}$ le vecteur des quantité conservées, $\rm{F}$ la fonction de flux, et $\rm{S}$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
+
+\begin{equation}
+\rm{ \frac{ U^{p+1}_i - U^{p}_i }{\Delta t} + \frac{ F^{p}_{i
++1/2} - F^{p}_{i-1/2} }{\Delta x} =0,}
+\label{eq:rad_solver}
+\end{equation}
+
+Condition de Courant radiative : $\rm{ c \leq \Delta x / \Delta t }$.
+Le pas de temps est donc plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
+
+\subsection{vitesse de la lumière reduite}
+
 
 système d'équations a résoudre
 la méthode M1
