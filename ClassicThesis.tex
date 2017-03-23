@@ -27,25 +27,11 @@
 %
 % **************************************************************************************************************
 \RequirePackage{fix-cm} % fix some latex issues see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
-\documentclass[ twoside,openright,
-				titlepage,
-				numbers=noenddot,
-				headinclude,
-				%1headlines,
-				% letterpaper a4paper
-                footinclude=true,
-                cleardoublepage=empty,
-                abstractoff, % <--- obsolete, remove (todo)
-                BCOR=5mm,
-                paper=a4,
-                fontsize=11pt,%11pt,a4paper,%
+\documentclass[ twoside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% letterpaper a4paper
+                footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
+                BCOR=5mm,paper=a4,fontsize=11pt,%11pt,a4paper,%
                 frenchb,english,%
-%                tocaligned,
-%				pdfspacing,
                 ]{scrreprt}
-
-
-
 
 %\includeonly{Chapters/Chapter01}
 %\includeonly{Chapters/Chapter02}
@@ -130,13 +116,13 @@ da. Le usate medical addresses pro, europa origine sanctificate nos se.}
 % ********************************************************************
 % Backmatter
 %*******************************************************
-%\appendix
-%%\renewcommand{\thechapter}{\alph{chapter}}
-%\cleardoublepage
-%\part{Appendix}
-%\includepdf[pages=-]{papers/EMMA.pdf} 
-%\cleardoublepage
-%\includepdf[pages=-]{papers/feedback.pdf} 
+\appendix
+%\renewcommand{\thechapter}{\alph{chapter}}
+\cleardoublepage
+\part{Appendix}
+\includepdf[pages=-]{papers/EMMA.pdf} 
+\cleardoublepage
+\includepdf[pages=-]{papers/feedback.pdf} 
 
 
 %\include{Chapters/Chapter0A}

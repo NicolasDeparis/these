@@ -315,8 +315,8 @@ le système d'équation de Vlasov-Poisson :
 \begin{equation}
 \begin{cases}
 
-\frac{d{\bf x}_p}{dt} = {\bf v}_p, \\
-\frac{d{\bf v}_p}{dt} = -\nabla \phi , \\
+\frac{d{x}_p}{dt} = { v}_p, \\
+\frac{d{ v}_p}{dt} = -\nabla \phi , \\
 \Delta \phi= 4\pi G \rho.
 
 \end{cases}
@@ -556,11 +556,11 @@ système d'équations a résoudres
 \begin{equation}
 \begin{cases}
 
-\rm{ \frac{ \partial \rho }{ \partial t } + \nabla \cdot (\rho v) = 0}, \\
+{ \frac{ \partial \rho }{ \partial t } + \nabla \cdot (\rho v) = 0}, \\
 \\
-\rm{ \frac{ \partial }{ \partial t } (\rho v) + \nabla \cdot (\rho v \otimes v ) \nabla p = -\rho\nabla \phi }, \\
+{ \frac{ \partial }{ \partial t } (\rho v) + \nabla \cdot (\rho v \otimes v ) \nabla p = -\rho\nabla \phi }, \\
 \\
-\rm{ \frac{ \partial e }{ \partial t } + \nabla \cdot [ \rho v (e+p/\rho) ] = -\rho v \cdot \nabla \phi },
+{ \frac{ \partial e }{ \partial t } + \nabla \cdot [ \rho v (e+p/\rho) ] = -\rho v \cdot \nabla \phi },
 
 \end{cases}
 \end{equation}
@@ -594,33 +594,140 @@ freefall
 hydro
 radiatif
 
-\section{Matériel et parallélisme}
+\section{Matérie et parallélismel}
 
-l'évolution du matériel
-MPI et courbe de hilbert
-CUDA et GPU
+Les simulations cosmologiques ont pour principal defi de simuler d'important volume d'espace avec la meilleure résolution possible.
+L'amelioration de certain algorythme a permis d'augmenter la taille des simulations mais le principal facteur limitant se trouve au niveau du materiel.
+Dans le but d'augmenter la puissance de calcul, les machines se regroupent en centre de calcul.
 
-\subsection{Les machines utilisées}
+Ces machines se composent d'un certain nombre de nœuds.
 
-le meso centre de l'UDS
-Curie
-Titan
-Occigen
+\paragraph{Nœud :} Élément du centre de calcul relier par un réseau.
+Proche d'un ordinateur personnel il est composé d'une carte mère sur laquelle est relié entre autres, un ou plusieurs processeurs (CPU), une certaine quantité de mémoire RAM et parfois une carte graphique (GPU)
+
+Chaque CPU dispose d'un certain nombre de cœurs, et chaque cœurs est capable d'exécuter un certain nombre de processus ou thread (généralement 1, et parfois 2 dans le cas de l'Hyperthreading)
+
+La difficulté est de géré la façon dont les threads travaillent ensemble.
+En effet a chaque thread sera associé un domaine de calcul représentant une partie de l'espace a modeliser.
+De plus les domaine ne sont pas isolés et partage de l'information. 
+
+Nous sommes alors confronté a plusieurs problèmes: comment associer les threads aux domaines de calculs  et comment faire communiquer ces threads entre eux.
+
+\subsection{courbe de Peano-Hilbert}
+
+%https://books.google.fr/books?id=sbQqBgAAQBAJ&pg=PA26&lpg=PA26&dq=peano+hilbert+mpi&source=bl&ots=HgSw0Jpf7d&sig=vXTb2JkDixd1gcDGANoARIYHAG0&hl=fr&sa=X&ved=0ahUKEwilofzKoerSAhUF6RQKHXzQDC4Q6AEIGjAA#v=onepage&q=peano%20hilbert%20mpi&f=false
+
+
+%Warren et Salmon
+Le découpage des domaines de calcul correspondants aux différents processeurs,  utilise une courbe de Peano-Hilbert.
+Ce type de courbes fractale a la particularité de remplir l'espace.
+Mais aussi de passer par tout les points d'une grille.
+Ainsi si l'on applique ce pavage aux cellules de notre grille, en associant un indice reliant un cellule a sa position sur la courbe de Hilbert.
+Il suffit ensuite de découper la courbe en parties identique  pour 
+Ainsi si l'on a par exemple  32 cellules a assigner sur 4 processeurs, la courbes sera découpée en 4 parties de 8 cellules.
+Chacune de ces partie sera en suite assignée a un processeur.
+
+Ce type de découpage minimise les interfaces entre domaine, en s'assurant d'une proximité spatiale entre tout les points de la courbe.
+Elle minimise donc les communications entre processeurs
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/courbe_Hilbert.jpeg} 
+        \caption{exemple de courbe de Hilbert. 
+        %http://www.lifl.fr/~pmathieu/transform/fractales.html
+}
+ 		\label{fig:hilbert}
+\end{figure}
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/hilbert2.png} 
+        \caption{exemple de courbe de Hilbert. 
+%http://iopscience.iop.org/article/10.1086/590370/pdf 
+}
+ 		\label{fig:hilbert2}
+\end{figure}
+
+
+\subsection{Mémoire partagée et mémoire distribuée}
+
+Une fois les processus et les domaines identifiés il existe différentes facons de faire dialoguer les processus entre eux.
+La principale distinction viendra généralement de si les threads sont exécutés par un meme noeud ou non.
+
+\paragraph{mémoire partagée : } 
+Si les threads sont éxécutés sur un meme noeud on aura tendance a utiliser un schéma a base de mémoire partagée.
+On dit que la mémoire est partagée quand plusieurs threads ont accès au meme espace memoire, cad par exemple que si le thread 0 déclare une variable X, le thread 1 aura aussi accès a cette variable . 
+OpenMP est une API permettant ce  genre partage de mémoire.
+
+\paragraph{mémoire distribuée : } 
+Dans le cas ou les threads sont exécutés par des processeurs étant physiquement éloigné, ie sur des noeuds différents, les communications doivent passer par un réseau de communication reliant les noeuds.
+Il faudra utiliser dans ce cas une autre API pour explicitement envoyer et recevoir des paquets d'information
+L'API la plus communément utilisée pour ce genre de communication est Message Passing Interface MPI.
+
+
+%Je n'ai aucun doute sur le fait que dans les années a venir 
+
+
+\subsection{GPGPU}
+
+Les cartes graphiques, ou GPU ont été détourné de leurs utilisation principale d'affichage il y a une dizaine d'années.
+Ces unités de calculs sont  efficaces dans le traitement d'un grand nombre d'information en parallèle.
+Elle sont donc toutes indiqué dans le cas des simulation numérique.
+
+La programmation sur carte graphique utilise une approche proche du concept de mémoire distribuée.
+Cad que la carte graphique GPU et le processeur central CPU ont besoin de communiquer.
+
+Or a l'heure actuelle cette communication utilise une interface relativement lente (PCI express) qui rend couteuse la communication. 
+Il faut donc que la quantité de calcul effectués par la carte soit suffisante pour rentabilisé la communication.
+
+
+
+
 
 \subsection{Gestion des entrées sortie}
 
-le feedback CODA
-grosse quantité de données
-analyse a distance
+le feedback CODA\\
+grosse quantité de données\\
+
+L'objectif durant ma thèse était de réaliser une simulation de la reionization avec un nombre de particule de matière noire (et donc une grille coarse) de 2048**3.
+Et si il faut calculer ces données, il faut également les stocker, cad les écrire sur disque dur.
+
+\begin{itemize}
+
+\item Pour les particule:
+en considerant qu'un flottant est codé sur 8 bits, chaque champs represente 8Go.
+Il y a une dizaine de champs en sortie (3 positions, 3 vitesses, etc): environs 80Go
+
+\item Pour la grille :
+En considérant qu'approximativement la quantité de cellule est multipliée pas 3 a cause du raffinement  chaque champ physique (densité, température, composante de la vitesse, etc..) représente environ 24Go de donnée.
+Il y a au total un cinquantaine de champs physique nécessaire a l'exécution de la simulation mais en pratique environ une vingtaine en sortie.
+Chaque écriture représente donc 500Go pour la grille.
+
+\item Pour les étoiles:
+c'est très variable car dépend directement du nombre d'étoile a l'instant donné, qui dépend lui même du paramètre de résolution.
+
+\end{itemize}
+
+Soit au total envrion 600Go par instant.
+
+Mais on voudrait évidemment avoir accès a l'état de la simulation a différents instant.
+Cette simulation a généré 170 snapshot.
+Au final le volume de donnée de la simulation représente environs une centaine de tera octets.
+
+Les entrées sorties sont des etapes relativement longues et l'ecriture sur disque d'une telle quantité de données demande du temps et ralentit l'exécution de la simulation.
+De plus, ces données sont généralement calculé sur des machines distante et leurs rapatriement sur des machine locales peut également être couteux en temps (parfois plusieurs mois)
+%analyse a distance
+
+Architecture des données 
+
 conception d'une organisation des données
 séparation des champs
 structure imposé par la gestion de l'AMR
 utilisation de hdf5
 écriture parallèle
 
-\subsection{Potentiel d'optimisation EMMA}
-
-la forme des gathers/scatter
-optimisation matérielle -> les prochaines générations de GPU
-Opérations coarse sur grille non AMR.
-reformatage de l'arbre et découplage de la physique
+%\subsection{Potentiel d'optimisation EMMA}
+%
+%la forme des gathers/scatter
+%optimisation matérielle -> les prochaines générations de GPU
+%Opérations coarse sur grille non AMR.
+%reformatage de l'arbre et découplage de la physique
