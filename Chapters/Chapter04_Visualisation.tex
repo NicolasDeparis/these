@@ -1,10 +1,46 @@
 \section{Projeter une grille AMR}
 
 Le concept de ligne de visées.
-Lorsque l'on veux representer un environement 3d sur une image 2d, il est necessaire d'établir le concept de ligne de visée.
+Lorsque l'on veux représenter un environnement 3d sur une image 2d, il est nécessaire d'établir le concept de ligne de visée.
+
+Il existe differents types de méthode de projections.
+Dans la suite de ce chapitre nous allons develloper deux d'entre elles: la projection en perspective et la projection orthogonal (Fig \ref{fig:raycast_projection}).
+
+La projection en perspective correspond au cas l'observateur est ponctuel et au centre d'une sphere, les rayons lumineux lui arrive radialement.
+C'est la projection qui se rapproche le plus de la vision "naturelle".
+
+La projection orthogonale correspond a l'approximation de grande distance.
+Les rayon sont parralèles entre eux et l'image recue est comme "imprimée".
+Cette projection est moins naturelle dans le sens ou elle ne correspond pas a ce que nous pouvons percevoir, mais elle a l'avantage d'être tres simple a mettre en oeuvre.
 
 
-\subsection{Projection dans pyEMMA}
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/04/raycast_projection.png} 
+        \caption{Deux types de projections}
+ 		\label{fig:raycast_projection}
+\end{figure}
+
+
+\subsection{la réduction de la ligne de visée}
+
+Dans les cas l'objectif est de réduire une ligne de visée a une valeurs a représenter a l’écran.
+Il existe plusieurs façons de réduire les lignes de visées.
+
+Une des méthodes les plus facile consiste a prendre la moyenne ou la somme de la ligne, cette méthode présente l'avantage de représenter l'ensemble de la ligne.
+Il est également possible de prendre les maximum de la ligne, cette méthode augmente significativement le contraste, au point que certaines projections peuvent présenter des artefacts indésirables.
+
+Une troisième méthodes légèrement plus physique consiste a utiliser les équations de transfert du rayonnment pour determiner l'epaisseur optique de la ligne
+
+\begin{equation}
+v= \sum e^{-d}
+\end{equation}
+
+Enfin, il est possible d'utilisé la réelle expression de l'epaisseur optique, prenant en compte densité, température, ionization et vitesse du gaz.
+(TODO)
+
+
+\subsection{Projection orthogonale}
 J'ai develloper une methode de projection d'AMR utilisant les fonction hystograme de numpy.
 Ces fonctions étant tres optimisées, la performance de génération de cube est généralement satisfaisante (pour les cube L<10).
 L'idée est de considéré les cellule AMR comme des particules d'une certaine taille.
@@ -46,22 +82,19 @@ w = d \cdot \left( \frac{1}{2**(L-Lmax) }\right) **3
 
 
 
-L'incoveniant de la methode des histogramme est qu'il n'est possible de realisé que des projection utilisant la moyenne.
+L'inconveniant de la methode des histogramme est qu'il n'est possible de realiser que des projection utilisant la moyenne.
 Or on voudra dans certain cas considérer d'autres reduction de ligne de visée.
-Pour compenser cette methode on realisera une projection 3d de la même maniere que precedement mais en utilisant nympy.hystogramdd qui permet de raeliser des histogrammes a N dimensions.
+Pour compenser cette methode on realisera une projection 3d de la même maniere que precedement mais en utilisant numpy.hystogramdd qui permet de realiser des histogrammes a N dimensions.
 La taille de l'histogramme augmentant en 2**3L les projections 3d seront genéralement limité a 1024**3 pour des question de mémoire RAM. 
 
 
 
 
 
-matplotlib
-PIL
-openseadragon
-
-
-le mean
-le max
+%matplotlib
+%PIL
+%openseadragon
+%
 
 
 
@@ -69,24 +102,59 @@ le max
 
 
 
-\section{Projection 3D}
-opengl
-blender
 
-\subsection{le lancer de rayon}
+\section{Projection perspective}
+%opengl
+%blender
+
+Dans ce cas, il n'existe plus de façon directe de recuperer les lignes de visée, il est nécessaire d'avoir recours au lancé de rayon.
+Cette technique appelée raycasting permet de récupérer toute les cellules interceptée pas un rayon donné.
+Il existe différentes techniques de raycasting, j'ai pu en explorer plusieurs:
+
+\subsection{L'algorithme de bressenham}
+L'algorithme de bressenham est une technique optimisée de raycasting.
+Il consiste a travailler sur l'indice des cellules d'une grille regulière.
+
+Cette technique est tres rapide mais ne fonctionne cependant que sur grille regulière.
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/04/Bresenham_line.png} 
+        \caption{Algorithme de Bressenham }
+ 		\label{fig:bressenham}
+\end{figure}
+
+
+
+
+\subsection{La méthodes KD-tree}
+
+Une autre technique mise en place dans le but d'explorer directement l'amr.
+De la mème manière que la technique de calcule des flux (TODO ref) cette technique repose sur l'utilisation d'un arbre pour determiner le cellule par lesquelles passent le rayon.
+
+
+
+
 
 la mise en place de la camera
 la définition de la position et du champs de vue (FOV) et de la profondeur de vue.
-camera sphérique avec HealPix
+camera sphérique avec HealPix see Sec. \ref{sec:healpix}
+
+la projection equirectangle est la projection la plus utilisée en photographie et video sphérique.
+Elle présente un ratio d'aspect de 2:1 correspondant a 360:180.
+L'association Healpix vers equirectangle est trivial puisque qu'elle consiste a associer les position x,y de la projection equirectangle, au angle $\theta$ et $\phi$ de la projection Healpix.
+\begin{equation}
+x=\theta
+y=\phi
+\end{equation}
+
+La densité de point n'etant pas uniforme dans ce reférentiel, il est necessaire de realiser une interpolation sur une matrice régulière pour obtenir l'image finale. see Fig \ref{fig:equirectangle}
 
 
-le raycasting 
-Le raycasting permet de récupéré toute les cellules interceptée pas un rayon
-
-L'algorithme de bressenham
-
-
-la reduction de la ligne de visée
+\begin{figure}[bth]
+        \includegraphics[height=.95\textheight]{img/04/equi.png} 
+        \caption{Projection equirectangle d'une cube de densité}
+ 		\label{fig:equirectangle}
+\end{figure}
 
 
 \section{le compositing RGB (A)}
@@ -97,8 +165,37 @@ il reste le bleu et le vert.
 Dans une première série d'images j'ai utilisé le vert pour la densité de gas et le bleu pour la densité de matière noire.
 
 \subsection{le théorie des couleurs}
-Comment créer su noir et blanc?
+Comment créer du noir et blanc?
 
-par la moyenne 
-par une ponderation spéciale
+
+par la moyenne :
+\begin{equation}
+gray= (R+G+B)/3
+\end{equation}
+
+R,G,B=gray
+
+
+par une ponderation spéciale correspondant a la capacité de l'oeil a voir certaine couleur, conservation de la luminance:
+\begin{equation}
+gray = R*0.2989 + G*0.5870 +B*0.1140
+\end{equation}
+
+R,G,B=gray
+
+
+\section{Movie}
+implementation du mode movie de EMMA
+
+c'est la même chose que précedemment mais a chaque pas de temps, il faut l'implementer en live (en c) pour ne pas avoir a sortir toute les info.
+
+\section{Light cone}
+A partir des images
+
+
+\begin{figure}[bth]
+        \includegraphics[height=.95\textheight]{img/04/frise_wall.png} 
+        \caption{Light cone}
+ 		\label{fig:lightcone}
+\end{figure}
 
