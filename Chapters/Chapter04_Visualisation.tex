@@ -1,0 +1,104 @@
+\section{Projeter une grille AMR}
+
+Le concept de ligne de visées.
+Lorsque l'on veux representer un environement 3d sur une image 2d, il est necessaire d'établir le concept de ligne de visée.
+
+
+\subsection{Projection dans pyEMMA}
+J'ai develloper une methode de projection d'AMR utilisant les fonction hystograme de numpy.
+Ces fonctions étant tres optimisées, la performance de génération de cube est généralement satisfaisante (pour les cube L<10).
+L'idée est de considéré les cellule AMR comme des particules d'une certaine taille.
+
+Prenon l'exemple d'une grille de densité non raffiné utilisant les sorties EMMA.
+Une grille 2d  quelconque est représenté par x,y,l et d ou x,y etant les position du bord inferieur guauche des cellules, l étant le niveau des cellules d etant le champs a représenter (ici la densité).
+
+\begin{equation}
+dV= \left( \frac{1}{2**L }\right) **3
+\end{equation} 
+
+En réalisant un histogram 2d de x et y pondéré en masse.
+Le poids de chaque cellule correspond a la masse de la cellule $w = \rho \cdot dV$:
+En considerant le centre des cellule $(x' = x+dx(L) /2)$ et en ajustant le bin de l'histograme sur la taille de la grille on peux projeter un niveau tres rapidement.
+
+\begin{lstlisting}[float=bth,language=python,frame=tb,caption={lprojection de l'AMR par la méthode des histogramme Numpy},label=lst:useless]
+ import numpy as np
+ h,binX,binY=np.hystogram2d(x,y,weight=dv)
+\end{lstlisting}
+
+ou h est une matrice 2d representant la projection.
+
+
+Lorsque l'AMR d'entrée contient plusieurs niveaux, il est possible de projeter les cellules niveau par niveau.
+Par example pour une grille contenant les niveaux 8 et 9, on projettera d'abord toutes les cellules de niveau 8 pour obtenir une matrice 256x256.
+puis on agrandira cette matrice avec des operateurs de changement de grille (TODO cf multigrille).
+La méthode la plus naturelle consiste utiliser une projection directe.
+nous obtenons alors une premiere grille de taille 512x512.
+On projettera ensuite par histogramme toutes les cellules du niveau  9 pour obtenir une seconde matrice de taille 512x512.
+La grille finale sera la moyenne des deux grille précédentes.
+
+On pourra utiliser ce principe de manière récursive jusqu'a avoir projeter tout les niveaux.
+
+Dans le cas ou le niveau de projection ne correspond pas au niveau maximum de l'AMR, il suffira de modifier la pondération des niveau superieur au niveau de projection en utilisant:
+
+\begin{equation}
+w = d \cdot \left( \frac{1}{2**(L-Lmax) }\right) **3
+\end{equation}
+
+
+
+L'incoveniant de la methode des histogramme est qu'il n'est possible de realisé que des projection utilisant la moyenne.
+Or on voudra dans certain cas considérer d'autres reduction de ligne de visée.
+Pour compenser cette methode on realisera une projection 3d de la même maniere que precedement mais en utilisant nympy.hystogramdd qui permet de raeliser des histogrammes a N dimensions.
+La taille de l'histogramme augmentant en 2**3L les projections 3d seront genéralement limité a 1024**3 pour des question de mémoire RAM. 
+
+
+
+
+
+matplotlib
+PIL
+openseadragon
+
+
+le mean
+le max
+
+
+
+
+
+
+
+\section{Projection 3D}
+opengl
+blender
+
+\subsection{le lancer de rayon}
+
+la mise en place de la camera
+la définition de la position et du champs de vue (FOV) et de la profondeur de vue.
+camera sphérique avec HealPix
+
+
+le raycasting 
+Le raycasting permet de récupéré toute les cellules interceptée pas un rayon
+
+L'algorithme de bressenham
+
+
+la reduction de la ligne de visée
+
+
+\section{le compositing RGB (A)}
+Une fois les projections realisées il est possibles de les combinées en créant des images en fausses couleurs.
+
+De maniere naturelle, J'ai utilisé le rouge pour  la température et la transparence pour l'ionization.
+il reste le bleu et le vert.
+Dans une première série d'images j'ai utilisé le vert pour la densité de gas et le bleu pour la densité de matière noire.
+
+\subsection{le théorie des couleurs}
+Comment créer su noir et blanc?
+
+par la moyenne 
+par une ponderation spéciale
+
