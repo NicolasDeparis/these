@@ -1,26 +1,164 @@
-\chapter{Les etoiles}
+\chapter{La composante stellaire}
 
 lien entre les différents solveurs en fonction du stade évolutif
+population stellair et non etoiles individuelles\\
 
 \section{La formation stellaire}
 
-loi de schmidt-kennicut
-tirage aléatoire
+\subsection{La loi de schmidt-kennicut}
+Loi observationnelle \\
+conversion densité surfacique vers densité 3D\\
+rho 1.5\\
+temps de free fall\\
+
+Seuil en densité \\
+\begin{equation}
+	flag = 
+  \begin{cases}
+      True, & \text{if } \rho > \rho_{thresh}\\
+      False,              & \text{otherwise}
+  \end{cases}
+\end{equation} 
+
+
+
+
+\begin{equation}
+	\rho_{thresh} = max\left(  \delta_{in} \bar{\rho}, \rho_{in} a^3 \right)
+\end{equation} 
+
+ou $\delta_{in}$ et $\rho_{in}$  sont respectivement les parametre d'overdensité et de densité physique.
+$\delta_{in}$est exprimé en unité comobile et est donc constant dans le temps en unité du code
+ $\rho_{in}$ est exprimé en unité physique (en atome par metre cube), sa valeur evolue dans le temps du point de vue des unité du codes.
+ 
+Dans les cellules au dessus du seuil on considère une SFR de:
+
+\begin{equation}
+	SFR = \epsilon \frac{\rho_g}{t_{ff}}
+    \label{eq_sfr}
+\end{equation}
+
+
+avec  $\epsilon$ le parametre d'efficacité de formation stellaire , $\rho_g$ la densité de gas locale, et le temps de chute libre:
+\begin{equation}
+t_{ff} = \sqrt{\frac{3\pi}{32G\rho_g}}
+\end{equation}
+
+\begin{equation}
+	M_{star} = SFR . dv .dt 
+\end{equation}
+
+determination de la valeur de 55\\
+
+tirage aléatoire\\
+loi de Poisson\\
+
+resolution en masse\\
+
+
 
 \section{La vie radiative}
 
-injection d'énergie dans le solveur radiatif, ok mais combien?
-calibration energetique et Starburst99
+injection d'énergie dans le solveur radiatif, ok mais combien?\\
+calibration energetique et Starburst99\\
+
+
+$
+    S = 
+\begin{cases}
+    S_0 ,         & \text{if } t < t_{life}\\
+    S_0.t^{-4},   & \text{if } t_{life} \leq t < 100.t_{life} \\
+    0,   & \text{if } 100t_{life} \leq t
+\end{cases}
+$
+
+
+\begin{table}
+\begin{tabular}{|l|l|}
+  \hline
+	$<h\nu>$	&  23.42 eV \\
+	$\alpha_e$	&  $2.35.10^{-22}$ m$^2$ \\
+	$\alpha_i$	&  $1.82.10^{-22}$ m$^2$ \\
+  \hline
+\end{tabular}
+\caption{Photon properties
+\label{tab_photon}}
+\end{table}
+
+Tab \ref{tab_photon} caracteristique des photons.
+
+
+
+
+We found a mean energy of $<h\nu> = 23.42$ eV,
+an energy weighted cross section of
+$\alpha_e = 2.35.10^{-22}$ m$^2$
+and a number weighted cross section of
+$\alpha_i = 1.82.10^{-22}$ m$^2$
+
+
+
+Masse de la population\\
+produit en croix pour correspondre a la masse dans simu\\
+integration seulement sur energy ionisante\\
+
+Multigroupe frequence\\
+multigroup temporel\\
+
 
 \section{le problème de la masse des étoiles}
 
-le paramètre de masse des étoiles change la reionization
-effet numérique
-le rayonemment est piègé dans les cellules
+le paramètre de masse des étoiles change la reionization\\
+effet numérique\\
+le rayonnement est piégé dans les cellules\\
 
 
 \section{Les supernovae}
 
-Implémentation
-Test numérique (Sedov)
-Papier Feedback
+\subsection{le modele theorique}
+Les etoiles de plus de 8mo ewploses en SN en injectant 1e51 erg dans le mmilieu\\
+Cette injection limite fortement la formation stellaire dans le milieu.\\
+modele sous grille\\
+
+
+
+LEs differentes phases
+\begin{itemize}
+\item expansion adiabatique
+\item snowplow
+\end{itemize}
+
+\subsection{Test numérique (Sedov)}
+
+OK\\
+mais pas en cosmo
+
+
+
+\subsection{ differentes implementations existantes}
+
+
+\subsection{Mes Implémentations}
+
+\begin{equation}
+e_{SN} = E_{SN}/8
+\end{equation}
+
+Then this energy is used to change the gas velocity by using:
+\begin{equation}
+    \Delta \overrightarrow{v_{gas}} = \sqrt{\frac{2e_{SN}}{\rho_g.dV}} \overrightarrow{u}
+    \label{eq_sn_direct}
+\end{equation}
+
+le pas de temps\\
+\section{test}
+fonction de luminosité 
+
+
+
+\section{Influence du feedback stellaire sur la reionization}
+
+\subsection{etude de flux au R200}
+
+\subsection{fraction d'echapement}
+

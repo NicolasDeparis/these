@@ -1,4 +1,4 @@
-\chapter{Introduction au modèle numérique}\label{ch:introduction}
+\chapter{Les méthodes numérique}\label{ch:introduction}
 
 Les echelles de temps sont radicalement opposées entre la cosmo qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle. 
 il faut considérer les simulations comme éphémère.
@@ -637,19 +637,19 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 
 \subsection{discretisation}
 \begin{equation}
-\rm{ \frac{\partial U}{\partial t} + \nabla \cdot (F(U)) = S(U), }
+ \frac{\partial U}{\partial t} + \nabla \cdot (F(U)) = S(U), 
 \label{eq:rad_generale}
 \end{equation}
 
-avec $\rm{U}$ le vecteur des quantité conservées, $\rm{F}$ la fonction de flux, et $\rm{S}$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
+avec $U$ le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
 
 \begin{equation}
-\rm{ \frac{ U^{p+1}_i - U^{p}_i }{\Delta t} + \frac{ F^{p}_{i
-+1/2} - F^{p}_{i-1/2} }{\Delta x} =0,}
+\frac{ U^{p+1}_i - U^{p}_i }{\Delta t} + \frac{ F^{p}_{i
++1/2} - F^{p}_{i-1/2} }{\Delta x} =0,
 \label{eq:rad_solver}
 \end{equation}
 
-Condition de Courant radiative : $\rm{ c \leq \Delta x / \Delta t }$.
+Condition de Courant radiative : $ c \leq \Delta x / \Delta t $.
 Le pas de temps est donc plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
 
 \subsection{vitesse de la lumière reduite}
@@ -808,3 +808,15 @@ utilisation de hdf5
 %optimisation matérielle -> les prochaines générations de GPU
 %Opérations coarse sur grille non AMR.
 %reformatage de l'arbre et découplage de la physique
+
+
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/sdss_millenium.jpeg} 
+        \caption{ 
+%http://wwwmpa.mpa-garching.mpg.de/millennium/
+}
+ 		\label{fig:}
+\end{figure}
+

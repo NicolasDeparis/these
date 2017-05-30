@@ -1,52 +1,41 @@
-\chapter{Introduction au modèle physique }\label{ch:introduction_physique}
+\chapter{ Le modele standard } \label{ch:introduction_physique}
 
-\section{Les piliers}
+Cette thèse s'inscrit dans le cadre du modèle standard de la cosmologie.
+Ce modèle considère un univers en expansion $\Lambda$ composé essentiellement de matière noire froide (Cold Dark Matter) $\Lambda$ Cold Dark Matter ($\Lambda$CDM)
 
-L'intégralité de l'astrophysique repose sur 3 piliers:
-\begin{enumerate}
-\item L'observation
-\item La théorie
-\item La simulation
-\end{enumerate}
+L'idée d'un univers non statique a pris forme dans le début du XIX eme siècle suite a deux evenement majeurs, d'un coté l'élaboration de la théorie de la relativité générale d'Einstein en 1915 a permis la mise en place d'un cadre theorique propice, et d'un autre coté, plus d'une decenie plus tard les observation de Hubble entre 1923 et 1929.
 
-lien avec la méthode scientifique de manière générale. observation, modélisation et test de la théorie or en astro on ne peut pas tester directement donc on simule.
+\section{Loi de Hubble ( observation) }
 
-L'observation est le premier de ces pilier. 
-Il est le plus ancien et celui sur lequel repose le plus de poids.
-L'Homme a toujours regardé le ciel.
-De plus il est commun a toute les disciplines scientifique.
-Il n'est pas de science possible sans observation.
-La principale difficulté ici, est que le point de vue que nous avons sur l'Univers est unique. 
-Il nous est impossible de le regarder sous un autre angle.
-
-Vient ensuite la théorie.
-Lorsque l'on voit ces lumière sur la voûte celleste, nous sommes obligé de nous poser la question essentielle de leur provenance.
-Cette question mène a l'élaboration de diverse formulation tentant d'expliquer comment (et pourquoi) le ciel s'illumine la nuit.  
-Dans le cadre de l'étude de l'univers dans sont ensemble, cette théorie est nommée cosmologie et repose sur des concept mathématiques complexes
-Il nous est impossible de d'effectuer des expériences sur l'univers, notre porté d'interaction est bien trop réduite.
-
-Enfin, le dernier pilier : la simulation.
-Pilier le plus récent il est sensé palier au problème des deux autres : l'impossibilité de changer de point de vue ou de tester les théories élaborées.
-Ici sous entendue la simulation numérique, il est beaucoup plus récente et dépend grandement de la technologie.
-C'est celui vers lequel j'ai choisis de me diriger.
-
-\section{observation -> Hubble}
-
-découverte des galaxies\\
-découverte de l'expansion de l'univers
-
+Hubble observe deux phenomème qui vont mené a une redeffinition de notre notion de cosmologie.
+Il est le premier a observer qu'il existe d'autre galaxie que la voie lactée.
+De plus il observe une relation entre la distance de ces nouvelles galaxies et leurs spectre lumineux.
+Plus ces galaxies sont  éloignées, plus leurs spectre et décalé vers la rouge.
+Il interpretat ce décallage comme un effet dopler et montra que ces galaxie s'éloigne de l'observateur.
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hubble_law.jpg} 
-        \caption{Hubble law. 
+        \caption{Loi de Hubble a partir d'observation actuelles. 
 %http://www.pnas.org/content/112/11/3173/F2.expansion.html
         Image ESO}
  		\label{fig:hubble_law}
 \end{figure}
 
+Cette relation entre la distance des galaxies $D$ et leurs vitesse d'éloignement $V$ est aujourd'hui appelée loi de Hubble et peux etre résumé par :
+
 \begin{equation}
-V = H_0 D
+V = H_0 D, 
 \end{equation}
+ ou $H_0$ est la constante de Hubble.
+
+Cette correlation est aujourd'hui tres bien etablie observationelement (Fig. \ref{fig:hubble_law})
+
+Ces observations on permis de confirmer ce qui avait été pressentis par Einstein plus d'une decenie plus tot, lorsqu'il introduisit le concept de constante cosmologique (qu'il nomma $\Lambda$). 
+Ce concept 
+
+
+découverte des galaxies\\
+découverte de l'expansion de l'univers
 
 
 \begin{figure}[bth]
@@ -172,16 +161,123 @@ univers infini, homogène, isotrope
 
 \citep{planck_collaboration_planck_2016}
 
-\subsection{Energie noire}
+\subsection{Energie noire $\Lambda$}
 
-echelle gigaparsec
+\subsubsection{Equation d'Einstein}
+
+La notion d'un univers non statique a ete introduite par Einstein en 1917 en rapport avec ses travaux sur le relativité générale. 
+Sa célèbre equation de champ décrivant le lien entre densité d'énergie et déformation de l'espace temps introduit la constante cosmologique $\Lambda$ representant 
+
+Equation d'Einstein :
+http://cdsads.u-strasbg.fr/abs/1915SPAW.......844E
+\begin{equation}
+R_{\mu\nu} = \frac{1}{2} g_{\mu\nu}R + \Lambda g_{\mu\nu}  = \kappa T_{\mu\nu}
+\end{equation} 
+
+
+
+Découverte de l'accélération de l'expansion de l'univers simultanément par 2 équipes :
+Les 2 ont eue le prix nobel en 2011
+
+\begin{itemize}
+\item  Supernova Cosmology Project
+ http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
+ 
+ \item  High-Z supernovae search team
+http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
+
+\end{itemize}
+
+quelques mois plus tard :
+Première apparition du terme energie noire:
+http://cdsads.u-strasbg.fr/abs/1999PhRvD..60h1301H
+
+
+
+\subsubsection{ Équations de Friedmann }
+
+ Recriture de l equation d'Einstein en considerant un univers homogene et isotrope.
+ 
+ Alexandre Friedmann Über die Krümmung des Raumes, Zeitschrift für Physik 10, 377-386 (1922). Première écriture des équations de Friedmann, dans le cas d'une coubure spatiale positive. http://cdsads.u-strasbg.fr/abs/1922ZPhy...10..377F 
+(de) Alexandre Friedmann, Über die Möglichkeit einer Welt mit konstanter negativer Krümmung des Raumes, Zeitschrift für Physik 21 326–332 (1924). Écriture des équations de Friedmann dans le cas d'une courbure spatiale négative. 
+ 
+univers de Friedmann-Lemaître-Robertson-Walker  
+http://dictionnaire.sensagent.leparisien.fr/%C3%89quations%20de%20Friedmann/fr-fr/
+ 
+Équations de Friedmann : 
+\begin{equation}
+3 \left( \frac{H^2}{c^2} +\frac{K}{a^2} \right) = \frac{8 \pi G }{c^2} \rho
+\label{eq:friedman1}
+\end{equation}
+
+\begin{equation}
+-2 \frac{ \dot{H}}{c^2} -3 \frac{H^2}{c^2} -\frac{K}{a^2} = \frac{8 \pi G }{c^4 P}
+\label{eq:friedman2}
+\end{equation}
+
+Eq. \ref{eq:friedman1} relie le taux d'expansion H, la courbure spatiale K et le facteur d'échelle a à la densité d'énergie $\rho$, 
+Eq. \ref{eq:friedman2} relie la pression P à la dérivée temporelle du taux d'expansion
+ 
+ 
+ 
+\begin{equation}
+\frac{\dot{a}}{a} = H_0 \sqrt{ \Omega_{r,0} a^{-4} +  \Omega_{M,0} a^{-3} + \Omega_{K,0}a^{-2} + \Omega_{\lambda,0}  } 
+\end{equation}
+
+
+\begin{equation}
+ \Omega_{i,0} = \frac{\rho_{i,0}}{\rho_{c,0}}
+ \end{equation}
+
+\begin{equation}
+\rho_{c,0} = \frac{3H_0^2}{8\pi G}
+ \end{equation}
+ 
+ 
+\begin{equation}
+ \Omega_{K,0} = 1 - \Omega_{r,0} - \Omega_{M,0} - \Omega_{\lambda,0} 
+ \end{equation}
+
+Univers plat
+\begin{equation}
+ \Omega_{K,0} = 0
+ \end{equation}
+
+\begin{equation}
+\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1
+ \end{equation}
+
+
+
+
+échelle gigaparsec\\
 Facteur d'expansion
 
-\subsection{Matière noire}
 
-echelle mega parsec
-gouverne la gravité
-non collisionnelle
+\begin{equation}
+H=\frac{1}{a} \frac{da}{dt} = \frac{\dot{a}}{a}
+\end{equation}
+
+Metrique de Friedmann-Lemaître-Robertson-Walker (FLRW)
+
+
+https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html
+
+\subsection{Matière noire CDM}
+
+echelle mega parsec\\
+gouverne la gravité\\
+non collisionnelle\\
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/01/matter_power_spectrum.jpeg} 
+        \caption{Spectre de puissance de distribution de la matière a grande échelle
+        http://adsabs.harvard.edu/cgi-bin/bib_query?2004PhRvD..69j3501T}
+ 		\label{fig:matter_power_spectrum}
+\end{figure}
+
+
 
 \subsection{Baryon}
 
@@ -200,85 +296,8 @@ seulement E>13.6 eV
 
 plot en camembert avec les différents constituants
 
-\section{Observation -> la reionization}
-
-le manque d'observations
-
-la difficulté des observations
-
-les futures observations
-
-Quelles sont les preuves de la réionisation?
-
-\subsection{spectre de quasar}
-
-tunnel gun peterson
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/01/quasar_spectre.pdf} 
-        \caption{Spectre de quasar a differents redshift presentant un tunnel gun peterson.
-        Image fan et al.}
- 		\label{fig:spectre_quasar}
-\end{figure}
-
-\subsection{Epaisseur optique lyman alpha}
-
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/01/epaisseur_optique_quasar.png} 
-        \caption{%https://ism2009.wordpress.com/2009/04/28/on-the-density-of-neutral-hydrogen-in-intergalactic-space/
-		Epaisseur optique calculée a partir des spectres de quasar de la Fig\,\ref{fig:spectre_quasar}
-        Image fan et al.}
- 		\label{fig:epaisseur_optique_quasar}
-\end{figure}
-
-\subsection{Epaisseur optique lyman alpha}
-
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/01/epaisseur_optique_thomson.png} 
-        \caption{%https://inspirehep.net/record/1343310/plots
-		Epaisseur optique Thomson
-        Image Robertson et al.}
- 		\label{fig:epaisseur_optique_thomson}
-\end{figure}
 
 
 
-polarisation du CMB
-
-ligne 21 cm
-
-fonction de luminosité UV
-
-
-
-\section{Théorie -> La reionization}
-
-réionisation et non rayonnisation!
-
-Qu'est ce que c'est?
-
-fin des âges sombres
-apparition des première sources de rayonnement
-Pourquoi étudier la réionisation
-
-Dernier processus impactant l'ensemble de l'univers.
-Importance pour le "missing satellite problem"
-
-\subsection{Sphère de Stromgren}
-
-
-\subsection{les principales question en suspend de l'étude de la réionisation}
-
-quand est ce arrivé?
-quelles sont les sources? -> débat galaxies vs quasars
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/01/gal_AGN.pdf} 
-        \caption{
-        Budget de photons provenant des galaxies et des quasars qurant la reionization.
-}
- 		\label{fig:gal_AGN}
-\end{figure}
-
-outlier dans l'épaisseur optique des quasars
-Le groupe local ?
 
 
