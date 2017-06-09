@@ -1,17 +1,50 @@
 \chapter{ Le modele standard } \label{ch:introduction_physique}
 
 Cette thèse s'inscrit dans le cadre du modèle standard de la cosmologie.
-Ce modèle considère un univers en expansion $\Lambda$ composé essentiellement de matière noire froide (Cold Dark Matter) $\Lambda$ Cold Dark Matter ($\Lambda$CDM)
+Ce modèle, aussi appelé modèle du Big Bang, considère un univers en expansion et composé essentiellement de matière noire froide.% -- Cold Dark Matter -- 
+$\Lambda$
+ $\Lambda$ Cold Dark Matter ($\Lambda$CDM)
 
-L'idée d'un univers non statique a pris forme dans le début du XIX eme siècle suite a deux evenement majeurs, d'un coté l'élaboration de la théorie de la relativité générale d'Einstein en 1915 a permis la mise en place d'un cadre theorique propice, et d'un autre coté, plus d'une decenie plus tard les observation de Hubble entre 1923 et 1929.
+L'idée d'un univers non statique a pris forme dans le début du XIX eme siècle suite a deux événement majeurs, d'un coté l'élaboration de la théorie de la relativité générale d'Einstein en 1915 a permis la mise en place d'un cadre théorique propice, et d'un autre coté, plus d'une décennie plus tard les observation de Hubble entre 1923 et 1929.
+
+En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L} 
+
+
 
 \section{Loi de Hubble ( observation) }
 
-Hubble observe deux phenomème qui vont mené a une redeffinition de notre notion de cosmologie.
-Il est le premier a observer qu'il existe d'autre galaxie que la voie lactée.
-De plus il observe une relation entre la distance de ces nouvelles galaxies et leurs spectre lumineux.
-Plus ces galaxies sont  éloignées, plus leurs spectre et décalé vers la rouge.
-Il interpretat ce décallage comme un effet dopler et montra que ces galaxie s'éloigne de l'observateur.
+%découverte des galaxies\\
+%découverte de l'expansion de l'univers
+
+Hubble observe deux phénomène qui vont mené a une redéfinition de notre notion de cosmologie.
+Il bénéficie a l'époque de l'accès au plus puissant télescope du monde (le télescope Hooker du mont Wilson)
+
+Cet instrument lui a permis, dans une publication de 1926, d'observer que des nébuleuses situées hors de notre galaxie présente des caractéristiques identiques a des système d'étoiles \citep{1926ApJ....63..236H}.
+Il en déduit qu'il existe d'autre galaxie que notre voie lactée.
+
+Avec les moyens observationnels dont nous disposons aujourd'hui l’existence d'un grand nombre de galaxies en dehors de notre voie lactée est bien établie.
+La figure \ref{fig:hubbl_deep_field} présente le "Hubble Ultra Deep Field" \citep{1538-3881-132-5-1729} une image prise en 2014, montrant un grand nombre de galaxies dans une portion réduite du ciel.
+
+\begin{figure}[bth]
+        \includegraphics[width=.9\linewidth]{img/01/hudf.jpeg} 
+        \caption{Hubble Ultra Deep Field 2014.
+        Image NASA.
+		En 1926 E. Hubble observe pour la première fois qu'il existe d'autre galaxies.
+		Leur nombre est estimé aujourd'hui à $\approx 2 \cdot 10^{11}$.}
+ 		\label{fig:hubbl_deep_field}
+\end{figure}
+
+
+De plus il observe une relation entre la distance de ces nouvelles galaxies et leurs spectre lumineux \citep{1929CoMtW...3...23H}.
+Plus ces galaxies sont éloignées de l'observateur, plus leurs spectre est décalé vers le rouge.
+Il interpréta ce décalage comme un effet Dopler et montra que ces galaxie s'éloigne de l'observateur avec une vitesse radiale directement proportionnelle a leur distance.
+
+Cette relation entre la distance des galaxies $D$ et leurs vitesse d'éloignement $V$ est aujourd'hui appelée loi de Hubble et peux être résumé par :
+
+\begin{equation}
+V = H_0 D,
+\end{equation}
+ou $H_0$ est la constante de Hubble .
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hubble_law.jpg} 
@@ -21,58 +54,103 @@ Il interpretat ce décallage comme un effet dopler et montra que ces galaxie s'�
  		\label{fig:hubble_law}
 \end{figure}
 
-Cette relation entre la distance des galaxies $D$ et leurs vitesse d'éloignement $V$ est aujourd'hui appelée loi de Hubble et peux etre résumé par :
+Une représentation actuelle de la relation entre la distance et le décalage vers le rouge observé est présenté sur la Fig. \ref{fig:hubble_law}.
+Cette corrélation est aujourd'hui très bien établie observationnellement (Fig. \ref{fig:hubble_law})
 
-\begin{equation}
-V = H_0 D, 
-\end{equation}
- ou $H_0$ est la constante de Hubble.
-
-Cette correlation est aujourd'hui tres bien etablie observationelement (Fig. \ref{fig:hubble_law})
-
-Ces observations on permis de confirmer ce qui avait été pressentis par Einstein plus d'une decenie plus tot, lorsqu'il introduisit le concept de constante cosmologique (qu'il nomma $\Lambda$). 
-Ce concept 
+Ces observations on permis de confirmer ce qui avait été pressentis par Einstein plus d'une décennie plus tôt, lorsqu'il introduisit le concept de constante cosmologique ($\Lambda$). 
 
 
-découverte des galaxies\\
-découverte de l'expansion de l'univers
+
+\section{$\Lambda$CDM}
 
 
-\begin{figure}[bth]
-        \includegraphics[width=.9\linewidth]{img/01/hudf.jpeg} 
-        \caption{Hubble Ultra Deep Field 2014. 
-        Image NASA}
- 		\label{fig:hubbl_deep_field}
-\end{figure}
-
-\section{théorie - lCDM}
-
-le big bang\\
-l'inflation\\
-la nucléosynthèse\\
-le CMB\\
-la reionization
+%le big bang\\
+%l'inflation\\
+%la nucléosynthèse\\
+%le CMB\\
+%la reionization
 
 
-\section{Le CMB}
+Une fois établis que les galaxies s'éloigne de nous dans toutes les directions, plusieurs constats s'imposent.
+
+Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les une des autres, et en poussant se constat a l'extrème, il fut imaginé qu'a un certain instant dans l'histoire de l'Univers, toute la matière devait être concentré en un point.
+Cette singularité à été baptisé Big Bang et donne son nom au modèle cosmologique actuel.
+
+%Dans le modèle du Big Bang, le début de l'Univers est suivis par une phase d'expansion rapide appelé inflation.
+
+Dans la conception actuelle de l'Univers, celui ci est par définition l'ensemble de ce qui existe, il ne lui est pas possible d'échanger de l’énergie avec l’extérieur et c'est donc un système isolé.
+Or, la thermodynamique nous dit qu'il existe une relation entre le volume et la température d'un system adiabatique.
+La température (la densité d'énergie interne) diminue au fur et a mesure que l'Univers se dilate.
+
+Plus l'on se rapproche temporellement du BigBang, plus l'Univers est dense et chaud.
+
+Après le BigBang, l'Univers est composé d'une soupe de quark et de gluon, qui vont former en se refroidissant les premiers protons, neutrons et électrons.
+Les protons et les neutrons vont a leurs tour s'assembler pour former les premiers noyaux atomiques.
+
+La théorique de la nucléosynthèse primordiale permets d'expliquer avec precision l'abondance observée des différents atomes présent dans l'Univers.
+
+A cette période, les noyaux atomiques sont découplé des électrons, on dis que l'Univers est dans un état ionisé.
+Il faudra attendre $\approx 380 000$  ans pour que la température baisse suffisamment pour permettre l'apparition des premiers atomes neutres.
+Cet période est appelée "l'époque de la recombinaison" et a donné lieu a l'émission du fond diffus cosmologique que nous développerons plus en détails dans la section \ref{sec:CMB}.
+Durant cette transition, l'Univers a connu un changement d'état majeur puisque celui ci est passé d'un état globalement ionisé a un état globalement neutre.
+
+A la suite de l'émission du fond diffus cosmologique, commence une période appelée "les ages sombres".
+L'Univers est alors composé de gaz froid soumis principalement a deux forces : la gravité et l'expansion de l'Univers.
+La compétition entre ces deux forces couplé a de très légères perturbations dans la densité de l''Univers ont menées a l'apparition des premières sur-densité qui ont permis l'apparition des premières étoiles.
+Ces étoiles ont émis du rayonnement suffisamment énergétique pour arracher les électrons du gaz environnant.
+L'Univers va alors subir un second changement d'état majeur, puisque le rayonnement des premières étoiles va de nouveau ioniser le gaz.
+C'est l'époque de la reionization.
+
+
+
+
+
+
+
+
+
+\section{Le fond diffus cosmologique}
+\label{sec:CMB}
+
+Comme nous l'avons vu dans la section précédente, l’émission du fond diffus cosmologique, ou rayonnement de fond micro-ondes (pour Cosmic Microwave Background ou CMB) marque la transition entre deux état distincts de l'Univers.
+
+
+
+\subsection{Surface de dernière diffusion}
+
+Du au grand nombre d'électrons libres avant la recombinaison, la lumière était soumise a un grand nombre de diffusions.
+Et a la manière de la surface d'une étoile, ou nous ne voyons que les photons qui ont pu s’échapper de celle ci et non ceux qui ont été émis en son centre, nous ne pouvons pas observer de lumière émise avant le CMB.
+
+Le CMB étant la plus ancienne lumière que nous pouvons observer, il contient actuellement l'information que nous pouvons obtenir sur l'état de l'Univers lorsqu'il était le plus jeune possible.
 
 
 \subsection{Observations}
 
-Penzias et Willson
+La quête de l'état de l'Univers a ses début a commencé de manière fortuite en 1964 quand Penzias et Willson ont observé, lors de travaux sur un nouveaux type d’antennes radio, un signal radio inexpliqué.
+Ce signal était constant et extrêmement homogène.
+Il obtiennent le prix Nobel en 1978 pour la \cite{PenziasWilsonNobel}.
 
-\subsection{Théorie}
+Cette observation constitue un argument de poids en faveur de la théorie du Big Bang 
+et a été suivie d'une série de mission spatiale dans le but d'améliorer les mesures faites sur le CMB.
 
-surface de dernière diffusion
+\begin{itemize}
+\item le satellite COBE (1989)
+\item le satellite WMAP (2001)
+\item le satellite Plank (2009)
+\end{itemize}
+
 
 
 \subsection{Température}
-Le cosmic Microwawe background se presente sous la forme du corp noir le plus parfait connus.
+Le cosmic Microwawe background se présente sous la forme du corps noir a une température de 2.73°K.
 Fig. \ref{fig:cmb_thermal_spectrum}
 T=2.73K
 
+emis a z=1100 et a une température de $\approx 3000$ K.
 
-\begin{figure}[bth]
+
+
+\begin{figure}[htbp]
         \includegraphics[width=.95\linewidth]{img/01/Cmbr.pdf} 
         \caption{Spectre thermique du CMB vue par le satellite Cosmic Background Explorer (COBE). 
         Image Wikipédia}
@@ -87,15 +165,15 @@ T=2.73K
 Le CMB n'est pas uniforme, il presente de tres faibles fluctuations (1e-5)qui nous renseigne sur l'etat de l'univers au moment de son emission.
 Fig. \ref{fig:cmb_power_spectrum}
 
-\begin{figure}[bth]
+\begin{figure}[htbp]
         \includegraphics[width=.95\linewidth]{img/01/CMB.jpeg} 
-        \caption{Les fluctuation du CMB vues par le satellite Planck. 
+        \caption{Les fluctuations du CMB vues par le satellite Planck. 
         Image ESA}
  		\label{fig:cmb}
 \end{figure}
 
 
-En decomposant ces fluctuations en harmoniques sphériques:
+En décomposant ces fluctuations en harmoniques sphériques:
 Fig\,\ref{fig:harmoniques_spheriques}
 
 decomposition en multipoles
