@@ -1,0 +1,54 @@
+\chapter{Les Halos}
+
+L'étude des simulation se fait souvent halos par halos.
+Quand on cherche a déterminer es propriétés des galaxies, un paramètre important est leur masse.
+Comme le gaz suit la dynamique des baryons, les galaxies sont situées dans les surdensités de matière noire.
+
+
+\section{La detection des halos}
+
+L'objectif d'un halo finder est de detecter les surdensités dans le champs de matière noire.
+Comme nous l'avons vu plus tot, (TODO ref) le champ de matière noire utilise une représentation sous forme de particules.
+
+J'ai principalement utilisé l'algoritme Friend Of Friend pour detecter les sur densités.
+
+FOF retourne une liste de position de halo, une liste permettant de lier les particules detecté aux halo.
+
+\section{Le rayon de Viriel}
+Approximation par le R200:
+\begin{equation}
+R_{200}=\frac{3\cdot M_{FoF} }{4\pi\cdot 200 \bar{\rho} }
+\end{equation}
+
+
+\section{Le problème de la forme des halos}
+Fortement non viriallisé a z=6\\
+beaucoup de dynamique et merger dans les filemments
+
+\section{association dans le R200}
+
+On cherchera a associer les galaxies  (surdensité d'étoiles) aux halos.
+
+La première méthode consiste a utiliser l'approximation du R200.
+Le méthode est la suivante:
+
+\begin{itemize}
+\item générer un KDtree sur les étoiles
+\item Faire une recherche sphérique autour de la positions des halo, sur un rayon de R200
+\end{itemize}
+
+Il sera possible d'utiliser une méthode comparable sur la grille, en utilisant les centres de cellule a la place de la position des étoiles.
+
+Comme les particules de matière noire  données par FoF ne represente pas le meme volume, dans un soucis de cohérence, on appliquera cette méthodes a la matière noire également.
+
+
+\section{association "fine"}
+Dans le but d'améliorer ces problèmes d'identification dans les halos fortement non virialisé, j'ai développer une méthode pour associer plus précisement les halos et la grille.
+
+
+la méthode consiste a :
+\begin{itemize}
+\item generer un KDtree sur la grille
+\item pour chaque particule d'une halo, trouver la plus proche cellule
+\item filtrer les cellules doublons
+\end{itemize}
