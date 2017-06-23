@@ -1,7 +1,5 @@
 \section{Les supernovae}
 
-
-
 \subsection{le modele theorique}
 il existe principallement deux evenement pouvant mener a un explosion de supernovae : 
 
@@ -10,10 +8,6 @@ il existe principallement deux evenement pouvant mener a un explosion de superno
 \item soit l'etoile n'est pas suffisement massive (elle va donc mourrir en naine blanche) mais dispose de suffisement de matière a proximité (générallement étopiles double ou le compagnon pas en phase géante rouge) pour que sa masse augmente avec le temps.
 la matière acretté va faitre passer la masse de cettte étoile au dessu de la limite.
 \end{itemize}
-
-
-
-
 
 
 Les etoiles de plus de 8mo ewploses en SN en injectant 1e51 erg dans le milieu\\
@@ -94,7 +88,7 @@ r_{(t)}=\left( \frac{E_0}{\alpha \rho_0 }\right)^{1/5} t^{2/5}
 
 
 
-Ce brusque changement dans l'etat du systeme créer une discontinuité que le solveur va devoir gérer.
+Ce brusque changement dans l'état du système créer une discontinuité que le solveur va devoir gérer.
 
 
 \subsubsection{Sedov Setup}
@@ -105,52 +99,93 @@ p=1e-5
 v=0
 gamma=5/3
 
-\subsubsection{Sedov evolution}
+\subsubsection{Sedov évolution}
 
-injection thermique simple\\
-test en 256**3 sans raffinement\\
+Ce test consiste a suivre l'onde de choc et a s'assurer que son profil et sa position sont correct dans le temps.
+On calcul pour chaque cellule sa distance au centre de l'explosion, puis en utilisant un histogramme sur les rayons, pondéré par la valeur du champ que l'on veux analyser, on obtient rapidement le profil radial moyen.
+Le résultats présentés utilise l'injection thermique simple (dans une seule cellule).
+
+Le domaine de calcul est en une grille régulière décomposé en $256^3$ éléments  de calcul et le raffinement n'est pas autorisé.
+
+La Fig. \ref{fig:sedov_evol} présentes le trois principaux champs (densité, pression et vitesse radiale) a trois instant différents, comparé a la solution analytique.
+On observe un très bon accord en la simulation et le théorie.
+Notre méthode d'injection d'énergie est correcte et bien dimensionnée.
 
 \begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
-		\includegraphics[width=.95\linewidth]{img/03/sedov/sedov_evol_8_pres.pdf} 
-		\includegraphics[width=.95\linewidth]{img/03/sedov/sedov_evol_8_vel.pdf} 
-        \caption{Test de Sedov, evolution des differentes variables d'etats}
- 		\label{fig:}
+        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
+		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_pres.pdf} 
+		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_vel.pdf} 
+        \caption{Test de Sedov, évolution des différentes variables d'états. La densité en haut, la pression au milieu et la vitesse radiale en bas.}
+ 		\label{fig:sedov_evol}
 \end{figure}
+
 
 
 \subsubsection{Sedov comparaison}
 
-test en 128**3 avec raffinement, 3 niveaux
+Nous avons vu qu'il existe différents moyens d'injecter de l'énergie dans le solveur hydrodynamique.
+Le test présenté ici consiste a vérifié que les différentes méthodes sont équivalentes entre elles.
 
-mise en place du raffinement :
-raffinement sur le gradient 
+Nous allons comparer 3 méthodes : 
+\begin{itemize}
+\item l'injection thermique dans une cellule 
+\item l'injection thermique dans un cube de huit cellules
+\item l'injection cinétique  dans un cube de huit cellules
+\end{itemize}
 
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/03/sedov/slice_therm1.pdf} 
-		\includegraphics[width=.95\linewidth]{img/03/sedov/slice_therm4.pdf} 
-		\includegraphics[width=.95\linewidth]{img/03/sedov/slice_kin.pdf} 
-        \caption{Test de Sedov}
- 		\label{fig:}
-\end{figure}
 
-\begin{figure}[bth]
+Ces 3 tests utillsent cette fois ci espace discret de  $128^3$ éléments, mais en autorisant le raffinement sur 3 niveaux.
+Le raffinement est effectué sur le gradient de densité, ie une cellule est divisé si le gradient de densité qu'elle contient est supérieur a une certaine valeur.
+Cette méthode permet de concentrer le raffinement sur le front de l'onde choc.
+
+La figure \ref{fig:sedovraff} présente le motif de raffinement obtenu pour le test d'injection thermique sur une cellule.
+Tout les tests présentent un motif de raffinement similaire.
+
+\begin{figure}[htpb]
         \includegraphics[width=.95\linewidth]{img/03/sedov/slice_th_1raf.pdf} 
         \caption{Test de Sedov, raffinement (mettre la color map) }
- 		\label{fig:}
+ 		\label{fig:sedovraff}
 \end{figure}
 
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/03/sedov/sedov_comp_profile_den.pdf} 
-		\includegraphics[width=.95\linewidth]{img/03/sedov/sedov_comp_profile_pres.pdf} 
-		\includegraphics[width=.95\linewidth]{img/03/sedov/sedov_comp_profile_vel.pdf} 
-        \caption{Test de Sedov, evolution des differentes variables d'etats}
- 		\label{fig:}
+La figure \ref{fig:sedovmethod} presente les profils obtenus a un instant donné pour les différentes méthodes d'injection d'énergie et pour les différents champs.
+On observe que le front est bien situé au même endroits indépendamment de la méthode.
+%Le profil de densité est présenté en échelle logarithmique pour accentuer les difference au niveau du centre. 
+
+\begin{figure}[htpb]
+        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_den.pdf} 
+		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_pres.pdf} 
+		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_vel.pdf} 
+        \caption{Test de Sedov, comparaison des profil radial en fonction des  méthodes d'injection. 
+        Densité en haut, pression au milieu et vitesse radial en bas.
+        La position et la forme du front d'onde ne dépendent pas de la méthodes d'injection utilisée.}
+ 		\label{fig:sedovmethod} 
 \end{figure}
 
 
-OK\\
-mais pas en cosmo
+Même si les profils radiaux moyens sont comparables, on observe des différences sur la forme de l'explosion.
+La figure \ref{fig:sedovslice} présente une coupe suivant l'axe z de la grille, contenant la cellule d'injection, pour les trois méthodes.
+Ces différence sont dues a la grille et a la façon dont les flux sont calculés.
+Dans le cas de l'injection thermique, les flux auront tendance à être suivant les axes principaux de la grille.
+Ce qui donne ce motif en forme de "+" bien particulier.
+Dans le cas de l'injection cinétique, les sont forcés a être dans des directions obliques, a 45°, par rapport a la l'axe de la grille.
+Nous avons cette fois si une figure en forme de "x".
+
+\begin{figure}[htpb]
+        \includegraphics[height=.3\textheight]{img/03/sedov/slice_therm1.pdf} 
+		\includegraphics[height=.3\textheight]{img/03/sedov/slice_therm4.pdf} 
+		\includegraphics[height=.3\textheight]{img/03/sedov/slice_kin.pdf} 
+        \caption{Test de Sedov}
+ 		\label{fig:sedovslice}
+\end{figure}
+
+
+
+\subsubsection{Conclusion}
+
+La conclusion de ses tests est que les différentes méthodes d'injection sont équivalentes, au moins dans le contexte du test de Sedov.
+
+%OK\\
+%mais pas en cosmo
 
 \subsection{Mes Implémentations}
 

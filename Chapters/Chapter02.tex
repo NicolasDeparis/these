@@ -274,6 +274,7 @@ Ncorps
 
 \subsection{génération des conditions initiales}
 
+
 méthode
 gaussian random noise
 théorie des perturbation linéaire
@@ -360,7 +361,7 @@ Dans le cas ou L’étendue de la particule intersecte des cellules de différen
  		\label{fig:CIC}
 \end{figure}
 
-Il existe des méthodes d'ordre supérieur avec des kernel plus complex que le top-hat du CIC comme par exemple des kernel en triangle ou en gausienne.
+Il existe des méthodes d'ordre supérieur avec des kernel plus complexe que le top-hat du CIC comme par exemple des kernel en triangle ou en gaussienne.
 %http://techfinder.stanford.edu/technology_detail.php?ID=30866
 
 Une fois la grille de densité générée nous pouvons calculer le potentiel.
@@ -545,15 +546,27 @@ Cet algorithme est représenté graphiquement sur la figure \ref{Description du 
 
 En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. Un seul appel génère un cycle nommé cycle en V (fig. \ref{Description du V-cycle}), deux un cycle en W, etc... 
 
-			
-
-
+		
 
 le pas de temps\\
 
 \section{Baryon}
 
-système d'équations a résoudres
+%solveur hydro
+%partie la plus intensive en calcul
+
+
+En cosmologie, le gaz est principalement soumis a deux forces : la pression et la gravité.
+Comme nous l'avons vu plus tot, L'Univers est consitué d'une grande quantité d'Hydrogene et d'Helium sous forme gaseuse.
+Pour suivre l'évolution de ce gas nous allons le considérer comme parfait et monoatomique.
+
+L'equation d'état du gaz sera donc:
+\begin{equation}
+p=\rho k T, 
+\end{equation}
+avec $k$ la constante de Boltzman.
+
+La physique du gaz est régie par les equations d'Euler :
 
 \begin{equation}
 \begin{cases}
@@ -568,15 +581,61 @@ système d'équations a résoudres
 \end{equation}
 \label{eq:hydro}
 
+Ce set d'équation peut être réécris sous la forme:
+
+\begin{equation}
+U+F(U) = 0,
+\end{equation}
+
+avec:
+\begin{equation}
+U=
+\begin{cases}
+{ \rho}\\
+{ u}\\
+{ v}\\
+{ w}\\
+{ E}
+\end{cases}
+,
+F(U)=
+\begin{cases}
+{ \rho u}\\
+{ \rho u^2+p}\\
+{ \rho uv}\\
+{ \rho uw}\\
+{ u(E+p)}
+\end{cases}
+\end{equation}
+
+L'idee est de decomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes.
+On utilisera ensuite les equations d'Euler pour resoudre localement le probleme de Riemman a chaques interfaces de cellule.
+Nous aurons donc acces aux flux de matière et d'energie entre les cellules pour pouvoir calculer l'etat suivant  
 
 
-solveur hydro
-partie la plus intensive en calcul
+Le probleme de Riemman consiste a considérer l'evolution d'un system d'equation différentielles a partir d'une condition initiale.
+En aillant l'etat d'un systeme regis par des equations differentielle un instant donné, qu'elle sera sont évolution?
+
+
+La discretisation des 
+
+
+Methode upwind
+
+propagation d'onde
+
+%\begin{itemize}
+%\item probleme de Rieman
+%\item methode de Godunov
+%\item méhtode HLL et HLLC Harten, Lax et van Leer.
+%\end{itemize}
+
+
+
 le pas de temps
 
-\section{La chimie}
 
-gestion du refroidissement
+
 
 \section{radiation}
 
@@ -670,6 +729,17 @@ part
 freefall
 hydro
 radiatif
+
+
+
+\section{La chimie}
+
+La chimie consiste a appliquer l'énergie de la radiation au gas.
+C'est a ce moment que le couplage entre le gaz et la radiation est réalisé.
+
+
+
+gestion du refroidissement
 
 \section{Matérie et parallélismel}
 
