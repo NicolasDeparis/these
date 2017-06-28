@@ -25,4 +25,8 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {lstlisting}{\numberline {7.1}lprojection de l'AMR par la m\IeC {\'e}thode des histogramme Numpy}{76}{lstlisting.7.1}
+\contentsline {lstlisting}{\numberline {7.1}Mise a jour du redshift de reionisation}{71}{lstlisting.7.1}
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {lstlisting}{\numberline {8.1}lprojection de l'AMR par la m\IeC {\'e}thode des histogramme Numpy}{80}{lstlisting.8.1}
