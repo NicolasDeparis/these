@@ -1,63 +1,251 @@
-\chapter{ Le modele standard } \label{ch:introduction_physique}
+\chapter{Le modele standard de la cosmologie moderne} \label{ch:introduction_physique}
 
 Cette thèse s'inscrit dans le cadre du modèle standard de la cosmologie.
-Ce modèle, aussi appelé modèle du Big Bang, considère un univers en expansion et composé essentiellement de matière noire froide.% -- Cold Dark Matter -- 
-$\Lambda$
- $\Lambda$ Cold Dark Matter ($\Lambda$CDM)
-
-L'idée d'un univers non statique a pris forme dans le début du XIX eme siècle suite a deux événement majeurs, d'un coté l'élaboration de la théorie de la relativité générale d'Einstein en 1915 a permis la mise en place d'un cadre théorique propice, et d'un autre coté, plus d'une décennie plus tard les observation de Hubble entre 1923 et 1929.
-
-En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L} 
+Ce modèle, aussi appelé modèle du Big Bang, considère un univers en expansion et composé essentiellement de matière noire froide $\Lambda$ Cold Dark Matter ($\Lambda$CDM).
+Ce chapitre a pour objectif de présenter les grandes lignes de ce modèle.
 
 
-
-\section{Loi de Hubble ( observation) }
+\section{Émergence de l'idée d'un Univers non statique}
 
 %découverte des galaxies\\
 %découverte de l'expansion de l'univers
 
-Hubble observe deux phénomène qui vont mené a une redéfinition de notre notion de cosmologie.
+\subsection{Cadre théorique}
+
+L'idée d'un univers non statique a pris forme dans le début du XIX eme siècle suite a deux événement majeurs.
+D'un coté l'élaboration de la théorie de la relativité générale d'Einstein en 1915 a permis la mise en place d'un cadre théorique propice.
+%La notion d'un univers non statique a ete introduite par Einstein en 1917 en rapport avec ses travaux sur le relativité générale. 
+D'un autre coté, plus d'une décennie plus tard les observation de Hubble entre 1923 et 1929.
+
+\subsection{Les observations de Hubble}
+
+Hubble observe deux phénomènes qui vont mené a une redéfinition de notre notion de cosmologie.
 Il bénéficie a l'époque de l'accès au plus puissant télescope du monde (le télescope Hooker du mont Wilson)
 
-Cet instrument lui a permis, dans une publication de 1926, d'observer que des nébuleuses situées hors de notre galaxie présente des caractéristiques identiques a des système d'étoiles \citep{1926ApJ....63..236H}.
+Cet instrument lui a permis, dans une publication de 1926, d'observer que des nébuleuses situées hors de notre galaxie présente des caractéristiques identiques a des système d'étoile \citep{1926ApJ....63..236H}.
 Il en déduit qu'il existe d'autre galaxie que notre voie lactée.
 
 Avec les moyens observationnels dont nous disposons aujourd'hui l’existence d'un grand nombre de galaxies en dehors de notre voie lactée est bien établie.
 La figure \ref{fig:hubbl_deep_field} présente le "Hubble Ultra Deep Field" \citep{1538-3881-132-5-1729} une image prise en 2014, montrant un grand nombre de galaxies dans une portion réduite du ciel.
+On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$.
+
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hudf.jpeg} 
-        \caption{Hubble Ultra Deep Field 2014.
-        Image NASA.
+        \caption{Hubble Ultra Deep Field} 
+        %2014.
+        %Image NASA.
 		En 1926 E. Hubble observe pour la première fois qu'il existe d'autre galaxies.
-		Leur nombre est estimé aujourd'hui à $\approx 2 \cdot 10^{11}$.}
+		Leur nombre est estimé aujourd'hui à $\approx 2 \cdot 10^{11}$.
  		\label{fig:hubbl_deep_field}
 \end{figure}
 
-
-De plus il observe une relation entre la distance de ces nouvelles galaxies et leurs spectre lumineux \citep{1929CoMtW...3...23H}.
+\subsection{La loi de Hubble}
+Hubble observe également une relation entre la distance de ces nouvelles galaxies et leurs spectre lumineux \citep{1929CoMtW...3...23H}.
 Plus ces galaxies sont éloignées de l'observateur, plus leurs spectre est décalé vers le rouge.
-Il interpréta ce décalage comme un effet Dopler et montra que ces galaxie s'éloigne de l'observateur avec une vitesse radiale directement proportionnelle a leur distance.
 
-Cette relation entre la distance des galaxies $D$ et leurs vitesse d'éloignement $V$ est aujourd'hui appelée loi de Hubble et peux être résumé par :
+Ce décalage vers le rouge -- ou redshift en anglais -- est une notion qui sera beaucoup utilisée par la suite.
+%En cosmologie nous referons a l'age de l'Univers autant en temps qu'en redshift.
+Nous verrons dans la prochaine section qu'il existe un lien direct entre age de l'univers et redshift.
 
-\begin{equation}
-V = H_0 D,
-\end{equation}
-ou $H_0$ est la constante de Hubble .
+Il interpréta ce décalage comme un effet Doppler et montra que ces galaxies s'éloignent de l'observateur avec une vitesse radiale directement proportionnelle a leur distance.
+Cette corrélation entre la distance et le décalage vers le rouge observé est aujourd'hui très bien établie observationnellement est présenté sur la Fig. \ref{fig:hubble_law} extraite de \citep{2015PNAS..112.3173B}.
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hubble_law.jpg} 
         \caption{Loi de Hubble a partir d'observation actuelles. 
 %http://www.pnas.org/content/112/11/3173/F2.expansion.html
-        Image ESO}
+%        Image ESO
+        }
  		\label{fig:hubble_law}
 \end{figure}
 
-Une représentation actuelle de la relation entre la distance et le décalage vers le rouge observé est présenté sur la Fig. \ref{fig:hubble_law}.
-Cette corrélation est aujourd'hui très bien établie observationnellement (Fig. \ref{fig:hubble_law})
+Cette relation entre la distance des galaxies $D$ et leurs vitesse radial d'éloignement $V$ est aujourd'hui appelée loi de Hubble et peux être résumé par :
 
-Ces observations on permis de confirmer ce qui avait été pressentis par Einstein plus d'une décennie plus tôt, lorsqu'il introduisit le concept de constante cosmologique ($\Lambda$). 
+\begin{equation}
+V = H_0 D,
+\end{equation}
+ou $H_0 = 67 \mathrm{ \left[ km.s^{-1}.Mpc^{-1} \right ] }$ est la constante de Hubble aujourd'hui \citep{planck_collaboration_planck_2016}.
+
+Conventionnellement, le sous script $0$ désigne le fait que la valeur de la variable qui lui est associé est celle prise aujourd'hui.
+Cette distinction est nécessaire car la valeur de la constante de Hubble n'est pas constante dans le temps.
+D'une manière plus générale la constante de Hubble s'exprime sous la forme
+\begin{equation}
+H=\frac{1}{a} \frac{da}{dt} = \frac{\dot{a}}{a}
+\end{equation}
+
+ou $a = a_{(t)}$ est le facteur d'expansion.
+Sa valeur représente la taille de l'Univers relativement a sa taille actuelle.
+Par définition $a_0 = 1$.
+
+Le redshift, noté $z$, s'exprime en fonction du facteur d'expansion de la manière suivante:
+
+\begin{equation}
+z= \frac{1}{a}-1
+\end{equation}
+
+\subsection{Equation d'Einstein}
+
+Les observations de Hubble on permis de confirmer ce qui avait été pressentis par Einstein plus d'une décennie plus tôt, lorsqu'il introduisit le concept de constante cosmologique ($\Lambda$). 
+
+Einstein publie en 1916 sa fameuse théorie de la relativité générale \citep{1916AnP...354..769E}.
+Il y introduit sa célèbre equation de champ décrivant le lien entre densité d'énergie et déformation de l'espace-temps:
+
+%Equation d'Einstein 
+%http://cdsads.u-strasbg.fr/abs/1915SPAW.......844E
+\begin{equation}
+R_{\mu\nu} = \frac{1}{2} g_{\mu\nu}R + \Lambda g_{\mu\nu}  = \kappa T_{\mu\nu}.
+\label{eq:einstein}
+\end{equation} 
+
+Dans cette equation apparaît le terme $\Lambda$ (de $\Lambda$CDM), appelée \textit{constante cosmologique}.
+Cette constante représente mathématiquement le fait que l'espace-temps peut être en expansion ou en contraction.
+
+
+\subsection{Équations de Friedmann}
+
+Quelques années plus tard, Alexandre Friedmann entreprend de trouver des solutions exactes a l'équation d'Einstein en l'appliquant a un Univers homogène et isotrope \citep{1922ZPhy...10..377F}.
+Il arrive a ce système d'équations indépendantes permettant de modéliser l'Univers dans son ensemble :
+
+%Recriture de l equation d'Einstein en considerant un univers homogene et isotrope.
+% 
+%Alexandre Friedmann Über die Krümmung des Raumes, Zeitschrift für Physik 10, 377-386 (1922). 
+%Première écriture des équations de Friedmann, dans le cas d'une coubure spatiale positive. http://cdsads.u-strasbg.fr/abs/1922ZPhy...10..377F 
+%
+%(de) Alexandre Friedmann, Über die Möglichkeit einer Welt mit konstanter negativer Krümmung des Raumes, Zeitschrift für Physik 21 326–332 (1924). 
+%Écriture des équations de Friedmann dans le cas d'une courbure spatiale négative. 
+% 
+%univers de Friedmann-Lemaître-Robertson-Walker  
+%http://dictionnaire.sensagent.leparisien.fr/%C3%89quations%20de%20Friedmann/fr-fr/
+ 
+%Équations de Friedmann : 
+
+\begin{equation}
+3 \left( \frac{H^2}{c^2} +\frac{K}{a^2} \right) = \frac{8 \pi G }{c^2} \rho
+\label{eq:friedman1}
+\end{equation}
+
+\begin{equation}
+-2 \frac{ \dot{H}}{c^2} -3 \frac{H^2}{c^2} -\frac{K}{a^2} = \frac{8 \pi G }{c^4 P}
+\label{eq:friedman2}
+\end{equation}
+
+L'équation \ref{eq:friedman1} relie le taux d'expansion H, la courbure spatiale K et le facteur d'échelle a à la densité d'énergie $\rho$.
+L'équation \ref{eq:friedman2} relie la pression P à la dérivée temporelle du taux d'expansion.
+ 
+  
+En manipulant l'équation \ref{eq:friedman1} il est possible de montrer que :
+% cf 
+% http://dictionnaire.sensagent.leparisien.fr/%C3%89quations%20de%20Friedmann/fr-fr/
+% https://en.wikipedia.org/wiki/Friedmann_equations
+% pour la demonstration
+
+\begin{equation}
+\frac{\dot{a}}{a} = H_0 \sqrt{ \Omega_{r,0} a^{-4} +  \Omega_{M,0} a^{-3} + \Omega_{K,0}a^{-2} + \Omega_{\Lambda,0}  } 
+\label{eq:scale_t}
+\end{equation}
+
+
+Ou les paramètres $\Omega_{i,0}$ représente la densité d'énergie associé aux différent constituant, 
+\begin{equation}
+ \Omega_{i,0} = \frac{\rho_{i,0}}{\rho_{c,0}},
+ \end{equation}
+
+en fonction de la densité critique de l'Univers:
+
+\begin{equation}
+\rho_{c,0} = \frac{3H_0^2}{8\pi G}
+ \end{equation}
+Cette valeur est déterminée avec l'équation \ref{eq:friedman1}, en considérant un univers statique ($\Lambda=0$) et plat ($\rho_{K,0}=0$).
+
+\begin{itemize}
+
+
+\item $\Omega_{r,0}$ représente la densité d'énergie radiative.
+Un Univers constitué exclusivement de cette énergie serait nommé "Univers lumière"
+
+\item $\Omega_{M,0}$ est la densité d'énergie associée a la matière (matière noire que nous introduiront dans la suite et baryonnique)
+Un Univers constitué exclusivement de cette énergie serait nommé "Univers poussière"
+
+\item $\Omega_{\Lambda,0}$ est la densité d’énergie du vide.
+Cette énergie est associée a la constante cosmologique et a l'expansion de l'Univers.
+ 
+\item $\Omega_{K,0}$ est densité de courbure spatiale ou la densité d'énergie associée a la courbure de l'espace.
+\begin{equation}
+ \Omega_{K,0} = 1 - \Omega_{r,0} - \Omega_{M,0} - \Omega_{\lambda,0} 
+\end{equation}
+
+\end{itemize}
+
+
+
+Nous verront dans la partie dédiée a la déterminations des paramètres cosmologique que les mesures actuelles sont en faveur d'un Univers plat (sans courbure).
+Ce qui s'exprime par :
+
+\begin{equation}
+ \Omega_{K,0} = 0,
+ \end{equation}
+
+il s'en suis que :
+\begin{equation}
+\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1 .
+ \end{equation}
+
+\begin{figure}[bth]
+        \includegraphics[width=.9\linewidth]{img/01/scale_t.jpg} 
+        \caption{Taille de l'Univers en fonction du temps pour différents paramètres cosmologiques.
+%https://map.gsfc.nasa.gov/universe/bb_concepts.html#Expansion
+        }
+ 		\label{fig:scale_t}
+\end{figure}
+
+En intégrant l’équation \ref{eq:scale_t}, il est possible de déterminer l'évolution de la taille de l'Univers en fonction de la densité respectives de ses différents constituants.
+La figure \ref{fig:scale_t} présente quelques évolutions possibles.
+Toutes les courbes passe par le point (Now,1) car par définition $a_0 = 1$.
+%TODO expliquer cette histoire de tangente
+Toutes les courbes ont la même tangente au point (Now,1).
+Nous observons ici que la valeur des paramètres cosmologique contraint l'age actuel de l'Univers (le point où la courbe passe l'axe horizontal).
+La valeur des paramètres contraint aussi l'avenir de l'Univers.
+Par exemple, la courbe orange représente un Univers dit fermé.
+Ce type d'Univers est voué a s'effondrer sur lui même a cause de la gravité de la matière qu'il contient.
+A l'inverse, la courbe rouge représente un Univers dit ouvert.
+La gravitation n'est pas suffisante pour contrer l'expansion, et ce type d'Univers est voué a grandir indéfiniment.
+
+%\cite{2003PhT....56d..53P}
+
+
+\subsection{Énergie noire}
+
+
+Si nous avons vu que la taille de l'Univers évolue avec le temps, il reste la question de l’évolution de cette vitesse.
+
+L'accélération de l'expansion de l'univers a été découverte simultanément par 2 équipes :
+
+\begin{itemize}
+\item  Supernova Cosmology Project \citep{1999ApJ...517..565P}
+% http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
+\item  High-Z supernovae search team \citep{1998AJ....116.1009R}
+%http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
+\end{itemize}
+Les 2 ont obtenues le prix Nobel en 2011.
+
+C'est seulement quelques mois plus tard qu’apparaît pour la première fois la mention d'énergie noire: \citep{1999PhRvD..60h1301H}
+
+
+
+
+
+%échelle gigaparsec\\
+%Facteur d'expansion
+%
+%Metrique de Friedmann-Lemaître-Robertson-Walker (FLRW)
+%
+%perturbation lineaires:
+%https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html
+
+
+
+
 
 
 
@@ -70,10 +258,11 @@ Ces observations on permis de confirmer ce qui avait été pressentis par Einste
 %le CMB\\
 %la reionization
 
+En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L} 
 
 Une fois établis que les galaxies s'éloigne de nous dans toutes les directions, plusieurs constats s'imposent.
 
-Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les une des autres, et en poussant se constat a l'extrème, il fut imaginé qu'a un certain instant dans l'histoire de l'Univers, toute la matière devait être concentré en un point.
+Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les une des autres, et en poussant se constat a L’extrême, il fut imaginé qu'a un certain instant dans l'histoire de l'Univers, toute la matière devait être concentré en un point.
 Cette singularité à été baptisé Big Bang et donne son nom au modèle cosmologique actuel.
 
 %Dans le modèle du Big Bang, le début de l'Univers est suivis par une phase d'expansion rapide appelé inflation.
@@ -104,7 +293,7 @@ C'est l'époque de la reionization.
 
 
 
-TODO INTRODUIRE LE REDSHIFT
+%TODO INTRODUIRE LE REDSHIFT
 
 
 
@@ -251,108 +440,6 @@ univers infini, homogène, isotrope
 \end{figure}
 
 \citep{planck_collaboration_planck_2016}
-
-\subsection{Energie noire $\Lambda$}
-
-\subsubsection{Equation d'Einstein}
-
-La notion d'un univers non statique a ete introduite par Einstein en 1917 en rapport avec ses travaux sur le relativité générale. 
-Sa célèbre equation de champ décrivant le lien entre densité d'énergie et déformation de l'espace temps introduit la constante cosmologique $\Lambda$ representant 
-
-Equation d'Einstein :
-http://cdsads.u-strasbg.fr/abs/1915SPAW.......844E
-\begin{equation}
-R_{\mu\nu} = \frac{1}{2} g_{\mu\nu}R + \Lambda g_{\mu\nu}  = \kappa T_{\mu\nu}
-\end{equation} 
-
-
-
-Découverte de l'accélération de l'expansion de l'univers simultanément par 2 équipes :
-Les 2 ont eue le prix nobel en 2011
-
-\begin{itemize}
-\item  Supernova Cosmology Project
- http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
- 
- \item  High-Z supernovae search team
-http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
-
-\end{itemize}
-
-quelques mois plus tard :
-Première apparition du terme energie noire:
-http://cdsads.u-strasbg.fr/abs/1999PhRvD..60h1301H
-
-
-
-\subsubsection{ Équations de Friedmann }
-
- Recriture de l equation d'Einstein en considerant un univers homogene et isotrope.
- 
- Alexandre Friedmann Über die Krümmung des Raumes, Zeitschrift für Physik 10, 377-386 (1922). Première écriture des équations de Friedmann, dans le cas d'une coubure spatiale positive. http://cdsads.u-strasbg.fr/abs/1922ZPhy...10..377F 
-(de) Alexandre Friedmann, Über die Möglichkeit einer Welt mit konstanter negativer Krümmung des Raumes, Zeitschrift für Physik 21 326–332 (1924). Écriture des équations de Friedmann dans le cas d'une courbure spatiale négative. 
- 
-univers de Friedmann-Lemaître-Robertson-Walker  
-http://dictionnaire.sensagent.leparisien.fr/%C3%89quations%20de%20Friedmann/fr-fr/
- 
-Équations de Friedmann : 
-\begin{equation}
-3 \left( \frac{H^2}{c^2} +\frac{K}{a^2} \right) = \frac{8 \pi G }{c^2} \rho
-\label{eq:friedman1}
-\end{equation}
-
-\begin{equation}
--2 \frac{ \dot{H}}{c^2} -3 \frac{H^2}{c^2} -\frac{K}{a^2} = \frac{8 \pi G }{c^4 P}
-\label{eq:friedman2}
-\end{equation}
-
-Eq. \ref{eq:friedman1} relie le taux d'expansion H, la courbure spatiale K et le facteur d'échelle a à la densité d'énergie $\rho$, 
-Eq. \ref{eq:friedman2} relie la pression P à la dérivée temporelle du taux d'expansion
- 
- 
- 
-\begin{equation}
-\frac{\dot{a}}{a} = H_0 \sqrt{ \Omega_{r,0} a^{-4} +  \Omega_{M,0} a^{-3} + \Omega_{K,0}a^{-2} + \Omega_{\lambda,0}  } 
-\end{equation}
-
-
-\begin{equation}
- \Omega_{i,0} = \frac{\rho_{i,0}}{\rho_{c,0}}
- \end{equation}
-
-\begin{equation}
-\rho_{c,0} = \frac{3H_0^2}{8\pi G}
- \end{equation}
- 
- 
-\begin{equation}
- \Omega_{K,0} = 1 - \Omega_{r,0} - \Omega_{M,0} - \Omega_{\lambda,0} 
- \end{equation}
-
-Univers plat
-\begin{equation}
- \Omega_{K,0} = 0
- \end{equation}
-
-\begin{equation}
-\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1
- \end{equation}
-
-
-
-
-échelle gigaparsec\\
-Facteur d'expansion
-
-
-\begin{equation}
-H=\frac{1}{a} \frac{da}{dt} = \frac{\dot{a}}{a}
-\end{equation}
-
-Metrique de Friedmann-Lemaître-Robertson-Walker (FLRW)
-
-
-https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html
 
 \subsection{Matière noire CDM}
 
