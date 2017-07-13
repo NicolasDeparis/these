@@ -16,29 +16,35 @@
 %%la difficulté des observations
 
 
-Nous avons vu dans le chapitre precedent que lors de la recombinaison, l'Univers est passé d'un état globalement ionisé a un etat globalement neutre.
-De cette transition, qui a eu lieu a enciron 380000ans après le BB, en a resulté l'emission du CMB.
-Suite a cette etape, l'univers etait alors homogene, et sa dynamique etait régie essentiellement par la lutte entre l'expansion et la gravitation.
-Du fait que l'univers etait neutre, le rayonnemenmt n'etait pas en mesure de se propager librement.
-C'etait les ages sombres.
+Nous avons vu dans le chapitre précédent que lors de la recombinaison, l'Univers est passé d'un état globalement ionisé a un etat globalement neutre.
+De cette transition, qui a eu lieu a environ 380000 ans après le BB, en a résulté L’émission du CMB.
+Suite a cette étape, l'univers était alors homogène, et sa dynamique était régie essentiellement par la lutte entre l'expansion et la gravitation.
+Du fait que l'univers était neutre, le rayonnement n’était pas en mesure de se propager librement.
+C’était les ages sombres.
 
-Il faudra alors attendre plusieurs centaine de million d'année pour voir apparaire des surdensité de gas suffisemment compactes pour former les première étoiles.
-Ces premières sources lumineuses ont emmis un puissant rayonnement ionisant qui a a nouveau séparé les protons et les electron formé lors de la recombinaison.
-Il a fallut encore plusieur centaine de million d'année pour que les première sources de rayonnement soient suffisement nombreuses pour que leurs photons remplissent l'univers, et le fasse passer d'un etat majoritairement neutre, a un etat a nouveau majoritairement ionisé. 
-Cette transition s'appele l'epoque de la reionisation.
+Il faudra alors attendre plusieurs centaine de million d'année pour voir apparaître des surdensité de gaz suffisamment compactes pour former les première étoiles.
+Ces premières sources lumineuses ont émis un puissant rayonnement ionisant qui a a nouveau séparé les protons et les électron formé lors de la recombinaison.
+Il a fallut encore plusieurs centaine de million d'année pour que les première sources de rayonnement soient suffisamment nombreuses pour que leurs photons remplissent l'univers, et le fasse passer d'un état majoritairement neutre, a un état a nouveau majoritairement ionisé. 
+Cette transition s’appelle L’époque de la réionisation.
 
-Une des difficultés de l'etude de la periode de reionization est que celle si a eu lieu tot dans l'histoire de l'univers lors de son premier milliard d'années.
+Une des difficultés de L’étude de la période de réionisation est que celle si a eu lieu tôt dans l'histoire de l'univers lors de son premier milliard d'années.
 Cette distance temporelle impose de regarder loin spatialement et donc de disposer de moyen observationnels important.
-Nous somme au balbutiement des observation de la reionisation.
-Dans cette section, je vais presenter quelques unes des preuvent observationnelles de la reionisation. 
+Nous somme au balbutiement des observation de la réionisation.
+Dans cette section, je vais présenter quelques unes des preuve observationnelles de la réionisation. 
 
-\subsection{Sphère de Stromgren}
+\section{Principe général}
 
-On considere une source ponctuelle dans un milieu homogene d'hydrogene neutre.
-Quelle region cette source va ioniser autour d'elle?
+\subsection{Sphère de Strömgren}
 
+Dans le but d’appréhender les principes de base a l’œuvre pendant la réionisation, nous allons commencer par nous placer dans un cas simple et idéal.
+Une source lumineuse ponctuelle (une étoile) apparaît instantanément dans un milieu infini, avec une densité et une température homogène et composé exclusivement d’hydrogène neutre.
 
-En considerant l'équilibre entre $\dot{N_\gamma}$ le nombre de photons emis par la source et le taux de recombinaison du milieu (caractérisé par $\alpha_B(T)$ le coefficient de recombinaison en fonction de la température et $n_H$ la densité d'hydrogène neutre), \cite{stromgren_physical_1939} a exprimé l'évolution du rayon de la sphère ionizée $r_i(t)$.
+\begin{itemize}
+\item Comment va évoluer l’état d'ionisation du gaz autour de cette source ?
+\item Quelle région cette source va ioniser autour d'elle?
+\end{itemize}
+
+En considérant l'équilibre entre $\dot{N_\gamma}$ le nombre de photons ionisant émis par la source et le taux de recombinaison du milieu (caractérisé par $\alpha_B(T)$ le coefficient de recombinaison en fonction de la température et $n_H$ la densité d'hydrogène neutre), \cite{stromgren_physical_1939} a exprimé l'évolution du rayon de la sphère ionisée $r_i(t)$.
 
 
 \begin{equation}
@@ -64,45 +70,140 @@ r_s = \left( \frac{3 \dot{N_\gamma} }{4 \pi \alpha_B(T) n_H^2} \right)
 \end{equation}
 
 
+L'intérieur d'une sphère de Strömgren est appelée région HII
 
-\subsection{spectre de quasar et epaisseur optique lyman alpha}
-Les quasars sont des objets tres brillants qui peuvent être observé a tres grandes distance.
-Les plus lointains d'entre eux presentent  un tunnel gun peterson.
 
-Lorsqu'un photon d'une energie proche 
+\subsection{Le cas non idéal}
+Nous venons de voir un modèle théorique simpliste sensé représenter la croissance des régions HII.
+
+\begin{itemize}
+\item les sources ne sont pas d'intensité constante
+\item la densité n'est pas homogène (motif en papillon autour des filament)
+\item les sources ne sont pas isolées
+\end{itemize}
+
+C'est ce dernier point qui va permettre a l'Univers de réioniser en entier.
+
+En effet c'est la percolation des régions HII
+
+
+\begin{equation}
+\frac{dQ_{HII}}{dt} = \frac{\dot{N}_{ion}}{ <n_H>} - \frac{Q_{HII}}{t_{rec}}
+\end{equation}
+
+
+\section{Preuves observationnelles}
+Dans cette section nous verrons quelles sont les principales preuves observationnelles de la réionisation.
+
+\subsection{Spectre de quasar et épaisseur optique Lyman alpha}
+
+Historiquement, les spectre de quasar lointains ont été les premières preuves que l'Univers était fortement neutre dans le passé.
+
+première observation de quasar avec tunel gun peterson \cite{1965ApJ...141.1295S}
+tunnel gun peterson \cite{1965ApJ...142.1633G} 
+
+\subsubsection{Raie Lyman alpha}
+
+\begin{figure}[htbp]
+\centering
+        \includegraphics[width=.95\textwidth]{img/01/lyman.jpg} 
+        \caption{Changement de niveau d'énergie de l'atome d'hydrogène}
+ 		\label{fig:lyman}
+\end{figure}
+
+Avant de poursuivre, il est nécessaire  de revenir sur le spectre d’émission de l’hydrogène.
+La série de Lyman correspond a la transition atomique menant au fondamental de l'atome d'hydrogène.
+Il existe plusieurs série de transition autre que celle de Lyman (cf Fig. \ref{fig:lyman}) mais cette dernière est la plus énergétique et la plus fréquente, et donc la plus facile à détecter.
+
+Il y a émission d'un photon Lyman-alpha pendant la transition de l'électron du premier état excité vers l’état fondamental (n2 -> n1).
+L'énergie de cette transition est de 1216 $\AA$, l’émission est donc dans l'Ultra Violet.
+
+Réciproquement, la transition n1 vers n2 mène a l'absorption d'un photon Lyman-alpha.
+C'est a dire que si un nuage de gaz neutre se trouve entre une source et l'observateur, le spectre réceptionné présentera une raie d'absorption a 1216 $\AA$.
+
+\subsubsection{Forêt Lyman alpha}
+
+
+Maintenant considéreront des distances cosmologique entre la source et l'observateur.
+Durant le parcours des photon, l'Univers aura subis une expansion et le spectre d'émission de la source sera redshifté.
+Le spectre présentera des raie d’absorption a différents endroit suivant le moment de rencontre des différents nuages de gaz neutre.
+C'est série de raies est très dense a haut redshift et est appelée forêt Lyman alpha.
+
+\subsubsection{Tunnel Gun Peterson}
+
+Si nous considérons maintenant que la source est a l’intérieur d'une zone dense, la série de raies absorbée ne sera plus discrète mais continue.
+c'est ce continuum d’absorption que l'on nomme Tunnel Gun Peterson \cite{1965ApJ...141.1295S}
+
+
+Dans le cas de la reionisation, les sources sont des quasar.
+Les quasars sont des objets suffisamment brillants pour être observé a très grandes distance.
+Il est observé que plus leur redshift est important, plus leur foret lyman alpha est important.
+Les plus lointains d'entre eux présentent  un tunnel gun peterson.
+
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/quasar_spectre.pdf} 
-        \caption{Spectre de quasar a differents redshift presentant un tunnel gun peterson.
-        Image fan et al.}
+        \caption{Spectre de quasar a différents redshift présentant un tunnel Gunn Peterson.
+		Image extraite de \cite{fan_constraining_2006}.}
  		\label{fig:spectre_quasar}
 \end{figure}
 
+\subsubsection{Épaisseur optique}
+
+A partir des spectres obtenu il est possible de mesurer l’épaisseur optique Gunn Peterson \cite{1965ApJ...141.1295S} des photons Lyman alpha a l'aide de la formule suivante:
+
+\begin{equation}
+\tau_{GP} = \frac{\pi e^2}{m_e c} f_\alpha \lambda_\alpha H^{-1}(z) n_{HI},
+\end{equation}
+où $f_\alpha$ est la force d'oscillateur de la transition Lyman alpha, $\lambda_\alpha = 1216 \AA$, $H(z)$ est la constante de Hubble, $n_{HI}$ la densité d'hydrogène neutre.
+
+Les épaisseurs optique obtenues avec cette formule sont présentés sur la figure \ref{fig:epaisseur_optique_quasar}.
+Il apparaît clairement que l'épaisseur optique augmente avec le redshift.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/epaisseur_optique_quasar.png} 
         \caption{%https://ism2009.wordpress.com/2009/04/28/on-the-density-of-neutral-hydrogen-in-intergalactic-space/
 		Epaisseur optique calculée a partir des spectres de quasar de la Fig\,\ref{fig:spectre_quasar}
-        Image fan et al.}
+        Image extraite de \cite{fan_constraining_2006}.}
  		\label{fig:epaisseur_optique_quasar}
 \end{figure}
 
-\subsection{CMB et epaisseur optique Thomson}
+\subsubsection{Les contraintes sur l'état d'ionisation}
+
+Une compilation des contraintes sur la fraction d'hydrogène neutre a été réalisé par \cite{2015ApJ...811..140B} et est présenté sur la figure \ref{fig:compile_constrains}.
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/01/xionconstrains.jpg} 
+        \caption{Fraction de neutre en fonction du redshift a partir d'observation lymann alpha.
+        Compilation par \cite{2015ApJ...811..140B}}
+ 		\label{fig:compile_constrains}
+\end{figure}
 
 
-Les photons du CMB ont été influencé par l'avant plan constitué par la reionisation.
 
+
+\subsection{CMB et épaisseur optique Thomson}
+
+
+Les photons du CMB ont été influencé par l'avant plan constitué par la réionisation.
+Les photons émis lors de la recombinaisons ont été diffusé, par le grand nombre d'électron libérer pendant la réionisation.
+Cette succession de diffusion Thomson, ce traduit par une épaisseur optique qui prend la forme : 
 
 \begin{equation}
-\tau_z = c \sigma_t \int_z^0 n_e (z) \frac{dt}{dz} dz
+\tau_z = c \sigma_t \int_z^0 n_e (z) \frac{dt}{dz} dz,
 \end{equation}
 
+avec $\sigma_t$ la section efficace Thomsonet $n_e (z)$ la densité d'électron libre.
 
-$\sigma_t$ section efficace Thomson, $n_e (z)$ est la densité d'électron libre.
+Une représentation de cette contrainte, observée par le satellite Planck se trouve sur la figure \ref{fig:epaisseur_optique_thomson}.
+Différent modèles réionisation y sont également présenté.
 
 
-Fig \ref{fig:epaisseur_optique_thomson}
+L'épaisseur optique Thomson césse d'augmente ra partir d'un certain redshift du a l'abscence d'électron libre permettant les diffusions.
 
+
+
+En utilisant un modèle de réionisation instantané, \cite{planck_collaboration_planck_2016} estime le redshift de réionisation à $z_r = 8.8 ^{+1.3}_{-1.2}$.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/epaisseur_optique_thomson.png} 
@@ -114,21 +215,26 @@ Fig \ref{fig:epaisseur_optique_thomson}
 
 
 
-\subsection{polarisation du CMB)}
 
 \subsection{ligne 21 cm}
+
+
+
+
+\subsection{polarisation du CMB)}
 
 \subsection{fonction de luminosité UV}
 
 
-\subsection{les futures observations}
-
-Quelles sont les preuves de la réionisation?
-
-
+\section{Les futures observations}
+\subsection{SKA}
+\subsection{LOFAR}
 
 
-\subsection{les principales question en suspend de l'étude de la réionisation}
+
+
+
+\section{les principales question en suspend de l'étude de la réionisation}
 
 %quand est ce arrivé?
 %quelles sont les sources? -> débat galaxies vs quasars

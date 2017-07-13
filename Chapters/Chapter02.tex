@@ -1,19 +1,22 @@
-\chapter{Les méthodes numérique}\label{ch:introduction}
+\chapter{Introduction a EMMA}\label{ch:introduction}
+Les échelles de temps sont radicalement opposées entre la cosmologie qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle (cf loi de \cite{moore1965cramming}). %\cite{THOMPSON200620}
+Les simulations numérique sont des produits possédant une valeur se dépréciant extrêmement rapidement, il faut les considérer comme éphémère.
 
-Les echelles de temps sont radicalement opposées entre la cosmo qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle. 
-il faut considérer les simulations comme éphémère.
 
-Comment modéliser la reionization?
+
+Nous avons vu dans la partie précédente qu'elles étaient les principales physiques à l’œuvre durant l'époque de réionisation.
+L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et implémenté informatiquement.
+
+%Comment modéliser la reionization?
 
 \section{Les différents types de fluides cosmologique}
 
 Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles, la radiation ou le champ magnétique.
-Ces fluides sont de nature différentes et il n'y a pas de méthode permettant de suivre de manière optimale ces différentes physique.
-On distinguera principalement deux catégories de fluides: les fluides collisionnels et les non-collisionnels.
+Ces fluides sont de nature différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physique.
+On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
 
-\paragraph{Physique collisionnelle : } elle concerne principalement le gas.
-
-\paragraph{Physique non-collisionnelle : } elle concerne principalement la matière noire ou les étoiles.
+\paragraph{La physique collisionnelle} concerne principalement le gaz.
+\paragraph{La physique non-collisionnelle} concerne principalement la matière noire et les étoiles.
 
 
 
@@ -100,11 +103,11 @@ On associera également les octs entre eux a l'aide d'une liste chainée.
 Il est necessaire d'ajouter deux pointeurs a l'objet OCT : un vers l'oct précédent en mémoire et un vers l'oct suivant.
 
 
-\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures CELL et OCT de EMMA},label=lst:useless]
+\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures CELL et OCT de EMMA},label=lst:celloct]
 struct CELL{
   int id;            // permet de determiner la position de la cellule dans l'oct
   struct OCT *parent // l'oct pere de la cellule
-  struct OCT *child; // si child est different de NULL alors la cellule est raffiner et child point vers l'oct enfant
+  struct OCT *child; // si child est different de NULL alors la cellule est raffinee et child point vers l'oct enfant
   struct PHYSIC *data; // pointeur vers la partie physique
 };
 
@@ -123,21 +126,49 @@ struct OCT{
 
 
 \subsubsection{gestion du raffinement}
-différentes condition de raffinement.\\
-sur la matière noire\\
-semi Lagrangienne\\
-sur le gradient d'ionization\\
-sur le gradient de densité (shock)\\
+%différentes condition de raffinement.\\
+%sur la matière noire\\
+%semi Lagrangienne\\
+%sur le gradient d'ionization\\
+%sur le gradient de densité (shock)\\
+
+Il est possible de définir arbitrairement une condition de raffinement en fonction de la physique que l'on cherche a étudier.
+Par exemple, dans des tests unitaires de type sphère de Stömgren ou explosion de Sedov, on marquera les cellules qui sont soumises a un gradient d'ionisation ou de densité supérieur a un certain seuil.
+%TODO ajouter les ref des sections pour sedov et stromgren
+Dans le cas de simulations cosmologique, on utilisera généralement une condition dite semi-Lagrangienne.
+C'est a dire qu'une cellule sera marquée comme "a raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse moyenne d'une cellule de ce niveau.
 
 
 
+En pratique, le raffinement se fera en trois temps:
 
+\begin{itemize}
+\item Dans un premier temps le code va passer en revue toutes les cellules d'un niveau, et les marquer comme "a raffiner" si une première condition physique est respectée.
+
+\item Une fois tout le niveau passé en revue, le code va ensuite faire une série de $N_{buffer}$ passages sur tout le niveau en marquant à chaque fois les cellules voisine des cellules précédemment marquées.
+Cette série de passage a pour but d’élargir la zone de raffinement et ainsi permettre une transition douce entre les niveaux.
+Cette zone de $N_{buffer}$ cellules autour des zones soumises à la condition physique de raffinement sera appelée le "buffer de raffinement".
+
+\item Une fois les cellules respectant ces deux conditions marquées, le raffinement est effectué.
+\end{itemize}
+
+En pratique le raffinement d'une cellule se fera en lui associant un OCT.
+*child pointera alors vers le dernier OCT libre de la liste chaînée.
+
+%le deraffinement
+On remarquera que la condition de raffinement ne prends pas en compte le fait qu'une cellule soit déjà raffinée ou non.
+Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "a raffinée" elle sera donc dé-raffinée.
 
 \subsubsection{Opérateurs de changement de grilles} \label{Opérateurs de changement de grilles}
 
-La \emph{restriction} consiste à dégrader la grille en résolution. La restriction la plus directe consiste à moyenner les cellules à dégrader. Par exemple, sur une grille à deux dimensions, pour diviser la résolution par deux, quatre cellules de la grille de départ devront être moyennées pour obtenir une nouvelle cellule de la grille à base résolution. \\
+Les opérations de raffinement/dé-raffinement font intervenir des opérateurs de changement de grille.
+Le changement de résolution peut avoir lieu dans les deux sens :
 
-La \emph{prolongation} consiste à augmenter la résolution d'une grille, la prolongation la plus directe consiste à injecter les valeurs de l'ancienne grille dans un certain nombre de cellules de la nouvelle grille. (fig \ref{Opérateurs de changement de grille})
+\begin{itemize}
+\item La \emph{restriction} consiste à dégrader la grille en résolution. La restriction la plus directe consiste à moyenner les cellules à dégrader. Par exemple, sur une grille à deux dimensions, pour diviser la résolution par deux, quatre cellules de la grille de départ devront être moyennées pour obtenir une nouvelle cellule de la grille à base résolution.
+
+\item La \emph{prolongation} consiste à augmenter la résolution d'une grille, la prolongation la plus directe consiste à injecter les valeurs de l'ancienne grille dans un certain nombre de cellules de la nouvelle grille. (fig \ref{Opérateurs de changement de grille})
+\end{itemize}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -145,26 +176,73 @@ La \emph{prolongation} consiste à augmenter la résolution d'une grille, la pro
 \subfloat[Prolongation]{\includegraphics[scale=0.35]{img/02/Prolongation.png}}\\
 \subfloat[Niveau L  ]{\includegraphics[scale=0.35]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
 \subfloat[Niveau L-1]{\includegraphics[scale=0.35]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
-\caption{\textbf{Opérateurs de changement de grille.} Ils permettent de changer la résolution de la grille. Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.\\
-Le potentiel du point masse prend une forme de losange à cause des conditions périodiques.}
+\caption{Opérateurs de changement de grille. 
+Ils permettent de changer la résolution de la grille. Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.}
 \label{Opérateurs de changement de grille}
 \end{center}
 \end{figure}
 
 La prolongation et la restriction sont des opérateurs aisément parallélisables. Chaque cellule (ou paquet de huit cellules) est indépendante des autres et il est possible de ne changer la résolution que d'une partie de la grille sans en affecter le reste.\\
 
-Il existe principalement deux conditions sur les opérateurs de changement de grille. La première impose une certaine réciprocité entre eux, les opérateurs doivent être adjoints: il est nécessaire qu'après une prolongation, suivie d'une restriction la grille d'arrivée soit la même que la grille de départ. L'inverse n'est pas nécessairement vrai: après une restriction , de l'information est perdue et aucune prolongation ne pourra la recomposer. 
-La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
+Il existe principalement deux conditions sur les opérateurs de changement de grille. 
+La première impose une certaine réciprocité entre eux, les opérateurs doivent être adjoints: il est nécessaire qu'après une prolongation, suivie d'une restriction la grille d'arrivée soit la même que la grille de départ. 
+L'inverse n'est pas nécessairement vrai: après une restriction, de l'information est perdue et aucune prolongation ne pourra la recomposer.
+La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. 
+Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
 
 
+\subsection{recherche de voisin}
+Nous verrons par la suite que l'état d'une cellule dépend des l'état des cellules qui l'entoure.
+La recherche de voisins sera donc une étape importante dans la gestion de la grille.
 
-\section{Energie noire}
-représente la majore partie du contenu de l'univers mais est la plus simple a simuler.
-Lien direct avec le facteur d'expansion (mettre ref section).
+La recherche de voisin se fera suivant ces étapes:
 
+\begin{itemize}
+\item en fonction de l'ID de la cellule, déterminer si la voisine est dans le même OCT parent.
+
+
+\item
+\begin{itemize}
+\item Si c'est le cas, accéder a l'oct parent et a l'aide de l'indice du tableau de cellule, retrouver le voisin en question.
+\item Si ce n'est pas le cas, accéder a la cellule mère de l'oct père et rechercher l'oct voisin
+\end{itemize}
+
+\end{itemize}
+
+\chapter{Les principaux solveurs physique}
+
+Nous allons voir dans cette partie que plus une physique représente une part importante du contenu de l'Univers plus elle est simple et rapide a simuler.
+Nous nous intéresserons a quatre solveurs distinct:
+\begin{itemize}
+\item d'énergie noire
+\item de matière noire
+\item du gaz
+\item de la radiation
+\end{itemize}
+Et ce, dans un ordre décroissant d'importance, relativement a la quantité d'énergie totale.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Énergie noire}
+
+Nous avons vu dans la partie d'introduction a la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers.
+Nous allons voir dans cette partie comme cette composante est simulée.
+
+Bien que nous sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
+Le solveur gérant l'énergie noire n'est pas a proprement parler un solveur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
+Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
+
+% mais est la plus simple a simuler.
+%Lien direct avec le facteur d'expansion (mettre ref section).
+
+L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code. %TODO ref
+Il en résultera une table, conservée en mémoire pendant toute l'exécution.
+Le facteur d'expansion sera alors interpoler dans cette table ne fonction de l'avancement de la simulation (cf partie calcul du pas de temps) %TODO ref
+
+\subsection{système d'unités comobiles}
 Il existe deux possibilités pour modéliser l'expansion de l'univers.
-La première consiste a considèrer un element de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, a y ajouter des élements.
-Le problème et que le cout numérique de la simulation croit entre autre avec le nombre d'éléments que l'on considère.
+La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, a y ajouter des élements.
+Le problème et que le coût numérique de la simulation croit entre autre avec le nombre d'éléments que l'on considère.
 La seconde possibilité est de faire varier la taille des éléments de calcul avec le facteur d'expansion.
 On appellera les longueurs ainsi exprimées des longueurs comobile.
 
@@ -188,87 +266,48 @@ ou $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
 La généralisation de ce principe a d'autre unités que la longueur est appeler système d'unités supercomobiles.
 \citep{martel_convenient_1998}
 
-Longueur:
-\begin{equation}
-\tilde{r}=\frac{r}{ar_*}
-\end{equation}
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{r l} \hline 
+Longueur: & $\tilde{r}=\frac{r}{ar_*}$ \\ \hline 
+Densité de matière: & $\tilde{\rho}=\frac{\rho a^3}{\rho_*}$ \\ \hline 
+Vitesse: & $ \tilde{v}=\frac{av}{v_*}$ \\ \hline 
+Pas de temps: & $\tilde{dt}=\frac{dt}{a^2t_*}$\\ \hline 
+Densité d’énergie potentielle: & $\tilde{\Phi}=\frac{a^2 \Phi}{\Phi_*}$\\ \hline 
+Pression: & $\tilde{p}=\frac{a^5 p}{p_*}$\\ \hline 
+Densité d’énergie cinétique: & $\tilde{\epsilon}=\frac{a^2 \epsilon}{\epsilon_*}$\\ \hline 
+Densité D’éléments: & $\tilde{N}=a^3 N r_*^3$\\ \hline 
+Flux: & $\tilde{F}=a^4 r_*^2 t_* F$\\ \hline 
+\end{tabular} 
+\end{center}
+\caption{Passage du système d'unités physique vers le système d'unité supercomobile} 
+\end{table}
 
-Densité de matière:
-\begin{equation}
-\tilde{\rho}=\frac{\rho a^3}{\rho_*}
-\end{equation}
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{r l} \hline 
+Longueur  & $r_*=L$\\ \hline 
+Densité & $\rho_* = \bar{\rho} = \frac{3H_0^2 \Omega_m}{8\pi G}$\\ \hline 
+Temps & $t_* = \frac{2}{H_0 \sqrt{\Omega_m}}$\\ \hline 
+Vitesse & $v_* = \frac{r_*}{t_*}$\\ \hline 
+Potentiel & $\Phi_* = \frac{r_*^2}{t_*^2} = v_*^2$\\ \hline 
+Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline 
+Énergie & $\epsilon_* = \frac{p_*}{\rho_*} = v_*^2$\\ \hline 
+\end{tabular} 
+\end{center}
 
-Vitesse:
-\begin{equation}
-\tilde{v}=\frac{av}{v_*}
-\end{equation}
-
-Pas de temps:
-\begin{equation}
-\tilde{dt}=\frac{dt}{a^2t_*}
-\end{equation}
-
-Densité d'energie potentielle:
-\begin{equation}
-\tilde{\Phi}=\frac{a^2 \Phi}{\Phi_*}
-\end{equation}
-
-Pression:
-\begin{equation}
-\tilde{p}=\frac{a^5 p}{p_*}
-\end{equation}
-
-Densité d’énergie cinetique:
-\begin{equation}
-\tilde{\epsilon}=\frac{a^2 \epsilon}{\epsilon_*}
-\end{equation}
-
-Densité D’éléments:
-\begin{equation}
-\tilde{N}=a^3 N r_*^3
-\end{equation}
-
-Flux:
-\begin{equation}
-\tilde{F}=a^4 r_*^2 t_* F
-\end{equation}
-
-
-
-Facteurs de normalisation:
-\begin{equation}
-r_*=L (la taille de boite)
-\end{equation}
-
-\begin{equation}
-\rho_* = \bar{\rho} = \frac{3H_0^2 \Omega_0}{8\pi G}
-\end{equation}
-
-\begin{equation}
-t_* = \frac{2}{H_0 \sqrt{\Omega_m}}
-\end{equation}
-
-\begin{equation}
-v_* = \frac{r_*}{t_*}
-\end{equation}
-
-\begin{equation}
-\Phi_* = \frac{r_*^2}{t_*^2} = v_*^2
-\end{equation}
-
-\begin{equation}
-p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2
-\end{equation}
-
-\begin{equation}
-\epsilon_* = \frac{p_*}{\rho_*} = v_*^2
-\end{equation}
+\caption{Facteurs de normalisation des différents grandeurs physique} 
+\end{table}
 
 
 
 
-\subsection{le pas de temps}
+\subsection{Gestion du pas de temps}
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Matière noire}
 Ncorps
 
@@ -354,8 +393,10 @@ Dans le cas ou L’étendue de la particule intersecte des cellules de différen
 
 
 \begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/02/CIC.jpg} 
-        \caption{Cloud In Cell. 
+		\centering
+        \includegraphics[width=.5\linewidth]{img/02/CIC.jpg} 
+        \caption{Représentation en 2D du Cloud In Cell. 
+        La masse d'une particule est répartie dans le cellules environnantes en lui associant une étendue spatiale.
         %http://homepage.univie.ac.at/franz.vesely/cp_tut/nol2h/new/c6sm_s4lr.html
 }
  		\label{fig:CIC}
@@ -550,7 +591,9 @@ En jouant sur le nombre d'appels récursifs de la fonction, il est possible de c
 
 le pas de temps\\
 
-\section{Baryon}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Le solveur hydrodynamique et la physique baryonique}
 
 %solveur hydro
 %partie la plus intensive en calcul
@@ -564,9 +607,9 @@ L'equation d'état du gaz sera donc:
 \begin{equation}
 p=\rho k T, 
 \end{equation}
-avec $k$ la constante de Boltzman.
+avec $k=1.38064852 \cdot 10^{-23} \left[ \mathrm{m^2 \cdot kg \cdot s^{-2} \cdot K^{-1}} \right] $ la constante de Boltzmann.
 
-La physique du gaz est régie par les equations d'Euler :
+La physique du gaz est régie par les equations d'Euler auto-gravitantes :
 
 \begin{equation}
 \begin{cases}
@@ -636,8 +679,8 @@ le pas de temps
 
 
 
-
-\section{radiation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Le solveur radiatif}
 
 \subsection{Les equations}
 \begin{equation}
@@ -679,7 +722,7 @@ d’état, avec le tenseur d’Eddington, D :
 \label{eq:fermeture}
 \end{equation}
 
-où D est approximé par le modèle M1 \citep{levermore1984,gonzalez2005} :
+où D est approximé par le modèle M1 \citep{levermore1984}%,gonzalez2005} :
 
 \begin{equation}
 \begin{cases}
@@ -721,52 +764,192 @@ le cooling
 le pas de temps
 la mise en place du multi longueur d'onde
 
-\section{gestion du pas de temps}
-
-condition de courant
-cosmo
-part
-freefall
-hydro
-radiatif
-
-
-
-\section{La chimie}
+\subsection{La chimie}
 
 La chimie consiste a appliquer l'énergie de la radiation au gas.
 C'est a ce moment que le couplage entre le gaz et la radiation est réalisé.
 
-
-
 gestion du refroidissement
 
-\section{Matérie et parallélismel}
 
-Les simulations cosmologiques ont pour principal defi de simuler d'important volume d'espace avec la meilleure résolution possible.
-L'amelioration de certain algorythme a permis d'augmenter la taille des simulations mais le principal facteur limitant se trouve au niveau du materiel.
-Dans le but d'augmenter la puissance de calcul, les machines se regroupent en centre de calcul.
 
-Ces machines se composent d'un certain nombre de nœuds.
+
+
+
+\chapter{Matériel et parallélisme}
+
+
+Les simulations cosmologiques ont pour principal défi de simuler d'important volume d'espace avec la meilleure résolution possible.
+Le défis des simulations de la réionisation est qu'elles doivent simuler un volume d'univers suffisant pour être représentatif ( $\approx 100$ Mpc selon \cite{iliev_cosmological_2006}) tout en résolvant la formation stellaire (échelle $<1$ pc).
+Nous verrons dans la prochaine partie que nous sommes encore loin de pouvoir résoudre la formation stellaire dans ce type de simulations. %TODO ref
+L’amélioration de certain algorithme (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation Ncorps directe, etc) a permis d'augmenter significativement la taille des simulations a puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
+
+\subsection{Loi de Moore et simulations}
+La loi de Moore \citep{moore1965cramming} propose un doublement du nombre de transistor par circuit intégré tout les 18 mois environs. (Fig \ref{fig:moore})
+Comme la puissance de calcul est étroitement liée au nombre de transistor par cœur, la taille -- le nombre d'éléments de résolution -- des simulations, suis également cette croissance exponentielle.
+Fig. \ref{fig:taillesimu}
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/moorelaw.png} 
+        \caption{Nombre de transistor par processeur en fonction du temps.
+        Cette croissance exponentielle est connue sous le nom de loi de Moore}
+ 		\label{fig:moore}
+
+        \includegraphics[width=.95\linewidth]{img/02/figure_simulations_with_time.png} 
+        \caption{Tailles des simulations en fonction du temps.
+        Il existe un lien directe avec la loi de Moore.
+         Image illustris}
+ 		\label{fig:taillesimu}
+\end{figure}
+
+
+\subsection{Principes de parallélisation}
+
+Comme on ne peux pas créer des processeurs aussi gros que ce que l'on le souhaite, la technique utilisée pour continuer a augmenter la puissance de calcul, consiste a en utiliser plusieurs en même temps.
+C'est ce qu'on appelle le parallélisme.
+
+Dans le cas des simulation cosmologique, la parallélisation est effectué en découpant l'espace a simuler en un certain nombre de sous domaines.
+Chaque processus indépendant sera alors chargé de simuler un sous domaine.
+Comme chaque sous domaine n'est pas isolé, mais appartient au même ensemble, les domaines vont devoir communiquer entre eux sur l'état de leurs voisin.
+Nous verrons en détail comment est effectué ce découpage dans la section \ref{sec:parasoft}.
+Mais voyons d'abord qu'elles sont les contraintes techniques de la parallélisation.
+
+Il existe différent type de parallélisation définis par la taxonomie de Flynn \citep{Flynn:1972:COE:1952456.1952459}: 
+
+\begin{itemize}
+\item SISD Single Instructions on Single Data.
+Aucun parallélisme, exécution d'une unique série d'instructions sur un unique flux de données.
+
+\item SIMD Single Instructions on Multiple Data.
+Exécution d'une unique série d'instructions sur différents flux de données.
+C'est le principe de fonctionnement des GPU.
+
+\item MISD Multiple Instructions on Single Data 
+Exécution de différentes série d'instructions sur un seul flux de données.
+
+\item MIMD Multiple Instructions on Multiple Data.
+Exécution de différentes série d'instructions sur différents flux de données.
+C'est l’architecture la plus utilisé aujourd'hui, et celle qui nous intéresse ici.
+Le type MIMD est lui même découpé en deux sous ensembles : 
+
+\begin{itemize}
+\item On dit que la mémoire est \textit{distribuée} quand les threads on leur propre espace mémoire dédié.
+Les principales machines que j'ai pu rencontrer utilise un modèle MIMD a mémoire distribuée.
+
+\item On dit que la mémoire est \textit{partagée} quand plusieurs threads ont accès au mème espace mémoire.
+\end{itemize}
+\end{itemize}
+
+Il existe plusieurs niveau de parallélisation, au niveau matériel.
+Par exemple, un processeur actuel dispose de plusieurs cœurs, capable de géré chacun un processus (voir 2 dans le cas de l'hyperthreading).
+Il est possible d'avoir plusieurs processeur au sein d'un même ordinateur.
+Et il est possible d'utiliser conjointement plusieurs ordinateurs.
+Ce qui nous mène a la notion de centre de calcul.
+
+\subsection{Les calculateurs}
+
+La production de simulation cosmologique a haute valeur scientifique ne se fait pas sur un simple ordinateur personnel.
+Pour réaliser de telle simulations, nous (les simulateurs) utilisons des centres de calcul.
+A la manière d'un télescope pour les observateurs, les supercalculateur sont les outils principaux des simulateurs.
+Et a la manière des plus gros télescopes, ces calculateurs sont gigantesques.
+
+La figure \ref{fig:titan} présente le calculateur TITAN du Oak Ridge Leadership Computing Facility sur lequel ont été éxécuté les simulations CODA \citep{ocvirk_cosmic_2015}.
+TITAN a été classé quatrième plus puissant calculateur au monde selon le cite top500.org (cf \ref{tab:top500}).
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/titan.jpg} 
+        \caption{Supercalculateur Titan OLCF.
+        ou ont été exécutés les simulations CODA}
+ 		\label{fig:titan}
+\end{figure}
+
+\begin{table}[bth]
+\begin{tabular}{ l l l l }
+\hline 
+Système & Pays & nb de cœurs & TFlop/s (peak) \\
+\hline 
+Sunway TaihuLight & Chine & 10,649,600 & 125,435.9 \\ 
+Tianhe-2  & Chine & 3,120,000 & 54,902.4 \\ 
+Piz Daint  & Suisse & 361,760 & 25,326.3 \\ 
+Titan  & États unis & 560,640 & 27,112.5 \\ 
+Sequoia  & États Unis &1,572,864 & 20,132.7 \\ 
+\end{tabular} 
+\caption{Les 5 super calculateurs les plus puissants du top500 de Juin 2017, source : www.top500.org}
+\label{tab:top500}
+\end{table}
+
+
+Ce type de calculateur est composé d'un certain nombre de nœud relié qui communique entre eux par l'intermédiaire d'un réseau.
+Proche d'un ordinateur personnel un nœud est composé d'une carte mère sur laquelle est relié entre autres, un ou plusieurs processeurs (CPU), une certaine quantité de mémoire RAM et parfois une carte graphique (GPU)
+Chaque CPU dispose d'un certain nombre de cœurs, et chaque cœurs est capable d'exécuter un certain nombre de processus ou thread (généralement 1, parfois 2 dans le cas de l'Hyperthreading)
+
+
+Durant le développement d'un code HPC, on cherchera a minimiser les communications.
+D'une manière générale, plus des composants sont physiquement éloignés, plus leurs communications seront lente (cf \ref{tab:debits})
+
+\begin{table}
+\begin{tabular}{ l l }
+\hline 
+Interface  & Débit théorique \\
+\hline 
+Cache (L1) & $\approx$ 700Go/s \\
+PCIE  & $\approx$ 16 Go/s \\
+RAM & $\approx$ 10 Go/s \\ 
+InfiniBand & $\approx$ 5 Go/s \\
+SSD & $\approx$ 600 Mo/s \\
+HDD & $\approx$ 100 Mo/s \\
+
+\end{tabular} 
+\caption{Ordre de grandeur des débits théorique des différentes interface rencontrées lors de l'exécution d'un code HPC}
+\label{tab:debits}
+\end{table}
+
+Les coeurs au sein d'un même CPU pourront communiquer entre eux de faible quantité de données par l'intérmédiaire du cache, ou en passant par la RAM pour les volumes plus importants.
+
+
+Tout les processus au sein d'un même noeud pourront communiquer par l'intermédiaire de la RAM si
+
+
+
+
+
+Une fois les processus et les domaines identifiés il existe différentes facons de faire dialoguer les processus entre eux.
+La principale distinction viendra généralement de si les threads sont exécutés par un meme noeud ou non.
+
+, cad par exemple que si le thread 0 déclare une variable X, le thread 1 aura aussi accès a cette variable . 
+OpenMP est une API permettant ce  genre partage de mémoire.
+
+
+Si les threads sont exécutés sur un même nœud on aura tendance a utiliser un schéma a base de mémoire partagée.
+
+Dans le cas ou les threads sont exécutés par des processeurs étant physiquement éloigné, ie sur des noeuds différents, les communications doivent passer par un réseau de communication reliant les noeuds.
+Il faudra utiliser dans ce cas une autre API pour explicitement envoyer et recevoir des paquets d'information
+L'API la plus communément utilisée pour ce genre de communication est Message Passing Interface MPI.
+
+
 
 \paragraph{Nœud :} Élément du centre de calcul relier par un réseau.
-Proche d'un ordinateur personnel il est composé d'une carte mère sur laquelle est relié entre autres, un ou plusieurs processeurs (CPU), une certaine quantité de mémoire RAM et parfois une carte graphique (GPU)
-
-Chaque CPU dispose d'un certain nombre de cœurs, et chaque cœurs est capable d'exécuter un certain nombre de processus ou thread (généralement 1, et parfois 2 dans le cas de l'Hyperthreading)
 
 La difficulté est de géré la façon dont les threads travaillent ensemble.
-En effet a chaque thread sera associé un domaine de calcul représentant une partie de l'espace a modeliser.
+En effet a chaque thread sera associé un domaine de calcul représentant une partie de l'espace a modéliser.
 De plus les domaine ne sont pas isolés et partage de l'information. 
 
 Nous sommes alors confronté a plusieurs problèmes: comment associer les threads aux domaines de calculs  et comment faire communiquer ces threads entre eux.
 
-\subsection{courbe de Peano-Hilbert}
+
+
+Ces machines se composent d'un certain nombre de nœuds.
+
+
+
+\subsection{Courbe de Peano-Hilbert}
+\label{sec:parasoft}
 
 %https://books.google.fr/books?id=sbQqBgAAQBAJ&pg=PA26&lpg=PA26&dq=peano+hilbert+mpi&source=bl&ots=HgSw0Jpf7d&sig=vXTb2JkDixd1gcDGANoARIYHAG0&hl=fr&sa=X&ved=0ahUKEwilofzKoerSAhUF6RQKHXzQDC4Q6AEIGjAA#v=onepage&q=peano%20hilbert%20mpi&f=false
 
 
 %Warren et Salmon
-Le découpage des domaines de calcul correspondants aux différents processeurs,  utilise une courbe de Peano-Hilbert.
+Le découpage des domaines de calcul correspondants aux différents processeurs, utilise une courbe de Peano-Hilbert.
 Ce type de courbes fractale a la particularité de remplir l'espace.
 Mais aussi de passer par tout les points d'une grille.
 Ainsi si l'on applique ce pavage aux cellules de notre grille, en associant un indice reliant un cellule a sa position sur la courbe de Hilbert.
@@ -785,36 +968,39 @@ Elle minimise donc les communications entre processeurs
  		\label{fig:hilbert}
 \end{figure}
 
+%
+%\begin{figure}[bth]
+%        \includegraphics[width=.95\linewidth]{img/02/hilbert2.png} 
+%        \caption{exemple de courbe de Hilbert. 
+%%http://iopscience.iop.org/article/10.1086/590370/pdf 
+%}
+% 		\label{fig:hilbert2}
+%\end{figure}
+
 
 \begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/02/hilbert2.png} 
-        \caption{exemple de courbe de Hilbert. 
-%http://iopscience.iop.org/article/10.1086/590370/pdf 
+        \includegraphics[width=.95\linewidth]{img/02/secteur.png} 
+        \caption{Exemple de domaine de processeur généré par EMMA. 
+        Chaque domaine représente une vue d'ensemble de la grille, a résolution dégradée.
 }
  		\label{fig:hilbert2}
 \end{figure}
 
 
-\subsection{Mémoire partagée et mémoire distribuée}
 
-Une fois les processus et les domaines identifiés il existe différentes facons de faire dialoguer les processus entre eux.
-La principale distinction viendra généralement de si les threads sont exécutés par un meme noeud ou non.
-
-\paragraph{mémoire partagée : } 
-Si les threads sont éxécutés sur un meme noeud on aura tendance a utiliser un schéma a base de mémoire partagée.
-On dit que la mémoire est partagée quand plusieurs threads ont accès au meme espace memoire, cad par exemple que si le thread 0 déclare une variable X, le thread 1 aura aussi accès a cette variable . 
-OpenMP est une API permettant ce  genre partage de mémoire.
-
-\paragraph{mémoire distribuée : } 
-Dans le cas ou les threads sont exécutés par des processeurs étant physiquement éloigné, ie sur des noeuds différents, les communications doivent passer par un réseau de communication reliant les noeuds.
-Il faudra utiliser dans ce cas une autre API pour explicitement envoyer et recevoir des paquets d'information
-L'API la plus communément utilisée pour ce genre de communication est Message Passing Interface MPI.
 
 
 %Je n'ai aucun doute sur le fait que dans les années a venir 
 
 
 \subsection{GPGPU}
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/cpu_vs_gpu.png} 
+        \caption{Comparaison CPU/GPU}
+ 		\label{fig:cpugpu}
+\end{figure}
+
 
 Les cartes graphiques, ou GPU ont été détourné de leurs utilisation principale d'affichage il y a une dizaine d'années.
 Ces unités de calculs sont  efficaces dans le traitement d'un grand nombre d'information en parallèle.
@@ -823,10 +1009,23 @@ Elle sont donc toutes indiqué dans le cas des simulation numérique.
 La programmation sur carte graphique utilise une approche proche du concept de mémoire distribuée.
 Cad que la carte graphique GPU et le processeur central CPU ont besoin de communiquer.
 
-Or a l'heure actuelle cette communication utilise une interface relativement lente (PCI express) qui rend couteuse la communication. 
+Or a l'heure actuelle cette communication utilise une interface relativement lente (PCI express) qui rend coûteuse la communication. 
 Il faut donc que la quantité de calcul effectués par la carte soit suffisante pour rentabilisé la communication.
 
+avantage des GPU -> meilleurs ratio flop/€ et 
+meilleur ration flop/W -> répond au problème de refroidissement
+plus dur a programmer, performance dépends du problème.
 
+
+\subsection{en pratique}
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/gatherscatter.jpg} 
+        \caption{Transition entre la structure en arbre de l'AMR et la structure en vecteur de calcul.
+}
+ 		\label{fig:hilbert}
+\end{figure}
 
 
 

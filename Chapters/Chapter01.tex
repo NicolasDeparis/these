@@ -104,6 +104,9 @@ Cette constante représente mathématiquement le fait que l'espace-temps peut ê
 
 \subsection{Équations de Friedmann}
 
+%Metrique de Friedmann-Lemaître-Robertson-Walker (FLRW)
+
+
 Quelques années plus tard, Alexandre Friedmann entreprend de trouver des solutions exactes a l'équation d'Einstein en l'appliquant a un Univers homogène et isotrope \citep{1922ZPhy...10..377F}.
 Il arrive a ce système d'équations indépendantes permettant de modéliser l'Univers dans son ensemble :
 
@@ -140,10 +143,20 @@ En manipulant l'équation \ref{eq:friedman1} il est possible de montrer que :
 % https://en.wikipedia.org/wiki/Friedmann_equations
 % pour la demonstration
 
+%TODO introduire les differents fluides cosmologiques
+
 \begin{equation}
 \frac{\dot{a}}{a} = H_0 \sqrt{ \Omega_{r,0} a^{-4} +  \Omega_{M,0} a^{-3} + \Omega_{K,0}a^{-2} + \Omega_{\Lambda,0}  } 
 \label{eq:scale_t}
 \end{equation}
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.9\linewidth]{img/01/dark4.jpg} 
+        \caption{Importance respective des differentes densité d'énergie en fonction de l'age de l'Univers (et donc de sa taille). Image extraite de \citep{2005univ.book.....F}
+        }
+ 		\label{fig:cosmoparamt}
+\end{figure}
 
 
 Ou les paramètres $\Omega_{i,0}$ représente la densité d'énergie associé aux différent constituant, 
@@ -157,39 +170,48 @@ en fonction de la densité critique de l'Univers:
 \rho_{c,0} = \frac{3H_0^2}{8\pi G}
  \end{equation}
 Cette valeur est déterminée avec l'équation \ref{eq:friedman1}, en considérant un univers statique ($\Lambda=0$) et plat ($\rho_{K,0}=0$).
+Nous verront dans la partie dédiée a la déterminations des paramètres cosmologique (cf Sec \ref{cosmoparam}) que les mesures actuelles sont en faveur d'un Univers plat (sans courbure).
+Ce qui s'exprime par :
+
+\begin{equation}
+\Omega_{K,0} = 0,
+\end{equation}
+
+il s'en suis que :
+\begin{equation}
+\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1 .
+\end{equation}
+
 
 \begin{itemize}
 
+\item $\Omega_{M,0}$ est la densité d'énergie associée a la matière (matière noire que nous introduiront dans la suite et la matière baryonique)
+Par simple effet de dilution, cette densité décroît avec le cube du facteur d'expansion.
+Un Univers constitué exclusivement de cette énergie serait nommé "Univers poussière"
+C'est le cas actuellement.
 
 \item $\Omega_{r,0}$ représente la densité d'énergie radiative.
-Un Univers constitué exclusivement de cette énergie serait nommé "Univers lumière"
+La densité de photon décroît avec le cube du facteur d'expansion, mais du fait de l'allongement de la longueur d'onde avec $a$, la densité d'énergie associée a la radiation décroit avec la puissance $4$ de $a$.
+Un Univers constitué exclusivement de cette énergie serait nommé "Univers lumière".
+Cette approximation est valable pour un Univers majoritairement remplis de matière relativiste.
+C'était le cas avant L’émission du fond diffus cosmologique.
 
-\item $\Omega_{M,0}$ est la densité d'énergie associée a la matière (matière noire que nous introduiront dans la suite et baryonnique)
-Un Univers constitué exclusivement de cette énergie serait nommé "Univers poussière"
 
 \item $\Omega_{\Lambda,0}$ est la densité d’énergie du vide.
-Cette énergie est associée a la constante cosmologique et a l'expansion de l'Univers.
- 
+Cette énergie est associée a la constante cosmologique et a l'expansion de l'Univers. 
+Cette densité est constante dans le temps
+
 \item $\Omega_{K,0}$ est densité de courbure spatiale ou la densité d'énergie associée a la courbure de l'espace.
+Selon l’équation \ref{eq:einstein}, l'énergie peut courber l'espace, mais si l'espace possède une courbure intrinsèque, elle est équivalente a une densité d'énergie.
 \begin{equation}
- \Omega_{K,0} = 1 - \Omega_{r,0} - \Omega_{M,0} - \Omega_{\lambda,0} 
+\Omega_{K,0} = 1 - \Omega_{r,0} - \Omega_{M,0} - \Omega_{\lambda,0} 
 \end{equation}
 
 \end{itemize}
 
 
 
-Nous verront dans la partie dédiée a la déterminations des paramètres cosmologique que les mesures actuelles sont en faveur d'un Univers plat (sans courbure).
-Ce qui s'exprime par :
 
-\begin{equation}
- \Omega_{K,0} = 0,
- \end{equation}
-
-il s'en suis que :
-\begin{equation}
-\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1 .
- \end{equation}
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/scale_t.jpg} 
@@ -216,40 +238,32 @@ La gravitation n'est pas suffisante pour contrer l'expansion, et ce type d'Unive
 
 \subsection{Énergie noire}
 
+%Dans un Univers, ou seule la gravité agit a grandes échelles, l'expansion ne peux que décélérer.
+
 
 Si nous avons vu que la taille de l'Univers évolue avec le temps, il reste la question de l’évolution de cette vitesse.
+Si l'on considère que l'univers s’étend suite a une impulsion initiale (cf prochaine section), et que la gravité est la seule force qui agit a grande échelle, l'expansion devrait décélérer.
+En effet comme la gravité est une force purement attractive, elle agis comme un ressort qui devrait ramener toute la masse a l'origine (scénario de la courbe orange sur la figure \ref{fig:scale_t}, ou la courbe retombe sur l'axe horizontal signifiant que la taille de l'univers tend a nouveau vers zero).
 
-L'accélération de l'expansion de l'univers a été découverte simultanément par 2 équipes :
-
+Or ce n'est pas ce qui est observé: l'accélération de l'expansion de l'univers a été découverte a la fin du XXème siècle par 2 équipes simultanément :
 \begin{itemize}
-\item  Supernova Cosmology Project \citep{1999ApJ...517..565P}
-% http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
-\item  High-Z supernovae search team \citep{1998AJ....116.1009R}
-%http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
+\item  High-Z supernovae search team \citep{1998AJ....116.1009R}%http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
+\item  Supernova Cosmology Project \citep{1999ApJ...517..565P}% http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
 \end{itemize}
 Les 2 ont obtenues le prix Nobel en 2011.
 
-C'est seulement quelques mois plus tard qu’apparaît pour la première fois la mention d'énergie noire: \citep{1999PhRvD..60h1301H}
-
-
-
+L'accélération de l'expansion de l'Univers pose un problème majeur.
+Il est établis depuis les travaux de Newton que pour accélérer une masse une force est nécessaire.
+Or nous ne disposons actuellement d'aucune théorie permettant d'expliquer cette force répulsive.
+Il a fallu seulement quelques mois après cette découverte pour qu’apparaisse pour la première fois la mention d'énergie noire: \citep{1999PhRvD..60h1301H}.
 
 
 %échelle gigaparsec\\
 %Facteur d'expansion
 %
-%Metrique de Friedmann-Lemaître-Robertson-Walker (FLRW)
 %
-%perturbation lineaires:
-%https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html
 
-
-
-
-
-
-
-\section{$\Lambda$CDM}
+\section{Le modèle du Big bang}
 
 
 %le big bang\\
@@ -258,45 +272,48 @@ C'est seulement quelques mois plus tard qu’apparaît pour la première fois la
 %le CMB\\
 %la reionization
 
-En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L} 
 
 Une fois établis que les galaxies s'éloigne de nous dans toutes les directions, plusieurs constats s'imposent.
 
-Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les une des autres, et en poussant se constat a L’extrême, il fut imaginé qu'a un certain instant dans l'histoire de l'Univers, toute la matière devait être concentré en un point.
+Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les une des autres, et en poussant se constat a l’extrême, il fut imaginé qu'a un certain instant dans l'histoire de l'Univers, toute la matière devait être concentré en un point (toutes les courbes de la figure \ref{fig:scale_t} passe par une taille nulle dans le passé)
 Cette singularité à été baptisé Big Bang et donne son nom au modèle cosmologique actuel.
 
-%Dans le modèle du Big Bang, le début de l'Univers est suivis par une phase d'expansion rapide appelé inflation.
+En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L} 
 
+
+\subsection{Température de l'Univers}
+
+Il existe un lien direct entre la taille de l'Univers et sa température.
 Dans la conception actuelle de l'Univers, celui ci est par définition l'ensemble de ce qui existe, il ne lui est pas possible d'échanger de l’énergie avec l’extérieur et c'est donc un système isolé.
 Or, la thermodynamique nous dit qu'il existe une relation entre le volume et la température d'un system adiabatique.
 La température (la densité d'énergie interne) diminue au fur et a mesure que l'Univers se dilate.
-
 Plus l'on se rapproche temporellement du BigBang, plus l'Univers est dense et chaud.
 
-Après le BigBang, l'Univers est composé d'une soupe de quark et de gluon, qui vont former en se refroidissant les premiers protons, neutrons et électrons.
+
+\subsection{Nucléosynthèse primordiale}
+%Dans le modèle du Big Bang, le début de l'Univers est suivis par une phase d'expansion rapide appelé inflation.
+Après le BigBang, l'Univers est composé d'une soupe de particules élémentaire (quark, gluon, électron) qui vont former en se refroidissant les premiers protons, neutrons et électrons.
 Les protons et les neutrons vont a leurs tour s'assembler pour former les premiers noyaux atomiques.
+La théorique de la nucléosynthèse primordiale a été présenté dans un article surnommé $\alpha \beta \gamma$ due aux initiales des noms de ses auteurs \citep{PhysRev.73.803}.
 
-La théorique de la nucléosynthèse primordiale permets d'expliquer avec precision l'abondance observée des différents atomes présent dans l'Univers.
+Cette théorie permets d'expliquer avec precision l'abondance observée des différents atomes présent dans l'Univers.
 
-A cette période, les noyaux atomiques sont découplé des électrons, on dis que l'Univers est dans un état ionisé.
-Il faudra attendre $\approx 380 000$  ans pour que la température baisse suffisamment pour permettre l'apparition des premiers atomes neutres.
+\begin{itemize}
+\item 73,9\% D’Hydrogène
+\item 24\% D’Hélium
+\item Le reste (2.1\%) est constitué de l'intégralité des autres éléments du tableau périodique que nous nommerons "métaux"
+\end{itemize}
+
+\subsection{Refroidissement du plasma primordial}
+A cette période, les noyaux atomiques sont découplé des électrons, on dit que l'Univers est dans un état ionisé.
+Un plasma proche de celui que l'on peux trouver au centre d'une étoile.
+Il faudra attendre $\approx 380 000$ ans pour que la température baisse suffisamment pour permettre l'apparition des premiers atomes neutres.
 Cet période est appelée "l'époque de la recombinaison" et a donné lieu a l'émission du fond diffus cosmologique que nous développerons plus en détails dans la section \ref{sec:CMB}.
 Durant cette transition, l'Univers a connu un changement d'état majeur puisque celui ci est passé d'un état globalement ionisé a un état globalement neutre.
 
-A la suite de l'émission du fond diffus cosmologique, commence une période appelée "les ages sombres".
-L'Univers est alors composé de gaz froid soumis principalement a deux forces : la gravité et l'expansion de l'Univers.
-La compétition entre ces deux forces couplé a de très légères perturbations dans la densité de l''Univers ont menées a l'apparition des premières sur-densité qui ont permis l'apparition des premières étoiles.
-Ces étoiles ont émis du rayonnement suffisamment énergétique pour arracher les électrons du gaz environnant.
-L'Univers va alors subir un second changement d'état majeur, puisque le rayonnement des premières étoiles va de nouveau ioniser le gaz.
-C'est l'époque de la reionization.
+Robert Herman et Ralph Alpher ont été les premiers a proposer l’existence du fond diffus cosmologique avant même sa découverte
 
-
-
-
-%TODO INTRODUIRE LE REDSHIFT
-
-
-
+revue sur la recombinaison :\ref{2009AN....330..657S}
 
 \section{Le fond diffus cosmologique}
 \label{sec:CMB}
@@ -358,7 +375,7 @@ Ce léger défaut d'uniformité (de l'ordre de $10^{-5}$ en relatif) nous rensei
 Par la suite, les satellites WMAP et Planck ont grandement amélioré la précision des mesures des anisotropies du fond diffus (Fig. \ref{fig:cmb}).
 
 \begin{figure}[htbp]
-        \includegraphics[width=.95\linewidth]{img/01/CMB.jpeg} 
+        \includegraphics[height=.95\textheight]{img/01/CMB.jpeg} 
         \caption{Les fluctuations du CMB vues par le satellite Planck. 
         Image ESA}
  		\label{fig:cmb}
@@ -380,15 +397,15 @@ avec :
 a_{lm}= \int d\Omega(\theta,\phi) \Delta T (\theta,\phi) Y(\theta,\phi)_{lm}
 \end{equation}
 
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/01/harmoniques_spheriques.jpeg} 
-        \caption{
-        représentation des $Y(\theta,\phi)_{lm}$
- Pierre Brassard, université de Montréal 
-%Spectre thermique du CMB vue par le satellite Cosmic Background Explorer (COBE). 
-        Image Wikipédia}
- 		\label{fig:harmoniques_spheriques}
-\end{figure}
+%\begin{figure}[bth]
+%        \includegraphics[width=.95\linewidth]{img/01/harmoniques_spheriques.jpeg} 
+%        \caption{
+%        représentation des $Y(\theta,\phi)_{lm}$
+% Pierre Brassard, université de Montréal 
+%%Spectre thermique du CMB vue par le satellite Cosmic Background Explorer (COBE). 
+%        Image Wikipédia}
+% 		\label{fig:harmoniques_spheriques}
+%\end{figure}
 
 
 \begin{equation}
@@ -412,8 +429,11 @@ représenté Fig.\,\ref{fig:cmb_power_spectrum}
 \end{figure}
 
 
-\section{Le contenu de l'univers - (Théorie)}
 
+
+
+\section{Le contenu de l'univers}
+\label{cosmoparam}
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/cosmoparam.png} 
@@ -476,7 +496,26 @@ seulement E>13.6 eV
 plot en camembert avec les différents constituants
 
 
+nessecité d'introduire la matière noire
+
+\section{dark matter}
 
 
 
+
+
+
+
+A la suite de l'émission du fond diffus cosmologique, commence une période appelée "les ages sombres".
+L'Univers est alors composé de gaz froid soumis principalement a deux forces : la gravité et l'expansion de l'Univers.
+La compétition entre ces deux forces couplé a de très légères perturbations dans la densité de l''Univers ont menées a l'apparition des premières sur-densité qui ont permis l'apparition des premières étoiles.
+Ces étoiles ont émis du rayonnement suffisamment énergétique pour arracher les électrons du gaz environnant.
+L'Univers va alors subir un second changement d'état majeur, puisque le rayonnement des premières étoiles va de nouveau ioniser le gaz.
+C'est l'époque de la reionization.
+
+
+
+
+%perturbation lineaires:
+%https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html
 
