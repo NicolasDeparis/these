@@ -1004,13 +1004,12 @@ EMMA utilise un degré supplémentaire de parallélisation.
 Les calcul de chaque domaines sont accéléré en utilisant les capacité parallèle des processeur graphic récents.
 Les cartes graphiques, ou GPU (pour Graphics Processing Unit) ont été détourné de leurs utilisation principale d'affichage il y a une dizaine d'années.
 
-A l'inverse des CPU actuels, qui disposent d'un nombre réduit de cœurs (16 cœurs pour un AMD Opteron 6300) les GPU dispose d'une nombre beaucoup plus important de coeurs (Fig \ref{fig:cpugpu})
-Par exemple la NVIDIA Tesla k40c dispose de 2880 coeurs et de 12Go de mémoire et a une puissance de calcul de 4.3 Tflop/s en simple precision.
-
+A l'inverse des CPU actuels, qui disposent d'un nombre réduit de cœurs (8 coeurs hyperthreadé pour un Intel® Xeon® X7560 de Curie et 16 cœurs pour un AMD Opteron 6300 de TITAN) les GPU dispose d'une nombre beaucoup plus important de coeurs (Fig \ref{fig:cpugpu})
+Par exemple la NVIDIA Tesla k40c dispose de 2880 coeurs.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/cpu_vs_gpu.png} 
-        \caption{Comparaison CPU/GPU. Une CPU dispose d'un nombre réduit de coeurs capables d'éxécuter des opération complexe. A l'inverse un GPU dispose d'un grand nombre de coeurs pouvant éxécuter un grand nombre d'opérations simples en parallèle}
+        \caption{Comparaison CPU/GPU. Une CPU dispose d'un nombre réduit de cœurs capables d’exécuter des opération complexe. A l'inverse un GPU dispose d'un grand nombre de coeurs pouvant éxécuter un grand nombre d'opérations simples en parallèle}
  		\label{fig:cpugpu}
 \end{figure}
 
@@ -1020,19 +1019,38 @@ Les GPU utilise un mode de parallélisation de type SIMD.
 Ces unités de calculs sont  efficaces dans le traitement d'un grand nombre d'information en parallèle.
 Elle sont donc toutes indiqués dans le cas des simulations numérique ou il s'agit d'appliquer un traitement identique a chaque cellules de la grille.
 
+Il existe 2 principaux avantage aux GPU par rapport aux CPU.
+Premièrement leurs meilleurs ratio puissance de calcul sur coup (flop/€).
+Et également un meilleur ratio puissance de calcul sur puissance élcetrique (flop/W) ce qui reduit les besoins de refroidissement et permet des économies supplémentaires.
 
 
+%
+% et de 12Go de mémoire et a une puissance de calcul de 4.3 Tflop/s en simple precision.
+%
+%
+%Intel® Xeon® X7560 -> TDP 130 W -> 76 Gflop/s (crete)
+%
+%
+%IBM A2 (sequoia) -> 204 Gflop/s -> TDP 55W
+
+ 
+
+Cependant CPU et GPU sont indissociable est il faut les utilisé conjointement pour tirer le meilleurs partis des capacitées de calcul offerte par une machine hybride.
+
+Une code hybride est découpé en deux parties, une partie sequentielle exécuté sur le CPU et une partie paralélle exécuté sur le GPU.
+Ont tirera le maximum des capacité d'axéléraion d'un GPU avec un code qui est autement parallélisable.
+En effet si l'on peux éspérer
 
 
 
 La programmation sur carte graphique utilise une approche proche du concept de mémoire distribuée.
 Cad que la carte graphique GPU et le processeur central CPU ont besoin de communiquer.
+Leurs espaces mémoire ne sont pas commun.
 
-Or a l'heure actuelle cette communication utilise une interface relativement lente (PCI express) qui rend coûteuse la communication. 
+%Or a l'heure actuelle cette communication utilise une interface relativement lente (PCI express) qui rend coûteuse la communication. 
 Il faut donc que la quantité de calcul effectués par la carte soit suffisante pour rentabilisé la communication.
 
-avantage des GPU -> meilleurs ratio flop/€ et 
-meilleur ration flop/W -> répond au problème de refroidissement
+
 plus dur a programmer, performance dépends du problème.
 
 

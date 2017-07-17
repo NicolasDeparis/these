@@ -83,7 +83,11 @@ t_{sound} = \frac{R}{C_s}
 \end{equation}
 
 \begin{equation}
-t_{ff} = \frac{1}{G \rho}
+t_{ff} = \frac{1}{\sqrt{G \rho}}
+\end{equation}
+
+\begin{equation}
+t_{ff} = t_{sound}
 \end{equation}
 
 
@@ -122,8 +126,6 @@ equation simplifié du processus de fusion:
 
 materiaux de base est l'hydrogene\\
 plasma donc hydrogène ionisé 
-formation d'élement lourd (<Fe)\\
-enrichissement du milieu
 
 
 \subsection{mort}
@@ -134,6 +136,7 @@ naine blanche\\
 trou noir\\
 supernovae\\
 formation d'elements lourd (>Fe)
+enrichissement du milieu
 
 
 
@@ -183,9 +186,12 @@ Seuil en densité \\
 	\rho_{thresh} = max\left(  \delta_{in} \bar{\rho}, \rho_{in} a^3 \right)
 \end{equation} 
 
-ou $\delta_{in}$ et $\rho_{in}$  sont respectivement les parametre d'overdensité et de densité physique.
+ou $\delta_{in}$ et $\rho_{in}$  sont respectivement les paramètre de surdensité et de densité physique.
 $\delta_{in}$est exprimé en unité comobile et est donc constant dans le temps en unité du code
  $\rho_{in}$ est exprimé en unité physique (en atome par metre cube), sa valeur evolue dans le temps du point de vue des unité du codes.
+
+determination de la valeur de 55\\ 
+ 
  
 Dans les cellules au dessus du seuil on considère une SFR de:
 
@@ -195,7 +201,7 @@ Dans les cellules au dessus du seuil on considère une SFR de:
 \end{equation}
 
 
-avec  $\epsilon$ le parametre d'efficacité de formation stellaire , $\rho_g$ la densité de gas locale, et le temps de chute libre:
+avec  $\epsilon$ le paramètre d'efficacité de formation stellaire , $\rho_g$ la densité de gaz locale, et le temps de chute libre:
 \begin{equation}
 t_{ff} = \sqrt{\frac{3\pi}{32G\rho_g}}
 \end{equation}
@@ -204,12 +210,28 @@ t_{ff} = \sqrt{\frac{3\pi}{32G\rho_g}}
 	M_{star} = SFR . dv .dt 
 \end{equation}
 
-determination de la valeur de 55\\
-
-tirage aléatoire\\
-loi de Poisson\\
-
 resolution en masse\\
+
+Nous avons donc a ce stade la masse totale de gaz a convertir en étoile.
+Il peux etre tres couteux de générer pour chaque cellule éligible, et a chaque pas de temps, une nouvelles particule stellaire (le nombre de particule peux rapidement exploser.
+Nous adoptons une approche probabiliste.
+Nous définissons une masse d'étoiles $m_{star}$ qui correspondra a notre "quanta stellaire".
+toutes les étoiles aurons donc la même masse.
+Et nous tirons le nombre de quanta a ajouter aléatoirement dans une lois de Poisson.
+
+\begin{equation}
+	P(N) = \frac{\lambda^N}{N!} e^{-\lambda}
+\end{equation}
+
+Ou $\lambda$ correspond au nombre de particule moyen a créer dans la cellule ($\lambda \frac{ M_{star}}{m_{star}}$
+Étant donné le grand nombre de tirage cette loi est en moyenne valide.
+
+La masse des étoiles est calculée d'une manière comparable a la masse d'une particule de matière noire.
+la masse d'une étoile correspond a la masse moyenne de gaz dans une cellules d'un certain niveau pouvant aller du niveau coarse $m_star = M_{DM} \frac{\Omega_b}{\Omega_m}$ au niveau plusieurs niveau raffiné.
+
+
+LEs étoiles créées auront une vitesse aléatoire pour éviter les effets de "collier".
+
 
 
 
@@ -273,23 +295,4 @@ le rayonnement est piégé dans les cellules\\
 \input{Chapters/Chapter03_supernovae.tex}
 
 
-
-\section{Influence du feedback stellaire sur la reionization}
-
-\subsection{etude de flux au R200}
-
-\subsection{Healpix}
-\label{sec:healpix}
-
-Healpix est un outils qui permets de répartir des points de manière uniforme sur la sphere.
-
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/03/healpix.jpg} 
-        \caption{Exemple de sphere HealPix}
- 		\label{fig:HealPix}
-\end{figure}
-
-
-
-\subsection{fraction d'echapement}à
 
