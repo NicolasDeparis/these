@@ -236,10 +236,49 @@ LEs étoiles créées auront une vitesse aléatoire pour éviter les effets de "
 
 
 \section{La vie radiative}
+%injection d'énergie dans le solveur radiatif, ok mais combien?\\
+%calibration energetique et Starburst99\\
 
-injection d'énergie dans le solveur radiatif, ok mais combien?\\
-calibration energetique et Starburst99\\
+Une fois les étoiles formées, il est nécessaire de les faire rayonner.
+Pour ce faire il faut passer en revue toute les étoiles, et a partir de leurs masse et de leur age, calculer leurs émissivité.
+Cette opération est simplifiée par l'utilisation de la liste chaînée de particule associées a chaque cellule. %TODO ref section
+En effet, en pratique, on passera en revue toutes les cellules, et pour chaque cellules on passera en revue toutes ses particules.
+On testera alors si une particules est une étoiles (la liste chainée contient également les particulke de matière noire), et si cette étoiles est dans un stade ou elle émet de l'énergie lumineuse.
+Si c'est le cas, on calculera sont émissivité et ont injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.
+Le calcul de $\dot{N}_\nu^*$ sera effectué dans toutes les cellules.
 
+La principale question a la quelle tente de répondre cette section est : Quel est le lien entre age, masse et luminosité d'une particule stellaire?
+Pour répondre a cette question on utilisera un modèle de population stellaire.
+
+Il existe différent modèles, j'ai choisi d'utilisé Starburst99 \citep{leitherer_starburst99:_1999}. %TODO mettre les differnts models
+
+A partir d'information caractéristique d'une population stellaire, comme sa masse, son IMF ou sa métallicité, Starburst99 retourne le spectre d'émission de cette population en fonction du temps cf (Fig \ref{fig:spectre_starburst}).
+
+\begin{figure}[htbp]
+        \includegraphics[width=.95\linewidth]{img/03/spectre_starburst.jpg} 
+        \caption{Spectre d'émission d'une population stellaire gégéré par Starburst99.
+        Ici avec les paramètres M=1e6 Mo, IMF Salpeter alpha 2.35 de 1 a 100Mo }
+ 		\label{fig:spectre_starburst}
+\end{figure}
+
+A partir de ces spectres, nous allons ne garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus petite que 911$\AA$) 
+
+
+
+\begin{equation}
+E_{ion} = \int_{13.6eV}^{+\inf} h \nu d\nu
+\end{equation}
+
+On obtient a partir de cette intégration, un profil de luminosité présenté sur la figure \ref{fig:flux}.
+
+\begin{figure}[htbp]
+        \includegraphics[width=.95\linewidth]{img/03/flux.pdf} 
+        \caption{Émissivité ionisante intégrée en fonction du temps}
+ 		\label{fig:flux}
+\end{figure}
+
+Le profil obtenu présente un plateau d'émissivité constante suivie d'une rapide décroissance.
+Ce profil peut être raisonnablement approximé par:
 
 $
     S = 
@@ -250,30 +289,53 @@ $
 \end{cases}
 $
 
+Ce flux correspond au flux d'une population de $10^6M_\odot$.
+Ces valeurs seront pondérées au prorata de la masse de la particule stellaire. (Une particule de $10^5M_\odot$ émettra 10 fois moins de photons).
+
+
+Ce profil d’émission ionisante peut être découper en différents "groupe de photons" (cf section \ref{sec:groupedephotons}).
+Il est possible de choisir un nombre arbitraire de groupes, mais il faut prendre en compte que chaque groupe devient l'équivalent d'un fluide dont on veut suivre l'évolution.
+Le coût numérique augmente rapidement avec le nombre de groupes. 
+J'ai implémenté la possibilité de découper les groupes, en fréquences, mais aussi en temps.
+Malgré tout, le ratio cout de calcul sur amélioration des prédictions n'est pas en faveur de l'augmentation du nombre de groupes (dans le cas des résolution considérée pendant ma thèse).
+En pratique on prendra un généralement un seul groupe de photons.
+
+L’énergie moyenne d'un photon dans un groupe est calculée de la manière suivante:
+\begin{equation}
+<E> = \frac{1}{N} \int_{\nu_1}^{\nu_2} N_\nu h \nu d\nu
+\end{equation}
+
+et la section efficace d'intéraction:
+\begin{equation}
+\sigma_E = \frac{1}{N<E>} \int_{\nu_1}^{\nu_2} N_\nu h \nu d\nu
+\end{equation}
+
+Pour une IMF TopHeavy, les valeurs obtenues sont:
+
 
 \begin{table}
-\begin{tabular}{|l|l|}
-  \hline
+\begin{tabular}{l l }
 	$<h\nu>$	&  23.42 eV \\
 	$\alpha_e$	&  $2.35.10^{-22}$ m$^2$ \\
 	$\alpha_i$	&  $1.82.10^{-22}$ m$^2$ \\
-  \hline
 \end{tabular}
-\caption{Photon properties
+\caption{Propriété des photon émis par les sources.
 \label{tab_photon}}
 \end{table}
 
-Tab \ref{tab_photon} caracteristique des photons.
+Tab \ref{tab_photon} caractéristique des photons.
 
 
-intégration de l'énergie est de la section efficace
+%intégration de l'énergie et de la section efficace
 
 
-We found a mean energy of $<h\nu> = 23.42$ eV,
-an energy weighted cross section of
-$\alpha_e = 2.35.10^{-22}$ m$^2$
-and a number weighted cross section of
-$\alpha_i = 1.82.10^{-22}$ m$^2$
+%We found a mean energy of $<h\nu> = 23.42$ eV,
+%an energy weighted cross section of
+%$\alpha_e = 2.35.10^{-22}$ m$^2$
+%and a number weighted cross section of
+%$\alpha_i = 1.82.10^{-22}$ m$^2$
+
+
 
 
 
