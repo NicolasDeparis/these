@@ -1,20 +1,112 @@
 \chapter{La composante stellaire}
 
-deffinition d'une étoile\\
+définition d'une étoile\\
+
+Maintenant que nous avons survolé toutes les physiques a l’œuvre dans ce type de simulation, concentrons nous sur les sources lumineuse.
+comme nous avons vu, il existe deux types de sources, les étoiles et les quasars. %TODO ref
+Je n'ai considérer que la partie stellaire.
+
 
 
 \section{Les differentes phases de la vie d'une étoile}
 
-
 le diagram HR
 
 
+La nucléosynthèse primordiale a créer peu de métaux. 
+A haut redshift, les metaux etaient peu disponible.
+les métaux permettent une meilleur emmission radiative, et donc un meilleur refroidissent.
+si le refroidissment est meilleur, l'equilibre hydrostatique penche an faveur de plus grosse étoiles.
+POPIII, IMF top Heavy, étoiles  primordiales
+
+plus un étoiles est grosse, plus son spectre sera énergétique et plus la portion de spectre ionisant sera important.
+
+A la fin de se vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
+l'équilibre radiatif est rompu et l'étoile s'éffondre.
+cette augmentation de la pression amorce une serie de fusion nucléaire d’élément plus lourd que l’hydrogène.
+cycle CNO
+Une fois arrivé au Fe, il devient coûteux de continuer a fusionner.
+FE le plus stable
+
+
+
+Géante rouge
+
+En fonction de la masse:
+naine blanche (pression de dégénérescence des électrons)
+etoile a neutron (pression de dégénérescence des neutrons)
+trou noir (singularité)
+
+
+
+Différents type de supernovae
+
+I -> binaire accrétante du compagnon -> passage au dessu de la limite.
+II -> l'étoile est assez massive au départ (M>8Mo)
+
+
+Les supernovae ont été introduite dans les simulations cosmologiques pour contre ballancer "l'overcooling probleme".
+Sans l'introduction d'énergie dans le gaz par les supernovae, le gas s'éffondre de manière importante et créer un nombre élevé d'étoiles.
+cela mène a un taux de formation stellaire trop important par rapport a ce qui est observé.
+
+
+
+les superbubbles
+A la manière de la percolllation des bulles de HII, les bulles de supernovae 
+
+
+
+
+
+
+
+
+Les étoiles se trouvent aux centre de la simulation.
+Le probleme du modèle sous grille
+// concept de particule puits 
+En effet, créer une étoiles consiste a transformer une partie du gaz en particule.
+Cette particule sera ensuite gérée par le solveur Ncorps, et servira de source au solveur radiatif.
+a la fin de sa vie, l'étoile va injecter de l'énergie dans le solveur hydro.
+
+
+Seul la partie du spectre capable de ioniser l'hydrogène est considérée. E>13.6eV
 
 \subsection{naissance}
 effondrement hierarchique\\
+
+masse de Jeans
+lien entre vitesse du son et vitesse de chute libre
+si la vitesse de chute libre est supérieur a la vitesse du son, le milieu n'a pas le temps de répondre a son effondrement, la gaz s'effondre et forme une étoile.
+
+\begin{equation}
+t_{sound} = \frac{R}{C_s}
+\end{equation}
+
+\begin{equation}
+t_{ff} = \frac{1}{G \rho}
+\end{equation}
+
+
+
+
 lien avec la densité\\
 
-\subsection{sequance principale}
+Formation dans l'H moléculaire mais pas dans les simu
+
+\subsection{Pop III}
+
+
+a haut redshift:
+
+TRes peux de métaux
+tres peu de ligne de refroisdissment
+étoiles plus grosse
+ temps de vie court
+
+
+
+
+\subsection{sequence principale}
 majore partie du temps\\
 
 equilibre hydrostatique entre gravitation et reaction de fusion nucléaire nucléaire\\
@@ -48,6 +140,24 @@ formation d'elements lourd (>Fe)
 lien entre les différents solveurs en fonction du stade évolutif
 
 En fonction des echelles de travail, nous considererons soit les etoiles individuelles soit une population stellaire.
+
+\section{les modèles de population stellaire}
+
+\subsection{Fonction de masse Initiale}
+notion de population stellaire
+
+Salpeter
+Krupa
+
+Fonction de masse IMF Top Heavy
+
+durant les calibrations: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
+
+\subsection{starburst99}
+paramètre d'entrée
+sorties
+
+
 
 \section{La formation stellaire}
 
@@ -134,6 +244,7 @@ $
 Tab \ref{tab_photon} caracteristique des photons.
 
 
+intégration de l'énergie est de la section efficace
 
 
 We found a mean energy of $<h\nu> = 23.42$ eV,

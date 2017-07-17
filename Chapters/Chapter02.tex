@@ -794,7 +794,9 @@ Fig. \ref{fig:taillesimu}
         \caption{Nombre de transistor par processeur en fonction du temps.
         Cette croissance exponentielle est connue sous le nom de loi de Moore}
  		\label{fig:moore}
+\end{figure}
 
+\begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/figure_simulations_with_time.png} 
         \caption{Tailles des simulations en fonction du temps.
         Il existe un lien directe avec la loi de Moore.
@@ -879,66 +881,69 @@ Sequoia  & États Unis &1,572,864 & 20,132.7 \\
 \end{table}
 
 
-Ce type de calculateur est composé d'un certain nombre de nœud relié qui communique entre eux par l'intermédiaire d'un réseau.
-Proche d'un ordinateur personnel un nœud est composé d'une carte mère sur laquelle est relié entre autres, un ou plusieurs processeurs (CPU), une certaine quantité de mémoire RAM et parfois une carte graphique (GPU)
-Chaque CPU dispose d'un certain nombre de cœurs, et chaque cœurs est capable d'exécuter un certain nombre de processus ou thread (généralement 1, parfois 2 dans le cas de l'Hyperthreading)
+Ce type de calculateur est composé d'un certain nombre de nœud (ordinateur) qui communique entre eux par l'intermédiaire d'un réseau.
 
-
-Durant le développement d'un code HPC, on cherchera a minimiser les communications.
 D'une manière générale, plus des composants sont physiquement éloignés, plus leurs communications seront lente (cf \ref{tab:debits})
+
 
 \begin{table}
 \begin{tabular}{ l l }
 \hline 
 Interface  & Débit théorique \\
 \hline 
-Cache (L1) & $\approx$ 700Go/s \\
-PCIE  & $\approx$ 16 Go/s \\
-RAM & $\approx$ 10 Go/s \\ 
+Cache L1 & $\approx$ 700Go/s \\
+RAM & $\approx$ 20 Go/s \\ 
+PCIE 16x & $\approx$ 16 Go/s \\
 InfiniBand & $\approx$ 5 Go/s \\
 SSD & $\approx$ 600 Mo/s \\
-HDD & $\approx$ 100 Mo/s \\
-
+HDD & $\approx$ 100 Mo/s
 \end{tabular} 
 \caption{Ordre de grandeur des débits théorique des différentes interface rencontrées lors de l'exécution d'un code HPC}
 \label{tab:debits}
 \end{table}
 
-Les coeurs au sein d'un même CPU pourront communiquer entre eux de faible quantité de données par l'intérmédiaire du cache, ou en passant par la RAM pour les volumes plus importants.
 
-
-Tout les processus au sein d'un même noeud pourront communiquer par l'intermédiaire de la RAM si
-
-
-
-
-
-Une fois les processus et les domaines identifiés il existe différentes facons de faire dialoguer les processus entre eux.
-La principale distinction viendra généralement de si les threads sont exécutés par un meme noeud ou non.
-
-, cad par exemple que si le thread 0 déclare une variable X, le thread 1 aura aussi accès a cette variable . 
-OpenMP est une API permettant ce  genre partage de mémoire.
-
-
-Si les threads sont exécutés sur un même nœud on aura tendance a utiliser un schéma a base de mémoire partagée.
-
-Dans le cas ou les threads sont exécutés par des processeurs étant physiquement éloigné, ie sur des noeuds différents, les communications doivent passer par un réseau de communication reliant les noeuds.
-Il faudra utiliser dans ce cas une autre API pour explicitement envoyer et recevoir des paquets d'information
-L'API la plus communément utilisée pour ce genre de communication est Message Passing Interface MPI.
+En principe, la mémoire est partagé au sein d'un nœud, et distribuée sur le réseau.
+C'est a dire que tout les processus au sein d'un même nœud pourront communiquer par l'intermédiaire de la RAM, ce type de communications est rapide.
+Pour les communications entre les nœuds, l'information devra passer par le réseau, ce type de communications est donc plus lent.
+Durant le développement d'un code HPC, on cherchera a minimiser les communications par le réseau.
 
 
 
-\paragraph{Nœud :} Élément du centre de calcul relier par un réseau.
-
-La difficulté est de géré la façon dont les threads travaillent ensemble.
-En effet a chaque thread sera associé un domaine de calcul représentant une partie de l'espace a modéliser.
-De plus les domaine ne sont pas isolés et partage de l'information. 
-
-Nous sommes alors confronté a plusieurs problèmes: comment associer les threads aux domaines de calculs  et comment faire communiquer ces threads entre eux.
+%Les cœurs au sein d'un même CPU pourront communiquer entre eux de faible quantité de données par l’intermédiaire du cache, ou en passant par la RAM pour les volumes plus importants.
 
 
 
-Ces machines se composent d'un certain nombre de nœuds.
+%Proche d'un ordinateur personnel un nœud est composé d'une carte mère sur laquelle est relié entre autres, un ou plusieurs processeurs (CPU), une certaine quantité de mémoire RAM et parfois une carte graphique (GPU)
+%Chaque CPU dispose d'un certain nombre de cœurs, et chaque cœurs est capable d'exécuter un certain nombre de processus ou thread (généralement 1, parfois 2 dans le cas de l'Hyperthreading)
+
+%
+%Une fois les processus et les domaines identifiés il existe différentes facons de faire dialoguer les processus entre eux.
+%La principale distinction viendra généralement de si les threads sont exécutés par un meme noeud ou non.
+%
+%, cad par exemple que si le thread 0 déclare une variable X, le thread 1 aura aussi accès a cette variable . 
+%OpenMP est une API permettant ce  genre partage de mémoire.
+%
+%
+%Si les threads sont exécutés sur un même nœud on aura tendance a utiliser un schéma a base de mémoire partagée.
+%
+%Dans le cas ou les threads sont exécutés par des processeurs étant physiquement éloigné, ie sur des noeuds différents, les communications doivent passer par un réseau de communication reliant les noeuds.
+%Il faudra utiliser dans ce cas une autre API pour explicitement envoyer et recevoir des paquets d'information
+%L'API la plus communément utilisée pour ce genre de communication est Message Passing Interface MPI.
+%
+%
+%
+%\paragraph{Nœud :} Élément du centre de calcul relier par un réseau.
+%
+%La difficulté est de géré la façon dont les threads travaillent ensemble.
+%En effet a chaque thread sera associé un domaine de calcul représentant une partie de l'espace a modéliser.
+%De plus les domaine ne sont pas isolés et partage de l'information. 
+%
+%Nous sommes alors confronté a plusieurs problèmes: comment associer les threads aux domaines de calculs  et comment faire communiquer ces threads entre eux.
+%
+%
+%
+%Ces machines se composent d'un certain nombre de nœuds.
 
 
 
@@ -993,18 +998,32 @@ Elle minimise donc les communications entre processeurs
 %Je n'ai aucun doute sur le fait que dans les années a venir 
 
 
-\subsection{GPGPU}
+\subsection{GPU}
+
+EMMA utilise un degré supplémentaire de parallélisation.
+Les calcul de chaque domaines sont accéléré en utilisant les capacité parallèle des processeur graphic récents.
+Les cartes graphiques, ou GPU (pour Graphics Processing Unit) ont été détourné de leurs utilisation principale d'affichage il y a une dizaine d'années.
+
+A l'inverse des CPU actuels, qui disposent d'un nombre réduit de cœurs (16 cœurs pour un AMD Opteron 6300) les GPU dispose d'une nombre beaucoup plus important de coeurs (Fig \ref{fig:cpugpu})
+Par exemple la NVIDIA Tesla k40c dispose de 2880 coeurs et de 12Go de mémoire et a une puissance de calcul de 4.3 Tflop/s en simple precision.
+
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/cpu_vs_gpu.png} 
-        \caption{Comparaison CPU/GPU}
+        \caption{Comparaison CPU/GPU. Une CPU dispose d'un nombre réduit de coeurs capables d'éxécuter des opération complexe. A l'inverse un GPU dispose d'un grand nombre de coeurs pouvant éxécuter un grand nombre d'opérations simples en parallèle}
  		\label{fig:cpugpu}
 \end{figure}
 
 
-Les cartes graphiques, ou GPU ont été détourné de leurs utilisation principale d'affichage il y a une dizaine d'années.
+Un CPU peux exécuter des taches différentes sur chacun de ses coeurs (MIMD).
+Les GPU utilise un mode de parallélisation de type SIMD.
 Ces unités de calculs sont  efficaces dans le traitement d'un grand nombre d'information en parallèle.
-Elle sont donc toutes indiqué dans le cas des simulation numérique.
+Elle sont donc toutes indiqués dans le cas des simulations numérique ou il s'agit d'appliquer un traitement identique a chaque cellules de la grille.
+
+
+
+
+
 
 La programmation sur carte graphique utilise une approche proche du concept de mémoire distribuée.
 Cad que la carte graphique GPU et le processeur central CPU ont besoin de communiquer.
@@ -1017,6 +1036,7 @@ meilleur ration flop/W -> répond au problème de refroidissement
 plus dur a programmer, performance dépends du problème.
 
 
+
 \subsection{en pratique}
 
 
@@ -1026,6 +1046,9 @@ plus dur a programmer, performance dépends du problème.
 }
  		\label{fig:hilbert}
 \end{figure}
+
+Copies asynchrones
+
 
 
 
