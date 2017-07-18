@@ -85,32 +85,37 @@ Les choses sont plus complexes dans le cas d'une grille adaptative.
 \end{figure}
 
 \subsubsection{Octree}
-fully threated tree description \citep{khokhlov_fully_1998-1}
 
-Vu que la grille est amenées a évoluer, il n'est plus possible d'avoir une position unique en mémoire associé à une position dans l'espace.
+Il existe deux grand groupe de maille adaptative.
+Le premier groupe utilise des grilles fixes imbriquées %TODO ref
 
-La grille est composée de cellules non ordonnée.
+Le second est le groupe qu'utilise EMMA : fully threated tree description \citep{khokhlov_fully_1998-1}.
+La base de cette représentation est de considérer que chaque cellule est ascociée a une grille 2x2x2 que l'on nomera un OCT (cf:\ref{lst:oct}), car décomposé en 8 sous parties  qui sont elles meme des cellules cf:\ref{lst:cell}.
+Et recurssivement, chaqunes de ses sous parties peut a leurs tour etre divisé ou non.
+il en resultera un arbre nommé Octree.
+
+Vu que la grille est amenées a évoluer, il n'y a plus une position unique en mémoire associé à une position dans l'espace.
+La grille est composée de cellules ordonnées sous forme de liste chainées.
 Pour créer un lien entre elle, il est nécessaire de stocker l'information de voisinage.
-cad que l'on a besoin de stocker 2*D pointeurs vers les cellules voisine.
- une cellule contient la partie physique 
+Pour localiser un oct dans l'espace, on a besoin de stocker 2*D pointeurs vers les cellules voisine.
+Un oct est egalement composé de d'un tableau de huit pointeurs vers ses huit cellules filles,  ainsi que d'un pointeur vers sa cellule mère.
+On associera ensuite au cellules la partie physique (densité, pression, température, etc...).
+Ainsi chaque cellule peut, sous certaine condition, etre subdivisée en un OCT pour augmenter la résolution localement.
 
-Chaque cellule peut, sous certaine condition, etre subdivisée pour localement augmenter la résolution.
-Elle devient alors asociée a un \emph{Oct} a 3 dimension.
-
-Un oct est composé de 8 pointeurs vers ses 8 cellules filles, d'un pointeur vers sa cellule mère.
 
 On associera également les octs entre eux a l'aide d'une liste chainée. 
-Il est necessaire d'ajouter deux pointeurs a l'objet OCT : un vers l'oct précédent en mémoire et un vers l'oct suivant.
+Il est nécessaire d'ajouter deux pointeurs a l'objet OCT : un vers l'oct précédent en mémoire et un vers l'oct suivant.
 
-
-\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures CELL et OCT de EMMA},label=lst:celloct]
+\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures cellule de EMMA},label=lst:cell]
 struct CELL{
   int id;            // permet de determiner la position de la cellule dans l'oct
   struct OCT *parent // l'oct pere de la cellule
   struct OCT *child; // si child est different de NULL alors la cellule est raffinee et child point vers l'oct enfant
   struct PHYSIC *data; // pointeur vers la partie physique
 };
+\end{lstlisting}
 
+\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures OCT  de EMMA},label=lst:oct]
 struct OCT{
   struct CELL cell[8]; // les 8 cellules de l'oct
   struct CELL *nei[6]; // pointeurs sur les cellule voisines
@@ -120,8 +125,6 @@ struct OCT{
   int level;           // niveau de l'oct
 };
 \end{lstlisting}
-
-
 
 
 
@@ -722,45 +725,75 @@ F(U)=
 
 
 \subsection{Le probleme de Riemann}
-L'idee est de decomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes.
-On utilisera ensuite les equations d'Euler pour resoudre localement le probleme de Riemman a chaques interfaces de cellule.
-Nous aurons donc acces aux flux de matière et d'energie entre les cellules pour pouvoir calculer l'etat suivant  
+L'idée est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes. (Piecewise constant approximation)
+On utilisera ensuite les equations d'Euler pour résoudre localement le problème de Riemann a chaque interfaces de cellule.
+Nous aurons donc accès aux flux de matière et d'énergie entre les cellules pour pouvoir calculer l'état suivant  
 
 
-Le probleme de Riemman consiste a considérer l'evolution d'un system d'equation différentielles a partir d'une condition initiale.
+Le probleme de Riemann consiste a considérer l'evolution d'un system d'equation différentielles a partir d'une condition initiale.
 En aillant l'etat d'un systeme regis par des equations differentielle un instant donné, qu'elle sera sont évolution?
 
 \subsection{La discretisation du probleme.}
 
 
-direction de la méthode upwind/downwind.
 
-upwind
+Contrairement a la résoltution de l'equation de Poisson,  il n'est plus possible d'utiliser une discretisation des derivées a l'aide d'un différence finie centrée.
+Nous allons rapidement voir pourquoi dans cette section.
+
+Une différence finie centrée peut etre décomposée en deux différence finies : 
 \begin{equation}
-\frac{d Fi}{dx} = \frac{Fi+1  + Fi}{dx} 
+\frac{d u}{dx} = \frac{u_{i+1}  + u_i}{dx} 
 \end{equation}
 
-downwind
 \begin{equation}
-\frac{d Fi}{dx} = \frac{Fi  + Fi-1}{dx} 
+\frac{d u}{dx} = \frac{u_i  + u_{i+1}}{dx} 
 \end{equation}
 
 
-la méthode downwind est inconditionnellement instable
+Dans le premier cas, la propagation d'une onde a la vitesse $c$ pourra être discrétisée en utilisant.
+
+\begin{equation}
+u_i t+1  = u_i t + c \frac{u_{i+1}  + u_i}{dx} 
+\end{equation}
+
+On montre %TODO cite TORO
+que ce schema est conditionnelement stable (la condition etant que la condition de Courant soient respéctée.
+Ce schema est appélé méthode UPWIND.
+
+A l'inverse on montre que que dans le cas de la seconde différence finie, le schema est inconditionnellment instable. 
+Ce shema est appelée méthode DOWNWIND.
+
 Seule la Methode upwind permet de suivre correctement la propagation d'onde.
 
 Le probleme est qu'il est compliquer de determiner dans quelle direction se propage une onde quelconques.
-Godunov a répondu a ce problème.
 
 \subsection{Méthode de Godunov}
 
-introduction aux volumes finis
+
+Godunov  \cite{MR0119433} a répondu a ce problème.
+
 methodes conservative
 
-\cite{MR0119433}
+introduction aux volumes finis
+consiste a estimer le flux aux interfaces des cellules.
+
+
+%\subsection{discretisation}
+\begin{equation}
+ \frac{\partial U}{\partial t} + \nabla \cdot (F(U)) = S(U), 
+\label{eq:rad_generale}
+\end{equation}
+
+avec $U$ le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
+
+\begin{equation}
+\frac{ U^{p+1}_i - U^{p}_i }{\Delta t} + \frac{ F^{p}_{i
++1/2} - F^{p}_{i-1/2} }{\Delta x} =0,
+\label{eq:rad_solver}
+\end{equation}
 
 \subsection{Méhtode HLL et HLLC }
-La méthode de HLL Harten, Lax et van Leer consiste a estimer le flux aux interfaces des cellules.
+La méthode de HLL Harten, Lax et van Leer 
 En utilisant la méthode de pente.
 
 \subsection{Le pas de temps}
@@ -778,8 +811,9 @@ avec $cs = \gamma P/\rho$
 
 Le solveur radiatif repose sur le principe de considerer la lumière comme un fluide.
 Il utilisera les meme concepts que le solveur hydrodynamique.
-Mais les équations sont différentes. 
+Mais avec un systeme initial d'équations différentes. 
 
+Avantage, il devient indépendant du nombre de sources.
 
 
 \subsection{Les equations}
@@ -837,61 +871,55 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 \label{eq:tenseur}
 \end{equation}
 
-\subsection{discretisation}
-\begin{equation}
- \frac{\partial U}{\partial t} + \nabla \cdot (F(U)) = S(U), 
-\label{eq:rad_generale}
-\end{equation}
 
-avec $U$ le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
 
-\begin{equation}
-\frac{ U^{p+1}_i - U^{p}_i }{\Delta t} + \frac{ F^{p}_{i
-+1/2} - F^{p}_{i-1/2} }{\Delta x} =0,
-\label{eq:rad_solver}
-\end{equation}
 
-Condition de Courant radiative : $ c \leq \Delta x / \Delta t $.
-Le pas de temps est donc plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
+
+\subsection{La chimie}
+
+La chimie fait le lien entre le solveur radiatif et le solveur hydrodynamique.
+C'est a ce moment qu'est appliquer l'énergie apportée par la radiation au gaz.
+
+
+gestion du refroidissement/ de la température/ énergie interne
+
 
 \subsection{Groupes de photons}
 \label{sec:groupedephotons}
 
+Il n'est pas possible avec la méthode au moment de considéré directement un spectre d'émission.
+Le spectre doit être discrétisé, c'est a dire qu'il devra être découpé en un certain nombre de groupe, et chaque groupe disposera des caractéristique moyenne de ssa portion du spectre.
 
-\subsection{vitesse de la lumière reduite}
+Le problème est que chaque groupe de photon devient un fluide a simuler. 
+L'augmentation du nombre de groupe devient vite couteux en terme de temps de calculs.
 
+%Les caratéristiques des photons\\
 
-système d'équations a résoudre
-la méthode M1
-aton
-le cooling
+Nous aborderons la mise en place du multi longueur d'onde dans la section %TODO ref
+
+\subsection{Pas de temps et vitesse de la lumière réduite}
 le pas de temps
-la mise en place du multi longueur d'onde
+Condition de Courant radiative : $ c \leq \Delta x / \Delta t $.
+Le pas de temps est donc plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
 
-\subsection{La chimie}
+%Pour compenser cette 
 
-La chimie consiste a appliquer l'énergie de la radiation au gas.
-C'est a ce moment que le couplage entre le gaz et la radiation est réalisé.
-
-gestion du refroidissement
-
-
-
-
+Les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux on des vitesses très inférieurs a celle de la lumière.
+L'idée est de diminuer la vitesse de la lumière dans le code tout en restant dans le domaine de l'approximation newtonienne.
+Cette idée est développée en détails dans la section %TODO ref
 
 
 \chapter{Matériel et parallélisme}
 
-
-Les simulations cosmologiques ont pour principal défi de simuler d'important volume d'espace avec la meilleure résolution possible.
+Nous avons maintenant un apercu de la quantité de calcul a exécuter.
+De plus, les simulations cosmologiques ont pour principal défi de simuler d'important volume d'espace avec la meilleure résolution possible.
 Le défis des simulations de la réionisation est qu'elles doivent simuler un volume d'univers suffisant pour être représentatif ( $\approx 100$ Mpc selon \cite{iliev_cosmological_2006}) tout en résolvant la formation stellaire (échelle $<1$ pc).
 Nous verrons dans la prochaine partie que nous sommes encore loin de pouvoir résoudre la formation stellaire dans ce type de simulations. %TODO ref
-L’amélioration de certain algorithme (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation Ncorps directe, etc) a permis d'augmenter significativement la taille des simulations a puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
+Nous avons vu que l'amélioration de certain algorithme (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation Ncorps directe, etc) a permis d'augmenter significativement la taille des simulations a puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
 
 \subsection{Loi de Moore et simulations}
 La loi de Moore \citep{moore1965cramming} propose un doublement du nombre de transistor par circuit intégré tout les 18 mois environs. (Fig \ref{fig:moore})
-Comme la puissance de calcul est étroitement liée au nombre de transistor par cœur, la taille -- le nombre d'éléments de résolution -- des simulations, suis également cette croissance exponentielle.
-Fig. \ref{fig:taillesimu}
+Comme la puissance de calcul est étroitement liée au nombre de transistor par cœur, la taille -- le nombre d'éléments de résolution -- des simulations, suis également cette croissance exponentielle (Fig. \ref{fig:taillesimu}).
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/moorelaw.png} 
