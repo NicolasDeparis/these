@@ -309,50 +309,93 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Matière noire}
-Ncorps
+
+La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien a la représentation Lagrangienne, et donc a une simulation sous forme de particule.
+Pour la simuler, on utilisera le principe des code Ncorp., c'est a dire qu'on utilisera un champs de particules massive interagissante par gravitation.
+Ill existe différentes techniques pour suivre l'évolution d'un tel système.
+Toutes sont basé sur le meme principe.
+Les particules sont placée suivant une certaine condition initiale.
+Et on cherche a connaitre la force gravitationnelle a laquelle chaque particule est soumise, dans le but de calculer son déplacement
+
 
 \subsection{génération des conditions initiales}
 
+Nous avons vu %TODO ref
+que le CMB nous donne de l'information sur l'état de la distribution de matière dans l'univers tres tot dans son histoire (il est possible de determiner le spectre de puissance des fluctuation de densité de l'univers primitif).
+Le principe de la génération des condition iniales est d'utiliser ce spectre de puissance pour générer des surdensité repréentant statistiqument ces fluctuations.
 
-méthode
-gaussian random noise
-théorie des perturbation linéaire
-lien avec le spectre de puissance
-MUSIC et GRAPHIC
-limite la résolution min et max (min en masse et max en espace)
+Pour se faire on va générer une grille regulière sur laquelle on placera une particule au centre de chaque cellule.
+Dans ce cas la densité est homogène.
+On va alors perturber la position des particules de manière a respecter les fluctuations statistique observées dans le CMB.
+
+Pour ce faire, il faut générer un bruit aléatoire Gaussien.
+Tout les générateurs de condition initiales que j'ai pus rencontrer utilise une SEED aléatoire, dans le but de générer ce bruit aléatoire.
+On convoluera ensuite ce bruit avec le spectre de puissance que l'on cherche a reproduire.
+
+Et on appliquera les déplacement obtenus au particules.
+
+Cette approximation n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire.
+Cette approximation du regime linéraire s'appelle l'appriximation de Zeldovitch %TODO ref
+
+Plus l'on cherche a simuler des petites échelles, plus l'on sort vite du domaine de précision accéptable.
+C'est pourquoi il est necessaire d'avoir recourt au simulations numériques.
+
+Nous voyons ici que le spectre est limité des deux cotés.
+D'un coté l'information des grandes échelles est tronquée par la taille de la boite considéré.
+Il n'est pas possible d'avoir de l'informations sur des longeurs d'onde du spectre plus grande que cette taille limite.
+De l'autre coté, les petites échelles sont tronquées par la limite de résolution.
+Le spectre est troqué au niveau de la longeur d'onde correspondant a la résolution de la grille.
+
+Au passage cette perte d'information sur les hautes fréquences peux etre problématique dans le cas ou la résolution est adaptative.
+Dans le cas de l'AMR par exemple il peux paretre difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
+
+En pratique j'ai principalement utilisé MUSIC et GRAPHIC %TODO ref.
 
 
-une simulation est limité par sa taille et sa résolution -> ceci définit la plage d'échelle que l'on peut simuler
-
-principes de bases ennoncé dans Pen (1997) and Bertschinger (2001).
-
-    discrétisation de l'espace
-    placement des particules sur la grille
-    génération d'un bruit blanc
-    convolution avec un spectre de puissance connu (celui du CMB)
 
 
-\subsection{Théorie des perturbation linéaire}
+%méthode
+%gaussian random noise
+%théorie des perturbation linéaire
+%lien avec le spectre de puissance
+%MUSIC et GRAPHIC
+%limite la résolution min et max (min en masse et max en espace)
 
-approximation de zeldovich
-perte de linéarité a un certain moment -> nécessité des simulation numériques
+
+%une simulation est limité par sa taille et sa résolution -> ceci définit la plage d'échelle que l'on peut simuler
+%
+%principes de bases ennoncé dans Pen (1997) and Bertschinger (2001).
+%
+%    discrétisation de l'espace
+%    placement des particules sur la grille
+%    génération d'un bruit blanc
+%    convolution avec un spectre de puissance connu (celui du CMB)
+
+%
+%\subsection{Théorie des perturbation linéaire}
+%
+%approximation de zeldovich
+%perte de linéarité a un certain moment -> nécessité des simulation numériques
 
 
 
 
 
 \subsection{solveur de gravité}
-Le sloveur que je connais le mieux.
 
-Fluide non collisionnel -> particule\\
-On cherche a obtenir la position des particules a chaque instant -> il nous faut leurs vitesse -> il nous faut leurs accélération -> il nous faut la force qui leur est appliquée.
-On peux obtenir cette force soit par calcul direct, soit par dérivation du potentiel.
+A partir des condition initiales nouvellement générées, il faut ensuite suivre dynamiquement l'évolution des particules.
 
-\begin{equation}
-\vec{F}=-\Delta \Phi
-\end{equation}
+Je vais plus détailler le solveur de gravité que les autres puisque c'est celui sur lequel j'ai le plus travaillé.
+%Le sloveur que je connais le mieux.
 
-le système d'équation de Vlasov-Poisson :
+%Fluide non collisionnel -> particule\\
+
+On cherche a obtenir la position des particules a chaque instant.
+Pour cela, il nous faut leurs vitesses.
+Pour cela, il nous faut leurs accélération.
+Pour cela, il nous faut la force qui leur est appliquée.
+
+Ce système d'équation est appelé le système d'équation de Vlasov-Poisson :
 
 \begin{equation}
 \begin{cases}
@@ -366,6 +409,9 @@ le système d'équation de Vlasov-Poisson :
 \end{equation}
 
 
+Il existe plusieurs méthodes pour résoudre ce système.
+Historiquement la première méthode était le méthode :
+
 \paragraph{Particule-Particule : } c'est le méthode la plus directe pour calculer l'évolution d'un fluide non collisionnel. 
 Elle consiste, pour chaque particule, a sommer les contribution gravitationnelles de toutes les autres particules.
 Ce type de code dispose d'une très bonne précision mais la quantité de calcule évolue en ordre $O(N^2)$, ce qui fait que ce type de code est très coûteux.
@@ -374,9 +420,22 @@ Ce type de code dispose d'une très bonne précision mais la quantité de calcul
 \vec{F}_i=-\sum_{j\neq i} G \frac{G m_i m_j(\vec{r}_i - \vec{r}_j) }{ |\vec{r}_i - \vec{r}_j |^3}
 \end{equation}
 
-\paragraph{Particule-tree : } consiste a regrouper les particules loin de la particule courante en un amas aillant une interaction gravitationnelle commune
-% (Barnes & Hut 1986) 
+Une évolution de cette méthode est la méthode :
 
+\paragraph{Particule-tree : } elle  consiste a regrouper les particules loin de la particule courante en un amas aillant une interaction gravitationnelle commune
+% (Barnes & Hut 1986) 
+Cette approximation permet de limiter considérablement le nombre de calcul pour les interactions lointaine qui sont de toute façons faibles.
+
+
+Une autre méthode, celle qui nous intéresse ici consiste a utiliser le potentiel:
+
+%On peux obtenir cette force soit par calcul direct, soit par dérivation du potentiel.
+
+\begin{equation}
+\vec{F}=-\Delta \Phi
+\end{equation}
+
+Le potentielle sera calculé sur une grille, cette méthode sera nommée :
 \paragraph{Particule-Mesh : } on projette les particules sur une grille
 ENZO %code, Bryan & Norman 1998
 RAMSES
@@ -585,11 +644,21 @@ Cet algorithme est représenté graphiquement sur la figure \ref{Description du 
 \end{center}
 \end{figure}		
 
-En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. Un seul appel génère un cycle nommé cycle en V (fig. \ref{Description du V-cycle}), deux un cycle en W, etc... 
+En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. 
+Un seul appel génère un cycle nommé cycle en V (fig. \ref{Description du V-cycle}), deux un cycle en W, etc... 
 
-		
+\subsection{Implémentation dans EMMA}
+Dans EMMA, la potentiel est calculé par multigrille sur la grille coarse, et par Jacobi sur les niveaux raffinés.
+La solution de la grille coarse étant injectée sur les niveau suivant, la solution est deja anticipée. 
+Il en résulte une convergence rapide.
 
-le pas de temps\\
+On prendra garde, lors de calcul en parallèle, a utiliser un niveau minimum de telle sorte que chaque processeurs dispose au minimum d'un oct.
+Dans le cas contraire, le calcul ne donnera pas le bon résultat.
+
+\subsection{Le pas de temps}
+
+le pas de temps sera calculer de telle sorte a respecter la condition de Courant.
+Une particule ne doit pas se déplacer de plus d'une fraction de case a chaque pas de temps.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -651,6 +720,8 @@ F(U)=
 \end{cases}
 \end{equation}
 
+
+\subsection{Le probleme de Riemann}
 L'idee est de decomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes.
 On utilisera ensuite les equations d'Euler pour resoudre localement le probleme de Riemman a chaques interfaces de cellule.
 Nous aurons donc acces aux flux de matière et d'energie entre les cellules pour pouvoir calculer l'etat suivant  
@@ -659,28 +730,54 @@ Nous aurons donc acces aux flux de matière et d'energie entre les cellules pour
 Le probleme de Riemman consiste a considérer l'evolution d'un system d'equation différentielles a partir d'une condition initiale.
 En aillant l'etat d'un systeme regis par des equations differentielle un instant donné, qu'elle sera sont évolution?
 
-
-La discretisation des 
-
-
-Methode upwind
-
-propagation d'onde
-
-%\begin{itemize}
-%\item probleme de Rieman
-%\item methode de Godunov
-%\item méhtode HLL et HLLC Harten, Lax et van Leer.
-%\end{itemize}
+\subsection{La discretisation du probleme.}
 
 
+direction de la méthode upwind/downwind.
 
-le pas de temps
+upwind
+\begin{equation}
+\frac{d Fi}{dx} = \frac{Fi+1  + Fi}{dx} 
+\end{equation}
+
+downwind
+\begin{equation}
+\frac{d Fi}{dx} = \frac{Fi  + Fi-1}{dx} 
+\end{equation}
 
 
+la méthode downwind est inconditionnellement instable
+Seule la Methode upwind permet de suivre correctement la propagation d'onde.
+
+Le probleme est qu'il est compliquer de determiner dans quelle direction se propage une onde quelconques.
+Godunov a répondu a ce problème.
+
+\subsection{Méthode de Godunov}
+
+
+
+\subsection{Méhtode HLL et HLLC }
+La méthode de HLL Harten, Lax et van Leer consiste a estimer le flux aux interfaces des cellules.
+En utilisant la méthode de pente.
+
+\subsection{Le pas de temps}
+
+Le pas de temps respecte encore une fois la condition de courant.
+
+\begin{equation}
+\frac{dx * CFL }{3*(max(v) + c_s)}
+\end{equation}
+
+avec $cs = \gamma P/\rho$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Le solveur radiatif}
+
+Le solveur radiatif repose sur le principe de considerer la lumière comme un fluide.
+Il utilisera les meme concepts que le solveur hydrodynamique.
+Mais les équations sont différentes. 
+
+
 
 \subsection{Les equations}
 \begin{equation}
