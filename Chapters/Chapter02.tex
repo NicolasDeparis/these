@@ -673,14 +673,6 @@ Une particule ne doit pas se déplacer de plus d'une fraction de case a chaque p
 
 En cosmologie, le gaz est principalement soumis a deux forces : la pression et la gravité.
 Comme nous l'avons vu plus tot, L'Univers est consitué d'une grande quantité d'Hydrogene et d'Helium sous forme gaseuse.
-Pour suivre l'évolution de ce gas nous allons le considérer comme parfait et monoatomique.
-
-L'equation d'état du gaz sera donc:
-\begin{equation}
-p=\rho k T, 
-\end{equation}
-avec $k=1.38064852 \cdot 10^{-23} \left[ \mathrm{m^2 \cdot kg \cdot s^{-2} \cdot K^{-1}} \right] $ la constante de Boltzmann.
-
 La physique du gaz est régie par les equations d'Euler auto-gravitantes :
 
 \begin{equation}
@@ -723,6 +715,14 @@ F(U)=
 \end{cases}
 \end{equation}
 
+Pour suivre l'évolution de ce gas nous allons le considérer comme parfait et monoatomique.
+
+L’équation d'état du gaz sera donc:
+\begin{equation}
+p=\rho k T, 
+\end{equation}
+avec $k=1.38064852 \cdot 10^{-23} \left[ \mathrm{m^2 \cdot kg \cdot s^{-2} \cdot K^{-1}} \right] $ la constante de Boltzmann.
+
 
 \subsection{Le probleme de Riemann}
 L'idée est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes. (Piecewise constant approximation)
@@ -730,42 +730,75 @@ On utilisera ensuite les equations d'Euler pour résoudre localement le problèm
 Nous aurons donc accès aux flux de matière et d'énergie entre les cellules pour pouvoir calculer l'état suivant  
 
 
-Le probleme de Riemann consiste a considérer l'evolution d'un system d'equation différentielles a partir d'une condition initiale.
-En aillant l'etat d'un systeme regis par des equations differentielle un instant donné, qu'elle sera sont évolution?
+Le problème de Riemann consiste a considérer l’évolution d'un system d’équation différentielles a partir d'une condition initiale.
+En aillant l’état d'un système régis par des equations différentielles un instant donné, qu'elle sera sont évolution?
+
+\begin{itemize}
+\item PDE
+\item IC
+\item BC
+\end{itemize}
 
 \subsection{La discretisation du probleme.}
 
 
-
-Contrairement a la résoltution de l'equation de Poisson,  il n'est plus possible d'utiliser une discretisation des derivées a l'aide d'un différence finie centrée.
+Contrairement a la résolution de l’équation de Poisson, il n'est plus possible d'utiliser une discrétisation des dérivées a l'aide d'un différence finie centrée.
 Nous allons rapidement voir pourquoi dans cette section.
 
-Une différence finie centrée peut etre décomposée en deux différence finies : 
+
+Une différence finie centrée peut être décomposée en deux différence finies : 
 \begin{equation}
-\frac{d u}{dx} = \frac{u_{i+1}  + u_i}{dx} 
+\frac{d u}{dx} \approx \frac{u_{i+1}  + u_i}{\Delta x} 
 \end{equation}
 
 \begin{equation}
-\frac{d u}{dx} = \frac{u_i  + u_{i+1}}{dx} 
+\frac{d u}{dx} \approx \frac{u_i  + u_{i+1}}{\Delta x} 
 \end{equation}
 
 
-Dans le premier cas, la propagation d'une onde a la vitesse $c$ pourra être discrétisée en utilisant.
+
+Considérons que nous voulons résoudre l'équation :
+\begin{equation}
+\frac{du}{dt} + a\frac{du}{dx} = 0
+\end{equation}
+
+Dans le premier cas, la discrétisation pourra s'écrire : 
+%la propagation d'une onde a la vitesse $a$ pourra être discrétisée en utilisant.
+
 
 \begin{equation}
-u_i t+1  = u_i t + c \frac{u_{i+1}  + u_i}{dx} 
+\frac{u_i^{t+1} + u_i^t }{\Delta t}   +a \frac{u_{i+1}^t  + u_i^t}{\Delta x} = 0
 \end{equation}
 
-On montre %TODO cite TORO
-que ce schema est conditionnelement stable (la condition etant que la condition de Courant soient respéctée.
+
+\begin{equation}
+u_i^{t+1}  = u_i^t +  c \left( u_{i+1}^t  + u_i^t \right) 
+\end{equation}
+
+ou : 
+
+\begin{equation}
+c= \frac{a \Delta t}{\Delta x},
+\end{equation}
+est le nombre de Courant
+
+
+A l'aide d'une analyse de von-Neumann (cf \cite{toro1999riemann}), on montre que la stabilité de ce schéma dépend du signe de a, la vitesse de propagation de l'onde.
+
+\begin{itemize}
+\item si a est positif, ce schéma est conditionnellement stable (la condition étant que la condition de Courant soient respectée : $0<c<1$) .
 Ce schema est appélé méthode UPWIND.
 
-A l'inverse on montre que que dans le cas de la seconde différence finie, le schema est inconditionnellment instable. 
+\item A l'inverse on montre que que dans le cas de la seconde différence finie, le schéma est inconditionnellement instable. 
 Ce shema est appelée méthode DOWNWIND.
+\end{itemize}
 
-Seule la Methode upwind permet de suivre correctement la propagation d'onde.
+Seule la méthode upwind permet de suivre correctement la propagation d'onde.
+Le problème est qu'a trois dimension, il est impossible de respecter cette condition pour un système quelconque.
+% déterminer dans quelle direction se propage une onde quelconques.
 
-Le probleme est qu'il est compliquer de determiner dans quelle direction se propage une onde quelconques.
+
+De plus il a été montré que cette méthode n'est pas conservative, et qu'elle était incapable de suivre les chocs (fortes discontinuités)
 
 \subsection{Méthode de Godunov}
 
