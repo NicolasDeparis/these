@@ -820,14 +820,27 @@ consiste a estimer le flux aux interfaces des cellules.
 avec $U$ le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
 
 \begin{equation}
-\frac{ U^{p+1}_i - U^{p}_i }{\Delta t} + \frac{ F^{p}_{i
-+1/2} - F^{p}_{i-1/2} }{\Delta x} =0,
+\frac{ u^{t+1}_i - u^t_i }{\Delta t} + \frac{ F^t_{i+1/2} - F^t_{i-1/2} }{\Delta x} =0,
 \label{eq:rad_solver}
 \end{equation}
 
+ou $F^t_{i+1/2}$ et $F^t_{i-1/2}$ sont les flux numérique intercellules, une estimations des flux physique.
+
+$F^t_{i+1/2}$
+
 \subsection{Méhtode HLL et HLLC }
 La méthode de HLL Harten, Lax et van Leer 
-En utilisant la méthode de pente.
+recalculation des flux entre les cellules
+
+\subsection{MUSCL}
+Monotonic Upstream-Centered Scheme for Conservation Laws (van Leer, 1979)
+Consiste a considerer une valeur dans la cellule, non plus constante mais variable.
+Cette variation est interpolée linéairement
+%En utilisant la méthode de pente.
+
+\subsection{Minmod}
+
+
 
 \subsection{Le pas de temps}
 
@@ -912,10 +925,35 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 
 La chimie fait le lien entre le solveur radiatif et le solveur hydrodynamique.
 C'est a ce moment qu'est appliquer l'énergie apportée par la radiation au gaz.
-
-
 gestion du refroidissement/ de la température/ énergie interne
 
+DEnsité de photons
+\begin{equation}
+\frac{dN}{dt} = S - c \sigma_N n_H N + \left( \alpha_A(T)  - \alpha_B(T) \right) x^2n_0^2
+\end{equation}
+
+
+Flux de photons
+\begin{equation}
+\frac{dF}{dt} = - c \sigma_N n_H F
+\end{equation}
+
+Etat d'onisation
+\begin{equation}
+\frac{dn_H}{dt} =  \left( \alpha_A(T)x^2  - \alpha_B(T)x (1-x) \right) n_0^2 - c \sigma_N n_HN
+\end{equation}
+
+
+Energie interne
+\begin{equation}
+\frac{de}{dt} = c n_H \Sigma_E N - 
+\end{equation}
+
+$\alpha_A(T)$
+
+
+pas de temps
+en pratique sous cyclage
 
 \subsection{Groupes de photons}
 \label{sec:groupedephotons}
