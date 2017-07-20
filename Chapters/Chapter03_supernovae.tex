@@ -1,29 +1,33 @@
 \section{Les supernovae}
 
 \subsection{le modele theorique}
-il existe principallement deux evenement pouvant mener a un explosion de supernovae : 
+il existe principalement deux événement pouvant mener a un explosion de supernovæ : 
 
 \begin{itemize}
-\item soit l'étoile est a l'origine suffisemant massive (plus de 8Mo) pour s'effondrer a la fin de sa vie.
-\item soit l'etoile n'est pas suffisement massive (elle va donc mourrir en naine blanche) mais dispose de suffisement de matière a proximité (générallement étopiles double ou le compagnon pas en phase géante rouge) pour que sa masse augmente avec le temps.
-la matière acretté va faitre passer la masse de cettte étoile au dessu de la limite.
+\item soit l'étoile est a l'origine suffisamment massive (plus de 8Mo) pour s'effondrer a la fin de sa vie.
+\item soit l'étoile n'est pas suffisamment massive (elle va donc mourir en naine blanche) mais dispose de suffisamment de matière a proximité (généralement étoiles double ou le compagnon pas en phase géante rouge) pour que sa masse augmente avec le temps.
+la matière acretté va faitre passer la masse de cette étoile au dessu de la limite.
 \end{itemize}
 
-
-Les etoiles de plus de 8mo ewploses en SN en injectant 1e51 erg dans le milieu\\
+Les étoiles de plus de 8mo exploses en SN en injectant 1e51 erg dans le milieu\\
 Cette injection limite fortement la formation stellaire dans le milieu.\\
-modele sous grille\\
+modèle sous grille\\
 
 
+\subsection{Les differentes phases}
 
-Les differentes phases
 \begin{itemize}
 \item expansion adiabatique
+Dans la phase d'expansion adiatique, l'energie est conservé, le choc est violent et le gas n'a pas le temps de perdre de l'énergie par radiation.
+Dans cette phase, l'expension est suffisement rapide pour que la dissipation d'énergie par radiation soit négligeable 
+C'est le cas dans le test de Sedov
+
 \item snowplow
+Dans la phase snowplow, le choc a suffisemment ralentis pour que le gas commence a rayonner de l'energie, l'energie n'est plus conservée.
+Dans ce cas, il se forme un bourelet de compression dans lequel le gas est poussé, comme dans le cas d'un chasse neige. 
+Les pertes par radiation deviennent importantes. 
 \end{itemize}
 
-Dans la phase d'expansion adiatique, l'energie est conservé, le choc est violent et le gas n'a pas le temps de perdre de l'energie par radiation.
-Dans la phase snowplow, le choc a suffisemment ralentis pour que le gas commence a rayonner de l'energie, l'energie n'est plus conservée.
 
 
 \subsection{les superbubles}
@@ -33,17 +37,37 @@ Toutes ces étoiles vont mourrir dans un laps de temps rapproché et ainsi, les 
 Les différentes bulle vont se rencontrer (a la manière des bulles ionizées) en mener a une bulle plus grande appelée superbuble.
 
 
-\subsection{les considerations d'echelles}
+\subsection{les considérations d'echelles}
 La facon de gerer les supernovae sera donc fonction de léchelle que l'on considere.
 Dans des simulations tres detaillées de galaxies, il sera necessaire de resoudre la phase adiabatique d'explosion individuelle.
 Dans des simulations cosmologiques de la reionisation, l'interet sera plus porté sur la phase snowplow des superbubbles.
 
 
-\subsection{ differentes implementations existantes}
+\subsection{ Différentes implémentations existantes}
 
 
-\subsection{le model thermique}
-Le model thermique consiste a injecter l'energie sous forme d'energie interne.
+
+\subsubsection{Navaro and white}
+
+
+\subsubsection{Stinson et al}
+
+
+
+\subsubsection{dubois et Teyssier}
+
+Utilisation de particule fantômes pour simuler les différentes phase
+
+\subsubsection{Dalla Veccia et Schaye}
+
+Modèle probabiliste, injection d'énergie seulement si l'énergie est suffisante pour générer un mouvement suffisant.
+
+
+\subsection{Mes Implémentations}
+
+
+\subsubsection{le model thermique}
+Le modèle thermique consiste a injecter l'energie sous forme d'energie interne.
 Il existe 2 variables d'etat liées a l'energie interne: la pression et la température.
 Modifié l'une de ses 2 variables est equivalent.
 
@@ -53,19 +77,22 @@ Dans l'implementation actuelle, la pression est modifiée en utilisant cette con
 P^{0+} = P^{0-}  + E_0 * (\gamma-1)
 \end{equation}
 
+Ce modèle est connu pour avoir de fortes pertes de d'énergie dans le cas ou le refroidissement est autorisé.
 
 
 \subsubsection{le model cinetique}
 
-Le model cinetique consiste a modifiée la vitesse du gaz autour de l'explosion.
-Nous avons fait le choix de limiter le nombre de cellules utilisées a 8 correspondant a 1 oct de la structure AMR d'\emma
 
+Le modèle cinétique consiste a modifier directement la vitesse du gaz autour de l'explosion dans le but de shunter la conversion de l'énergie interne en mouvement.
+Ce type de model a été utilisé pour 
+
+Nous avons fait le choix de limiter le nombre de cellules utilisées a 8 correspondant a 1 oct de la structure AMR d'\emma
 
 \begin{equation}
 e_{SN} = E_{SN}/8
 \end{equation}
 
-Then this energy is used to change the gas velocity by using:
+Ensuite cette énergie est utilisé pour changer la vitesse du gaz en utilisant : 
 \begin{equation}
     \Delta \overrightarrow{v_{gas}} = \sqrt{\frac{2e_{SN}}{\rho_g.dV}} \overrightarrow{u}
     \label{eq_sn_direct}
@@ -74,24 +101,24 @@ Then this energy is used to change the gas velocity by using:
 
 \subsection{Test numérique (Sedov)}
 
-la derivation des solutions du test de Sedov se trouve :
-chapitre 17 de Shu the physique of astrophysic Volume 2.\\
+%la dérivation des solutions du test de Sedov se trouve :
+%chapitre 17 de Shu the physique of astrophysic Volume 2.\\
 
-Le test de Sedov cherche a reproduire une explosion parfaite.
-Il consiste a relacher instantanemant une quantité dénergie $E_0$ dans un milieu homogène d'indice adiabatique $\gamma$, de densité $\rho_0$ et de pression $P_0$ (ou de température $T_0$).
+Dans le but de tester l'implémentation des différents modèles d'injection d'énergie, je l'es ai soumis au test de Sedov.
+Ce test est utilisé pour tester le cas d'une explosion parfaite.
+Il consiste a relâcher instantanément une quantité d'énergie $E_0$ dans un milieu homogène d'indice adiabatique $\gamma$, de densité $\rho_0$ et de pression $P_0$ (ou de température $T_0$).
+Ce brusque changement dans l'état du système créer une discontinuité que le solveur va devoir gérer.
 
-Sedov a demontré en 1959 que :
+L'avantage de ce test est qu'il dispose d'une solution analytique.
+Sedov a exprimé  en 1959 que le rayon de l'explosion en fonction du temps peux s'exprime : %TODO ref
 
 \begin{equation}
 r_{(t)}=\left( \frac{E_0}{\alpha \rho_0 }\right)^{1/5} t^{2/5}
 \end{equation}
 
 
+\subsubsection{Sedov évolution temporelle }
 
-Ce brusque changement dans l'état du système créer une discontinuité que le solveur va devoir gérer.
-
-
-\subsubsection{Sedov Setup}
 
 parametre du test :
 rho=1
@@ -99,7 +126,6 @@ p=1e-5
 v=0
 gamma=5/3
 
-\subsubsection{Sedov évolution}
 
 Ce test consiste a suivre l'onde de choc et a s'assurer que son profil et sa position sont correct dans le temps.
 On calcul pour chaque cellule sa distance au centre de l'explosion, puis en utilisant un histogramme sur les rayons, pondéré par la valeur du champ que l'on veux analyser, on obtient rapidement le profil radial moyen.
@@ -121,7 +147,7 @@ Notre méthode d'injection d'énergie est correcte et bien dimensionnée.
 
 
 
-\subsubsection{Sedov comparaison}
+\subsubsection{Sedov comparaison entre les méthodes}
 
 Nous avons vu qu'il existe différents moyens d'injecter de l'énergie dans le solveur hydrodynamique.
 Le test présenté ici consiste a vérifié que les différentes méthodes sont équivalentes entre elles.
@@ -134,7 +160,7 @@ Nous allons comparer 3 méthodes :
 \end{itemize}
 
 
-Ces 3 tests utillsent cette fois ci espace discret de  $128^3$ éléments, mais en autorisant le raffinement sur 3 niveaux.
+Ces 3 tests utilisent cette fois ci espace discret de  $128^3$ éléments, mais en autorisant le raffinement sur 3 niveaux.
 Le raffinement est effectué sur le gradient de densité, ie une cellule est divisé si le gradient de densité qu'elle contient est supérieur a une certaine valeur.
 Cette méthode permet de concentrer le raffinement sur le front de l'onde choc.
 
@@ -187,7 +213,6 @@ La conclusion de ses tests est que les différentes méthodes d'injection sont �
 %OK\\
 %mais pas en cosmo
 
-\subsection{Mes Implémentations}
 
 
 

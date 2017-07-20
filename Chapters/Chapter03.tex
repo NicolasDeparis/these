@@ -243,13 +243,16 @@ Nous y reviendrons dans la section dédiée. %TODO ref
 
 \section{La formation stellaire}
 
-\subsection{La loi de schmidt-kennicut}
-Loi observationnelle \\
-conversion densité surfacique vers densité 3D\\
-rho 1.5\\
-temps de free fall\\
+\subsection{Localisation des zones de formation stellaire}
 
-Seuil en densité \\
+Il est admis que les étoiles se forment dans les nuage moléculaires.
+Ces nuages ce trouvent eux meme dans des zones suffisement dense pour que les molecules puissent se former.
+En pratique dans EMMA, 
+%la physique de l'hydrogene moléculaire n'est pas prisent en compte 
+Les zones capables de former des étoiles sont localisées a l'aide d'un seuil en densité.
+Toutes les cellules en dessous d'un certain seuil ne sont pas authorisée a créer des particules stellaire.
+
+%Seuil en densité \\
 \begin{equation}
 	flag = 
   \begin{cases}
@@ -258,8 +261,13 @@ Seuil en densité \\
   \end{cases}
 \end{equation} 
 
-
-
+Cette densité de seuil $\rho_{thresh}$ peux être définie arbitrairement.
+Comme toute densité, elle est dépendante de la résolution.
+De plus il en possible de définir une densité en unité physique ou en unité commobile.
+Un seuil en densité physique sera plus représentatif de se qui se passe réellement.
+Mais a haut redshift, la densité était haute partout, et un seuil en unité comobile est utile pour limité l'aparition des premières étoiles a un redshift donné.
+%TODO figure du seuil en fonction du redshift
+En pratique on pourra définir ces deux seuil, et le seuil final sera le plus contraignant des deux.
 
 \begin{equation}
 	\rho_{thresh} = max\left(  \delta_{in} \bar{\rho}, \rho_{in} a^3 \right)
@@ -269,48 +277,135 @@ ou $\delta_{in}$ et $\rho_{in}$  sont respectivement les paramètre de surdensit
 $\delta_{in}$est exprimé en unité comobile et est donc constant dans le temps en unité du code
  $\rho_{in}$ est exprimé en unité physique (en atome par metre cube), sa valeur evolue dans le temps du point de vue des unité du codes.
 
-determination de la valeur de 55\\ 
+% determination de la valeur de 55\\ 
+
+
+
+\subsection{La loi de schmidt-kennicut}
+ %conversion densité surfacique vers densité 3D\\
+%rho 1.5\\
+%temps de free fall\\
+
+Maintenant que nous avons définis ou former des étoiles, il faut calculer combien nous devons en former.
+
+La loi de Schmidt %TODO ref
+est une loi observationnelle qui lie la densité surfacique de gaz dans les galaxies au taux de formation stelaire (SFR) dans cette galaxie.
+Kennicut %TODO ref
+a utilisé un model de galaxie pour dé projeté la densité surfacique observé et ainsi determiner une loi qui lie le SFR a la densité volumique de gaz.
+
+Il est arrivé a une loi de la forme:
+\begin{equation}
+SFR \propto \rho ^{\alpha}
+\end{equation}
+
+avec $\alpha \approx 1.5$
+
  
- 
-Dans les cellules au dessus du seuil on considère une SFR de:
+Le taux de formation stellaire s'exprime généralement en $M_\odot \cdot Mpc^{-3}  \cdot yr^{-1}$  
+Ce qui est homogène a une densité divisé par un temps.
+
+
+En pratique divisera $\rho_g$ la densité de gaz locale par le temps de chute libre ,
+\begin{equation}
+t_{ff} = \sqrt{\frac{3\pi}{32G\rho_g}}.
+\end{equation}
+
+Ce qui nous mène a considérer, dans les cellules autorisée, une SFR sous la forme:
 
 \begin{equation}
-	SFR = \epsilon \frac{\rho_g}{t_{ff}}
+	SFR = \epsilon_{sf} \frac{\rho_g}{t_{ff}}
     \label{eq_sfr}
 \end{equation}
 
-
-avec  $\epsilon$ le paramètre d'efficacité de formation stellaire , $\rho_g$ la densité de gaz locale, et le temps de chute libre:
+avec  $\epsilon_{sf}$ le paramètre d'efficacité de formation stellaire.
+Observationellement, $\epsilon_{sf}$  est de l'ordre du \%. %TODO ref
+Ce qui signifie que la formation stellaire est relativement inéfficace.
+Utiliser le temps de chute libre dans cette expression fait sens puisque en théorie c'est le temps qu'il faudrait a un nuage de gaz pour s'effondrer si il n'y avait aucune resistance.
+En pratique le temps caractéristique de formation stellaire:
 \begin{equation}
-t_{ff} = \sqrt{\frac{3\pi}{32G\rho_g}}
+t_{sf} =  \frac{t_{ff}}{ \epsilon_{sf} },
 \end{equation}
+est de l'ordre de quelques milliard d'années.
+
+A partir de ce taux de formation on obtient la masse de gaz a convertir en étoile dans chaque cellule en multipliant par $dv$ le volume de la cellule en question et $dt$ le pas de temps entre deux passage dans la fonction de formation stellaire.
 
 \begin{equation}
 	M_{star} = SFR . dv .dt 
 \end{equation}
 
-resolution en masse\\
+%resolution en masse\\
 
 Nous avons donc a ce stade la masse totale de gaz a convertir en étoile.
-Il peux etre tres couteux de générer pour chaque cellule éligible, et a chaque pas de temps, une nouvelles particule stellaire (le nombre de particule peux rapidement exploser.
+Il devient rapidement couteux de générer pour chaque cellule éligible, et a chaque pas de temps, une nouvelles particule stellaire (le nombre de particule peux rapidement exploser.
 Nous adoptons une approche probabiliste.
 Nous définissons une masse d'étoiles $m_{star}$ qui correspondra a notre "quanta stellaire".
 toutes les étoiles aurons donc la même masse.
+La masse des étoiles est calculée d'une manière comparable a la masse d'une particule de matière noire.
+la masse d'une étoile correspond a la masse moyenne de gaz dans une cellules d'un certain niveau pouvant aller du niveau coarse $m_star = M_{DM} \frac{\Omega_b}{\Omega_m}$ au niveau plusieurs niveau raffiné.
+
+
 Et nous tirons le nombre de quanta a ajouter aléatoirement dans une lois de Poisson.
 
 \begin{equation}
 	P(N) = \frac{\lambda^N}{N!} e^{-\lambda}
 \end{equation}
 
-Ou $\lambda$ correspond au nombre de particule moyen a créer dans la cellule ($\lambda \frac{ M_{star}}{m_{star}}$
+Ou $\lambda$ correspond au nombre de particule moyen a créer dans la cellule :
+\begin{equation}
+\lambda = \frac{ M_{star}}{m_{star}}
+\end{equation}
 Étant donné le grand nombre de tirage cette loi est en moyenne valide.
-
-La masse des étoiles est calculée d'une manière comparable a la masse d'une particule de matière noire.
-la masse d'une étoile correspond a la masse moyenne de gaz dans une cellules d'un certain niveau pouvant aller du niveau coarse $m_star = M_{DM} \frac{\Omega_b}{\Omega_m}$ au niveau plusieurs niveau raffiné.
+On obtiendra au final $N_{star}$ le nombre de quanta de masse d'étoile a créer.
 
 
-LEs étoiles créées auront une vitesse aléatoire pour éviter les effets de "collier".
+En pratique j'ai implémenté deux méthodes de transformations.
+Si  $N_{star}>1$ il est possible de créer : 
+\begin{itemize}
+\item  $N_{star}$ particules aillant chacune une mass  $m_{star}$.
+\item une seule particule de masse  $N_{star} \cdot m_{star}$.
+\end{itemize}
 
+Dans le premier cas le nombre de particules sera plus élevée et la résolution stellaire meilleure, mais en contrepartie le cout numérique sera plus important.
+Le choix de la méthode est laissé a l'utilisateur.
+
+En pratique la création d'une particule stellaire consistera a 
+\begin{itemize}
+\item prendre dans la réserve, une nouvelle particule %un maillon de la liste chainée
+\item ajouter ce nouveau maillons a la liste chainée de particule de la cellule.
+\item initialiser cette nouvelle particule avec : 
+\begin{itemize}
+\item un état
+\item un temps de création
+\item une vitesse 
+\item une masse
+\item un identifiant
+\end{itemize}
+\end{itemize}
+
+
+On associera un temps de création a la particule stellaire et non un age, ceci permet de ne pas avoir a remettre a jour cette valeur a chaque pas de temps.
+Pendant les analyses post simulation, on prendra garde a définir l'age des étoiles comme étant le temps associé au snapshot courant moins le temps de création de la particule.
+
+Les étoiles créées auront une vitesse aléatoire pour éviter les effets de "collier".
+
+
+Il est utile d'associer un identifiant unique aux particules.
+Cela permet de les retrouver entre les différents snapshot.
+La technique la plus simple est d'associer la valeur d'un entier que l'on incrémente a chaque création d'une nouvelle particule.
+Du fait de la parallélisation cette incrémentation est compliquée et demande des communications a chaque création de particule.
+La pratique retenue consiste a former toutes les particules de toutes les processeurs, en leur assignant un identifiant caractéristique (ici -1) et d'assigner les identifiant finaux dans un second temps.
+Une fois les particules créées,  on compte le nombre de nouvelles particules dans chaques processeurs.
+Ce qui permet d'allouer une plage d'identifiants par processeurs, et ainsi allouer les identifiants finaux.
+
+
+\section{Test}
+
+Dans le but de tester cette implémentation, le premier test réalisé consiste a comparer la SFR cosmique de l'ensemble de la boite, aux observations.
+Les points d'observations de Bouwens %TODO ref
+
+%TODO mettre figure SFR qui passe dans les cloups.
+
+Des test plus poussés seront développés plus loin.
 
 
 
@@ -323,16 +418,13 @@ Pour ce faire il faut passer en revue toute les étoiles, et a partir de leurs m
 Cette opération est simplifiée par l'utilisation de la liste chaînée de particule associées a chaque cellule. %TODO ref section
 En effet, en pratique, on passera en revue toutes les cellules, et pour chaque cellules on passera en revue toutes ses particules.
 On testera alors si une particules est une étoiles (la liste chainée contient également les particulke de matière noire), et si cette étoiles est dans un stade ou elle émet de l'énergie lumineuse.
-Si c'est le cas, on calculera sont émissivité et ont injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.
+Si c'est le cas, on calculera son émissivité et on injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.
 Le calcul de $\dot{N}_\nu^*$ sera effectué dans toutes les cellules.
 
-La principale question a la quelle tente de répondre cette section est : Quel est le lien entre age, masse et luminosité d'une particule stellaire?
+La principale question a laquelle tente de répondre cette section est : Quel est le lien entre age, masse et luminosité d'une particule stellaire?
 Pour répondre a cette question on utilisera un modèle de population stellaire.
 
-
-A partir de ces spectres, nous allons ne garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus petite que 911$\AA$) 
-
-
+A partir des spectres obtenus avec Starburst99, nous allons ne garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus petite que 911$\AA$) 
 
 \begin{equation}
 E_{ion} = \int_{13.6eV}^{+\inf} h \nu d\nu
@@ -360,7 +452,6 @@ $
 
 Ce flux correspond au flux d'une population de $10^6M_\odot$.
 Ces valeurs seront pondérées au prorata de la masse de la particule stellaire. (Une particule de $10^5M_\odot$ émettra 10 fois moins de photons).
-
 
 Ce profil d’émission ionisante peut être découper en différents "groupe de photons" (cf section \ref{sec:groupedephotons}).
 Il est possible de choisir un nombre arbitraire de groupes, mais il faut prendre en compte que chaque groupe devient l'équivalent d'un fluide dont on veut suivre l'évolution.
@@ -392,10 +483,10 @@ Pour une IMF TopHeavy, les valeurs obtenues sont:
 \label{tab_photon}}
 \end{table}
 
-Tab \ref{tab_photon} caractéristique des photons.
+La table \ref{tab_photon} présente les caractéristique des photons obtenus.
 
 
-%intégration de l'énergie et de la section efficace
+%TODO intégration de l'énergie et de la section efficace
 
 
 %We found a mean energy of $<h\nu> = 23.42$ eV,
@@ -405,22 +496,30 @@ Tab \ref{tab_photon} caractéristique des photons.
 %$\alpha_i = 1.82.10^{-22}$ m$^2$
 
 
-
-
-
-Masse de la population\\
-produit en croix pour correspondre a la masse dans simu\\
-integration seulement sur energy ionisante\\
-
-Multigroupe frequence\\
-multigroup temporel\\
+%Masse de la population\\
+%produit en croix pour correspondre a la masse dans simu\\
+%integration seulement sur energy ionisante\\
+%
+%Multigroupe frequence\\
+%multigroup temporel\\
 
 
 \section{le problème de la masse des étoiles}
 
-le paramètre de masse des étoiles change la reionization\\
-effet numérique\\
-le rayonnement est piégé dans les cellules\\
+
+
+%le paramètre de masse des étoiles change la reionization\\
+%effet numérique\\
+%le rayonnement est piégé dans les cellules\\
+
+Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire avait une grande importance dans l'évolution de la fraction ionisée.
+Même si celui ci n'a pas d'impact sur la SFR globale, le taux d'ionisation moyen est fortement dépendant de ce paramètre.
+Plus la résolution stellaire est élevée, plus la boite réionise tard.
+
+
+%TODO ajouter les figures cf présentation pp
+
+
 
 
 \input{Chapters/Chapter03_supernovae.tex}
