@@ -1,10 +1,53 @@
+\section{Introduction a la visualisation de données}
+
+ 
+Nous revenons au concept Observation -> théorie -> expérience.
+La visualisation représente l'étape d'observation du cycle.
+
+La visualisation de donnée scientifique est importante car elle permet d'obtenir énormément d'information.
+
+%pour qui?
+Avant même de définir un but il faut definir une cible.
+Les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent
+
+
+\begin{itemize}
+\item Les scientifiques.
+Aligner des 1 et des 0 sur des gros ordinateur, n'a vraiment de sens que si il représente quelque chose.
+Le mot important dans cette phrase est représentation.
+Il est nécessaire, en recherche de visualiser ce qui se passe dans les simulations pour comprendre et qualifier les phénomènes avant de pouvoir les quantifier.
+Cette cible aura besoin d'outils pointu aillant pour principal objectif la quantification.
+
+\item L'éducation 
+Ratio équitable entre qualification et quantification
+
+\item Le grand public./ La vulgarisation
+Qualification principalement 
+il est important de creer des belles image
+\end{itemize}
+
+Mais la visualisation est un défis car les volumes de données sont généralement important.
+
+
+%Pourquoi
+
+Le monde de la 3D.
+Les simus, les moteurs de jeux video, les SFX de films,
+La 3D est partout.
+Les monde des simulation peux s'en inspirer.
+
+
 \section{Projeter une grille AMR}
 
-Le concept de ligne de visées.
-Lorsque l'on veux représenter un environnement 3d sur une image 2d, il est nécessaire d'établir le concept de ligne de visée.
+\subsection{Le concept de ligne de visées}
 
-Il existe differents types de méthode de projections.
-Dans la suite de ce chapitre nous allons develloper deux d'entre elles: la projection en perspective et la projection orthogonal (Fig \ref{fig:raycast_projection}).
+D'une manière générale, les simulations cosmologiques utilisent un espace en 3 dimensions.
+
+La représentation d'un environnement virtuel a 3 dimensions passe toujours par la création d'une image a deux dimensions.
+Pour faire cette transformation, qui nécessité de supprimer une dimension, il est nécessaire d'établir le concept de ligne de visée.
+
+Il existe différents types de méthode de projections.
+Dans la suite de ce chapitre nous allons développer deux d'entre elles: la projection en perspective et la projection orthogonal (Fig \ref{fig:raycast_projection}).
 
 La projection en perspective correspond au cas l'observateur est ponctuel et au centre d'une sphere, les rayons lumineux lui arrive radialement.
 C'est la projection qui se rapproche le plus de la vision "naturelle".
@@ -41,8 +84,8 @@ Enfin, il est possible d'utilisé la réelle expression de l'epaisseur optique, 
 
 
 \subsection{Projection orthogonale}
-J'ai develloper une methode de projection d'AMR utilisant les fonction hystograme de numpy.
-Ces fonctions étant tres optimisées, la performance de génération de cube est généralement satisfaisante (pour les cube L<10).
+J'ai développer une méthode de projection d'AMR utilisant les fonction histogramme de numpy.
+Ces fonctions étant très optimisées, la performance de génération de cube est généralement satisfaisante (quelque secondes pour un cube de niveau 10).
 L'idée est de considéré les cellule AMR comme des particules d'une certaine taille.
 
 Prenon l'exemple d'une grille de densité non raffiné utilisant les sorties EMMA.
@@ -93,7 +136,7 @@ La taille de l'histogramme augmentant en 2**3L les projections 3d seront genéra
 
 %matplotlib
 %PIL
-%openseadragon
+openseadragon
 %
 
 
@@ -156,9 +199,10 @@ La densité de point n'etant pas uniforme dans ce reférentiel, il est necessair
  		\label{fig:equirectangle}
 \end{figure}
 
+Ce type d'image se prettent bien a la vulgarisation, car le resultat final est légé et peut être utilisé avec un Google Cardboard par exemple pour obtenir une visualisation intéractive facilement rependable.
 
 \section{le compositing RGB (A)}
-Une fois les projections realisées il est possibles de les combinées en créant des images en fausses couleurs.
+Une fois les projections realisées il est possibles de les combiner en créant des images en fausses couleurs.
 
 De maniere naturelle, J'ai utilisé le rouge pour  la température et la transparence pour l'ionization.
 il reste le bleu et le vert.
@@ -185,17 +229,75 @@ R,G,B=gray
 
 
 \section{Movie}
-implementation du mode movie de EMMA
+%implementation du mode movie de EMMA
+%c'est la même chose que précedemment mais a chaque pas de temps, il faut l'implementer en live (en c) pour ne pas avoir a sortir toute les info.
 
-c'est la même chose que précedemment mais a chaque pas de temps, il faut l'implementer en live (en c) pour ne pas avoir a sortir toute les info.
+
+J'ai implémenté dans EMMA, la possibilité d'obtenir une matrice 2D par pas de temps, représentant la projection orthogonale suivant un axe donné.
+La projection est réalisée de la même manière que précédemment mais a la volée et a chaque pas de temps.
+Le choix a été fait de réaliser la projection a la fin de chaque pas de temps coarse.
+La résolution temporelle est donc la résolution temporelle du pas de temps coarse.
+Comme la résolution temporelle des niveaux raffinés est plus importante que le niveau coarse, 
+LA projection temporelle peux etre 
+En écrivant ces lignes je me rends compte que le dt de projection devrait être lié au dx de projection. 
+
+Les simulations que j'ai pu réalisées comportaient environs un millier de pas temps, et généraient donc autant d'images ($N_{dt} \approx 10^3$).
+A 25 FPS cela représente une durée de 40 secondes de vidéo.
+
+
+
 
 \section{Light cone}
-A partir des images
+La création d'un light cone se fait a partir des images générer par le mode movie.
+Le cube est 
+
+Si les images en sorties du mode movie on une résolution $N_p=1024$ pixel carré.
+On prend une tranche d'une épaisseur $dx$ donnée suivant l'axe $y$ sur l'image du pas de temps $i_{dt}$, puis une deuxième tranche de la même épaisseur, mais décalée dans l 'image $i_{dt+1}$, et ainsi de suite.
+
+La position du début $S_i$ et de la fin $S_f$ de la tranche dans l'image sera :
+
+\begin{equation}
+S_i = (dx * i_{dt}) \% N_p 
+\end{equation} 
+\begin{equation}
+S_f = S_i + dx 
+\end{equation} 
+
+Le modulo sur la taille de l'image permet de gérer les conditions périodiques simplement.
+On prendra également garde a utiliser une épaisseur de tranche qui soit un multiple entier du nombre de pixel de l'image de manière a respécter simplement les condition périodique
+
+Le ratio d'aspect $\Phi$ est le rapport entre la hauteur et la longueur de l'image, et s'exprime :
+\begin{equation}
+\Phi = \frac{ N_{dt} * dx}{N_p}
+\end{equation}
+Étant donné que $N_{dt}$ et $N_p$ sont fixés par les paramètres de la simulation, il n'est possible de géré le ratio d'aspect qu'en fonction de l'épaisseur de la tranche $dx$, 
+
+Plus le ratio d'aspect sera important, plus les structure vont se répétée sur le light cone.
+
+Un light cone réaliser avec cette méthode et a partir d'une simulation présenté dans la partie %TODO ref
+est présenté sur la figure \ref{fig:lightcone}
 
 
 \begin{figure}[bth]
         \includegraphics[height=.95\textheight]{img/04/frise_wall.png} 
-        \caption{Light cone}
+        \caption{Light cone dans une simulation $8/h Mpc ^3$. Le temps se déroule de haute en bas sur plus de 700 Myrs }
  		\label{fig:lightcone}
 \end{figure}
+
+\section{Projeter des particules en 3D}
+
+\subsection{avec un frame work} 
+Irlicht
+
+Blender 
+
+
+
+\subsection{Sans Framework}
+
+J'ai develloper un visualisateur de aprticule en OPenGL
+
+OpenGL
+intéraction avec CUDA
+
 
