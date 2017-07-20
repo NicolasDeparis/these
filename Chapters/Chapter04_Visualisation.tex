@@ -144,7 +144,14 @@ openseadragon
 
 
 
-
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/04/rgb-compose.jpeg} 
+        \caption{Projection orthogonale de la simulation CODAII- EMMA en 2048$^2$.
+        projection moyenne sur rho, T et rhoX en composition RGB.
+Les zones rouges sont les vides qui ont recut du rayonnement plus tard et n'ont pas encore eu le temps de refroidir par détente adiabatique.  
+        }
+ 		\label{fig:ortho}
+\end{figure}
 
 \section{Projection perspective}
 %opengl
@@ -228,6 +235,8 @@ gray = R*0.2989 + G*0.5870 +B*0.1140
 R,G,B=gray
 
 
+
+
 \section{Movie}
 %implementation du mode movie de EMMA
 %c'est la même chose que précedemment mais a chaque pas de temps, il faut l'implementer en live (en c) pour ne pas avoir a sortir toute les info.
@@ -301,3 +310,8 @@ OpenGL
 intéraction avec CUDA
 
 
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/04/part.png} 
+        \caption{Capture d'ecrandu viewer 3D  }
+ 		\label{fig:ortho}
+\end{figure}
