@@ -33,8 +33,6 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {lstlisting}{\numberline {9.1}Mise a jour du redshift de reionisation}{101}{lstlisting.9.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {lstlisting}{\numberline {9.2}lprojection de l'AMR par la m\IeC {\'e}thode des histogramme Numpy}{110}{lstlisting.9.2}
-\defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }

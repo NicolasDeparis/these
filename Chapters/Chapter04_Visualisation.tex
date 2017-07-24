@@ -1,148 +1,173 @@
 \section{Introduction a la visualisation de données}
 
- 
-Nous revenons au concept Observation -> théorie -> expérience.
-La visualisation représente l'étape d'observation du cycle.
+La visualisation représente l'étape d'observation du cycle \textit{Observation -> Théorie -> Expérience} puisque c'est cette étape qui boucle la boucle.
+La visualisation représente la premiere étape dans l'observation de la simulation.
+Elle a pour but d'être une première approche qualitative qui va ensuite permettre de cibler une seconde approche plus quantitative.
+Par exemple, on peux utiliser une visualisation des la distribution du gaz dans certaine galaxie pour identifier la forme des galaxies, pour ensuite chercher a quantifier leurs forme en fonction de leurs halo hote.
+On peut facilement observer a l'oeil les motifs en forme de papillon des bulles d'ionisation.
+Ou la structure en réseau de la matière a grande échelle.
 
+Le cerveaux humain est efficace pour identifier les pattern visuels. 
 La visualisation de donnée scientifique est importante car elle permet d'obtenir énormément d'information.
 
-%pour qui?
-Avant même de définir un but il faut definir une cible.
-Les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent
 
+
+%pour qui?
+Il existe tout un panel de visualisation possible, et avant même de définir un but il faut définir une cible car les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent.
+On distinguera principalement trois catégories de public:
 
 \begin{itemize}
-\item Les scientifiques.
-Aligner des 1 et des 0 sur des gros ordinateur, n'a vraiment de sens que si il représente quelque chose.
-Le mot important dans cette phrase est représentation.
-Il est nécessaire, en recherche de visualiser ce qui se passe dans les simulations pour comprendre et qualifier les phénomènes avant de pouvoir les quantifier.
-Cette cible aura besoin d'outils pointu aillant pour principal objectif la quantification.
-
-\item L'éducation 
-Ratio équitable entre qualification et quantification
-
-\item Le grand public./ La vulgarisation
-Qualification principalement 
-il est important de creer des belles image
+\item Le grand public.
+\item L'éducation.
+\item Les professionnels.
 \end{itemize}
 
-Mais la visualisation est un défis car les volumes de données sont généralement important.
+Le grand public sera touché par les images de vulgarisations que l'on peut trouver sur internet ou dans les magasine.
+Ce type d'image n'a pour seul but que d'être artistique et agréable a regarder.
 
+Les images a vocation éducatives se doivent aussi d'être belles, mais elles doivent également comporter une partie informatives.
+Elle doivent contenir une certaine dose d'information supplémentaire par rapport aux images purement artistique.
+
+Enfin les outils de visualisation pour les professionnel disposes généralement de tous les outils nécessaire a la quantification de l'information.
+On pourra par exemple analyser différents champs physique, sous différents angles, on pourra changer les échelles de couleurs, etc.
+
+% L'éducation 
+%Ratio équitable entre qualification et quantification
+
+%/ La vulgarisation
+%Qualification principalement 
+%il est important de créer des belles image
+
+%Aligner des 1 et des 0 sur des gros ordinateur, n'a vraiment de sens que si il représente quelque chose.
+%Le mot important dans cette phrase est représentation.
+%Il est nécessaire, en recherche de visualiser ce qui se passe dans les simulations pour comprendre et qualifier les phénomènes avant de pouvoir les quantifier.
+%Cette cible aura besoin d'outils pointu aillant pour principal objectif la quantification.
+
+Le principal défi de la visualisation des simulation cosmologique est la quantité de données qu'elles représente.
+Si il est possible de faire des rendu pré-calculés d'images, il est encore impossible d'avoir une représentation en temps réel.
+Pourtant il existe des techniques (dans le monde des jeux vidéo par exemple) permettant d'afficher dynamiquement des univers en 3 dimensions gigantesque de manière fluide sur des machines grand public.
+Je pense qu'il y a de quoi s'inspirer de ce coté la.
 
 %Pourquoi
 
-Le monde de la 3D.
-Les simus, les moteurs de jeux video, les SFX de films,
-La 3D est partout.
-Les monde des simulation peux s'en inspirer.
+%Le monde de la 3D.
+%Les simus, les moteurs de jeux video, les SFX de films,
+%La 3D est partout.
+%Les monde des simulation peux s'en inspirer.
 
 
 \section{Projeter une grille AMR}
 
-\subsection{Le concept de ligne de visées}
+Pour rappel, le format de donnée en sortie d'EMMA, sont sous forme de liste de cellules AMR dans un  espace en 3 dimensions..
+Une image (en nuance de gris) est composée d'une matrice a 2 dimensions de pixel réguliers en forme et en taille.
+Il est donc necéssaire d'effectuer une transformation entre ces deux représentation.
+Comme cette transformation mène a la perte d'une dimension on parlera de projection.
 
-D'une manière générale, les simulations cosmologiques utilisent un espace en 3 dimensions.
+\subsection{Le tirage des lignes de visées}
 
 La représentation d'un environnement virtuel a 3 dimensions passe toujours par la création d'une image a deux dimensions.
-Pour faire cette transformation, qui nécessité de supprimer une dimension, il est nécessaire d'établir le concept de ligne de visée.
+Il existe différents types de méthodes de projections qui dépendent de la gestion des lignes de visées.
+Dans la suite de ce chapitre nous allons développer deux d'entre elles: la projection en perspective et la projection orthogonale (Fig \ref{fig:raycast_projection}).
 
-Il existe différents types de méthode de projections.
-Dans la suite de ce chapitre nous allons développer deux d'entre elles: la projection en perspective et la projection orthogonal (Fig \ref{fig:raycast_projection}).
+\paragraph{La projection orthogonale} correspond a l'approximation de grande distance.
+Les rayons sont parallèles entre eux et le cube de données est comme "écrasée" ou "imprimée" suivant un axe.
+Cette projection est moins naturelle, dans le sens ou elle ne correspond pas a ce que nous avons l'habitude de percevoir, mais elle a l'avantage d'être relativement simple a mettre en œuvre.
 
-La projection en perspective correspond au cas l'observateur est ponctuel et au centre d'une sphere, les rayons lumineux lui arrive radialement.
+\paragraph{La projection en perspective} correspond au cas l'observateur est ponctuel et au centre d'une sphere, les rayons lumineux lui arrive radialement.
 C'est la projection qui se rapproche le plus de la vision "naturelle".
 
-La projection orthogonale correspond a l'approximation de grande distance.
-Les rayon sont parralèles entre eux et l'image recue est comme "imprimée".
-Cette projection est moins naturelle dans le sens ou elle ne correspond pas a ce que nous pouvons percevoir, mais elle a l'avantage d'être tres simple a mettre en oeuvre.
-
-
-
 \begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/04/raycast_projection.png} 
-        \caption{Deux types de projections}
- 		\label{fig:raycast_projection}
+    \center
+    \subfloat[Orthogonale]{\includegraphics[width=0.45\textwidth]{img/04/raycast_ortho.png}}%
+    \qquad
+   	\subfloat[Perspective]{\includegraphics[width=0.45\textwidth]{img/04/raycast_perspective.png}}%
+    \caption{Les deux types de projections que nous allons aborder.}
+ 	\label{fig:raycast_projection}
 \end{figure}
 
 
-\subsection{la réduction de la ligne de visée}
+\subsection{La réduction des lignes de visées}
 
-Dans les cas l'objectif est de réduire une ligne de visée a une valeurs a représenter a l’écran.
-Il existe plusieurs façons de réduire les lignes de visées.
+Une fois les lignes de visées obtenues, il faut les réduire une valeur unique pour effectuer la projection
+Il existe plusieurs (une infinité de) façons de réduire les lignes de visées, en voici quelques une que j'ai pu utiliser:
 
-Une des méthodes les plus facile consiste a prendre la moyenne ou la somme de la ligne, cette méthode présente l'avantage de représenter l'ensemble de la ligne.
-Il est également possible de prendre les maximum de la ligne, cette méthode augmente significativement le contraste, au point que certaines projections peuvent présenter des artefacts indésirables.
+\begin{itemize}
+\item La moyenne ou la somme ont l'avantage d'être facilement implémentable et de garder l'information sur toute la ligne de visée.
 
-Une troisième méthodes légèrement plus physique consiste a utiliser les équations de transfert du rayonnment pour determiner l'epaisseur optique de la ligne
+\item Le maximum permet d'augmenter significativement le contraste, rendant les images visuellement plus intéressante que la somme mais en contre partie certaines projections peuvent présenter des artefacts indésirables.
 
+\item L'épaisseur optique permet de garder de l'information sur toute la ligne et d'être une représentation avec une signification physique car elle utilise les équations de transfert du rayonnement.
+Cependant elle est plus gourmande en ressources.
+Pour faire de la visualisation pure on pourra utiliser une expression du type:
 \begin{equation}
-v= \sum e^{-d}
+v= \sum e^{-x}
 \end{equation}
+Et on pourra également être plus quantitatif en utilisant les vraies équations physique mais il faudra utiliser plusieurs champs simultanément. %TODO ref
+\end{itemize}
 
-Enfin, il est possible d'utilisé la réelle expression de l'epaisseur optique, prenant en compte densité, température, ionization et vitesse du gaz.
-(TODO)
+%Une des méthodes les plus facile consiste a prendre la moyenne ou la somme de la ligne, cette méthode présente l'avantage de représenter l'ensemble de la ligne.
+%Il est également possible de prendre les maximum de la ligne, cette méthode augmente significativement le contraste, au point que certaines projections peuvent présenter des artefacts indésirables.
 
+%Une troisième méthodes légèrement plus physique consiste a utiliser les équations de transfert du rayonnment pour determiner l'epaisseur optique de la ligne
 
-\subsection{Projection orthogonale}
-J'ai développer une méthode de projection d'AMR utilisant les fonction histogramme de numpy.
-Ces fonctions étant très optimisées, la performance de génération de cube est généralement satisfaisante (quelque secondes pour un cube de niveau 10).
+%Enfin, il est possible d'utilisé la réelle expression de l'epaisseur optique, prenant en compte densité, température, ionization et vitesse du gaz.
+%(TODO)
+
+\section{Projection orthogonale}
+
+J'ai développer une méthode de projection d'AMR sur une grille (2D ou 3D) de taille arbitraire en utilisant les fonctions histogramme de Numpy.
+Ces fonctions étant binen optimisées, la performance de génération de cube est généralement satisfaisante (de l'ordre de quelque secondes pour un cube de $1024^3$).
 L'idée est de considéré les cellule AMR comme des particules d'une certaine taille.
 
-Prenon l'exemple d'une grille de densité non raffiné utilisant les sorties EMMA.
-Une grille 2d  quelconque est représenté par x,y,l et d ou x,y etant les position du bord inferieur guauche des cellules, l étant le niveau des cellules d etant le champs a représenter (ici la densité).
+Prenons l'exemple d'une grille de densité non raffiné utilisant les sorties EMMA.
+Une grille 2D quelconque est représenté par le couple $x,y$ étant les positions du bord inférieur gauche des cellules, $l$ étant le niveau des cellules et $d$  étant le champs a représenter (prenons par exemple la densité).
 
+Le volume de la cellule est définis en fonction du niveau suivant:
 \begin{equation}
-dV= \left( \frac{1}{2**L }\right) **3
+dV= 2^{-3L}
 \end{equation} 
+
 
 En réalisant un histogram 2d de x et y pondéré en masse.
 Le poids de chaque cellule correspond a la masse de la cellule $w = \rho \cdot dV$:
-En considerant le centre des cellule $(x' = x+dx(L) /2)$ et en ajustant le bin de l'histograme sur la taille de la grille on peux projeter un niveau tres rapidement.
+En considérant le centre des cellule $(x' = x+dx(L) /2)$ et en ajustant le bin de l'histograme sur la taille de la grille on peux projeter un niveau rapidement.
 
-\begin{lstlisting}[float=bth,language=python,frame=tb,caption={lprojection de l'AMR par la méthode des histogramme Numpy},label=lst:useless]
- import numpy as np
- h,binX,binY=np.hystogram2d(x,y,weight=dv)
-\end{lstlisting}
-
-ou h est une matrice 2d representant la projection.
+%\begin{lstlisting}[float=bth,language=python,frame=tb,caption={lprojection de l'AMR par la méthode des histogramme Numpy},label=lst:useless]
+% import numpy as np
+% h,binX,binY=np.hystogram2d(x,y,weight=dv)
+%\end{lstlisting}
+o%u h est une matrice 2d representant la projection.
 
 
 Lorsque l'AMR d'entrée contient plusieurs niveaux, il est possible de projeter les cellules niveau par niveau.
-Par example pour une grille contenant les niveaux 8 et 9, on projettera d'abord toutes les cellules de niveau 8 pour obtenir une matrice 256x256.
-puis on agrandira cette matrice avec des operateurs de changement de grille (TODO cf multigrille).
-La méthode la plus naturelle consiste utiliser une projection directe.
-nous obtenons alors une premiere grille de taille 512x512.
-On projettera ensuite par histogramme toutes les cellules du niveau  9 pour obtenir une seconde matrice de taille 512x512.
-La grille finale sera la moyenne des deux grille précédentes.
+Par example pour une grille contenant les niveaux 8 et 9, on projettera d'abord toutes les cellules de niveau 8 pour obtenir une matrice $256x256$.
+On agrandira cette matrice avec des opérateurs de changement de grille (cf Section \ref{Opérateurs de changement de grilles}).
+%La méthode la plus naturelle consiste utiliser une projection directe.
+Nous obtenons alors une première grille de taille $512x512$.
+On projettera ensuite  de la même manière les cellules du niveau $9$ pour obtenir une seconde matrice de taille $512x512$.
+En prenant la moyenne des deux grille obtenues ont obtient finalement la projection sur le niveau $9$.
+On pourra utiliser ce principe de manière récursive jusqu'à avoir projeter tout les niveaux.
 
-On pourra utiliser ce principe de manière récursive jusqu'a avoir projeter tout les niveaux.
-
-Dans le cas ou le niveau de projection ne correspond pas au niveau maximum de l'AMR, il suffira de modifier la pondération des niveau superieur au niveau de projection en utilisant:
-
+Dans le cas ou le niveau de projection ne correspond pas au niveau maximum de l'AMR, il suffira de modifier la pondération des niveau supérieur au niveau de projection en utilisant:
 \begin{equation}
-w = d \cdot \left( \frac{1}{2**(L-Lmax) }\right) **3
+w = d \cdot \left( \frac{1}{2^{(L-Lmax)} }\right)^3
 \end{equation}
+Ainsi toute les cellules se trouvant sur des niveaux supérieur au niveaux de projection seront automatiquement prisent en compte.
+
+Le principal inconvenant de la méthode des histogrammes est qu'il n'est possible de réaliser que des projection utilisant la moyenne.
+Or on voudra dans certain cas considérer d'autres réduction de ligne de visée.
+Pour compenser cette méthode on réalisera une projection 3D de la même manière que précédemment mais en utilisant de histogrammes a 3 dimensions.
+La taille de l'histogramme augmentant en $2^{3L}$ les projections 3D seront généralement limité a $1024^3$ pour des questions de mémoire RAM. 
 
 
+J'ai utilisée cette méthode pour projeter quelques champs de données de la simulation CODAII-EMMA.
+J'ai généré des images de $16384^2$ pixels.
+La quantité de données a gérée étant colossale, j'ai découpé le problème en tranche sur lesquelles j'ai effectué une projection par maximum.
+J'ai ensuite réalisé la moyenne de ses tranches pour générer l'image finale.
 
-L'inconveniant de la methode des histogramme est qu'il n'est possible de realiser que des projection utilisant la moyenne.
-Or on voudra dans certain cas considérer d'autres reduction de ligne de visée.
-Pour compenser cette methode on realisera une projection 3d de la même maniere que precedement mais en utilisant numpy.hystogramdd qui permet de realiser des histogrammes a N dimensions.
-La taille de l'histogramme augmentant en 2**3L les projections 3d seront genéralement limité a 1024**3 pour des question de mémoire RAM. 
-
-
-
-
-
-%matplotlib
-%PIL
-openseadragon
-%
-
-
-
-
-
+Pour afficher l'image en ligne de manière fluide j'ai utilisé openseadragon %TODO ref
+un logiciel permettant d générer des tuiles d'images et de las charger dynamiquement.
+Ces images sont disponibles en lignes a l'adresse %TODO ref
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/04/rgb-compose.jpeg} 
@@ -153,7 +178,7 @@ Les zones rouges sont les vides qui ont recut du rayonnement plus tard et n'ont 
  		\label{fig:ortho}
 \end{figure}
 
-\section{Projection perspective}
+\section{Projection en perspective}
 %opengl
 %blender
 
@@ -202,7 +227,8 @@ La densité de point n'etant pas uniforme dans ce reférentiel, il est necessair
 
 \begin{figure}[bth]
         \includegraphics[height=.95\textheight]{img/04/equi.png} 
-        \caption{Projection equirectangle d'une cube de densité}
+        \caption{Projection equirectangle d'une cube de densité.
+        Ce type d'image représente une vue de 360° par 180° (d'ou un ration d'aspec de 2:1) ici prise depuis le centre de la simulation.}
  		\label{fig:equirectangle}
 \end{figure}
 
@@ -296,22 +322,49 @@ est présenté sur la figure \ref{fig:lightcone}
 \section{Projeter des particules en 3D}
 
 \subsection{avec un frame work} 
-Irlicht
 
 Blender 
+interface python
+Logiciel de visualisation 3d
+Possibilité de faire du rendu volumique de qualité professionnelle
+Pas adapté a la visu scientifique.
+
+
+Irlicht
+Moteur de jeu 3d open source 
+extremement simple d'utilisation
+les particules sont des bilboard : de texture 2d qui pointent tjrs vers la caméra
+posibilité de customiser les points
+deplacement en temps réel dans l'univers 3D a la manière d'un FPS
+(tres) mauvaise performance 
 
 
 
 \subsection{Sans Framework}
 
-J'ai develloper un visualisateur de aprticule en OPenGL
+J'ai develloper un visualisateur de particule en OPenGL
 
-OpenGL
-intéraction avec CUDA
+Une capture d'écran du rendu de ce viewer est présenté sur la figure \ref{fig:viewer}
+
+LEs partivule sont des vertex en language OpenGL.
+
+declaration de buffer, envois sur la carte graphique.
+
+
+Prochain objectif, ajouter du mouvement.
+
+Interpolation entre 2 snaps.
+
+interpolation faite en CUDA pour éviter les retour de GPU vers CPU.
+
+posibilité d'utiliser plusieurs snaps 
+
+Visualisation de la formation des structure en temps réélle tres instructive
+
 
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/04/part.png} 
         \caption{Capture d'ecrandu viewer 3D  }
- 		\label{fig:ortho}
+ 		\label{fig:viewer}
 \end{figure}
