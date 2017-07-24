@@ -10,10 +10,8 @@ Ou la structure en réseau de la matière a grande échelle.
 Le cerveaux humain est efficace pour identifier les pattern visuels. 
 La visualisation de donnée scientifique est importante car elle permet d'obtenir énormément d'information.
 
-
-
 %pour qui?
-Il existe tout un panel de visualisation possible, et avant même de définir un but il faut définir une cible car les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent.
+Il existe tout un panel de visualisations possible, et avant même de définir un but il faut définir une cible, car les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent.
 On distinguera principalement trois catégories de public:
 
 \begin{itemize}
@@ -101,6 +99,7 @@ Cependant elle est plus gourmande en ressources.
 Pour faire de la visualisation pure on pourra utiliser une expression du type:
 \begin{equation}
 v= \sum e^{-x}
+\label{eq:epop}
 \end{equation}
 Et on pourra également être plus quantitatif en utilisant les vraies équations physique mais il faudra utiliser plusieurs champs simultanément. %TODO ref
 \end{itemize}
@@ -116,11 +115,11 @@ Et on pourra également être plus quantitatif en utilisant les vraies équation
 \section{Projection orthogonale}
 
 J'ai développer une méthode de projection d'AMR sur une grille (2D ou 3D) de taille arbitraire en utilisant les fonctions histogramme de Numpy.
-Ces fonctions étant binen optimisées, la performance de génération de cube est généralement satisfaisante (de l'ordre de quelque secondes pour un cube de $1024^3$).
-L'idée est de considéré les cellule AMR comme des particules d'une certaine taille.
+Ces fonctions étant bien optimisées, la performance de génération de cube est généralement satisfaisante (de l'ordre de quelque secondes pour un cube de $1024^3$).
+L'idée est de considérer les cellules AMR comme des particules d'une certaine taille.
 
-Prenons l'exemple d'une grille de densité non raffiné utilisant les sorties EMMA.
-Une grille 2D quelconque est représenté par le couple $x,y$ étant les positions du bord inférieur gauche des cellules, $l$ étant le niveau des cellules et $d$  étant le champs a représenter (prenons par exemple la densité).
+Prenons l'exemple de la densité sur une grille non raffinée utilisant le format de sortie d'EMMA.
+Une grille 2D quelconque est représenté par le couple $x,y$ étant les positions du bord inférieur gauche des cellules, $l$ étant le niveau des cellules et $d$ étant le champs a représenter (prenons par exemple la densité).
 
 Le volume de la cellule est définis en fonction du niveau suivant:
 \begin{equation}
@@ -130,7 +129,7 @@ dV= 2^{-3L}
 
 En réalisant un histogram 2d de x et y pondéré en masse.
 Le poids de chaque cellule correspond a la masse de la cellule $w = \rho \cdot dV$:
-En considérant le centre des cellule $(x' = x+dx(L) /2)$ et en ajustant le bin de l'histograme sur la taille de la grille on peux projeter un niveau rapidement.
+En considérant le centre des cellule $(x' = x+dx(L) /2)$ et en ajustant le bin de l’histogramme sur la taille de la grille on peux projeter un niveau rapidement.
 
 %\begin{lstlisting}[float=bth,language=python,frame=tb,caption={lprojection de l'AMR par la méthode des histogramme Numpy},label=lst:useless]
 % import numpy as np
@@ -165,15 +164,16 @@ J'ai généré des images de $16384^2$ pixels.
 La quantité de données a gérée étant colossale, j'ai découpé le problème en tranche sur lesquelles j'ai effectué une projection par maximum.
 J'ai ensuite réalisé la moyenne de ses tranches pour générer l'image finale.
 
-Pour afficher l'image en ligne de manière fluide j'ai utilisé openseadragon %TODO ref
-un logiciel permettant d générer des tuiles d'images et de las charger dynamiquement.
+Pour afficher l'image en ligne de manière fluide j'ai utilisé Openseadragon %TODO ref
+un logiciel permettant d générer des tuiles d'images et de les charger dynamiquement.
 Ces images sont disponibles en lignes a l'adresse %TODO ref
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/04/rgb-compose.jpeg} 
         \caption{Projection orthogonale de la simulation CODAII- EMMA en 2048$^2$.
-        projection moyenne sur rho, T et rhoX en composition RGB.
-Les zones rouges sont les vides qui ont recut du rayonnement plus tard et n'ont pas encore eu le temps de refroidir par détente adiabatique.  
+        La projection corespond a la moyenne sur une tranche de 8/h Mpc d'épaisseur. 
+        La composition RGB est réalisée avec dans l'ordre la température, la densité de gaz et la densité de gaz ionisé.
+		Les vaste zones rouges correspondent aux vides qui ont reçut du rayonnement plus tard et n'ont pas encore eu le temps de refroidir par détente adiabatique.  
         }
  		\label{fig:ortho}
 \end{figure}
@@ -182,15 +182,16 @@ Les zones rouges sont les vides qui ont recut du rayonnement plus tard et n'ont 
 %opengl
 %blender
 
-Dans ce cas, il n'existe plus de façon directe de recuperer les lignes de visée, il est nécessaire d'avoir recours au lancé de rayon.
-Cette technique appelée raycasting permet de récupérer toute les cellules interceptée pas un rayon donné.
+Dans ce cas, il n'existe plus de façon directe de récupérer les lignes de visée, il est nécessaire d'avoir recours au lancé de rayon.
+Cette technique, appelée raycasting, permet de récupérer toute les cellules interceptée pas un rayon donné.
 Il existe différentes techniques de raycasting, j'ai pu en explorer plusieurs:
 
-\subsection{L'algorithme de bressenham}
-L'algorithme de bressenham est une technique optimisée de raycasting.
-Il consiste a travailler sur l'indice des cellules d'une grille regulière.
-
-Cette technique est tres rapide mais ne fonctionne cependant que sur grille regulière.
+\subsection{Raycasting}
+\subsubsection{L'algorithme de bressenham}
+L'algorithme de Bressenham est une technique optimisée de raycasting.
+Il consiste a manipuler des indice de cellules pour déterminer quelles cellules intercepte un segment arbitraire.
+Cette technique est très rapide mais ne fonctionne cependant que sur grille régulière.
+Il est donc nécessaire de projeter la grille a la résolution désirée avant de tirer les rayons.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/04/Bresenham_line.png} 
@@ -198,32 +199,21 @@ Cette technique est tres rapide mais ne fonctionne cependant que sur grille regu
  		\label{fig:bressenham}
 \end{figure}
 
+\subsubsection{La méthodes KD-tree}
+
+J'ai mis en place une autre technique dans le but d'explorer directement l'AMR.
+De la mème manière que la technique de calcul des flux (TODO ref) cette technique repose sur l'utilisation d'un arbre pour déterminer les cellule par lesquelles passent le rayon.
+Il s'agit de tracer une ligne dans l'espace et de la discrétiser.
+Pour chaque vertex de cette ligne on utilisera le KD-tree pour déterminer qu'elle cellule AMR est la plus proche de ce vertex.
+Enfin on associera la valeur de cette cellule au vertex en question.
+
+Cette technique a l'avantage d'économiser le temps de projection de l'AMR sur une grille régulière
 
 
+\subsection{Application}
 
-\subsection{La méthodes KD-tree}
-
-Une autre technique mise en place dans le but d'explorer directement l'amr.
-De la mème manière que la technique de calcule des flux (TODO ref) cette technique repose sur l'utilisation d'un arbre pour determiner le cellule par lesquelles passent le rayon.
-
-
-
-
-
-la mise en place de la camera
-la définition de la position et du champs de vue (FOV) et de la profondeur de vue.
-camera sphérique avec HealPix see Sec. \ref{sec:healpix}
-
-la projection equirectangle est la projection la plus utilisée en photographie et video sphérique.
-Elle présente un ratio d'aspect de 2:1 correspondant a 360:180.
-L'association Healpix vers equirectangle est trivial puisque qu'elle consiste a associer les position x,y de la projection equirectangle, au angle $\theta$ et $\phi$ de la projection Healpix.
-\begin{equation}
-x=\theta
-y=\phi
-\end{equation}
-
-La densité de point n'etant pas uniforme dans ce reférentiel, il est necessaire de realiser une interpolation sur une matrice régulière pour obtenir l'image finale. see Fig \ref{fig:equirectangle}
-
+%la mise en place de la camera
+%la définition de la position et du champs de vue (FOV) et de la profondeur de vue.
 
 \begin{figure}[bth]
         \includegraphics[height=.95\textheight]{img/04/equi.png} 
@@ -232,33 +222,55 @@ La densité de point n'etant pas uniforme dans ce reférentiel, il est necessair
  		\label{fig:equirectangle}
 \end{figure}
 
-Ce type d'image se prettent bien a la vulgarisation, car le resultat final est légé et peut être utilisé avec un Google Cardboard par exemple pour obtenir une visualisation intéractive facilement rependable.
+Indépendamment de la méthode de lancé de rayon, il est nécessaire de définir la caméra.
+C'est a dire qu'il faut localiser le point de départ (la position de la caméra) et les points d'arrivés (Field Of View FOV et profondeur de champs) des rayons.
+Pour l'exemple présenté sur la figure \ref{fig:equirectangle} j'ai positionné la caméra au centre d'un cube de densité de gaz $P_i = (0.5,0.5,0.5)$.
+J'ai ensuite défini une caméra sphérique avec HealPix (see Sec. \ref{sec:healpix}) pour lancer les rayons dans la sphère inscrite au cube.
+La projection a utilisée ici $786432$ rayons et chaque rayon à utilisé la réduction de l'eq \ref{eq:epop}.
 
-\section{le compositing RGB (A)}
-Une fois les projections realisées il est possibles de les combiner en créant des images en fausses couleurs.
+Il est ensuite nécessaire de projeter la sphère sur une surface plane.
+J'ai utilisé la projection equirectangle qui est la projection la plus utilisée en photographie et vidéo sphérique.
+Elle présente un ratio d'aspect de 2:1 correspondant a FOV de 360x180°.
 
-De maniere naturelle, J'ai utilisé le rouge pour  la température et la transparence pour l'ionization.
-il reste le bleu et le vert.
-Dans une première série d'images j'ai utilisé le vert pour la densité de gas et le bleu pour la densité de matière noire.
-
-\subsection{le théorie des couleurs}
-Comment créer du noir et blanc?
-
-
-par la moyenne :
+%L'association Healpix vers equirectangle est trivial puisque qu'elle consiste a associer les position x,y de la projection equirectangle, au angle $\theta$ et $\phi$ de la projection Healpix.
+Cette projection est trivial puisqu'elle consiste a associer les positions cartésiennes des pixels aux angles des rayons:
 \begin{equation}
-gray= (R+G+B)/3
+x=\theta\\
+y=\phi.
 \end{equation}
 
-R,G,B=gray
+La densité de point n’étant pas uniforme dans ce référentiel, il est nécessaire de réaliser une interpolation sur une matrice régulière pour obtenir l'image finale.
+Ce type d'image se prêtent bien a la vulgarisation, car le résultat final est léger et peut être utilisé avec un Google Cardboard par exemple pour obtenir une visualisation interactive facilement diffuser.
 
+Il est également possible d'utiliser ce type de méthode a des fin plus quantitatives.
+En fonction de la méthode de réduction des rayons, il peut être possible d'étudier, pour des halos spécifiques, l'escape fraction des photons ou les flux hydrodynamiques en fonction de la direction. 
+Il est également possible de créer des observatoires virtuels en simulant différents types d'instruments.
 
-par une ponderation spéciale correspondant a la capacité de l'oeil a voir certaine couleur, conservation de la luminance:
-\begin{equation}
-gray = R*0.2989 + G*0.5870 +B*0.1140
-\end{equation}
-
-R,G,B=gray
+%\section{le compositing RGB (A)}
+%Une fois les projections réalisées il est possibles de les combiner en créant des images en fausses couleurs.
+%
+%De manière naturelle, J'ai utilisé le rouge pour la température et la transparence pour l'ionisation.
+%il reste le bleu et le vert.
+%Dans une première série d'images j'ai utilisé le vert pour la densité de gas et le bleu pour la densité de matière noire.
+%
+%\subsection{le théorie des couleurs}
+%Comment créer du noir et blanc?
+%
+%
+%par la moyenne :
+%\begin{equation}
+%gray= (R+G+B)/3
+%\end{equation}
+%
+%R,G,B=gray
+%
+%
+%par une ponderation spéciale correspondant a la capacité de l'oeil a voir certaine couleur, conservation de la luminance:
+%\begin{equation}
+%gray = R*0.2989 + G*0.5870 +B*0.1140
+%\end{equation}
+%
+%R,G,B=gray
 
 
 
@@ -307,64 +319,99 @@ Le ratio d'aspect $\Phi$ est le rapport entre la hauteur et la longueur de l'ima
 \end{equation}
 Étant donné que $N_{dt}$ et $N_p$ sont fixés par les paramètres de la simulation, il n'est possible de géré le ratio d'aspect qu'en fonction de l'épaisseur de la tranche $dx$, 
 
-Plus le ratio d'aspect sera important, plus les structure vont se répétée sur le light cone.
+Plus le ratio d'aspect sera important, plus les structure vont se répéter sur le light cone.
 
 Un light cone réaliser avec cette méthode et a partir d'une simulation présenté dans la partie %TODO ref
 est présenté sur la figure \ref{fig:lightcone}
 
 
 \begin{figure}[bth]
-        \includegraphics[height=.95\textheight]{img/04/frise_wall.png} 
-        \caption{Light cone dans une simulation $8/h Mpc ^3$. Le temps se déroule de haute en bas sur plus de 700 Myrs }
+        \includegraphics[height=.90\textheight]{img/04/frise_wall.png} 
+        \caption{Light cone dans une simulation $8/h Mpc ^3$. 
+        Le temps se déroule de haut en bas sur plus de 700 Myrs.
+        Le voile blanc représente l'état d'ionisation du gaz.
+        L'apparition des bulles d'ionisation est clairement localisée autour des structures les plus denses.
+        Le rouge représente les température de plus de $2\cdot 10^4K$ pour accentuer les supernovae. 
+ }
  		\label{fig:lightcone}
 \end{figure}
 
-\section{Projeter des particules en 3D}
+\section{Projection interactive en 3D}
 
-\subsection{avec un frame work} 
+Les projections présentées jusqu'ici sont toutes des projections pré-calculées.
+Explorer les simulations produites en trois dimensions et en temps réel, permettrait un énorme gain de temps au niveau de l'analyse, puisqu'il serait possible de localiser visuellement et très rapidement les régions d’intérêts et les patterns globaux.
 
-Blender 
-interface python
-Logiciel de visualisation 3d
-Possibilité de faire du rendu volumique de qualité professionnelle
-Pas adapté a la visu scientifique.
-
-
-Irlicht
-Moteur de jeu 3d open source 
-extremement simple d'utilisation
-les particules sont des bilboard : de texture 2d qui pointent tjrs vers la caméra
-posibilité de customiser les points
-deplacement en temps réel dans l'univers 3D a la manière d'un FPS
-(tres) mauvaise performance 
+J'ai fait quelques essais de visualisations en temps réel en utilisant des frameworks existant.
+J'ai testé par exemple Blender %TODO ref
+un logiciel libre disposant d'une interface python qui permet de faire du rendu 3D professionnel et qui possède un moteur de jeux permettant de faire du temps réel.
+J'ai également utilisé Irrlicht %TODO ref
+un moteur de jeu open source extrêmement simple d'utilisation permettant des déplacement en temps réel dans un univers 3D a la manière d'un jeu de tir a la première personne.
+De plus, Irrlicht possède un module Occulus Rift qui m'a permis de réaliser un visualiseur en réalité virtuelle.
+Sont principal inconvénient était ses performances limitées.
+Ce test de visualiseur en réalité virtuelle a indirectement mené a la publication de l'article de conférence en annexe \ref{pap:visu}.
 
 
 
-\subsection{Sans Framework}
+%\subsection{avec un frame work} 
+%
+%Blender 
+%interface python
+%Logiciel de visualisation 3d
+%Possibilité de faire du rendu volumique de qualité professionnelle
+%Pas adapté a la visu scientifique.
+%
+%
+%Irlicht
+%Moteur de jeu 3d open source 
+%extremement simple d'utilisation
+%les particules sont des bilboard : de texture 2d qui pointent tjrs vers la caméra
+%posibilité de customiser les points
+%deplacement en temps réel dans l'univers 3D a la manière d'un FPS
+%(tres) mauvaise performance 
 
-J'ai develloper un visualisateur de particule en OPenGL
+%\subsection{Sans Framework}
 
-Une capture d'écran du rendu de ce viewer est présenté sur la figure \ref{fig:viewer}
-
-LEs partivule sont des vertex en language OpenGL.
-
-declaration de buffer, envois sur la carte graphique.
+Dans le but d'obtenir de meilleur performance, j'ai développé un visualiseur de particule directement en OpenGL.
+L'OpenGL est un langage graphique bas niveau permettant de meilleurs optimisations que l'utilisation de moteurs de jeux préexistant.
+Une capture d'écran d'un cube de $128^3$ particules de matière noire, rendu de ce viewer est présenté sur la figure \ref{fig:viewer}.
 
 
-Prochain objectif, ajouter du mouvement.
+%LEs partivule sont des vertex en language OpenGL.
+%declaration de buffer, envois sur la carte graphique.
 
-Interpolation entre 2 snaps.
+En plus de la visualisation interactive, j'y ai ajouter la possibilité de déplacer les particules.
+Pour cela, il faut interpoler les positions des particules entre deux instants.
+La principale difficulté était de mettre a jour la position des particules.
+OpenGL utilise un paradigme proche de CUDA.
+Les positions des particules sont définies en mémoire sur le CPU puis envoyées sur le GPU pour l'affichage.
+Lors des déplacements ces transfert était fait a chaque frame et ralentissaient considérablement les performances.
+en utilisant une passerelle entre OpenGL et CUDA, j'ai pu réaliser les déplacement directement sur la carte graphique et économiser les temps de transferts.
+Au final, la visualisation de la formation des structures de matières noires en temps réelle est très instructive.
 
-interpolation faite en CUDA pour éviter les retour de GPU vers CPU.
+Ce projet a néanmoins été abandonné, car un projet bien plus ambitieux a été amorcé par A. Schaaff.
+L'objectif est de réaliser un visualiseur capable de représenter un volume de donnée aussi conséquent que ceux de la simulation CODA.
+Pour se faire, il utilise un système de base de données organisée en AMR permettant un affichage adaptatif des particules en fonction de leurs distance.
+Cet outil est réalisé en JavaScript et utilise les technologies web pour un affichage a distance dans un navigateur internet.
+Cet outils dispose déjà de modules de mesure et de sélection permettant un usage 
+Les premiers pas de cet outil sont prometteurs 
 
-posibilité d'utiliser plusieurs snaps 
 
-Visualisation de la formation des structure en temps réélle tres instructive
+%Prochain objectif, ajouter du mouvement.
+%Interpolation entre 2 snaps.
+%interpolation faite en CUDA pour éviter les retour de GPU vers CPU.
+%posibilité d'utiliser plusieurs snaps 
+%Visualisation de la formation des structure en temps réélle tres instructive
 
 
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/04/part.png} 
-        \caption{Capture d'ecrandu viewer 3D  }
+        \caption{Capture d’écran de mon viewer 3D en OpenGL.
+        Le déplacement en temps réel dans un système de particules de matière noire en mouvement est très instructif.}
  		\label{fig:viewer}
 \end{figure}
+
+
+\section{Conclusion}
+
+La visualisation de données de simulation touche un vaste public.
