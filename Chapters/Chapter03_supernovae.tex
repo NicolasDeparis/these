@@ -136,12 +136,36 @@ Le domaine de calcul est en une grille régulière décomposé en $256^3$ élém
 La Fig. \ref{fig:sedov_evol} présentes le trois principaux champs (densité, pression et vitesse radiale) a trois instant différents, comparé a la solution analytique.
 On observe un très bon accord en la simulation et le théorie.
 Notre méthode d'injection d'énergie est correcte et bien dimensionnée.
+%
+%\begin{figure}[bth]
+%        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
+%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_pres.pdf} 
+%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_vel.pdf} 
+%        \caption{Test de Sedov, évolution des différentes variables d'états. La densité en haut, la pression au milieu et la vitesse radiale en bas.}
+% 		\label{fig:sedov_evol}
+%\end{figure}
 
 \begin{figure}[bth]
-        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
-		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_pres.pdf} 
-		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_vel.pdf} 
-        \caption{Test de Sedov, évolution des différentes variables d'états. La densité en haut, la pression au milieu et la vitesse radiale en bas.}
+   \begin{minipage}[c]{.46\linewidth}
+        \includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_pres.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_vel.pdf} 
+
+   \end{minipage} \hfill
+   \begin{minipage}[c]{.46\linewidth}
+		
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_den.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_pres.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_vel.pdf} 
+
+   \end{minipage}
+
+        \caption{Test de Sedov, évolution des différentes variables d'états. La densité en haut, la pression au milieu et la vitesse radiale en bas.        
+        Test de Sedov, comparaison des profil radial en fonction des  méthodes d'injection. 
+        Densité en haut, pression au milieu et vitesse radial en bas.
+        La position et la forme du front d'onde ne dépendent pas de la méthodes d'injection utilisée.
+% 		\label{fig:sedovmethod} 
+ 		}
  		\label{fig:sedov_evol}
 \end{figure}
 
@@ -167,25 +191,25 @@ Cette méthode permet de concentrer le raffinement sur le front de l'onde choc.
 La figure \ref{fig:sedovraff} présente le motif de raffinement obtenu pour le test d'injection thermique sur une cellule.
 Tout les tests présentent un motif de raffinement similaire.
 
-\begin{figure}[htpb]
-        \includegraphics[width=.95\linewidth]{img/03/sedov/slice_th_1raf.pdf} 
-        \caption{Test de Sedov, raffinement (mettre la color map) }
- 		\label{fig:sedovraff}
-\end{figure}
+%\begin{figure}[htpb]
+%        \includegraphics[width=.95\linewidth]{img/03/sedov/slice_th_1raf.pdf} 
+%        \caption{Test de Sedov, raffinement (mettre la color map) }
+% 		\label{fig:sedovraff}
+%\end{figure}
 
 La figure \ref{fig:sedovmethod} presente les profils obtenus a un instant donné pour les différentes méthodes d'injection d'énergie et pour les différents champs.
 On observe que le front est bien situé au même endroits indépendamment de la méthode.
 %Le profil de densité est présenté en échelle logarithmique pour accentuer les difference au niveau du centre. 
 
-\begin{figure}[htpb]
-        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_den.pdf} 
-		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_pres.pdf} 
-		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_vel.pdf} 
-        \caption{Test de Sedov, comparaison des profil radial en fonction des  méthodes d'injection. 
-        Densité en haut, pression au milieu et vitesse radial en bas.
-        La position et la forme du front d'onde ne dépendent pas de la méthodes d'injection utilisée.}
- 		\label{fig:sedovmethod} 
-\end{figure}
+%\begin{figure}[htpb]
+%        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_den.pdf} 
+%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_pres.pdf} 
+%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_vel.pdf} 
+%        \caption{Test de Sedov, comparaison des profil radial en fonction des  méthodes d'injection. 
+%        Densité en haut, pression au milieu et vitesse radial en bas.
+%        La position et la forme du front d'onde ne dépendent pas de la méthodes d'injection utilisée.}
+% 		\label{fig:sedovmethod} 
+%\end{figure}
 
 
 Même si les profils radiaux moyens sont comparables, on observe des différences sur la forme de l'explosion.
@@ -196,12 +220,32 @@ Ce qui donne ce motif en forme de "+" bien particulier.
 Dans le cas de l'injection cinétique, les sont forcés a être dans des directions obliques, a 45°, par rapport a la l'axe de la grille.
 Nous avons cette fois si une figure en forme de "x".
 
+%\begin{figure}[htpb]
+%        \includegraphics[height=.3\textheight]{img/03/sedov/slice_therm1.pdf} 
+%		\includegraphics[height=.3\textheight]{img/03/sedov/slice_therm4.pdf} 
+%		\includegraphics[height=.3\textheight]{img/03/sedov/slice_kin.pdf} 
+%        \caption{Test de Sedov}
+% 		\label{fig:sedovslice}
+%\end{figure}
+
+
+
 \begin{figure}[htpb]
-        \includegraphics[height=.3\textheight]{img/03/sedov/slice_therm1.pdf} 
-		\includegraphics[height=.3\textheight]{img/03/sedov/slice_therm4.pdf} 
-		\includegraphics[height=.3\textheight]{img/03/sedov/slice_kin.pdf} 
-        \caption{Test de Sedov}
- 		\label{fig:sedovslice}
+
+	\centering
+	\subfloat[]{        \includegraphics[width=.45\linewidth]{img/03/sedov/slice_therm1.pdf}} 
+	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/sedov/slice_therm4.pdf}} \\
+
+	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/sedov/slice_kin.pdf} }
+	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/sedov/slice_th_1raf_cut.pdf}  }
+
+    \caption{Différents motif d'explosion en fonction de la méthodes d'injection.
+    Chaque figure représente une tranche d'une cellule d'épaisseur contenant le site de l'explosion.
+    (a), (b) et (c) représente le log de la densité avec une colormap quantitative.
+    A cause de la grille de calcul, il existe des axes privilégiés pour les flux, il en résulte des motif en croix et ou en losange.
+    La figure (d) représente les niveaux de raffinements, le niveau 10 est aligné sur le front d'onde.
+    }
+ 	\label{fig:sedovslice}
 \end{figure}
 
 
@@ -217,5 +261,39 @@ La conclusion de ses tests est que les différentes méthodes d'injection sont �
 
 
 le pas de temps\\
-\section{test}
-fonction de luminosité 
+\section{Tests en conditions cosmologique}
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\textwidth]{img/03/sedov/SFRmethode.pdf} 
+        \caption{SFH cosmique en fonction de la méthode d'injection.
+        Les méthodes n'impactent pas le milieu de la même manière
+        }
+ 		\label{fig:sfr_methode}
+\end{figure}
+
+La méthode d'injection cinétique a plus d'impact en condition cosmologique.
+Ceci est du a l'introduction de la physique du refroidissement.
+La méthode thermique repose sur le principe de conversion de l'énergie interne en énergie cinétique.
+La méthode thermique est connue %TODO ref
+pour subir d'importante perte d'énergie.
+La méthode cinétique outre passe cette conversion et mets directement le gaz en mouvement.
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\textwidth]{img/03/sedov/sneff_SFR.pdf} 
+        \caption{SFH cosmique en fonction de la quantité d'énergie injectée. 
+        Plus la quantité d'énergie injecté est importante, plus le taux de formation stellaire diminue.
+        }
+ 		\label{fig:sfr_methode}
+\end{figure}
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\textwidth]{img/03/sedov/SFR_sfeff.pdf} 
+        \caption{SFH cosmique en fonction de l'efficacité de formation stellaire.
+        Toutes les simulation utilise la même méthode d'injection et la même quantité d'énergie.
+		L'effet du couplage est bien présent.
+        }
+ 		\label{fig:sfr_methode}
+\end{figure}
+

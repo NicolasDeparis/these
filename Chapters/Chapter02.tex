@@ -193,10 +193,10 @@ Le changement de résolution peut avoir lieu dans les deux sens :
 
 \begin{figure}[htbp]
 \begin{center}
-\subfloat[Restriction]{\includegraphics[scale=0.35]{img/02/Restriction.png}}
-\subfloat[Prolongation]{\includegraphics[scale=0.35]{img/02/Prolongation.png}}\\
-\subfloat[Niveau L  ]{\includegraphics[scale=0.35]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
-\subfloat[Niveau L-1]{\includegraphics[scale=0.35]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
+\subfloat[Restriction]{\includegraphics[width=.45\linewidth]{img/02/Restriction.png}}
+\subfloat[Prolongation]{\includegraphics[width=.45\linewidth]{img/02/Prolongation.png}}\\
+\subfloat[Niveau L  ]{\includegraphics[width=.45\linewidth]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
+\subfloat[Niveau L+1]{\includegraphics[width=.45\linewidth]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
 \caption{Opérateurs de changement de grille. 
 Ils permettent de changer la résolution de la grille. Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.}
 \label{Opérateurs de changement de grille}
@@ -245,10 +245,10 @@ L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'
 Il en résultera une table, conservée en mémoire pendant toute l'exécution.
 Le facteur d'expansion sera alors interpoler dans cette table ne fonction de l'avancement de la simulation (cf partie calcul du pas de temps) %TODO ref
 
-\subsection{système d'unités comobiles}
-Il existe deux possibilités pour modéliser l'expansion de l'univers.
-La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, a y ajouter des élements.
-Le problème et que le coût numérique de la simulation croit entre autre avec le nombre d'éléments que l'on considère.
+\subsection{Gestion de l'expansion}
+Il existe deux possibilités pour modéliser l'expansion de l'univers a l'aide d'une grille.
+La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, a y ajouter des éléments.
+Le problème et que le coût numérique de la simulation croit, entre autre, avec le nombre d'éléments que l'on considère.
 La seconde possibilité est de faire varier la taille des éléments de calcul avec le facteur d'expansion.
 On appellera les longueurs ainsi exprimées des longueurs comobile.
 
@@ -267,8 +267,6 @@ r'=\tilde{r}r*
 \end{equation}
 ou $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
 
-
-\subsection{Système d'unités supercomobiles}
 La généralisation de ce principe a d'autre unités que la longueur est appeler système d'unités supercomobiles.
 \citep{martel_convenient_1998}
 
@@ -361,19 +359,21 @@ On convoluera ensuite ce bruit avec le spectre de puissance que l'on cherche a r
 Et on appliquera les déplacement obtenus au particules.
 
 Cette approximation n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire.
-Cette approximation du regime linéraire s'appelle l'appriximation de Zeldovitch %TODO ref
+Cette approximation du regime linéraire s'appelle l’approximation de Zeldovitch %TODO ref
+\cite{2014MNRAS.439.3630W}
+
 
 Plus l'on cherche a simuler des petites échelles, plus l'on sort vite du domaine de précision accéptable.
 C'est pourquoi il est necessaire d'avoir recourt au simulations numériques.
 
 Nous voyons ici que le spectre est limité des deux cotés.
 D'un coté l'information des grandes échelles est tronquée par la taille de la boite considéré.
-Il n'est pas possible d'avoir de l'informations sur des longeurs d'onde du spectre plus grande que cette taille limite.
+Il n'est pas possible d'avoir de l’information sur des longueurs d'onde du spectre plus grande que cette taille limite.
 De l'autre coté, les petites échelles sont tronquées par la limite de résolution.
-Le spectre est troqué au niveau de la longeur d'onde correspondant a la résolution de la grille.
+Le spectre est troqué au niveau de la longueur d'onde correspondant a la résolution de la grille.
 
-Au passage cette perte d'information sur les hautes fréquences peux etre problématique dans le cas ou la résolution est adaptative.
-Dans le cas de l'AMR par exemple il peux paretre difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
+Au passage cette perte d'information sur les hautes fréquences peux être problématique dans le cas ou la résolution est adaptative.
+Dans le cas de l'AMR par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
 
 En pratique j'ai principalement utilisé MUSIC et GRAPHIC %TODO ref.
 
@@ -677,11 +677,11 @@ Il en résulte une convergence rapide.
 On prendra garde, lors de calcul en parallèle, a utiliser un niveau minimum de telle sorte que chaque processeurs dispose au minimum d'un oct.
 Dans le cas contraire, le calcul ne donnera pas le bon résultat.
 
-\subsection{Liste chainée de particule}
-La gestion des particules dans EMMA utilise le principe de la liste chainé.
-A chaque cellule est associée  un pointeur vers une particule de tete.
+\subsection{Liste chaînée de particule}
+La gestion des particules dans EMMA utilise le principe de la liste chaînée déjà abordée pour les OCT. %TODO ref
+A chaque cellule est associée  un pointeur vers une particule de tète.
 Si ce pointeur est NULL, la cellule ne contient pas de particule.
-Les particules entrant dans cette cellule seront ajoutées a la liste chainée.
+Les particules entrant dans cette cellule seront ajoutées a la liste chaînée.
 On prendra garde a gérer cette liste au moment du raffinement et du déraffinement des cellules.
 
 
@@ -691,6 +691,11 @@ On prendra garde a gérer cette liste au moment du raffinement et du déraffinem
 Le pas de temps sera calculer de telle sorte a respecter la condition de Courant.
 Une particule ne doit pas se déplacer de plus d'une fraction de case a chaque pas de temps.
 
+
+%	    dtloc=0.1*SQRT(2.*M_PI/(3.*(curoct->cell[icell].gdata.d+1.)*aexp));
+%\begin{equation}
+%
+%\end{equation}
 
 
 

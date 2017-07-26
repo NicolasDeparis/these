@@ -33,6 +33,7 @@
                 frenchb,english,%
                 ]{scrreprt}
 
+\usepackage{subfig}
 
 
 %\includeonly{Chapters/Chapter01}
@@ -105,37 +106,62 @@
 \include{Chapters/Chapter01}
 \include{Chapters/Chapter01_reionization}
 
-\ctparttext{\begin{flushright}{\slshape    
-	Premature optimisation is the root of all evil.} \\ \medskip 
-	-- Donald Knuth
-\end{flushright}
+%\ctparttext{\begin{flushright}{\slshape    
+%	Premature optimisation is the root of all evil.} \\ \medskip 
+%	-- Donald Knuth
+%\end{flushright}
+%}
+\cleardoublepage
+\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:EMMA}.\medskip
+
+\emph{"EMMA: an adaptive mesh refinement cosmological simulation code with radiative transfert"}\medskip
+
+Dominique Aubert, Nicolas Deparis et Pierre Ocvirk
 }
-
 \part{Methodes numeriques}
-
-
 \include{Chapters/Chapter02}
 
 \cleardoublepage
+\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:feedback}.\medskip
 
-\ctparttext{You can put some informational part preamble text here. 
-Illo principalmente su nos. Non message \emph{occidental} angloromanic
-da. Debitas effortio simplificate sia se, auxiliar summarios da que,
-se avantiate publicationes via. Pan in terra summarios, capital
-interlingua se que. Al via multo esser specimen, campo responder que
-da. Le usate medical addresses pro, europa origine sanctificate nos se.}
+\emph{"Radiation and supernovae feedback during the epoch of reionization with EMMA"} \medskip
+
+Nicolas Deparis, Dominique Aubert, Pierre Ocvirk et Nicolas Gillet.
+}
 \part{Les étoiles}
-
 
 %\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
 \include{Chapters/Chapter03}
 %\include{multiToC} % <--- just debug stuff, ignore for your documents
-
 \include{Chapters/Chapter03_Halos}
 
+\cleardoublepage
+\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:c}.\medskip
+
+\emph{"Influence of reduced light speed approximation on reionization fronts speed in cosmological RHD simulation"\\}\medskip
+
+Nicolas Deparis, Dominique Aubert et Pierre Ocvirk.
+}
 \part{Les cartes de reionizations}
 \include{Chapters/Chapter04_Carte_reio}
 
+\cleardoublepage
+\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:z0}.\medskip
+
+\emph{"Connecting the reionization history of galaxies to their $z=0$ properties"}\medskip
+
+Dominique Aubert, Pierre Ocvirk et Nicolas Deparis.
+}
+\part{Reionization }
+\include{Chapters/Chapter05_z0}
+
+\cleardoublepage
+\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:visu}.\medskip
+
+\emph{"Immersive 3D visualization of astronomical data"}\medskip
+
+A. Schaaff, J. Berthier, J. Da Rocha, N. Deparis, S. Derriere, P. Gaultier, R. Houpin, J. Normand et P. Ocvirk.
+}
 \part{Visualiser les  simulations}
 \include{Chapters/Chapter04_Visualisation}
 
@@ -144,7 +170,7 @@ da. Le usate medical addresses pro, europa origine sanctificate nos se.}
 % Backmatter
 %*******************************************************
 \appendix
-\renewcommand{\thechapter}{\alph{chapter}}
+%\renewcommand{\thechapter}{\alph{chapter}}
 \cleardoublepage\include{papers/publications}
 
 %********************************************************************
