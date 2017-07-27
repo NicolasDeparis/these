@@ -7,14 +7,14 @@ Comme le gaz suit la dynamique des baryons, les galaxies sont situées dans les 
 
 
 
-\section{La detection des halos}
+\section{La détection des halos}
 
 L'objectif d'un halo finder est de detecter les surdensités dans le champs de matière noire.
 Comme nous l'avons vu plus tot, (TODO ref) le champ de matière noire utilise une représentation sous forme de particules.
 
-J'ai principalement utilisé l'algoritme Friend Of Friend pour detecter les sur densités.
+J'ai principalement utilisé l’algorithme Friend Of Friend (FOF) pour détecter les sur densités.
 
-FOF retourne une liste de position de halo, une liste permettant de lier les particules detecté aux halo.
+FOF retourne une liste de position de halo, une liste permettant de lier les particules détecté aux halo.
 
 \subsection{Le rayon de Viriel}
 Approximation par le R200:
@@ -27,6 +27,8 @@ R_{200}=\frac{3\cdot M_{FoF} }{4\pi\cdot 200 \bar{\rho} }
 Fortement non viriallisé a z=6\\
 beaucoup de dynamique et merger dans les filemments
 
+Changer la longeur de lissage ne changera pas le problème 
+
 \begin{figure}[bth]
         \includegraphics[width=.95\textwidth]{img/03/part_halo_R200.pdf} 
         \caption{La détection des halos par FOF peux être difficile au moment de la reionization car les structure ne sont pas Virialisée
@@ -35,9 +37,9 @@ beaucoup de dynamique et merger dans les filemments
 \end{figure}
 
 \begin{figure}[bth]
-        \includegraphics[width=.95\textwidth]{img/03/part_cells.pdf} 
-        \includegraphics[width=.95\textwidth]{img/03/part_cells_fine.pdf} 
-        \caption{La detection des halo par FOF peux être difficile au moment de la reionization car les structure ne sont pas Virialisée
+	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/part_cells.pdf} }
+	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/part_cells_fine.pdf} }
+        \caption{Cellule associées au halo dans le cas de l'estimation R200 vs dans le cas de la méthode fine.
         }
  		\label{fig:part_halo}
 \end{figure}
@@ -45,11 +47,11 @@ beaucoup de dynamique et merger dans les filemments
 
 
 
-\subsection{association dans le R200}
+\subsection{Association dans le R$_{200}$}
 
 On cherchera a associer les galaxies  (surdensité d'étoiles) aux halos.
 La première méthode consiste a utiliser l'approximation du R200.
-Il faudra associer, la matière noire, le gas et les étoiles compris a l'intérieur d'une sphere de rayon R200.
+Il faudra associer, la matière noire, le gaz et les étoiles compris a l'intérieur d'une sphere de rayon R200.
 
 Il sera possible d'utiliser une méthode comparable sur la grille, en utilisant les centres de cellule a la place de la position des étoiles.
 Comme les particules de matière noire  données par FoF ne represente pas le meme volume, dans un soucis de cohérence, on appliquera cette méthodes a la matière noire également.
@@ -80,7 +82,9 @@ la méthode consiste a :
 \item filtrer les cellules doublons
 \end{itemize}
 
-\section{Étude de la composition dans le R200}
+Cette méthode est évidemment bien plus longue qu'une simple recherche dans la sphere
+
+\section{Étude de la composition dans le R$_{200}$ }
 
 
 \subsection{La fonction de masse HMF}
@@ -94,9 +98,9 @@ Plus un halo est massif, plus celui ci va contenir d'étoiles.
 Connaissant, a un instant donné, les étoiles appartenant a chaque halo, il est possible de déterminer leurs ages, et donc de connaitre l'histoire de formation stellaire de chaque halo.
 Nous allons voir que la masse 
 
-\subsection{La fraction baryonnique}
+\subsection{La fraction baryonique}
 La fraction baryonique est une grandeur importante pour caractériser un halo.
-En effet, le rayonnement n'interagit qu'avec les baryons et plus un halo aura de baryon, plus le rayonnement aura de difficulte a s'en echaper.
+En effet, le rayonnement n'interagit qu'avec les baryons et plus un halo aura de baryon, plus le rayonnement aura de difficulté a s'en échapper.
 
 \begin{equation}
 f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
@@ -105,7 +109,7 @@ f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
 
 
 
-\section{Etude au R200}
+\section{Étude au R${_200}$}
 
 \subsection{Healpix}
 \label{sec:healpix}
@@ -127,7 +131,7 @@ Projection sur la grille AMR
 \subsection{Détermination des flux au $R_{200}$}
 \label{sec:healpix}
 
-Projection des vecteurs surla normale des cellules de la sphere.
+Projection des vecteurs sur la normale des cellules de la sphere.
 
 Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
 Nous avons vu que le rayonnement interagis les baryons
@@ -140,22 +144,15 @@ Ensuite, pour chaque point de la sphère Healpix, on effectuera une recherche de
 
 Nous connaissons maintenant l'ensemble des cellules au R200 de chaques halos.
 
-\subsection{la vitesse du gas au R200}
+\subsection{La vitesse du gaz au $R_{200}$}
 
 
 
-\subsection{le flux radiatif au R200}
+\subsection{Le flux radiatif au $R_{200}$}
 en utilisant cette technique sur 
 
 
-\section{Influence du feedback stellaire sur la reionization}
 
-
-
-
-
-
-
-\subsection{fraction d'echapement}
+\subsection{fraction d'échappement}
 
 %fonction de luminosité 
