@@ -1,7 +1,3 @@
-
-
-
-
 \chapter{Introduction au calcul des cartes de reionisation}
 
 
@@ -128,5 +124,22 @@ Il est possible de deriver une seconde fois la carte de temps d'ionisation pour 
         }
  		\label{fig:speedz}
 \end{figure}
+
+
+%\chapter{Influence du l'approximation de vitesse de la lumière réduite sur la propagation des fronts d'ionisation}
+\chapter{Vitesse de la lumière et vitesse des fronts d'ionisation.}
+
+J'ai utilisé l'outil développé dans la section précédente pour comparer des simulation identiques a l'exception de l'approximation de la vitesse de la lumière réduite (Reduce Speed of Light RSLA).
+
+Comme abordé dans la section sur le solveur radiatif %TODO ref
+le calcul de la radiation est couteux en terme de ressource de calcul.
+Ceci car la condition de Courant impose d'exécuter un grand nombre de pas de temps.
+L'idée de la RSLA est que la vitesse de la lumière est significativement plus rapide que la vitesse des autres processus a l'oeuvre dans la simulation.
+Partant de ce constat, meme en la réduisant d'un facteur $N$, cette vitesse devrait rester significativement supérieure, et mener aux meme résultats.
+En divisant la vitesse par un facteur $N$, on peux augmenter la taille du pas de temps par le meme facteur, et donc diminuer le nombre de pas de temps total et le cout global du solveur radiatif.
+L'objectif de cette section est d'explorer l'impact de ce facteur sur la vitesse des fronts d'ionisation.
+Nous verrons que la réionisation est un processus qui s'effectue en deux phases, et que en fonction de la RSLA, l'une ou l'autre est affectée.
+
+
 
 
