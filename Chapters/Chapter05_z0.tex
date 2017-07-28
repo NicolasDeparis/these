@@ -1,6 +1,8 @@
-\section{Introduction}
+\section{Intro}
 
-Cette partie est relativement courte par rapport aux autre car repose sur une lettre qui s'inscrit dans une stratégie de travail a long terme.
+%Lettre donc partie courte.
+
+Cette partie repose sur une lettre qui s'inscrit dans une stratégie de travail a long terme.
 Elle a pour vocation de présenter la simulation "CODA II EMMA" ainsi que les premiers résultats obtenus.
 Ces résultats utilise deux simulation pour faire le lien entre la période de réionisation et l’époque actuelle.
 Cette étude montre que les halos les plus massifs a z=0 sont réionisé plus tôt que le reste de l'Univers.
@@ -48,70 +50,23 @@ Cette dernière a été exécutée sur 32768 cœurs CPU et 4096 GPU du calculate
 Elle a pour but d'avoir une représentation complète de l'époque de réionisation.
 \end{itemize}
 
-\subsection{Merger tree}
 
 
 \subsection{projection a z=0}
 
-
 L'objectif est de créer un lien entre ces deux simulations.
 La simulation matière noire a servi a créer un arbre de fusion (merger tree) des halos, permettant de suivre les histoires de formation des halos du début de la simulation jusqu'à nos jours.
-La simulation RHD a pour objectif de réaliser une carte de réionisation (cf %TODO ref
-)
-
 
 En considérant que le couplage entre la matière noire et les baryons et faible, la comparaison entre les catalogues de halos des deux simulations pris a la même époque peux être réalisé directement.
 
 
-Deux méthodes de couplage ont été testées  :
+les 2 méthodes :
 
-\begin{itemize}
-\item  Centre de masse pris dans le merger tree.
-Pour chaque halo détecté a z=0 dans la simulation pure matière noire, on remonte son merger tree, jusqu'à z=6.
-Pour se faire, il est nécessaire que le halo ai un projeniteur déjà formé a ce redshift.
-Si le a au moins un projeniteur, on détecte le plus massif et on recherche la position de son centre de masse.
-On cherche ensuite le redshift de reionisation associé dans la carte de redshift.
-En imposant que le halo ai un projéniteur a z=6 cette méthode assure une certaine 
-
-\item moyenne du t des particules.
-Les particules possèdent chacune un identifiant unique, il est donc possible de rechercher la position d'une particule donnée a plusieurs instant.
-On prend toutes les particules d'un halo détecté a z=0. 
-on remonte a leurs positions respectives a z=6.
-a chacune de ces positions, on associe un redshift d'ionisation a partir de la carte d'ionisation de la seconde simulation.
-Ce qui nous donne accès a la distributions des redshift de ionisation des particules d'un halo.
-Nous nous intéresserons a la médianne et a l'écart entre les extremes de cette distribution.
-%le cinquième et le quatre vingt quinzième percentile de cette distribution.
-\end{itemize}
-
-
-%On a donc pour tout les halos le redshift d'ionisation de son 
+- Centre de masse pris dans le merger tree
+- moyenne du t des particules
 
 
 
 \subsection{Résultats}
 
-\subsubsection{z (M)}
-
-Les deux méthodes donnent des résultats comparables.
-Les halos les plus massifs a z=0 on un redshift d'ionisation plus élevé.
-Les halos 
-
-
-%\begin{figure}[bth]
-%        \includegraphics[width=.95\linewidth]{img/} 
-%        \caption{}
-% 		\label{fig:}
-%\end{figure}
-%
-%
-%\begin{figure}[bth]
-%        \includegraphics[width=.95\linewidth]{img/} 
-%        \caption{ }
-% 		\label{fig:}
-%\end{figure}
-
-
-\subsubsection{dépendance d'environnement }
-
-Découpage en 8 octant.
 
