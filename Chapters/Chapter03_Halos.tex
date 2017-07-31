@@ -13,88 +13,107 @@ Nous regarderons des propriétés telle la fraction de masse baryonique ou le ta
 %Quand on cherche a déterminer es propriétés des galaxies, un paramètre important est leur masse.
 %Comme le gaz suit la dynamique des baryons, les galaxies sont situées dans les surdensités de matière noire.
 
-
-
-
 \section{La détection des halos}
-LA première étape est de détecter les halos.
+La première étape est de détecter les halos.
 L'objectif d'un halo finder est de detecter les surdensités dans le champs de matière noire.
-Comme nous l'avons vu plus tot, (TODO ref) le champ de matière noire utilise une représentation sous forme de particules.
+Comme nous l'avons vu plus tot, %TODO ref
+le champ de matière noire utilise une représentation sous forme de particules.
 
-J'ai principalement utilisé l’algorithme Friend Of Friend (FOF) pour détecter les sur densités.
+J'ai principalement utilisé l’algorithme Friend Of Friend (FOF) pour détecter les sur-densités. %TODO ref
+FOF lie les particules regroupées en surdensité, en utilisant une taille de lien caractéristique.
+Il retourne ensuite une liste de groupes de particules et une liste de positions déterminées par le centre de masse des particules de chaque halos.
 
-FOF retourne une liste de position de halo, une liste permettant de lier les particules détecté aux halo.
+%FOF retourne une liste de position de halo, une liste permettant de lier les particules détecté aux halos.
+Il existe plusieurs possibilités pour ensuite déterminer l'étendue spatiale des halos.
 
 \subsection{Le rayon de Viriel}
-Approximation par le R200:
+La première possibilité pour déterminer l'étendue spatiale du halo consiste a utiliser l'approximation du $R_{200}$.
+Elle consiste à considérer une sphère aillant une densité moyenne de $200$ fois la densité moyenne de l'univers $\bar{\rho}$.
+%TODO ref
+
 \begin{equation}
-R_{200}=\frac{3\cdot M_{FoF} }{4\pi\cdot 200 \bar{\rho} }
+R_{200}= \left( \frac{3\cdot M_{FoF} }{4\pi\cdot 200 \bar{\rho}} \right)^{1/3}
 \end{equation}
 
 
-\subsection{Le problème de la forme des halos}
-Fortement non viriallisé a z=6\\
-beaucoup de dynamique et merger dans les filemments
+\subsection{Association dans le R$_{200}$}
 
-Changer la longeur de lissage ne changera pas le problème 
+%Il faut ensuite y associer les autres champs physique contenus par la grille 
+%La première méthode consiste a utiliser l'approximation du R200.
+%Il faudra associer, la matière noire, le gaz et les étoiles compris a l'intérieur d'une sphere de rayon R200.
+
+%Il faut ensuite y associer les autres champs physique contenus par la grille 
+
+%Le méthode est la suivante:
+%
+%\begin{itemize}
+%\item générer un KDtree sur les particule de matière noire / les étoiles / la grille AMR
+%\item Faire une recherche sphérique autour de la positions des halo, sur un rayon de R200
+%\item stocker les indices dans une structure
+%\end{itemize}
+
+Nous avons donc a ce stade une position et une étendue pour chaque halo.
+On cherchera ensuite a y associer les galaxies (surdensité d'étoiles).
+J'ai utilisé un KD-tree, généré sur les étoiles, pour faire des recherches sphérique de manière efficace.
+
+Nous chercherons également a obtenir des informations sur les champs physique contenus pas la grille AMR.
+Il sera possible d'utiliser un KDtree pour déterminer quelles sont les cellules qui se trouvent dans le $R_{200}$ du halo.
+IL suffi pour cela d'utiliser les centres de cellule a la place de la position des étoiles.
+%Comme les particules de matière noire  données par FoF ne represente pas le meme volume, dans un soucis de cohérence, on appliquera cette méthodes a la matière noire également.
+A ce stade nous avons donc la possibilité, pour chaque halo, de connaître n'importe qu'elle grandeurs comprissent dans son $R_{200}$.
+
+Pour les petits halos, peu résolus, la taille des cellules peu être grandes par rapport au $R_{200}$.
+Pour minimiser l'erreur commise, la grille AMR pourra être projeter sur une grille régulière de résolution arbitraire.
+Cette méthode permettra d'associer des sous parties de cellules aux halo et améliorera la precision global de l'association.
+
+\subsection{Le problème de la forme des halos}
+
+%Fortement non viriallisé a z=6\\
+%beaucoup de dynamique et merger dans les filemments
+
+L'approximation du $R_{200}$ est valide et a fait ses preuves dans le cas de halos virialisés.  %TODO ref
+Cependant, a haut redshift (z>5) les halos sont encore en formation et peuvent être fortement non virialisé.
+Il devient alors difficile pour FOF de séparer les différentes sous parties d'une même sur-densité.
+La figure \ref{fig:part_halo} illustre particulièrement bien ce problème de détection.
+
+La sur-densité dectectée par FOF est loin d'être sphérique, et l'approximation du $R_{200}$ n'est pas valide dans ce cas.
+Du fait de l'effondrement hierarchique de la matière noire, changer la longueur de lissage ne changera pas le problème et ne ferait que le reporter a d'autres échelles.
+
 
 \begin{figure}[bth]
         \includegraphics[width=.95\textwidth]{img/03/part_halo_R200.pdf} 
-        \caption{La détection des halos par FOF peux être difficile au moment de la reionization car les structure ne sont pas Virialisée
+        \caption{La détection des halos par FOF peux être difficile au moment de la réionisation car les structure peuvent ne pas être virialisée.
         }
  		\label{fig:part_halo}
 \end{figure}
+
+
+\subsection{Association "fine"}
+
+Dans le but d'améliorer ces problèmes d'identification dans les halos fortement non virialisé, j'ai développé une méthode pour associer plus précisément les halos et la grille.
+Cette méthode consiste a rechercher, pour chaque particule de matière noire, sa plus proche cellule.
+Malgré que cette recherche soit effectué de manière efficace a l'aide d'un KD tree, cette méthode est évidemment bien plus longue qu'une simple recherche dans la sphere.
+
+%\begin{itemize}
+%\item générer un KDtree sur la grille
+%\item pour chaque particule d'une halo, trouver la plus proche cellule
+%\item filtrer les cellules doublons
+%\end{itemize}
+
+La figure \ref{fig:R200_fine} présente la détection des cellule entre les deux méthodes pour le halo de la figure \ref{fig:part_halo}.
+
 
 \begin{figure}[bth]
 	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/part_cells.pdf} }
 	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/part_cells_fine.pdf} }
         \caption{Cellule associées au halo dans le cas de l'estimation R200 vs dans le cas de la méthode fine.
         }
- 		\label{fig:part_halo}
+ 		\label{fig:R200_fine}
 \end{figure}
 
+\section{Étude de la composition des halos}
 
-
-
-\subsection{Association dans le R$_{200}$}
-
-On cherchera a associer les galaxies  (surdensité d'étoiles) aux halos.
-La première méthode consiste a utiliser l'approximation du R200.
-Il faudra associer, la matière noire, le gaz et les étoiles compris a l'intérieur d'une sphere de rayon R200.
-
-Il sera possible d'utiliser une méthode comparable sur la grille, en utilisant les centres de cellule a la place de la position des étoiles.
-Comme les particules de matière noire  données par FoF ne represente pas le meme volume, dans un soucis de cohérence, on appliquera cette méthodes a la matière noire également.
-
-Le méthode est la suivante:
-
-\begin{itemize}
-\item générer un KDtree sur les particule de matière noire / les étoiles / la grille AMR
-\item Faire une recherche sphérique autour de la positions des halo, sur un rayon de R200
-\item stocker les indices dans une structure
-\end{itemize}
-
-nous avons donc la possibilité, pour chaque halo, de connaitre n'importe qu'elle grandeur comprisent dans son R200.
-
-
-Pour les petits halos, peu résolus, la taille des cellules peu être grandes par rapport au R200.
-Pour minimiser l'erreur commise, la grille AMR pourra être projeter sur une grille régulière de resolution arbitraire.
-Cette méthode permettra d'associer des sous parties de cellules aux halo et améliorera la precision global de l'association.
-
-\subsection{Association "fine"}
-Dans le but d'améliorer ces problèmes d'identification dans les halos fortement non virialisé, j'ai développer une méthode pour associer plus précisement les halos et la grille.
-
-
-la méthode consiste a :
-\begin{itemize}
-\item générer un KDtree sur la grille
-\item pour chaque particule d'une halo, trouver la plus proche cellule
-\item filtrer les cellules doublons
-\end{itemize}
-
-Cette méthode est évidemment bien plus longue qu'une simple recherche dans la sphere
-
-\section{Étude de la composition dans le R$_{200}$ }
-
+Maintenant que nous pouvons associer toutes la physique au sein de chaque halo, nous pouvons regarder quelques caractéristiques.
 
 \subsection{La fonction de masse HMF}
 
@@ -118,12 +137,34 @@ f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
 
 
 
-\section{Étude au R${_200}$}
+\section{Étude a la surface des halos}
 
-\subsection{Healpix}
+Nous cherchons ici a quantifier les flux entrants et sortant des halos en fonction de leurs masses.
+Nous présenterons la méthodologie utilisé pour la détection de ces flux, ainsi que les résultats obtenus pour les flux hydrodynamique et radiatif.
+
+
+
+
+\subsection{Détermination des flux au $R_{200}$}
 \label{sec:healpix}
 
-Healpix est un outils qui permets de répartir des points de manière uniforme sur la sphere.
+Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
+Nous avons vu que le rayonnement interagis les baryons, et nous verrons qu'il existe un liens entre la fraction baryonnique determinée plus haut %TODO ref
+et les flux radiatif.
+
+
+Nous cherchons a déterminer les flux a la surface des halos.
+Par soucis de simplicité, nous utiliserons l'approximation du $R_{200}$.
+Il faut donc discrétiser la sphère de rayon $R_{200}$.
+
+
+\subsubsection{Healpix}
+\label{sec:healpix}
+
+Cette disrcétisation de sphère sera réalisée grace a Healpix.  %TODO ref
+Healpix est un outils qui permets de répartir des points de manière uniforme sur la sphere (c.f. figure \ref{fig:HealPix}).
+L'avantage de cette méthode est que toutes les cellules ont la même pondération.
+
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/03/healpix.jpg} 
@@ -131,27 +172,25 @@ Healpix est un outils qui permets de répartir des points de manière uniforme s
  		\label{fig:HealPix}
 \end{figure}
 
-Projection sur la grille AMR
- - utilisation du KD tree
- - nearest neighbhoor
- - récupération des cellules sur la sphere
- 
-
-\subsection{Détermination des flux au $R_{200}$}
-\label{sec:healpix}
-
-Projection des vecteurs sur la normale des cellules de la sphere.
-
-Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
-Nous avons vu que le rayonnement interagis les baryons
-
-
-Pour déterminer les flux autours de chaque halo, il est nécessaire de les englober d'une sphère.
-Cette sphère serra discrétisée a l'aide de Healpix (TODO ref) un outils qui permets de répartir des points de manière uniforme sur une surface sphérique (Fig. \ref{fig:HealPix}).
+%L'association Healpix/grille sera réalisée par recherche de plus proche voisin 
+Par la suite, les halos seront discrétisé en utilisant $3072$ point Healpix.
 Une fois la sphère générée, on la centrera sur la position du halo, et on la redimensionnera de telle manière a ce qu'elle corresponde aux R200 du halo en question.
-Ensuite, pour chaque point de la sphère Healpix, on effectuera une recherche de plus proche voisin, pour déterminer avec qu'elle cellule l'associer.
+Puis, pour chaque point de la sphère Healpix, on effectuera une recherche de plus proche voisin à l'aide d'un KD tree, pour déterminer avec qu'elle cellule l'associer.
 
-Nous connaissons maintenant l'ensemble des cellules au R200 de chaques halos.
+
+Nous avons donc accès aux cellules correspondant a la surface du halo.
+%Nous connaissons maintenant l'ensemble des cellules au R200 de chaques halos.
+Nous pouvons donc travailler directement avec les grandeurs scalaires.
+Mais nous cherchons a réaliser une étude sur les flux.
+IL sera donc nécessaire de projeter les vecteurs de flux sur la normale des cellules de la sphere.
+
+
+
+
+%Pour déterminer les flux autours de chaque halo, il est nécessaire de les englober d'une sphère.
+%Cette sphère serra discrétisée a l'aide de Healpix (TODO ref) un outils qui permets de répartir des points de manière uniforme sur une surface sphérique .
+
+
 
 \subsection{La vitesse du gaz au $R_{200}$}
 
