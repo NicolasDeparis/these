@@ -146,7 +146,8 @@ RACINE pour l'oct de niveau 0. Il n'a pas de cellule mere et représente l'ensem
 FEUILLE pour les cellules qui ne sont pas raffinées. 
 
 
-\subsubsection{gestion du raffinement}
+\subsubsection{Gestion du raffinement}
+\label{sec:raffinement}
 %différentes condition de raffinement.\\
 %sur la matière noire\\
 %semi Lagrangienne\\
@@ -157,7 +158,7 @@ Il est possible de définir arbitrairement une condition de raffinement en fonct
 Par exemple, dans des tests unitaires de type sphère de Stömgren ou explosion de Sedov, on marquera les cellules qui sont soumises a un gradient d'ionisation ou de densité supérieur a un certain seuil.
 %TODO ajouter les ref des sections pour sedov et stromgren
 Dans le cas de simulations cosmologique, on utilisera généralement une condition dite semi-Lagrangienne.
-C'est a dire qu'une cellule sera marquée comme "a raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse moyenne d'une cellule de ce niveau.
+C'est a dire qu'une cellule sera marquée comme "a raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse de matière noire (ou de gaz) moyenne d'une cellule de ce niveau.
 
 
 
@@ -333,7 +334,7 @@ Et ce, dans un ordre décroissant d'importance, relativement a la quantité d'é
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Matière noire}
-
+\label{sec:solverDM}
 La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien a la représentation Lagrangienne, et donc a une simulation sous forme de particule.
 Pour la simuler, on utilisera le principe des code Ncorp., c'est a dire qu'on utilisera un champs de particules massive interagissante par gravitation.
 Ill existe différentes techniques pour suivre l'évolution d'un tel système.

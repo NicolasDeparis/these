@@ -16,20 +16,18 @@ Nous regarderons des propriétés telle la fraction de masse baryonique ou le ta
 \section{La détection des halos}
 La première étape est de détecter les halos.
 L'objectif d'un halo finder est de detecter les surdensités dans le champs de matière noire.
-Comme nous l'avons vu plus tot, %TODO ref
-le champ de matière noire utilise une représentation sous forme de particules.
+Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
 
-J'ai principalement utilisé l’algorithme Friend Of Friend (FOF) pour détecter les sur-densités. %TODO ref
-FOF lie les particules regroupées en surdensité, en utilisant une taille de lien caractéristique.
+J'ai principalement utilisé l’algorithme Friend Of Friend (FOF) pour détecter les sur-densités et plus particulièrement pFOF l'implémentation parallèle de \cite{2014A&A...564A..13R}.
+pFOF lie les particules regroupées en surdensité, en utilisant une taille de lien caractéristique.
 Il retourne ensuite une liste de groupes de particules et une liste de positions déterminées par le centre de masse des particules de chaque halos.
 
 %FOF retourne une liste de position de halo, une liste permettant de lier les particules détecté aux halos.
 Il existe plusieurs possibilités pour ensuite déterminer l'étendue spatiale des halos.
 
 \subsection{Le rayon de Viriel}
-La première possibilité pour déterminer l'étendue spatiale du halo consiste a utiliser l'approximation du $R_{200}$.
+La première possibilité pour déterminer l'étendue spatiale du halo consiste a utiliser l'approximation du $R_{200}$ \citep{1997ApJ...490..493N}.
 Elle consiste à considérer une sphère aillant une densité moyenne de $200$ fois la densité moyenne de l'univers $\bar{\rho}$.
-%TODO ref
 
 \begin{equation}
 R_{200}= \left( \frac{3\cdot M_{FoF} }{4\pi\cdot 200 \bar{\rho}} \right)^{1/3}
@@ -111,13 +109,29 @@ La figure \ref{fig:R200_fine} présente la détection des cellule entre les deux
  		\label{fig:R200_fine}
 \end{figure}
 
+
+
+
 \section{Étude de la composition des halos}
 
-Maintenant que nous pouvons associer toutes la physique au sein de chaque halo, nous pouvons regarder quelques caractéristiques.
+Maintenant que nous pouvons associer toutes la physique au sein de chaque halo, nous pouvons regarder  différentes caractéristiques en fonction du type de feedback.
 
-\subsection{La fonction de masse HMF}
+\subsection{Les fonctions de masse}
 
-\subsection{La masse d'étoiles en fonction de la masse de matière noire + Stellar mass function}
+Les fonctions de masse des galaxies 
+
+
+\begin{figure}[bth]
+		\includegraphics[width=.95\linewidth]{img/03/ghmf.pdf}
+        \caption{Fonction de masse des galaxies (GMF) et des halos (HMF) pour différents type de feedback de supernovae.
+        Le feedback n'a pas d'influence directe sur la function de masse des halos, mais a un impact mesurable sur la formation stellaire.
+        }
+ 		\label{fig:ghmf}
+\end{figure}
+
+
+
+\subsection{La masse d'étoiles en fonction de la masse du halo}
 Plus un halo est massif, plus celui ci va contenir d'étoiles.
 
 
@@ -126,7 +140,19 @@ Plus un halo est massif, plus celui ci va contenir d'étoiles.
 Connaissant, a un instant donné, les étoiles appartenant a chaque halo, il est possible de déterminer leurs ages, et donc de connaitre l'histoire de formation stellaire de chaque halo.
 Nous allons voir que la masse 
 
+
+\begin{figure}[bth]
+		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_avg.pdf}
+		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_tot.pdf}
+        \caption{SFR en fonction de la masse du halo moyenne en haut et total en bas.
+        }
+ 		\label{fig:sfr_halo}
+\end{figure}
+
+
+
 \subsection{La fraction baryonique}
+\label{sec:baryon_frac}
 La fraction baryonique est une grandeur importante pour caractériser un halo.
 En effet, le rayonnement n'interagit qu'avec les baryons et plus un halo aura de baryon, plus le rayonnement aura de difficulté a s'en échapper.
 
@@ -134,6 +160,16 @@ En effet, le rayonnement n'interagit qu'avec les baryons et plus un halo aura de
 f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
 \end{equation}
 
+
+\begin{figure}[bth]
+		\includegraphics[width=.95\linewidth]{img/03/baryon_frac.pdf}
+        \caption{Fraction baryonique en fonction de la masse du halo et des feedback.
+        }
+ 		\label{fig:bfrac}
+\end{figure}
+
+
+La figure \ref{fig:bfrac} présente les résultats obtenus.
 
 
 
@@ -149,7 +185,7 @@ Nous présenterons la méthodologie utilisé pour la détection de ces flux, ain
 \label{sec:healpix}
 
 Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
-Nous avons vu que le rayonnement interagis les baryons, et nous verrons qu'il existe un liens entre la fraction baryonnique determinée plus haut %TODO ref
+Nous avons vu que le rayonnement interagis les baryons, et nous verrons qu'il existe un liens entre la fraction baryonique déterminée plus haut (sec. \ref{sec:baryon_frac})
 et les flux radiatif.
 
 
@@ -161,7 +197,7 @@ Il faut donc discrétiser la sphère de rayon $R_{200}$.
 \subsubsection{Healpix}
 \label{sec:healpix}
 
-Cette disrcétisation de sphère sera réalisée grace a Healpix.  %TODO ref
+Cette discrétisation de sphère sera réalisée grâce a Healpix \citep{gorski_healpix:_2005}.
 Healpix est un outils qui permets de répartir des points de manière uniforme sur la sphere (c.f. figure \ref{fig:HealPix}).
 L'avantage de cette méthode est que toutes les cellules ont la même pondération.
 

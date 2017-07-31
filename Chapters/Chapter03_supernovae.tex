@@ -257,11 +257,38 @@ La conclusion de ses tests est que les différentes méthodes d'injection sont �
 %OK\\
 %mais pas en cosmo
 
-
-
-
 le pas de temps\\
-\section{Tests en conditions cosmologique}
+
+
+\section{Tests en conditions de production}
+
+Dans le but de tester ces différentes méthodes d'injections dans un contexte cosmologique j'ai réalisé une série de simulations.
+Chacune de ces simulation est strictement identique a l'exception de la méthode d'injection d'énergie.
+Les paramètres communs a toutes les simulations qui vont suivre sont les suivants:
+
+Elles représentes un volume de 8/H cMpc cube echantillonées par 256 cube particules de matière noire.
+Ce sui mène a une résoltion en masse de 3.4 10 6 M0 et une résolution spatiale de 46 ckpc sur la grille coarse.
+La grille est raffinée suivant une méthode semi lagrangienne (voir Sec. \ref{sec:raffinement}).
+
+Les condition initiales ont été générées avec MUSIC avec une cosmologie de Planck \citep{planck_collaboration_planck_2016} : 
+$\Omega_m=0.3175$, 
+$\Omega_v=0.6825$,
+$\Omega_b=0.0490$,
+$H_0=67.11$,
+$\sigma_8=0.830$. 
+Les simulations commences a redshift z=150.
+
+
+Le premier test consiste a essayer les différents feedback avec la même quantité d'énergie injectée, et a mesurer leur impact sur la SFH cosmique.
+La figure \ref{fig:sfr_methode} présente les résultats obtenus.
+La méthode d'injection cinétique a plus d'impact en condition cosmologique.
+Ceci est du a l'introduction de la physique du refroidissement.
+La méthode thermique repose sur le principe de conversion de l'énergie interne en énergie cinétique.
+La méthode thermique est connue %TODO ref
+pour subir d'importante perte d'énergie.
+La méthode cinétique outre passe cette conversion et mets directement le gaz en mouvement.
+
+%TODO parler du feedback radiatif
 
 \begin{figure}[bth]
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFRmethode.pdf} 
@@ -271,22 +298,27 @@ le pas de temps\\
  		\label{fig:sfr_methode}
 \end{figure}
 
-La méthode d'injection cinétique a plus d'impact en condition cosmologique.
-Ceci est du a l'introduction de la physique du refroidissement.
-La méthode thermique repose sur le principe de conversion de l'énergie interne en énergie cinétique.
-La méthode thermique est connue %TODO ref
-pour subir d'importante perte d'énergie.
-La méthode cinétique outre passe cette conversion et mets directement le gaz en mouvement.
-
+Nous aurons donc tendance préférer la méthode cinétique par la suite, vu que celle ci est plus efficace a nos échelles.
+Le deuxième test consiste a utilisé la méthode cinétique et a varier la quantité d'énergie injectée.
+La figure \ref{fig:sfr_egy} présente les résultats obtenus.
+On y observe que plus on injecte d'énergie, plus la SFR instantanée diminue.
+Ce qui est le comportement attendus puisque plus les supernovae sont puissante, plus les sur-densités de gaz sont "cassées", et donc plus difficile il devient de former de nouvelles étoiles.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\textwidth]{img/03/sedov/sneff_SFR.pdf} 
         \caption{SFH cosmique en fonction de la quantité d'énergie injectée. 
         Plus la quantité d'énergie injecté est importante, plus le taux de formation stellaire diminue.
         }
- 		\label{fig:sfr_methode}
+ 		\label{fig:sfr_egy}
 \end{figure}
 
+
+
+Un troisième test consiste a injecter une certaine quantité d'énergie par supernovae, et a faire varier l'efficacité de formation stellaire.
+En effet plus on forme d'étoiles et plus le feedback devient important, mais plus il y a de feedback, moins il est facile de former de nouvelles étoiles.
+Le couplage entre feedback et formation stellaire n'est pas clair et mérite d'être exploré.
+La figure \ref{fig:sfr_sfe} présente ce test pour trois efficacité de formation stellaire avec un modèle de feedback cinétique et une efficacité de supernovae de 100 \%.
+On observe un fort couplage entre feedback et formation stellaire, a tel point que pour une efficacité de formation stellaire de 10\% le feedback mène a une SFH décroissante.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFR_sfeff.pdf} 
@@ -294,6 +326,30 @@ La méthode cinétique outre passe cette conversion et mets directement le gaz e
         Toutes les simulation utilise la même méthode d'injection et la même quantité d'énergie.
 		L'effet du couplage est bien présent.
         }
- 		\label{fig:sfr_methode}
+ 		\label{fig:sfr_sfe}
 \end{figure}
+
+Une observation importante par rapport au deuxième test est qu’indépendamment de la quantité d'énergie injectée, et que même si la SFR est significativement impacté, l'histoire d'ionisation reste quasiment constante (cd fig \ref{fig:xion_sneff}).
+
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\textwidth]{img/03/sneff_xion.pdf} 
+        \caption{Malgré une SFH différente (voir figure \ref{fig:sfr_egy}), l'histoire d'ionisation est conservée en changeant la quantité d'énergie injectée.
+        }
+ 		\label{fig:xion_sneff}
+\end{figure}
+
+Cet effet est inattendu car si la quantité d'étoiles diminue, la quantité de radiation diminue d'autant, et donc la fonction d'ionisation globale devrait être impacté.
+Or ce n'est pas ce qui est observé ici.
+Dans le but d'explorer cet effet, nous allons nous concentrer dans la suite a une étude galaxies par galaxies.
+
+
+
+
+
+
+
+
+
+
 
