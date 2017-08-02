@@ -891,22 +891,33 @@ avec $cs = \gamma P/\rho$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Le solveur radiatif}
 
-Le solveur radiatif repose sur le principe de considerer la lumière comme un fluide.
-Il utilisera les meme concepts que le solveur hydrodynamique.
-Mais avec un systeme initial d'équations différentes. 
+Il existe deux grandes famille de code de transfert de rayonnement.
+\begin{itemize}
+\item La première famille utilise une représentation très physique de la lumière, et simule la radiation a l'aide de rayons se propageant dans l'espace.
+CRASH \citep{2003MNRAS.345..379M}, C$^2$RAY\citep{2006NewA...11..374M}.
+Ce type de code utilise une principe qui se rapproche physiquement de la vraie nature de la lumière.
+Chaque source lance un certain nombre de groupe de photon, qui vont se propager et interagir avec le milieu.
+Plus les sources sont nombreuses, plus le nombre de groupe de photons a suivre devient important, et plus le cout numérique l'est également.
 
-Avantage, il devient indépendant du nombre de sources.
+\item La seconde, celle utilisée dans EMMA, repose sur le principe de considérer la lumière comme un fluide. \citep{gnedin_multi-dimensional_2001, aubert_radiative_2008}.
+Ces méthodes dites méthodes aux moments utiliseront donc les même concepts que le solveur hydrodynamique, mais avec un système initial d'équations différentes. 
+EMMA utilise une approximation du moment au premier ordre, son solveur repose sur l'\textit{approximation M1} \citep{levermore_relating_1984}.
+Son principal avantage est que le coût numérique est indépendant du nombre de sources.
+\end{itemize}
+
+Ce solveur se déroule en deux temps.
+Premièrement, il faut calculer la propagation du rayonnement, on appelles cette étape \textit{le transport} des photons.
+Deuxièmement, il faut le couplage entre le rayonnement et le gaz, c'est a dire calculer l'impact \textit{chimie} du gaz.
 
 
-\subsection{Les equations}
+\subsection{Les équations du transfert du rayonnement}
 \begin{equation}
 \frac{1}{c} \frac{\partial I_\nu}{\partial t} + \vec{n}\cdot \vec{\nabla} I_\nu = \eta_\nu - \kappa_\nu I_\nu 
 \end{equation}
-Avec: $I_\nu(\vec{x},\vec{n},t)$ l'intensité spécifique
-$\eta_\nu(\vec{x},\vec{n},t)$ la source de rayonnement
-
-et le coefficient d'absorption $\kappa_\nu(\vec{x},\vec{n},t) = \sigma_\nu n_H$ 
-$\sigma_\nu$ la section efficace de photoionisation de l'H neutre et $n_H$ la densité d'H neutre
+Avec: $I_\nu(\vec{x},\vec{n},t)$ l'intensité spécifique,
+$\eta_\nu(\vec{x},\vec{n},t)$ la source de rayonnement,
+le coefficient d'absorption $\kappa_\nu(\vec{x},\vec{n},t) = \sigma_\nu n_H$, 
+$\sigma_\nu$ la section efficace de photo-ionisation de l'hydrogène neutre et $n_H$ la densité d'hydrogène neutre
 
 
 \begin{equation}
@@ -919,26 +930,21 @@ $\sigma_\nu$ la section efficace de photoionisation de l'H neutre et $n_H$ la de
 \end{cases}
 \label{eq:densite_energie}
 \end{equation}
-
-$\vec{F}_\nu$ le flux radiatif
-
+Représentant respectivement les moments d'ordre 0 et 1 de $I_\nu$ avec:
+$\vec{F}_\nu$ le flux radiatif, 
 $P_\nu $ la pression radiative
-
-et 
-
-$S_\nu = \dot{N}_\nu^* + \dot{N}_\nu^{rec}$ etant le taux d'emission de photon due aux sources $\dot{N}_\nu^*$ et a la recombinaison $ \dot{N}_\nu^{rec}$
+et $S_\nu = \dot{N}_\nu^* + \dot{N}_\nu^{rec}$ le taux d’émission de photon due aux sources $\dot{N}_\nu^*$ et a la recombinaison $ \dot{N}_\nu^{rec}$
 
 
-\subsection{approximation M1}
-La fermeture du système se fait par l’intermédiaire de l’équation
-d’état, avec le tenseur d’Eddington, D :
+\subsection{Relation de fermeture et approximation M1}
+La fermeture du système se fait par l’intermédiaire de l’équation d’état, avec $D$ le tenseur d’Eddington :
 
 \begin{equation}
  P_\nu = D N\nu ,
 \label{eq:fermeture}
 \end{equation}
 
-où D est approximé par le modèle M1 \citep{levermore1984}%,gonzalez2005} :
+où D est approximé par le modèle M1 \citep{levermore_relating_1984}%,gonzalez2005} :
 
 \begin{equation}
 \begin{cases}
@@ -963,7 +969,7 @@ La chimie fait le lien entre le solveur radiatif et le solveur hydrodynamique.
 C'est a ce moment qu'est appliquer l'énergie apportée par la radiation au gaz.
 gestion du refroidissement/ de la température/ énergie interne
 
-DEnsité de photons
+Densité de photons
 \begin{equation}
 \frac{dN}{dt} = S - c \sigma_N n_H N + \left( \alpha_A(T)  - \alpha_B(T) \right) x^2n_0^2
 \end{equation}
@@ -974,13 +980,13 @@ Flux de photons
 \frac{dF}{dt} = - c \sigma_N n_H F
 \end{equation}
 
-Etat d'onisation
+État d'ionisation
 \begin{equation}
 \frac{dn_H}{dt} =  \left( \alpha_A(T)x^2  - \alpha_B(T)x (1-x) \right) n_0^2 - c \sigma_N n_HN
 \end{equation}
 
 
-Energie interne
+Énergie interne
 \begin{equation}
 \frac{de}{dt} = c n_H \Sigma_E N - 
 \end{equation}
@@ -995,10 +1001,9 @@ en pratique sous cyclage
 \label{sec:groupedephotons}
 
 Il n'est pas possible avec la méthode au moment de considéré directement un spectre d'émission.
-Le spectre doit être discrétisé, c'est a dire qu'il devra être découpé en un certain nombre de groupe, et chaque groupe disposera des caractéristique moyenne de ssa portion du spectre.
-
+Le spectre doit être discrétisé, c'est a dire qu'il devra être découpé en un certain nombre de groupe, et chaque groupe disposera des caractéristique moyenne de sa portion du spectre.
 Le problème est que chaque groupe de photon devient un fluide a simuler. 
-L'augmentation du nombre de groupe devient vite couteux en terme de temps de calculs.
+L'augmentation du nombre de groupe devient vite coûteux en terme de temps de calculs.
 
 %Les caratéristiques des photons\\
 

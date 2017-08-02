@@ -1,6 +1,9 @@
 \chapter{Introduction au calcul des cartes de reionisation}
 
 
+Nous avons abordé dans la partie précédente une étude centré sur les halos.
+Cependant les contraintes observationnelles sur la reionization sont sur l'\ac{IGM}
+
 Les cartes de redshift de reionization sont de outils important pour l'étude de la reionization dans son ensemble.
 Ces cartes sont constituée en chaque point de l'espace, du redshift au quel chaque cellule et passer au dessus d'un certain niveau d'ionisation moyen.
 
@@ -12,10 +15,10 @@ Pour ce faire, toutes les cellules seront initialisées a une valeur impossible 
 La mise a jour ne se fera donc qu'a la condition que la fraction d'ionisation soit superieure au seuil ET que la valeur actuelle du redshift d'ionisation soit -1.
 Ainsi la valeur ne sera pas remise a jour a chaque pas de temps ou la cellule sera ionisée. 
 
-Dans le cas de la dernière ionisation, la valeur du redshift sera mise a jour, tant que la fraction d'ionization de la cellule est inferieure au seuil.
+Dans le cas de la dernière ionisation, la valeur du redshift sera mise a jour, tant que la fraction d'ionisation de la cellule est inférieure au seuil.
 Ainsi, si un cellule recombine, le valeur de son redshift associé sera de nouveau mise a jour, et la mise a jour stoppera a chaque passage au dessus du seuil.
 
-L'implementation est présenté sur le Listing \ref{lst:majz}.
+L'implémentation est présenté sur le Listing \ref{lst:majz}.
 
 \begin{lstlisting}[float=bth,language=c,frame=tb,caption={Mise a jour du redshift de reionisation},label=lst:majz]
   #define THRESH_MAP (0.5)
@@ -34,9 +37,9 @@ Si dans le cas du raffinement, l'injection directe du redshift de la cellule mè
 En effet, dans EMMA, quand une cellule est deraffinée la valeur moyenne des 8 cellules filles est injectée dans la cellule mère.
 Le problème est que les redshift ne doivent pas être moyennés.
 La simulation, et les processus physiques qui y ont lieu, sont calculé par rapport au temps.
-Nous avons vu dans la partie (TODO ref) qu'il existe un lien non trivial entre le redshift et temps (l'age de l'Univers).
+Nous avons vu dans la partie \ref{sec:friedman} qu'il existe un lien non trivial entre le redshift et temps (l'age de l'Univers).
 Pour répondre a ce problème, j'ai fait le choix de travailler non pas avec le redshift mais avec l'age de l'Univers au moment de l'ionisation de la cellule.
-Les cartes de temps seront converties en cartes de redshift en post traitement en utilisant les meme paramètres cosmologique que ceux du run.
+Les cartes de temps seront converties en cartes de redshift en post traitement en utilisant les mèmes paramètres cosmologique que ceux utilisés en interne de la simulation.
 
 TODO DECRIRE LES CARTES\\
 
@@ -73,12 +76,12 @@ V_{reio}  = \left | \frac{1}{ \vec{\nabla} t_{reio}} \right| .
 \end{equation}
 
 
-Le calcul du gradient etant problèmatique au niveau des interfaces entre niveaux de raffinement, les études présentées ici ont été réalisée en projetant la grille AMR sur le niveau coarse, de manière a n'avoir qu'un seul niveau, et a supprimer ces interfaces.
+Le calcul du gradient étant problématique au niveau des interfaces entre niveaux de raffinement, les études présentées ici ont été réalisée en projetant la grille \ac{AMR} sur le niveau coarse, de manière a n'avoir qu'un seul niveau, et a supprimer ces interfaces.
 
-L'objectif est de comparer la vitesse des fronts d'ionisationa la vitesse de la lumière.
-Or il reste un problème a regler, la carte de vitesse obtenue est en unité comobile, alors que la lumière voyage avec une vitesse physique.
-Pour contrer ce problème, le gradient devra etre pondéré par la valeur du facteur d'expansion de la cellule associée.
-On obtiendra ce facteur par intégration de la cosmologie, de la même facon que pour transformer la carte de temps en carte de redshift.
+L'objectif est de comparer la vitesse des fronts d'ionisation a la vitesse de la lumière.
+Or il reste un problème a régler, la carte de vitesse obtenue est en unité comobile, alors que la lumière voyage avec une vitesse physique.
+Pour contrer ce problème, le gradient devra être pondéré par la valeur du facteur d'expansion de la cellule associée.
+On obtiendra ce facteur par intégration de la cosmologie, de la même façon que pour transformer la carte de temps en carte de redshift.
 
 Au final, le calcul du gradient sera discrétisé de la manière suivante:
 
@@ -116,7 +119,7 @@ ceci est suivis d'un pic de vitesse puis d'une chute brutale correspondant a l'i
 
 
 \section{accélération}
-Il est possible de deriver une seconde fois la carte de temps d'ionisation pour obtenir une carte d'accélération des fronts.
+Il est possible de dériver une seconde fois la carte de temps d'ionisation pour obtenir une carte d'accélération des fronts.
 
 \begin{figure}[htpb]
         \includegraphics[width=.95\linewidth]{img/04_mapreio/map_acc_c1.pdf} 
