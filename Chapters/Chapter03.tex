@@ -13,9 +13,9 @@ Nous verrons qu'elles sont les contraintes imposées par la résolution des simu
 
 \section{Les différentes phases de la vie d'une étoile}
 
-
-définition d'une étoile
-
+Nous allons nous intéresser dan cette partie aux différentes phases de la vie d'une étoile.
+Nous allons aborder la naissance, la vie et la mort d'une étoiles de manière générale dans un premier temps.
+Et nous verrons dans un second temps l'implémentation de ces trois phases dans EMMA 
 
 \subsection{Naissance}
 
@@ -24,7 +24,7 @@ définition d'une étoile
 
 En principe une étoile se forme par effondrement gravitationnel.
 Dans un nuage, si le temps de chute libre est supérieur au temps de rection a une perturbation le milieu n'a pas le temps de résister a son effondrement et le gaz s'effondre sur lui même.
-Cette ne s’arrête que quand les réaction thermonucléaire s'enclenche et que le gaz forme une étoile.
+Cette ne s'arrête que quand les réactions thermonucléaire s'enclenche et que le gaz forme une étoile.
 
 Il y a effondrement si:
 \begin{equation}
@@ -36,9 +36,7 @@ avec:
 \begin{equation}
 t_{ff} = \frac{1}{\sqrt{G \rho}},
 \end{equation}
-
-et 
-
+et
 \begin{equation}
 t_{sound} = \frac{R}{C_s},
 \end{equation}
@@ -47,15 +45,13 @@ Ici intervient la densité, plus le milieu est dense plus il aura tendance a s'e
 D'un autre coté intervient aussi la vitesse du son $C_s$, elle même dépendante de la température $C_s \propto \sqrt{T}$.
 Plus le gaz sera chaud, plus le nuage devra être gros pour pouvoir s’effondrer.
 
-
-
 \subsection{Population III}
 
 %tres peu de ligne de refroisdissment
 %étoiles plus grosse
 % temps de vie court
 
-Or a haut redshift, au moment de l'apparition des premières étoiles, les métaux étaient trés peux disponible (cf nucléosynthèse primordiale) %TODO ref
+Or a haut redshift, au moment de l'apparition des premières étoiles, les métaux étaient très peux disponible  (voir :\ref{sec:nucleosynthese_primordiale})
 De ce fait, le gaz disposait de relativement peu de possibilité de refroidissement, et donc la température du gaz devait être élevée.
 Les étoiles primordiales devaient donc être plus grosses que les étoiles de notre voisinage (plus de 100Mo).
 Ce type d'étoiles est appelées étoiles de population III.
@@ -73,7 +69,7 @@ Du fait de leur masse, elles émettait un fort rayonnement ionisant, et avaient 
 
 
 
-\subsection{sequence principale}
+\subsection{Séquence principale}
 
 %le diagram HR
 
@@ -89,74 +85,49 @@ Elle consiste en un équilibre hydrostatique entre gravitation et réaction de f
 4p \leftrightarrow He^4 + 2e+ + 2\nu + E
 \end{equation}
 
-L'étoile va donc consommer son hydrogène pour résister a l’effondrement gravitationnel.
+L'étoile va donc consommer son hydrogène pour résister a l'effondrement gravitationnel.
 Il en résultera la formation d'hélium.
 
 Plus une étoile est grosse plus le taux de réaction doit être élevé pour lutter contre la gravité.
 Il en résulte que les grosse étoiles sont plus énergétique, et emmetent donc plus de rayonnement ionisant.
-Mais ce taux de réaction élévé mêne a une durée de vie plus courte.
+Mais ce taux de réaction élevé mène a une durée de vie plus courte.
 
 %materiaux de base est l'hydrogene\\
 %plasma donc hydrogène ionisé 
 
-\subsection{mort}
+\subsection{Mort}
 
-Arrivé a un certain taux de consommation d'hydrogène, 
-les réactions ne sont plus suffisante et l'étoile s’effondre.
-En fonction de sa masse, plusieurs scénario d’évolution sont possibles:
+Arrivé a un certain taux de consommation d'hydrogène, les réactions PP ne sont plus suffisante et l'étoile s'effondre sur elle même.
+A la fin de sa vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
+
+L'équilibre entre la gravité et la pression radiative est rompu et l'étoile s'effondre, ce qui mene a une augmentation de la pression interne.
+Cette augmentation de la pression amorce une nouvelle série de fusion nucléaire, qui va consommer des élément plus lourd que l’hydrogène.
+C'est le début du cycle CNO.
+Une fois arrivé au Fe, il devient coûteux de continuer a fusionner des éléments car Fe est le plus stable.
+
+% Géante rouge ?
+
+Il existe principalement deux types de supernovae : 
+\begin{itemize}
+\item les types I sont des étoiles binaire accrétante du compagnon -> passage au dessus de la limite.
+\item les types II, l'étoile est assez massive des le départ (M>8Mo) Les étoiles de plus de 8Mo vont exploser en supernovæ et injecter 10 51 erg d'énergie dans le milieu.
+\end{itemize}
 
 
-%Consomation du materiaux de base
 
-géante rouge\\
-naine blanche\\
-trou noir\\
-supernovae\\
-formation d'elements lourd (>Fe)
+
+
+formation d'éléments lourd (>Fe)
 enrichissement du milieu
 
+Après l'explosion de la supernova, le cœur subsiste et en fonction de sa masse, plusieurs scénario d'évolution sont possibles:
+\begin{itemize}
+\item Naine blanche (pression de dégénérescence des électrons)
+\item Étoile a neutron (pression de dégénérescence des neutrons)
+\item Trou noir (singularité)
+\end{itemize}
 
-
-
-
-
-
-A la fin de se vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
-l'équilibre radiatif est rompu et l'étoile s'éffondre.
-cette augmentation de la pression amorce une serie de fusion nucléaire d’élément plus lourd que l’hydrogène.
-cycle CNO
-Une fois arrivé au Fe, il devient coûteux de continuer a fusionner.
-FE le plus stable
-
-
-
-Géante rouge
-
-En fonction de la masse:
-naine blanche (pression de dégénérescence des électrons)
-étoile a neutron (pression de dégénérescence des neutrons)
-trou noir (singularité)
-
-
-
-Différents type de supernovae
-
-I -> binaire accrétante du compagnon -> passage au dessu de la limite.
-II -> l'étoile est assez massive au départ (M>8Mo)
-
-
-Les supernovae ont été introduite dans les simulations cosmologiques pour contre ballancer "l'overcooling probleme".
-Sans l'introduction d'énergie dans le gaz par les supernovae, le gas s'éffondre de manière importante et créer un nombre élevé d'étoiles.
-cela mène a un taux de formation stellaire trop important par rapport a ce qui est observé.
-
-
-
-les superbubbles
-A la manière de la percollation des bulles de HII, les bulles de supernovae 
-
-
-
-
+Dans tout les cas, le résidu continue a interagir gravitationnellement.
 
 \section{Population stellaire et modèle sous grille}
 
@@ -200,7 +171,7 @@ Une particule stellaire va donc devoir interagir avec tout les solveurs du code.
 
 Les étoiles naissent en groupe.
 La probabilité de former une étoile d'une certaine masse est régie par la fonction de masse initiale (IMF)
-Il existe différentes IMF, parmi les plus connues il y a :
+Il existe différentes \ac{IMF}, parmi les plus connues il y a :
 
 \begin{itemize}
 \item \cite{1955ApJ...121..161S}
@@ -209,11 +180,11 @@ Il existe différentes IMF, parmi les plus connues il y a :
 \item \cite{2003PASP..115..763C}
 \end{itemize}
 
-Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendence a être tres massive.
-De plus, certain travaux (eg \cite{2003MNRAS.344L...7C} ) sugère une IMF top heavy, c'est a dire une IMF avec une proportion d'étoile massive très importante.
-La majorité des simulations que j'ai réalisées utilisent une IMF Top-Heavy.
+Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendance a être très massive.
+De plus, certain travaux (eg \cite{2003MNRAS.344L...7C} ) suggère une \ac{IMF} top heavy, c'est a dire une \ac{IMF} avec une proportion d'étoile massive très importante.
+La majorité des simulations que j'ai réalisées utilisent une \ac{IMF} Top-Heavy.
 
-J'ai commencé mes calibrations avec une IMF de Salpeter, mais il s'est vite avéré que les sources n’émettaient pas assez de photons et que les boites n'arrivaient pas a reioniser
+J'ai commencé mes calibrations avec une \ac{IMF} de Salpeter, mais il s'est vite avéré que les sources n’émettaient pas assez de photons et que les boites n'arrivaient pas a reioniser
 %: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
 %Fonction de masse IMF Top Heavy
 
@@ -224,11 +195,11 @@ J'ai commencé mes calibrations avec une IMF de Salpeter, mais il s'est vite av�
 %paramètre d'entrée
 %sorties
 
-La modalisation de population stellaire est complexe, et il existe différent modèles complets.
+La modélisation de population stellaire est complexe, et il existe différent modèles complets.
 J'ai choisi d'utilisé Starburst99 \citep{leitherer_starburst99:_1999} mais il en existe d'autres : \cite{2003MNRAS.344.1000B} , FSPS \cite{2009ApJ...699..486C}.  
 %TODO mettre les differnts models
 
-A partir d'information caractéristique d'une population stellaire, comme sa masse, son IMF ou sa métallicité, Starburst99 retourne le spectre d'émission de cette population en fonction du temps cf (Fig \ref{fig:spectre_starburst}).
+A partir d'information caractéristique d'une population stellaire, comme sa masse, son \ac{IMF} ou sa métallicité, Starburst99 retourne le spectre d'émission de cette population en fonction du temps cf (Fig \ref{fig:spectre_starburst}).
 
 \begin{figure}[htbp]
         \includegraphics[width=.95\linewidth]{img/03/spectre_starburst.jpg} 
@@ -241,16 +212,20 @@ Un avantage de Starburst99 par rapport a d'autre modèle et qu'il retourne égal
 Nous y reviendrons dans la section dédiée. %TODO ref
 
 
+
+
+
+
 \section{La formation stellaire}
 
 \subsection{Localisation des zones de formation stellaire}
 
 Il est admis que les étoiles se forment dans les nuage moléculaires.
-Ces nuages ce trouvent eux meme dans des zones suffisement dense pour que les molecules puissent se former.
+Ces nuages ce trouvent eux même dans des zones suffisamment dense pour que les molécules puissent se former.
 En pratique dans EMMA, 
 %la physique de l'hydrogene moléculaire n'est pas prisent en compte 
 Les zones capables de former des étoiles sont localisées a l'aide d'un seuil en densité.
-Toutes les cellules en dessous d'un certain seuil ne sont pas authorisée a créer des particules stellaire.
+Toutes les cellules en dessous d'un certain seuil ne sont pas autorisée a créer des particules stellaire.
 
 %Seuil en densité \\
 \begin{equation}
