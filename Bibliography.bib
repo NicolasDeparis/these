@@ -3989,33 +3989,6 @@ archivePrefix = "arXiv",
 }
 
 
-@article{aubert_radiative_2008,
-	title = {A radiative transfer scheme for cosmological reionization based on a local {Eddington} tensor},
-	volume = {387},
-	issn = {0035-8711},
-	url = {http://adsabs.harvard.edu/abs/2008MNRAS.387..295A},
-	doi = {10.1111/j.1365-2966.2008.13223.x},
-	abstract = {A radiative transfer scheme is presented, based on a moment description
-of the equation of radiative transfer and the so-called `M1 closure
-model' for the Eddington tensor. This model features a strictly
-hyperbolic transport step for radiation: it has been implemented using
-standard Godunov-like techniques in a new code called ATON. Coupled to
-simple models of ionization chemistry and photoheating, ATON is able to
-reproduce the results of other schemes on a various set of standard
-tests such as the expansion of a HII region, the shielding of the
-radiation by dense clumps and cosmological ionization by multiple
-sources. Being simple yet robust, such a scheme is intended to be
-naturally and easily included in grid-based cosmological fluid solvers.},
-	urldate = {2017-01-26},
-	journal = {Monthly Notices of the Royal Astronomical Society},
-	author = {Aubert, Dominique and Teyssier, Romain},
-	month = jun,
-	year = {2008},
-	keywords = {methods: N-body simulations, methods: numerical, radiative transfer},
-	pages = {295--307},
-	file = {NASA/ADS Full Text PDF:/home/deparis/.zotero/zotero/ur7cam7o.default/zotero/storage/DJCFESMP/Aubert et Teyssier - 2008 - A radiative transfer scheme for cosmological reion.pdf:application/pdf}
-}
-
 @article{gnedin_multi-dimensional_2001,
 	title = {Multi-dimensional cosmological radiative transfer with a {Variable} {Eddington} {Tensor} formalism},
 	volume = {6},
@@ -4075,3 +4048,60 @@ reionization.},
 }
 
 
+
+@article{rosdahl_ramsesrt_2013,
+	title = {{RAMSES}-{RT}: radiation hydrodynamics in the cosmological context},
+	volume = {436},
+	issn = {0035-8711},
+	shorttitle = {{RAMSES}-{RT}},
+	url = {http://adsabs.harvard.edu/abs/2013MNRAS.436.2188R},
+	doi = {10.1093/mnras/stt1722},
+	abstract = {We present a new implementation of radiation hydrodynamics (RHD) in the adaptive mesh refinement (AMR) code RAMSES. The multigroup radiative transfer (RT) is performed on the AMR grid with a first-order Godunov method using the M1 closure for the Eddington tensor, and is coupled to the hydrodynamics via non-equilibrium thermochemistry of hydrogen and helium. This moment-based approach has the great advantage that the computational cost is independent of the number of radiative sources - it can even deal with continuous regions of emission such as bound-free emission from gas. As it is built directly into RAMSES, the RT takes natural advantage of the refinement and parallelization strategies already in place. Since we use an explicit advection solver for the radiative transport, the time-step is restricted by the speed of light - a severe limitation that can be alleviated using the so-called reduced speed of light approximation. We propose a rigorous framework to assess the validity of this approximation in various conditions encountered in cosmology and galaxy formation. We finally perform with our newly developed code a complete suite of RHD tests, comparing our results to other RHD codes. The tests demonstrate that our code performs very well and is ideally suited for exploring the effect of radiation on current scenarios of structure and galaxy formation.},
+	urldate = {2017-03-08},
+	journal = {Monthly Notices of the Royal Astronomical Society},
+	author = {Rosdahl, J. and Blaizot, J. and Aubert, D. and Stranex, T. and Teyssier, R.},
+	month = dec,
+	year = {2013},
+	keywords = {methods: numerical, radiative transfer},
+	pages = {2188--2231},
+	file = {NASA/ADS Full Text PDF:/home/deparis/.zotero/zotero/ur7cam7o.default/zotero/storage/TNAFWISA/Rosdahl et al. - 2013 - RAMSES-RT radiation hydrodynamics in the cosmolog.pdf:application/pdf}
+}
+
+
+@article{theuns_p^3m-sph_1998,
+	title = {P{\textasciicircum}3M-{SPH} simulations of the {Lyalpha} forest},
+	volume = {301},
+	issn = {0035-8711},
+	url = {http://adsabs.harvard.edu/abs/1998MNRAS.301..478T},
+	doi = {10.1046/j.1365-8711.1998.02040.x},
+	abstract = {We investigate the importance of several numerical artefacts such as lack of resolution on spectral properties of the Lyalpha forest as computed from cosmological hydrodynamic simulations in a standard cold dark matter universe. We use a new simulation code which is based on a combination of a hierarchical particle-particle-particle-mesh (P3M) scheme for gravity and smoothed particle hydrodynamics (SPH) for gas dynamics. We have performed extensive comparisons between this new code and a modified version of the HYDRA code of Couchman et al. and find excellent agreement. We have also rerun the TREESPH simulations of Hernquist et al. using our new codes and find very good agreement with their published results. This shows that results from hydrodynamical simulations that include cooling are reproducible with different numerical algorithms. We then use our new code to investigate several numerical effects, such as resolution, on spectral statistics deduced from Voigt profile fitting of lines by running simulations with gas particle masses of 1.4x10{\textasciicircum}8, 1.8x10{\textasciicircum}7, 2.2x10{\textasciicircum}6 and 2.1x10{\textasciicircum}5Msolar. When we increase the numerical resolution the mean effective hydrogen optical depth converges and so does the column density distribution. However, higher resolution simulations produce narrower lines and consequently the b parameter (velocity width) distribution has only marginally converged in our highest resolution run. Obtaining numerical convergence for the mean HeII transmission is demanding. When progressively smaller haloes are resolved at better resolution, a larger fraction of
+low-density gas contracts to moderate overdensities in which Heii is already optically thick, and this increases the net transmission, making it difficult to simulate Heii reliably. Our highest resolution
+simulation gives a mean effective optical depth in Heii 5 per cent lower than the simulation with eight times lower mass resolution, illustrating the degree to which the Heii optical depth has converged. In contrast, the hydrogen mean optical depth for these runs is identical. As many properties of the simulated Lyalpha forest depend on resolution, one should be careful when deducing physical parameters from a comparison of the simulated forest with the observed one. We compare predictions from our highest resolution simulation in a cold dark matter universe, with a photoionizing background inferred from quasars as computed by Haardt \& Madau, with observations. The simulation reproduces both the HI column density and b parameter distribution when we assume a high baryon density, Omega\_Bh{\textasciicircum}2{\textgreater}{\textasciitilde}0.028. In addition we need to impose a higher intergalactic medium (IGM) temperature than predicted within our basic set of assumptions. We argue that such a higher temperature could be caused by differences between the assumed and true reionization history. The simulated HI optical depth is in good agreement with observations, but the Heii optical depth is lower than observed. Fitting the Heii optical depth requires a larger jump, {\textasciitilde}14, between the photon flux at the HI and Heii edge than is present in the Haardt \& Madau spectrum.},
+	urldate = {2016-05-19},
+	journal = {Monthly Notices of the Royal Astronomical Society},
+	author = {Theuns, Tom and Leonard, Anthony and Efstathiou, George and Pearce, F. R. and Thomas, P. A.},
+	month = dec,
+	year = {1998},
+	keywords = {cosmology: theory, HYDRODYNAMICS, large-scale structure of universe, QUASARS: ABSORPTION LINES},
+	pages = {478--502},
+	file = {NASA/ADS Full Text PDF:/home/deparis/.zotero/zotero/ur7cam7o.default/zotero/storage/4SGBP9FR/Theuns et al. - 1998 - P^3M-SPH simulations of the Lyalpha forest.pdf:application/pdf}
+}
+
+@article{hui_equation_1997,
+	title = {Equation of state of the photoionized intergalactic medium},
+	volume = {292},
+	issn = {0035-8711},
+	url = {http://adsabs.harvard.edu/abs/1997MNRAS.292...27H},
+	doi = {10.1093/mnras/292.1.27},
+	abstract = {We develop an efficient method of studying the effects of reionization history on the temperature-density relation of the intergalactic medium in the low-density limit. It is applied to the study of
+photo-reionization models in which the amplitude, spectrum, and onset epoch of the ionizing flux, as well as the cosmology, are systematically varied. We find that the mean temperature-density relation at z = 2-4 is well approximated by a power-law equation of state for uniform
+reionization models. We derive analytical expressions for its evolution and exhibit its asymptotic behavior: it is found that, for sufficiently early reionization, imprints of reionization history prior to z = 10 on the temperature-density relation are washed out. While the amplitude of the radiation flux at the ionizing frequency of H I is found to have a negligible effect on the temperature-density relation as long as the universe reionizes before z = 5, the spectrum can change the overall temperature by about 20 percent, through variations in the abundances of helium species. However, the slope of the mean equation of state is found to lie within a narrow range for all reionization models we study, where reionization takes place before z = 5. We discuss the implications of these findings for the observational properties of the Ly-alpha forest.},
+	urldate = {2017-04-12},
+	journal = {Monthly Notices of the Royal Astronomical Society},
+	author = {Hui, Lam and Gnedin, Nickolay Y.},
+	month = nov,
+	year = {1997},
+	keywords = {Absorption Spectra, Equations Of State, Intergalactic Media, Photoionization, Quasars},
+	pages = {27},
+	file = {NASA/ADS Full Text PDF:/home/deparis/.zotero/zotero/ur7cam7o.default/zotero/storage/N5VNQUPV/Hui et Gnedin - 1997 - Equation of state of the photoionized intergalacti.pdf:application/pdf}
+}

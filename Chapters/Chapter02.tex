@@ -960,20 +960,30 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 \end{equation}
 
 
+\subsection{Pas de temps et vitesse de la lumière réduite}
+
+Condition de Courant radiative : $ c \leq \Delta x / \Delta t $.
+Le pas de temps est donc plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
+
+%Pour compenser cette 
+
+Les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux on des vitesses très inférieurs a celle de la lumière.
+L'idée est de diminuer la vitesse de la lumière dans le code tout en restant dans le domaine de l'approximation newtonienne.
+Cette idée est développée en détails dans la section %TODO ref
 
 
 
 \subsection{La chimie}
 
 La chimie fait le lien entre le solveur radiatif et le solveur hydrodynamique.
-C'est a ce moment qu'est appliquer l'énergie apportée par la radiation au gaz.
+C'est a ce moment qu'est appliquée l'énergie apportée par la radiation au gaz.
 gestion du refroidissement/ de la température/ énergie interne
+Contrairement au transport, la chimie est non conservative.
 
 Densité de photons
 \begin{equation}
 \frac{dN}{dt} = S - c \sigma_N n_H N + \left( \alpha_A(T)  - \alpha_B(T) \right) x^2n_0^2
 \end{equation}
-
 
 Flux de photons
 \begin{equation}
@@ -988,14 +998,20 @@ Flux de photons
 
 Énergie interne
 \begin{equation}
-\frac{de}{dt} = c n_H \Sigma_E N - 
+\frac{de}{dt} = c n_H \Sigma_E N - \Lambda_{(n_0,x,T)}
 \end{equation}
 
-$\alpha_A(T)$
 
+Les taux de réaction chimique $\alpha_A(T)$, $\alpha_B(T)$ et $\beta_(T)$ sont repris de tables de \cite{theuns_p^3m-sph_1998}.
+Les sections efficace d'interactions viennent de \cite{hui_equation_1997}.
 
-pas de temps
-en pratique sous cyclage
+Les processus chimique agissant sur des échelles de temps courtes par rapport au transport des photons, le pas de temps sera plusieurs ordres de grandeurs plus faible.
+En pratique, a chaque pas de temps radiatif, on effectuera un sous-cyclage sur le pas de temps chimique.
+Après chaque pas de temps chimique, la variation d’énergie est calculée. 
+Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'étape courante est recalculée. (cf \cite{rosdahl_ramsesrt_2013}) 
+
+Étant donné que le processus chimique sont uniquement local (ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du solveur chimique sur GPU est très intéressant du point de vue accélération.
+
 
 \subsection{Groupes de photons}
 \label{sec:groupedephotons}
@@ -1009,16 +1025,6 @@ L'augmentation du nombre de groupe devient vite coûteux en terme de temps de ca
 
 Nous aborderons la mise en place du multi longueur d'onde dans la section %TODO ref
 
-\subsection{Pas de temps et vitesse de la lumière réduite}
-le pas de temps
-Condition de Courant radiative : $ c \leq \Delta x / \Delta t $.
-Le pas de temps est donc plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
-
-%Pour compenser cette 
-
-Les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux on des vitesses très inférieurs a celle de la lumière.
-L'idée est de diminuer la vitesse de la lumière dans le code tout en restant dans le domaine de l'approximation newtonienne.
-Cette idée est développée en détails dans la section %TODO ref
 
 
 \chapter{Matériel et parallélisme}
@@ -1306,7 +1312,7 @@ plus dur a programmer, performance dépends du problème.
         \includegraphics[width=.95\linewidth]{img/02/gatherscatter.jpg} 
         \caption{Transition entre la structure en arbre de l'AMR et la structure en vecteur de calcul.
 }
- 		\label{fig:hilbert}
+ 		\label{fig:gatherscatter}
 \end{figure}
 
 Copies asynchrones
@@ -1316,12 +1322,12 @@ Copies asynchrones
 
 \subsection{Gestion des entrées sortie}
 
-Si l'on se réfère a la table \ref{tab:debits} on observe que les debits d'accès disques sont les plus faible.
+Si l'on se réfère a la table \ref{tab:debits} on observe que les débits d'accès disques sont les plus faible.
 Et étant donné la quantité de données en jeu, une bonne gestion des Entrées/Sorties peut donc permettre un gain de temps appréciable.
 
 Les entrées sorties sont des étapes relativement longues et l'écriture sur disque d'une telle quantité de données demande du temps et ralentit l'exécution de la simulation.
-De plus, ces données sont généralement calculé sur des machines distante et leurs rapatriement sur des machine locales peut également être couteux en temps.
-Il a fallu plusieurs mois pour rappatrier localement les données générées par la simulation CODA.
+De plus, ces données sont généralement calculé sur des machines distante et leurs rapatriement sur des machine locales peut également être coûteux en temps.
+Il a fallu plusieurs mois pour rapatrier localement les données générées par la simulation CODA.
 
 De plus améliorer la compacité des données permet également de gagner du temps au moment du transfert vers des machines distante, ou simplement au moment de la lecture
 
@@ -1330,7 +1336,10 @@ De plus améliorer la compacité des données permet également de gagner du tem
 %le feedback CODA\\
 %grosse quantité de données\\
 
-L'objectif durant ma thèse était de réaliser une simulation de la reionization avec un nombre de particule de matière noire (et donc une grille coarse) de $2048**3$.
+Il a fallut plusieurs mois pour rapatrier les données de CODA de TITAN aux états unis vers Strasbourg
+
+CODA II EMMA (voir partie \ref{sec:CODAEMMA})
+L'objectif durant ma thèse était de réaliser une simulation de la réionisation avec un nombre de particule de matière noire (et donc une grille coarse) de $2048**3$.
 Et si il faut calculer ces données, il faut également les stocker, cad les écrire sur disque dur.
 
 \begin{itemize}
@@ -1362,8 +1371,6 @@ L'information étaient exacte, mais le volume de données était considérable.
 De plus chaque processeur écrivait un fichier indépendant, ce qui pouvait rapidement faire exploser le nombre de fichiers.
 
 
-
-
 Le nouveau modèle que j'ai implémenté se base sur une notion de tableau de champs.
 Les processeurs écrivent conjointement dans le même fichier, le nombre total de fichiers ne dépend plus du nombre de processeurs sur lequel a tourné la simulation.
 Les écriture sont réalisées en parallèles grâce a l' utilisation de la librairie hdf5
@@ -1374,6 +1381,7 @@ Chaque fichier représente un champ physique.
 Lors d'un transfert entre machine, il est possible de ne rapatrier que les champs nécessaire, et ainsi économiser de la bande passante.
 Chaque cellule est considérée comme une particule d'une certaine taille.
 
+%TODO faire le lien avec \ref{fig:gatherscatter}
 
 %Architecture des données 
 %conception d'une organisation des données

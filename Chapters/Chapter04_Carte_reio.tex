@@ -41,7 +41,8 @@ Nous avons vu dans la partie \ref{sec:friedman} qu'il existe un lien non trivial
 Pour répondre a ce problème, j'ai fait le choix de travailler non pas avec le redshift mais avec l'age de l'Univers au moment de l'ionisation de la cellule.
 Les cartes de temps seront converties en cartes de redshift en post traitement en utilisant les mèmes paramètres cosmologique que ceux utilisés en interne de la simulation.
 
-TODO DECRIRE LES CARTES\\
+%TODO DECRIRE LES CARTES
+
 
 Motifs concentrique autour des sources\\
 
@@ -52,7 +53,7 @@ trace des fillemmment\\
 
 \begin{figure}[htpb]
         \includegraphics[width=.95\linewidth]{img/04_mapreio/map_z_c1.pdf} 
-        \caption{Example de carte de redshift de reionisation généré par EMMA.
+        \caption{Exemple de carte de redshift de réionisation généré par EMMA.
         Il s'agit d'une tranche d'une cellule d'épaisseur.
         }
  		\label{fig:zmap}
@@ -120,13 +121,37 @@ ceci est suivis d'un pic de vitesse puis d'une chute brutale correspondant a l'i
 
 \section{accélération}
 Il est possible de dériver une seconde fois la carte de temps d'ionisation pour obtenir une carte d'accélération des fronts.
+Cette accélération est une accélération spatiale.
+Il s'agit de la variation spatiale de vitesse.
+La carte obtenue est présenté sur la figure \ref{fig:accz}.
 
 \begin{figure}[htpb]
         \includegraphics[width=.95\linewidth]{img/04_mapreio/map_acc_c1.pdf} 
-        \caption{Vitesse d'ionisation en fonction du redshift
+        \caption{Carte d'accélération des fronts d'ionisation.
         }
- 		\label{fig:speedz}
+ 		\label{fig:acc}
 \end{figure}
+
+
+
+
+
+De la même manière que précédemment, il est possible de lier les cartes de vitesses et d'accélération
+\begin{figure}[htpb]
+        \includegraphics[width=.95\linewidth]{img/04_mapreio/v_gradv_c1.pdf} 
+        \caption{Accélération des fronts d'ionisation en fonction de leur vitesse.
+        Plus un front va vite, plus il accélère.
+        }
+ 		\label{fig:accspeed}
+\end{figure}
+
+
+figure \ref{fig:accspeed}
+Je n'ai pas réussi a identifier l'origine de la bosse
+On y observe que plus un front est rapide, plus il accélère.
+Ce qui conforte l'idée que la reionisation est un processus qui s'emballe.
+
+
 
 
 %\chapter{Influence du l'approximation de vitesse de la lumière réduite sur la propagation des fronts d'ionisation}
@@ -145,4 +170,35 @@ Nous verrons que la réionisation est un processus qui s'effectue en deux phases
 
 
 
+\begin{figure}[htpb]
+        \includegraphics[width=.95\linewidth]{img/04_mapreio/z_rsla.pdf} 
+        \caption{REdshift de reionisation en fonction de la RSLA
+        }
+ 		\label{fig:zrsla}
+\end{figure}
+
+Figure \ref{fig:zrsla}
+
+
+
+\begin{figure}[htpb]
+        \includegraphics[width=.95\linewidth]{img/04_mapreio/PDF_v_reio.pdf} 
+        \caption{Densité de probabilité de trouver une vitesse dans la boite.
+        }
+ 		\label{fig:pdfv}
+\end{figure}
+
+figure \ref{fig:pdfv}
+
+
+
+\begin{figure}[htpb]
+        \includegraphics[width=.95\linewidth]{img/04_mapreio/avg_reionization_speed.pdf} 
+        \caption{Vitesse moyenne des fronts en fonction du redshift.
+        }
+ 		\label{fig:vreioz}
+\end{figure}
+
+
+figure \ref{fig:vreioz}.
 
