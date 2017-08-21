@@ -15,7 +15,7 @@ Nous regarderons des propriétés telle la fraction de masse baryonique ou le ta
 
 \section{La détection des halos}
 La première étape est de détecter les halos.
-L'objectif d'un halo finder est de detecter les surdensités dans le champs de matière noire.
+L'objectif d'un halo finder est de détecter les surdensités dans le champs de matière noire.
 Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
 
 J'ai principalement utilisé l’algorithme Friend Of Friend (FOF) pour détecter les sur-densités et plus particulièrement pFOF l'implémentation parallèle de \cite{2014A&A...564A..13R}.
@@ -230,13 +230,81 @@ IL sera donc nécessaire de projeter les vecteurs de flux sur la normale des cel
 
 \subsection{La vitesse du gaz au $R_{200}$}
 
+Dans le but de mettre en évidence l'efficacité des supernovae a expulser le gaz des halos, j'ai quantifié la vitesse moyenne du gaz autour des halos au niveau de leur R200.
+Par convention, la normale a la sphère pointe vers l'extérieur.
+Donc si la vitesse moyenne est positive, le halo perd de la matière baryonnique, et sinon il en accrète.
+%TODO inserrer figure flux
+Dans le cas idéal, la matière chute sur le halo à la vitesse de chute libre.
 
+\begin{equation}
+v_{lim} = \sqrt{\frac{2 GM (r<R_{200})} {R_{200}} } 
+\end{equation}
+
+A l'inverse, si de la matière est expulsé plus rapidement que cette vitesse limite, elle n'est plus gravitationnelement liée au halo.
+
+En absence de feedback, la quasi totalité des halos se trouvent sur cette relation limite.
+De part la nature collisionnelle des baryons, cette vitesse est une limite superieure, les baryons accrétés étant ralentit par la présence des baryons initialement prsent au sein du halo.
+
+Un des résultat obtenu est qu'au moment de l'introduction de la radiation dans les simulation, il y a apparition d'une population de halo de faible masses avec des vitesses moyenne positives.
+Dans ce cas, la radiation est en mesure de générer des flux sortant, et donc de diminuer la fraction baryonnique de cette classe de masse. $M<qq 10^8$.
+Cette population ne possède pas d'étoile, ce qui suggère un effet extérieur au halo.
+La vitesse d'expulsion moyenne est significativement plus faible que la vitesse d'échappement (1 ou 2 ordres de grandeurs).
+
+De plus dans la partie accrétante du diagramme on observe que la vitesse limite est globalement plus faible (la population s'est légèrement écartée de la ligne limite).
+Également, la dispersion des valeurs moyennes est plus grande, signifiant que la radiation n'agit pas de la même façon sur tout les halos.
+
+Avec l'introduction des supernovae, il y a apparition d'une nouvelle population dans la partie haute du diagramme.
+Cette population possède des étoiles aillant déjà exposées en supernovae, ce qui suggère un effet provenant de l'intérieur.
+On observe que les halos possédant des vitesses positives peuvent avoir des masse plus élevées que dans le cas du simple feedback radiatif.
+De plus, le feedback cinétique permet de générer des outflows sur des halos plus massif que dans le cas du feedback thermique.
+Les vitesses moyennes sont proches de la vitesse d'échappement.
 
 \subsection{Le flux radiatif au $R_{200}$}
-en utilisant cette technique sur 
+%TODO inserrer figure flux
+
+Comme dans ces simulations, la lumière est décrite comme une fluide (cf Sec. ) %TODO ref
+Un travail identique a celui de la section précédente peux être réalisé sur les flux radiatif.
+
+Nous observons que la quantité de photon s'échappant des halos ne dépend pas (ou tres peux) de la méthode de feedback de supernovae.
+
+problème du coarserad %TODO ref
+Résolution plus faible que pour l'hydro.
+(résolution des CODA)
 
 
 
-\subsection{fraction d'échappement}
+
+\subsection{Fraction d'échappement}
+
+
+Par contre nous avons vu que le taux de formation stellaire, et donc le taux de production de photon, depend du type de supernovae.
+
+En comparant les flux radiatif sortant, a la production de photon interne au halo, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échapement des photons.
+
 
 %fonction de luminosité 
+
+
+\section{Conclusion}
+
+
+Nous avons vu dans cette partie différentes méthodes pour gérer les supernovae dans les simulations cosmologique.
+Nous avons vu que la formation stellaire est fortement couplée a la méthode d'injection d'énergie.
+Une injection d'énergie sous forme cinétique sera plus efficace pour réguler la formation stellaire qu'une methode thermique.
+La régulation de la formation stellaire se fait par l'intermédiaire de l'expulsion des baryons des halos, privant ainsi les zone de formation de matière première.
+Or, cette diminution de la quantité de baryon, permet a la radiation de s'échapper plus facilement.
+
+Au final, la compétition entre la diminution du taux de production de photon et l'augmentation de la fraction d'échappement semble neutre.
+
+Cette conclusion n'est valable qu'au résolution considérées dans cette étude, c'est a dire la résolution des plus grosses simulations de la réionisation comme CODA ou CROC. %TODO ref.
+
+
+
+De plus nous observons que le budget de photons est principalement gouverné par les halos de masses intermédiaire. $10^{10} M_\odot$
+
+
+
+
+
+
+
