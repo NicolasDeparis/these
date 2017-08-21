@@ -141,9 +141,12 @@ struct OCT{
 Terminologie:
 On parlera de :
 
-RACINE pour l'oct de niveau 0. Il n'a pas de cellule mere et représente l'ensemble de l'espace de la grille.
+RACINE pour l'OCT de niveau 0. Il n'a pas de cellule mère et représente l'ensemble de l'espace de la grille.
+La génération de conditions périodique (généralement utilisées en cosmologies) se fait de manière naturelle en faisant pointer tout les voisins de l'OCT racine vers lui même.
+
 
 FEUILLE pour les cellules qui ne sont pas raffinées. 
+
 
 
 \subsubsection{Gestion du raffinement}

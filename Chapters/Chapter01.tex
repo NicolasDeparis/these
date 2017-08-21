@@ -414,13 +414,12 @@ C_l = \frac{1}{2l+1} \sum_{m=-l}^l a_{lm} a_{lm}^*
 \end{equation}
 
 
-Et finalement, on obtient le spectre de puissance:
+Et finalement, on obtient le spectre de puissance représenté Fig.\,\ref{fig:cmb_power_spectrum}:
 
 \begin{equation}
 D_l = \frac{l (l+1) C_l }{2 \pi} 
 \end{equation}
 
-représenté Fig.\,\ref{fig:cmb_power_spectrum}
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/CMB_power_spectrum.png} 
@@ -430,7 +429,9 @@ représenté Fig.\,\ref{fig:cmb_power_spectrum}
 \end{figure}
 
 
-
+Ce spectre de puissance contient de l'information sur la distribution de la matière au moment de l'émission du CMB.
+Cette distribution de matière servira a la génération des conditions initiales des simulations. %TODO ref
+De plus, nous verrons dans la prochaine section que se spectre contient également de l'information sur l'abondance des différents constituants de l'Univers.
 
 
 \section{Le contenu de l'univers}
@@ -442,13 +443,20 @@ représenté Fig.\,\ref{fig:cmb_power_spectrum}
  		\label{fig:cosmoparam}
 \end{figure}
 
-Fig. \ref{fig:cosmoparam}
 
 
-Pour simuler l'univers, on a besoin de savoir ce qu'il contient. 
-A partir du spectre de puissance, on peut déterminer les différentes composantes de l'univers (paramètres cosmologique).
+Pour simuler l'univers, on a besoin de savoir ce qu'il contient.
 
-univers infini, homogène, isotrope
+%A partir de différents observables,
+%En recoupant les données obtenues a partir d'observations comme , 
+
+Le spectre de puissance du fond diffus cosmologique permet de déterminer les quantité respectives des différents constituants de l'univers.
+En recoupant ces données a d'autre observables, comme la distribution des amas de galaxies ou les supernovae lointaines, il est possible de contraindre les paramètres cosmologiques (Fig. \ref{fig:cosmoparam}).
+
+Les paramètres cosmologiques du modèle standard les plus récent ont été obtenus par \cite{planck_collaboration_planck_2016}, et sont présentés sur la figure \ref{fig:planck_parameters}.
+
+%A partir du spectre de puissance, on peut déterminer les différentes composantes de l'univers (paramètres cosmologique).
+%univers infini, homogène, isotrope
 
 
 %https://ned.ipac.caltech.edu/level5/Freedman2/Freed6.html
@@ -456,66 +464,77 @@ univers infini, homogène, isotrope
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/01/table_planck.pdf} 
-        \caption{Determination des parametres cosmologiques par la colaboration Planck.}
+        \caption{Détermination des paramètres cosmologiques par la collaboration Planck.}
  		\label{fig:planck_parameters}
 \end{figure}
 
-\citep{planck_collaboration_planck_2016}
+
+
+\subsection{Énergie noire}
+Avec une abondance relative de près de 70 \%, l'énergie noire est le principal constituant de l'Univers.
+Elle a été introduite pour expliquer l'accélération de l'expansion l'Univers.
+Elle contraint la distribution de matière sur les plus grandes échelles (de l'ordre du Giga parsec).
+
+des future missions comme EUCLIDE %TODO ref
+
 
 \subsection{Matière noire CDM}
+Le modèle $\Lambda$CDM nécessite une certaine quantité de matière pour expliquer les interactions gravitationnelles observées.
+Cette quantité de matière n'est pas en accord avec les observations réalisées sur la matière visible.
+Il a donc été nécessaire d’introduire une matière invisible appelée matière noire.
+La matière noire représente 26\% du bilan énergétique total et gouverne les échelles de l'ordre du Mega parsec.
+Elle est la principale source de gravitation et présente des propriétés non collisionnelles
 
-echelle mega parsec\\
-gouverne la gravité\\
-non collisionnelle\\
 
 
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/01/matter_power_spectrum.jpeg} 
-        \caption{Spectre de puissance de distribution de la matière a grande échelle
-        %http://adsabs.harvard.edu/cgi-bin/bib_query?2004PhRvD..69j3501T
-        }
- 		\label{fig:matter_power_spectrum}
-\end{figure}
+%echelle mega parsec\\
+%gouverne la gravité\\
+%non collisionnelle\\
+%
+%
+%\begin{figure}[bth]
+%        \includegraphics[width=.95\linewidth]{img/01/matter_power_spectrum.jpeg} 
+%        \caption{Spectre de puissance de distribution de la matière a grande échelle
+%        %http://adsabs.harvard.edu/cgi-bin/bib_query?2004PhRvD..69j3501T
+%        }
+% 		\label{fig:matter_power_spectrum}
+%\end{figure}
 
 
 
 \subsection{Baryon}
 
-echelle kilo parsec
-collisionnelle
-interagit avec la radiation
-La matière visible
+Les Baryons correspondent a la matière connue.
+Il s'agit de la matière avec laquelle la lumière interagis.
+Ils ne représente que 5\% du bilan global.
+Les baryons interagissent entre eux, ils ont une physique collisionnelle.
+Leur introduction dans les simulations a été nécessaire lorsque l'on a commencer a étudier des échelles de l'ordre du Kilo parsec.
+Elle est la matière qui constitue les étoiles.
+
+
+%echelle kilo parsec
+%collisionnelle
+%interagit avec la radiation
+%La matière visible
 
 \subsection{Radiation}
 
-quasiment notre seul source d'information sur l'univers (plus vrai depuis les ondes gravitationnelles)
-essentielle pour la reionization
-seulement E>13.6 eV
+La radiation ne représente aujourd'hui que $10^{-4}$ de l'énergie totale.
+Elle représente notre seul source d'information sur l'univers (Ce n'est plus le cas depuis la récente découverte des ondes gravitationnelles) %TODO ref
+Elle est centrale dans le processus de réionisation.
 
-\subsection{bilan}
+La radiation est capable d'impacter a la fois les petites échelles de l'ordre du parsec (en interagissant avec la formation stellaire)
+et aux grandes échelles de l'ordre de la centaine de Méga parsec en changeant les propriétés optiques de l'\ac{IGM}.
 
-plot en camembert avec les différents constituants
+%A la fois les grandes échelles et les petites.
+%Son introduction dans les simulations 
 
-
-nessecité d'introduire la matière noire
-
-\section{dark matter}
-
+%seulement E>13.6 eV
 
 
-
-
-
-
-A la suite de l'émission du fond diffus cosmologique, commence une période appelée "les ages sombres".
-L'Univers est alors composé de gaz froid soumis principalement a deux forces : la gravité et l'expansion de l'Univers.
-La compétition entre ces deux forces couplé a de très légères perturbations dans la densité de l''Univers ont menées a l'apparition des premières sur-densité qui ont permis l'apparition des premières étoiles.
-Ces étoiles ont émis du rayonnement suffisamment énergétique pour arracher les électrons du gaz environnant.
-L'Univers va alors subir un second changement d'état majeur, puisque le rayonnement des premières étoiles va de nouveau ioniser le gaz.
-C'est l'époque de la reionization.
-
-
-
+%\subsection{Bilan}
+%
+%plot en camembert avec les différents constituants
 
 %perturbation lineaires:
 %https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html

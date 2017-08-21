@@ -145,7 +145,7 @@ L'objectif est ici de faire le lien entre la physique de l'univers dans son ense
 
 \section{Organisation du manuscrit}
 \begin{itemize}
-\item Introduction au   cosmologique $\Lambda$ CDM et a la periode de reionisation.
+\item Introduction au   cosmologique $\Lambda$ CDM et a la période de réionisation.
 \item Présentation du model numérique (Papier emma)
 \item Présentation du model d'étoiles (papier SN)
 \item Présentation de l'outils des cartes de reionization (papier c)
@@ -155,12 +155,15 @@ L'objectif est ici de faire le lien entre la physique de l'univers dans son ense
 
 
 
-Je travail avec Dominique Aubert au développement d'un code nommé \emma, capable de simuler l'évolution de la matière noire, du gaz et de la radiation.
+J'ai travaillé au développement d'un code nommé \emma, capable de simuler l'évolution de la matière noire, du gaz et de la radiation a des échelles cosmologiques.
 Il a pour principal objectif l'étude de la période de réionisation.
-\emma\ est un code a maille adaptative (AMR) qui a la particularité d'être massivement parallèle et d'être accéléré par processeurs graphiques.
+\emma\ est un code a maille adaptative (AMR) qui a la particularité d'être massivement parallèle et d'être accéléré par processeurs graphiques (\ac{GPU}).
 
-Ma tache principale a été jusqu'ici d'implémenter un scénario de formation stellaire, ainsi qu'un modèle de feedback de supernovae.
-Mais d'une manière plus générale j'ai contribué à divers aspect du code, comme la gestion des paramètres utilisateur, l'écriture des données de sorties ou encore la documentation.
+La première partie de se manuscrit sera consacré a introduire le cadre théorique de cette étude et a présenter le modèle cosmologique actuel.
+Je présenterai ensuite les grande lignes de \emma, qui permettront au lecteur de mieux appréhender les résultats obtenus a partir des simulations générées a partir de ce code.
+
+Dans la première partie de ma thèse, ma tache principale a été d'implémenter un scénario de formation stellaire, ainsi qu'un modèle de feedback de supernovae.
+D'une manière plus générale j'ai contribué à divers aspect du code, comme la gestion des paramètres utilisateur, l'écriture des données de sorties ou encore la documentation.
 Je développe également une librairie d'analyse des fichiers générés par \emma.
 J'ai également contribué au développement d'un code de visualisation et d'exploration de simulations astrophysique.
 
