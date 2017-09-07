@@ -376,9 +376,19 @@ Ce qui permet d'allouer une plage d'identifiants par processeurs, et ainsi allou
 \section{le SFH cosmique}
 
 Dans le but de tester cette implémentation, le premier test réalisé consiste a comparer la SFR cosmique de l'ensemble de la boite, aux observations.
-Les points d'observations de Bouwens %TODO ref
+%Les points d'observations de Bouwens %TODO ref
+La figure \ref{fig:test_SFH} presente un test après calibration des paramètres libre.
+Le seuil de formation a été réglé a 50 $\bar{\rho}$ et l'efficacité de formation stellaire a $1\%$.
+LA SFH obtenue respecte les contraintes observationnelle.
 
-%TODO mettre figure SFR qui passe dans les cloups.
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/SFR.pdf}
+        \caption{Histoire de formation stellaire (SFH) d'une simulation de (8/h cMpc)$^3$.
+        Il est possible d'obtenir une SFH qui respecte les observations avec un modèle relativement simple.
+}
+ 		\label{fig:test_SFH}
+\end{figure}
 
 Des test plus poussés seront développés plus loin.
 
@@ -402,10 +412,10 @@ Pour répondre a cette question on utilisera un modèle de population stellaire.
 A partir des spectres obtenus avec Starburst99, nous allons ne garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus petite que 911$\AA$) 
 
 \begin{equation}
-E_{ion} = \int_{13.6eV}^{+\inf} h \nu d\nu
+E_{ion (t)} = \int_{13.6eV}^{+\inf} h \nu_{(t)} d\nu
 \end{equation}
 
-On obtient a partir de cette intégration, un profil de luminosité présenté sur la figure \ref{fig:flux}.
+On obtient a partir de cette intégration, le profil d'émmissivité ionisante présenté sur la figure \ref{fig:flux}.
 
 \begin{figure}[htbp]
         \includegraphics[width=.95\linewidth]{img/03/flux.pdf} 
@@ -454,7 +464,7 @@ Pour une IMF TopHeavy, les valeurs obtenues sont:
 	$\alpha_e$	&  $2.35.10^{-22}$ m$^2$ \\
 	$\alpha_i$	&  $1.82.10^{-22}$ m$^2$ \\
 \end{tabular}
-\caption{Propriété des photon émis par les sources.
+\caption{Propriété des photons émis par les sources.
 \label{tab_photon}}
 \end{table}
 
@@ -479,7 +489,16 @@ La table \ref{tab_photon} présente les caractéristique des photons obtenus.
 %multigroup temporel\\
 
 
-\section{le problème de la masse des étoiles}
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/xion.pdf} 
+        \caption{Histoire de la fraction d'ionization dans la simulation présentée en \ref{fig:test_SFH}.
+        Après calibration de la fraction d'échapement interne, il est possible d'obtenir une histoire d'ionisation en accord avec les observations.
+}
+ 		\label{fig:test_xion}
+\end{figure}
+
+
+\section{Le problème de la masse des étoiles}
 
 
 
@@ -488,11 +507,19 @@ La table \ref{tab_photon} présente les caractéristique des photons obtenus.
 %le rayonnement est piégé dans les cellules\\
 
 Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire avait une grande importance dans l'évolution de la fraction ionisée.
-Même si celui ci n'a pas d'impact sur la SFR globale, le taux d'ionisation moyen est fortement dépendant de ce paramètre.
+Même si celui ci n'a pas d'impact sur la SFR globale, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf Fig .\ref{fig:mstar}).
 Plus la résolution stellaire est élevée, plus la boite réionise tard.
+Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important.
 
 
-%TODO ajouter les figures cf présentation pp
+\begin{figure}[bth]
+        \includegraphics[width=.45\linewidth]{img/02/Mstar_SFH.png} 
+        \includegraphics[width=.45\linewidth]{img/02/Mstar_xion.png} 
+        \caption{
+        En changeant le parametre de résolution en masse des particules stellaire, la SFH moyenne reste constante mais l'histoire d'ionisation s'en trouve impacté.
+}
+ 		\label{fig:mstar}
+\end{figure}
 
 
 

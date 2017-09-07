@@ -1218,7 +1218,7 @@ Ainsi si l'on a par exemple  32 cellules a assigner sur 4 processeurs, la courbe
 Chacune de ces partie sera en suite assignée a un processeur.
 
 Ce type de découpage minimise les interfaces entre domaine, en s'assurant d'une proximité spatiale entre tout les points de la courbe.
-Elle minimise donc les communications entre processeurs
+Elle minimise donc les communications entre processeurs.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/courbe_Hilbert.jpeg} 
@@ -1236,6 +1236,14 @@ Elle minimise donc les communications entre processeurs
 %}
 % 		\label{fig:hilbert2}
 %\end{figure}
+
+
+Dans l'état actuel du code, la courbe est calculée au debut de la simulation, et donc  seul la grille coarse est prise en compte.
+De plus, la repartition des dommaines est statique et n'évolue pas au cour de la simulation.
+Dans le cas ou un domaine raffine plus qu'un autre, la charge de travail y est plus importante.
+Dans le futur, l'objectif serai de calculer la courbe de Hilbert sur la totalité des cellules feuilles.
+Pour ainsi pouvoir refaire le découpage et donc équilibrer la charge entre les processeurs.
+C'est ce qui s'appel le "load balancing".
 
 
 \begin{figure}[bth]
@@ -1293,8 +1301,8 @@ Et également un meilleur ratio puissance de calcul sur puissance élcetrique (f
 Cependant CPU et GPU sont indissociable est il faut les utilisé conjointement pour tirer le meilleurs partis des capacitées de calcul offerte par une machine hybride.
 
 Une code hybride est découpé en deux parties, une partie sequentielle exécuté sur le CPU et une partie paralélle exécuté sur le GPU.
-Ont tirera le maximum des capacité d'axéléraion d'un GPU avec un code qui est autement parallélisable.
-En effet si l'on peux éspérer
+On tirera le maximum des capacités d'accélération d'un GPU avec un code qui est autement parallélisable.
+%En effet si l'on peux éspérer
 
 
 
@@ -1310,7 +1318,26 @@ plus dur a programmer, performance dépends du problème.
 
 
 
-\subsection{en pratique}
+
+
+\subsection{Les communications CPU/GPU}
+
+Les CPU sont capable d'accéder rapidement aux informations en mémoire, quel que soient leurs organisation.
+Le GPU sont sensibles à la segmentation des données.
+C'est à dire que les calculs sur GPU seront performants si les données sont organisées de facons a ce que leur accés memoire consecutifs soient physiquement proches.
+Prenon l'exemple d'une différence finie. 
+Pour calculer le nouvel etat d'une cellule, il est necessaire de connaitre sont état actuel, et celui de sa voisine.
+L'accès mémoire sera plus rapide si l'information est situer sur un espace mémoire adjacent.
+
+La difficulté est que l'arbre AMR ne respecte pas cette organisation, et peut être extremement fragmenté.
+Dans EMMA le choix a été fait d'organiser les données sur le CPU, avant de les envoyer sur le GPU (opération de "gather").
+Les calculs sont effectués sur le GPU avec une structure memoire adequate, puis rapatriée et remises dans l'arbre par le CPU ((opération de "scatter") (cf Fig. \ref{fig:gatherscatter})
+
+Ce choix est motivé par le fait qu'une structure mémoire bien organisée peux amener a des gains conséquents.
+Par exemple dans ATON %TODO ref
+un code de transfert radiatif sur grille fixe, le gain GPU est de l'ordre de 80.
+
+Le pari est ici que la perte de temps genérée par les opérations de gather/scatter sera compensé par l'accélération du GPU.
 
 
 \begin{figure}[bth]
@@ -1320,7 +1347,45 @@ plus dur a programmer, performance dépends du problème.
  		\label{fig:gatherscatter}
 \end{figure}
 
-Copies asynchrones
+
+En pratique l'opération de gather consiste a rassembler toutes les informations necessaire au calcul de l'état d'une cellule.
+Par exemple pour le calcul du potentiel (cf ) %TODO ref
+les données necessaires seront: la densité locale, le potentiel local, le potentiel des 6 cellules voisines des axes principaux.
+Ces données sont rassemblées dans une structure, et stockées dans un tableau.
+Cette opération sera réalisée pour chaque cellule de la grille.
+
+On peut observer ici que les copies ont beaucoup de redondance.
+Une cellule d'interet + copie de 6 cellules, le ratio est de $1/6$.
+Le potentiel d'une cellule sera copié sept fois sur le GPU.
+
+Ces multiples copies diminue grandements les performances et en font l'une des principales limitations à l'accélération globale du code.
+Toute fois, même dans cet état, l'éxécution s'en trouve accélérée d'un facteur $\approx 3$ par rapport à la version CPU.
+
+Dans le but de réduire le nombre de copies et accélérer l'éxécution du code, j'ai modifié les opérations de gather/scatter pour diminuer la redondance des copies.
+Au lieu de traiter les cellules unes par unes, l'idée est de traiter les octs.
+Dans ce cas les cellules sont traité par 8 et les voisinages au sein d'un oct peuvent être directement traité.
+On copie donc 8 cellules d'interet et 4 cellules de bord par face du cube, soit 24 cellules.
+Le ratio passe donc a $8/24 = 1/3$ la quantité de copies redondante a donc été diminuée par 2 par rapport au cas précédent.
+
+Vu que la surface d'un cube augmente avec le caré de son coté, alors que son volume augmente avec son cube, plus grand sera la nombre de cellule d'interet, meilleur sera la ratio.
+En étendant ce principe, j'ai dévellopé une méthode qui permet de manière récursive d'envoyer une portion d'AMR contenue dans un OCT de niveau arbitraire.
+
+Cependant les résultats ne sont pas a la hauteur des espérances, et l'accélération n'est pas proportionnelle au ratio de données utiles.
+
+IL existe cependant des pistes pour améliorer ce goulot d'étranglement.
+La plus prométeuse semble être de suprimer complétement les copies en placant la totalité de l'arbre directement sur la carte.
+Dans ce cas, c'est le GPU qui devra gérer l'evolution de l'arbre. 
+%Le CPU étant tres efficace pour ce genre d'opération, il semble
+
+Une autre possibilité est de séparer la gestion de l'arbre de la physique.
+En l'état actuel, les données physique sont stockées en mémoire avec la même structure que l'arbre.
+L'idée serait de stocker dans l'arbre, des indices de cellules permettant de retrouver l'information physique dans des vecteurs plat (cf Fig. \ref{fig:gatherscatter}).
+Ainsi les vecteurs pouraient être en premanance sur le GPU, et seul l'information sur leurs position dans l'AMR devrait être transmise.
+Un grand nombre de copies seraient alors évitées.
+
+
+
+%Copies asynchrones
 
 
 
@@ -1344,7 +1409,7 @@ De plus améliorer la compacité des données permet également de gagner du tem
 Il a fallut plusieurs mois pour rapatrier les données de CODA de TITAN aux états unis vers Strasbourg
 
 CODA II EMMA (voir partie \ref{sec:CODAEMMA})
-L'objectif durant ma thèse était de réaliser une simulation de la réionisation avec un nombre de particule de matière noire (et donc une grille coarse) de $2048**3$.
+L'objectif durant ma thèse était de réaliser une simulation de la réionisation avec un nombre de particule de matière noire (et donc une grille coarse) de $2048^3$.
 Et si il faut calculer ces données, il faut également les stocker, cad les écrire sur disque dur.
 
 \begin{itemize}
