@@ -1,33 +1,43 @@
 \section{Introduction a la visualisation de données}
 
-La visualisation représente l'étape d'observation du cycle \textit{Observation -> Théorie -> Expérience} puisque c'est cette étape qui boucle la boucle.
-La visualisation représente la premiere étape dans l'observation de la simulation.
-Elle a pour but d'être une première approche qualitative qui va ensuite permettre de cibler une seconde approche plus quantitative.
-Par exemple, on peux utiliser une visualisation des la distribution du gaz dans certaine galaxie pour identifier la forme des galaxies, pour ensuite chercher a quantifier leurs forme en fonction de leurs halo hote.
-On peut facilement observer a l'oeil les motifs en forme de papillon des bulles d'ionisation.
-Ou la structure en réseau de la matière a grande échelle.
 
-Le cerveaux humain est efficace pour identifier les pattern visuels. 
-La visualisation de donnée scientifique est importante car elle permet d'obtenir énormément d'information.
+Nous avons abordé en guise d'introduction un principe de base de la méthode scientifique: le cycle \textit{Observation -> Théorie -> Expérience}.
+La visualisation représente l'étape de bouclage de ce cycle  puisque qu'elle consiste à observer le résultat de l'expérience de simulation.
+Elle est importante car elle permet d'obtenir énormément d'informations facilement et rapidement.
+Le cerveaux humain est efficace pour identifier les motifs qui se détache visuellement de leur environnement.
+Elle permet une première approche qualitative qui va ensuite permettre de cibler une seconde approche plus quantitative.
+
+%Par exemple, on peux utiliser une visualisation de la distribution de gaz autour de certaine galaxie pour identifier leur environnement, et ensuite l'étudier un fonction de la masse du halo hôte.
+%La visualisation représente la première étape dans l'observation de la simulation.
+%leurs forme, pour ensuite chercher a quantifier leurs forme en fonction de leurs halo hote.
+%On peut facilement observer a l'oeil les motifs en forme de papillon des bulles d'ionisation.
+%Ou la structure en réseau de la matière a grande échelle.
+%La visualisation de donnée scientifique 
+
 
 %pour qui?
-Il existe tout un panel de visualisations possible, et avant même de définir un but il faut définir une cible, car les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent.
+En fonction du publique auquel s'adresse la visualisation, l'information utile sera différente et l'accent sera mis sur différents aspect.
+%Il existe tout un panel de visualisations possible, et avant même de définir un but il faut définir une cible, car les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent.
 On distinguera principalement trois catégories de public:
 
 \begin{itemize}
-\item Le grand public.
-\item L'éducation.
-\item Les professionnels.
-\end{itemize}
-
-Le grand public sera touché par les images de vulgarisations que l'on peut trouver sur internet ou dans les magasine.
+\item Le grand public. 
+ 
+Il sera principalement touché par les images de vulgarisations que l'on peut trouver sur internet ou dans les magasine.
 Ce type d'image n'a pour seul but que d'être artistique et agréable a regarder.
+
+\item L'éducation.
 
 Les images a vocation éducatives se doivent aussi d'être belles, mais elles doivent également comporter une partie informatives.
 Elle doivent contenir une certaine dose d'information supplémentaire par rapport aux images purement artistique.
 
-Enfin les outils de visualisation pour les professionnel disposes généralement de tous les outils nécessaire a la quantification de l'information.
-On pourra par exemple analyser différents champs physique, sous différents angles, on pourra changer les échelles de couleurs, etc.
+\item Les professionnels.
+
+Enfin, les outils de visualisation pour les professionnels disposent généralement de tous les outils nécessaire à la quantification de l'information.
+On pourra par exemple analyser différents champs physique, sous différents angles, changer les échelles de couleurs, etc.
+
+\end{itemize}
+
 
 % L'éducation 
 %Ratio équitable entre qualification et quantification
@@ -41,11 +51,17 @@ On pourra par exemple analyser différents champs physique, sous différents ang
 %Il est nécessaire, en recherche de visualiser ce qui se passe dans les simulations pour comprendre et qualifier les phénomènes avant de pouvoir les quantifier.
 %Cette cible aura besoin d'outils pointu aillant pour principal objectif la quantification.
 
-Le principal défi de la visualisation des simulation cosmologique est la quantité de données qu'elles représente.
-Si il est possible de faire des rendu pré-calculés d'images, il est encore impossible d'avoir une représentation en temps réel.
+Le principal défi de la visualisation des simulations cosmologique est la quantité de données qu'elles représente.
+Si il est possible de faire des rendu pré-calculés d'images, il est encore impossible d'avoir une représentation en temps réel de simulation de taille moyenne.
 Pourtant il existe des techniques (dans le monde des jeux vidéo par exemple) permettant d'afficher dynamiquement des univers en 3 dimensions gigantesque de manière fluide sur des machines grand public.
 Je pense qu'il y a de quoi s'inspirer de ce coté la.
 
+Nous avons vu %TODO ref
+qu'il existe deux types de représentation de la physique dans la simulation : la grille et les particules.
+Ces deux représentation utilisent chacune des techniques de visualisation particulières.
+Dans la suite de cette partie nous allons aborder séparément ces types de représentations et survoler les contraintes et les techniques associées a chacune.
+
+Nous commencerons par aborder la visualisation de données sur grille, puis dans un second temps nous nous concentrerons sur la représentation des particules.
 %Pourquoi
 
 %Le monde de la 3D.
@@ -53,23 +69,25 @@ Je pense qu'il y a de quoi s'inspirer de ce coté la.
 %La 3D est partout.
 %Les monde des simulation peux s'en inspirer.
 
-
 \section{Projeter une grille AMR}
 
-Pour rappel, le format de donnée en sortie d'EMMA, sont sous forme de liste de cellules AMR dans un  espace en 3 dimensions..
-Une image (en nuance de gris) est composée d'une matrice a 2 dimensions de pixel réguliers en forme et en taille.
-Il est donc necéssaire d'effectuer une transformation entre ces deux représentation.
-Comme cette transformation mène a la perte d'une dimension on parlera de projection.
+EMMA travail dans un espace en trois dimensions.
+Nous cherchons ici à créer une image des résultats produit par EMMA.
+En sortie d'EMMA, l'information est sous forme de liste de cellules \ac{AMR} disposant d'une position et d'une taille, dans un espace en trois dimensions.
+Une image est composée d'une matrice à deux dimensions de pixels, généralement réguliers en forme et en taille.
+Il est donc nécessaire d'effectuer une transformation entre ces deux représentations.
+Cette transformation (on parlera de projection) mène a la perte d'une dimension, qui sera réduite a l'aide de lignes de visées.
+
 
 \subsection{Le tirage des lignes de visées}
 
-La représentation d'un environnement virtuel a 3 dimensions passe toujours par la création d'une image a deux dimensions.
+%La représentation d'un environnement virtuel a 3 dimensions passe toujours par la création d'une image a deux dimensions.
 Il existe différents types de méthodes de projections qui dépendent de la gestion des lignes de visées.
 Dans la suite de ce chapitre nous allons développer deux d'entre elles: la projection en perspective et la projection orthogonale (Fig \ref{fig:raycast_projection}).
 
 \paragraph{La projection orthogonale} correspond a l'approximation de grande distance.
-Les rayons sont parallèles entre eux et le cube de données est comme "écrasée" ou "imprimée" suivant un axe.
-Cette projection est moins naturelle, dans le sens ou elle ne correspond pas a ce que nous avons l'habitude de percevoir, mais elle a l'avantage d'être relativement simple a mettre en œuvre.
+Les rayons sont parallèles entre eux et le cube de données est comme "écrasé" ou "imprimé" suivant un axe donné.
+Cette projection est moins naturelle, dans le sens où elle ne correspond pas a ce que nous avons l'habitude de percevoir, mais elle a l'avantage d'être relativement simple a mettre en œuvre.
 
 \paragraph{La projection en perspective} correspond au cas l'observateur est ponctuel et au centre d'une sphere, les rayons lumineux lui arrive radialement.
 C'est la projection qui se rapproche le plus de la vision "naturelle".
@@ -86,13 +104,13 @@ C'est la projection qui se rapproche le plus de la vision "naturelle".
 
 \subsection{La réduction des lignes de visées}
 
-Une fois les lignes de visées obtenues, il faut les réduire une valeur unique pour effectuer la projection
-Il existe plusieurs (une infinité de) façons de réduire les lignes de visées, en voici quelques une que j'ai pu utiliser:
+Avant d'aborder le tirage des lignes de visées a proprement parlé, voyons rapidement comment les réduire une valeur unique pour effectuer la projection.
+Il existe différentes façons de réduire les lignes de visées, en voici quelques une que j'ai pu utiliser:
 
 \begin{itemize}
 \item La moyenne ou la somme ont l'avantage d'être facilement implémentable et de garder l'information sur toute la ligne de visée.
 
-\item Le maximum permet d'augmenter significativement le contraste, rendant les images visuellement plus intéressante que la somme mais en contre partie certaines projections peuvent présenter des artefacts indésirables.
+\item Le maximum permet d'augmenter significativement le contraste, rendant les images visuellement plus intéressante que la moyenne/somme mais en contre partie certaines projections peuvent présenter des artefacts indésirables.
 
 \item L'épaisseur optique permet de garder de l'information sur toute la ligne et d'être une représentation avec une signification physique car elle utilise les équations de transfert du rayonnement.
 Cependant elle est plus gourmande en ressources.
@@ -102,6 +120,9 @@ v= \sum e^{-x}
 \label{eq:epop}
 \end{equation}
 Et on pourra également être plus quantitatif en utilisant les vraies équations physique mais il faudra utiliser plusieurs champs simultanément. %TODO ref
+
+\item D'une manière générale, toute transformation permettant d'obtenir une seul valeur a partir d'une série
+
 \end{itemize}
 
 %Une des méthodes les plus facile consiste a prendre la moyenne ou la somme de la ligne, cette méthode présente l'avantage de représenter l'ensemble de la ligne.
@@ -114,40 +135,50 @@ Et on pourra également être plus quantitatif en utilisant les vraies équation
 
 \section{Projection orthogonale}
 
-J'ai développer une méthode de projection d'AMR sur une grille (2D ou 3D) de taille arbitraire en utilisant les fonctions histogramme de Numpy.
-Ces fonctions étant bien optimisées, la performance de génération de cube est généralement satisfaisante (de l'ordre de quelque secondes pour un cube de $1024^3$).
-L'idée est de considérer les cellules AMR comme des particules d'une certaine taille.
+La projection orthogonale est la plus directe car tout les rayons sont parallèles entre eux et suivent un axe de la grille.
+Comme la grille est ici composée de cellule de différentes taille, il faut prendre en compte l'étendue spatiale de chaque cellule de manière individuelles.
 
-Prenons l'exemple de la densité sur une grille non raffinée utilisant le format de sortie d'EMMA.
-Une grille 2D quelconque est représenté par le couple $x,y$ étant les positions du bord inférieur gauche des cellules, $l$ étant le niveau des cellules et $d$ étant le champs a représenter (prenons par exemple la densité).
-
-Le volume de la cellule est définis en fonction du niveau suivant:
-\begin{equation}
-dV= 2^{-3L}
-\end{equation} 
+J'ai développé une méthode de projection d'\ac{AMR} sur une grille (2D ou 3D) de taille arbitraire en utilisant des histogrammes.
+Ces fonctions étant très bien optimisées, la performance de génération des cartes/cubes est généralement satisfaisante (de l'ordre de quelque secondes pour un cube de $1024^3$ avec les fonctions histogramme de Numpy).
+L'idée est de considérer les cellules \ac{AMR} comme des particules et de les projeter niveau par niveau.
 
 
-En réalisant un histogram 2d de x et y pondéré en masse.
-Le poids de chaque cellule correspond a la masse de la cellule $w = \rho \cdot dV$:
-En considérant le centre des cellule $(x' = x+dx(L) /2)$ et en ajustant le bin de l’histogramme sur la taille de la grille on peux projeter un niveau rapidement.
+%Prenons l'exemple de la densité sur une grille non raffinée utilisant le format de sortie d'EMMA.
+%Une grille 2D quelconque est représenté par le couple $x,y$ étant les positions du bord inférieur gauche des cellules, $l$ étant le niveau des cellules et $d$ étant le champs a représenter (prenons par exemple la densité).
+
+Par exemple, prenons comme objectif de projeter la densité de gaz provenant d'une grille \ac{AMR} 3D de niveau de base $L_{0}=8$ sur une matrice 2D $256^2$.
+En réalisant un histogram 2D, sur les positions $x$ et $y$ des cellules, on obtient directement un projection suivant l'axe $z$ de la grille \ac{AMR}.
+Les valeurs de toutes les cellules aillant des positions comprise dans un intervalle (x+dx,y+dy) seront automatiquement ajoutées au pixel correspondant.
+
+Cependant, dans le cas d'une grille raffinée, il est nécessaire de prendre en compte une pondération pour les cellules raffinées.
+Le volume d'une cellule est définis en fonction de son niveau $dV= 2^{-3L}$, et son poids $w$ en fonction de la valeur $\rho$ à projeter sera $w = \rho \cdot dV$.
+L'image finale sera alors obtenue en réalisant un histogramme 2D pondéré par $w$.
+
+%En réalisant un histogram 2d de x et y pondéré en masse.
+
+%En considérant le centre des cellule $(x' = x+dx(L) /2)$ et en ajustant le bin de l’histogramme sur la taille de la grille on peux projeter un niveau rapidement.
 
 %\begin{lstlisting}[float=bth,language=python,frame=tb,caption={lprojection de l'AMR par la méthode des histogramme Numpy},label=lst:useless]
 % import numpy as np
 % h,binX,binY=np.hystogram2d(x,y,weight=dv)
 %\end{lstlisting}
-o%u h est une matrice 2d representant la projection.
+%u h est une matrice 2d representant la projection.
+%Lorsque l'AMR d'entrée contient plusieurs niveaux, il est possible de projeter les cellules niveau par niveau.
 
 
-Lorsque l'AMR d'entrée contient plusieurs niveaux, il est possible de projeter les cellules niveau par niveau.
-Par example pour une grille contenant les niveaux 8 et 9, on projettera d'abord toutes les cellules de niveau 8 pour obtenir une matrice $256x256$.
+Ceci n'est valable que dans le cas d'une projection sur le niveau de base de la grille \ac{AMR}.
+Cependant il est possible de projeter la grille a une résolution supérieure.
+Prenons par example pour une grille contenant de niveau $L_{0}=8$ raffinée une fois.
+Pour obtenir une image $512^2$, on projettera d'abord toutes les cellules de niveau 8 (et seulement ces cellules) pour obtenir une matrice $256x256$.
 On agrandira cette matrice avec des opérateurs de changement de grille (cf Section \ref{Opérateurs de changement de grilles}).
 %La méthode la plus naturelle consiste utiliser une projection directe.
-Nous obtenons alors une première grille de taille $512x512$.
-On projettera ensuite  de la même manière les cellules du niveau $9$ pour obtenir une seconde matrice de taille $512x512$.
-En prenant la moyenne des deux grille obtenues ont obtient finalement la projection sur le niveau $9$.
-On pourra utiliser ce principe de manière récursive jusqu'à avoir projeter tout les niveaux.
+Nous obtenons alors une première grille de taille $512x512$ présentant des trous aux emplacements des endroits raffinés.
+On projettera ensuite de la même manière les cellules du niveau $L=9$ pour obtenir une seconde matrice de taille $512x512$.
+Cette seconde matrice sera finalement utilisée pour combler les trous de la première.
+%En prenant la moyenne des deux grille obtenues ont obtient finalement la projection sur le niveau $L=9$.
+%On pourra utiliser ce principe de manière récursive jusqu'à avoir projeter tout les niveaux.
 
-Dans le cas ou le niveau de projection ne correspond pas au niveau maximum de l'AMR, il suffira de modifier la pondération des niveau supérieur au niveau de projection en utilisant:
+Dans le cas ou le niveau de projection ne correspond pas au niveau maximum de l'AMR, il suffira de modifier la pondération des niveau supérieurs au niveau de projection en utilisant:
 \begin{equation}
 w = d \cdot \left( \frac{1}{2^{(L-Lmax)} }\right)^3
 \end{equation}
@@ -155,8 +186,13 @@ Ainsi toute les cellules se trouvant sur des niveaux supérieur au niveaux de pr
 
 Le principal inconvenant de la méthode des histogrammes est qu'il n'est possible de réaliser que des projection utilisant la moyenne.
 Or on voudra dans certain cas considérer d'autres réduction de ligne de visée.
-Pour compenser cette méthode on réalisera une projection 3D de la même manière que précédemment mais en utilisant de histogrammes a 3 dimensions.
-La taille de l'histogramme augmentant en $2^{3L}$ les projections 3D seront généralement limité a $1024^3$ pour des questions de mémoire RAM. 
+Dans le cas de la création d'une carte 2D de maximum par exemple, il est nécessaire de générer un cube avant de réaliser la projection.
+L'avantage est que cette méthode est aisément transposable a trois dimensions en utilisant des histogrammes 3D.
+
+
+%Pour compenser ce problème on réalisera une projection 3D de la même manière que précédemment mais en utilisant de histogrammes a 3 dimensions.
+%Il sera ainsi possible de réduire le cube obtenu de  
+%La taille de l'histogramme augmentant en $2^{3L}$ les projections 3D seront généralement limité a $1024^3$ pour des questions de mémoire RAM. 
 
 
 J'ai utilisée cette méthode pour projeter quelques champs de données de la simulation CODAII-EMMA.
