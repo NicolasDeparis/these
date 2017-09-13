@@ -178,9 +178,9 @@ Cette seconde matrice sera finalement utilisée pour combler les trous de la pre
 %En prenant la moyenne des deux grille obtenues ont obtient finalement la projection sur le niveau $L=9$.
 %On pourra utiliser ce principe de manière récursive jusqu'à avoir projeter tout les niveaux.
 
-Dans le cas ou le niveau de projection ne correspond pas au niveau maximum de l'AMR, il suffira de modifier la pondération des niveau supérieurs au niveau de projection en utilisant:
+Dans le cas ou le niveau de projection ne correspond pas au niveau maximum de l'\ac{AMR}, il suffira de modifier la pondération des niveau supérieurs au niveau de projection en utilisant:
 \begin{equation}
-w = d \cdot \left( \frac{1}{2^{(L-Lmax)} }\right)^3
+w = d \cdot \left( 2^{Lmax-L} \right)^3
 \end{equation}
 Ainsi toute les cellules se trouvant sur des niveaux supérieur au niveaux de projection seront automatiquement prisent en compte.
 
@@ -196,38 +196,47 @@ L'avantage est que cette méthode est aisément transposable a trois dimensions 
 
 
 J'ai utilisée cette méthode pour projeter quelques champs de données de la simulation CODAII-EMMA.
-J'ai généré des images de $16384^2$ pixels.
-La quantité de données a gérée étant colossale, j'ai découpé le problème en tranche sur lesquelles j'ai effectué une projection par maximum.
-J'ai ensuite réalisé la moyenne de ses tranches pour générer l'image finale.
+Un exemple d'image réalisée est présenté sur la figure \ref{fig:ortho}.
+Pour réaliser cette image j'ai projeté une tranche de 8/h cMpc d'épaisseur sur le niveau de base.
+Cette projection a été effectuée trois fois, pour la température, la densité et l'état d'ionisation du gaz.
+L'image finale est une composition \ac{RGB} de ces trois champs.
 
-Pour afficher l'image en ligne de manière fluide j'ai utilisé Openseadragon %TODO ref
-un logiciel permettant d générer des tuiles d'images et de les charger dynamiquement.
-Ces images sont disponibles en lignes a l'adresse %TODO ref
+J'ai également généré des images de $16384^2$ pixels (256 Megapixel), en découpant le cube en tranche sur lesquelles j'ai effectué une projection par moyenne.
+J'ai ensuite réalisé un maximum sur les tranches obtenues pour générer l'image finale.
+
+%La quantité de données a gérée étant importante,
+
+%Pour afficher l'image en ligne de manière fluide j'ai utilisé Openseadragon %TODO ref
+%un logiciel permettant d générer des tuiles d'images et de les charger dynamiquement.
+%Ces images sont disponibles en lignes a l'adresse %TODO ref
 
 \begin{figure}[bth]
         \includegraphics[width=.95\textwidth]{img/04/rgb-compose.jpeg} 
-        \caption{Projection orthogonale de la simulation CODAII- EMMA en 2048$^2$.
-        La projection corespond a la moyenne sur une tranche de 8/h Mpc d'épaisseur. 
+        \caption{Projection orthogonale de la simulation CODAII- EMMA sur une matrice $2048^2$.
+        La projection correspond à la moyenne sur une tranche de 8/h Mpc d'épaisseur. 
         La composition RGB est réalisée avec dans l'ordre la température, la densité de gaz et la densité de gaz ionisé.
 		Les vaste zones rouges correspondent aux vides qui ont reçut du rayonnement plus tard et n'ont pas encore eu le temps de refroidir par détente adiabatique.  
         }
  		\label{fig:ortho}
 \end{figure}
 
+
+\clearpage
 \section{Projection en perspective}
 %opengl
 %blender
 
-Dans ce cas, il n'existe plus de façon directe de récupérer les lignes de visée, il est nécessaire d'avoir recours au lancé de rayon.
-Cette technique, appelée raycasting, permet de récupérer toute les cellules interceptée pas un rayon donné.
-Il existe différentes techniques de raycasting, j'ai pu en explorer plusieurs:
+Dans le cas de la projection en perspective, les lignes de visées ne sont plus parralèles, et il n'existe plus de façon directe de les récupérer.
+Il devient nécessaire d'avoir recours au lancé de rayon.
+Cette technique, appelée raycasting, permet de récupérer toute les cellules interceptée pas un segment de droite donné.
+%Il existe différentes techniques de raycasting, j'ai pu en explorer plusieurs:
 
 \subsection{Raycasting}
 \subsubsection{L'algorithme de bressenham}
 L'algorithme de Bressenham est une technique optimisée de raycasting.
 Il consiste a manipuler des indice de cellules pour déterminer quelles cellules intercepte un segment arbitraire.
-Cette technique est très rapide mais ne fonctionne cependant que sur grille régulière.
-Il est donc nécessaire de projeter la grille a la résolution désirée avant de tirer les rayons.
+Cette technique est rapide mais ne fonctionne cependant que sur grille régulière.
+Il est donc nécessaire de projeter la grille à la résolution désirée avant de tirer les rayons.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/04/Bresenham_line.png} 
@@ -237,13 +246,12 @@ Il est donc nécessaire de projeter la grille a la résolution désirée avant d
 
 \subsubsection{La méthodes KD-tree}
 
-J'ai mis en place une autre technique dans le but d'explorer directement l'AMR.
-De la mème manière que la technique de calcul des flux (TODO ref) cette technique repose sur l'utilisation d'un arbre pour déterminer les cellule par lesquelles passent le rayon.
-Il s'agit de tracer une ligne dans l'espace et de la discrétiser.
-Pour chaque vertex de cette ligne on utilisera le KD-tree pour déterminer qu'elle cellule AMR est la plus proche de ce vertex.
+J'ai mis en place une autre technique dans le but d'explorer directement l'\ac{AMR} et éviter la projection sur grille régulière.
+De la même manière que la technique de calcul des flux (voir partie \ref{sec:healpix}) cette technique repose sur l'utilisation d'un arbre pour déterminer les cellules par lesquelles passent le rayon.
+La première étape consiste à tracer une ligne de vidée dans l'espace et de la discrétiser.
+Pour chaque vertex de cette ligne on utilisera le KD-tree pour déterminer qu'elle cellule \ac{AMR} est la plus proche de ce vertex.
 Enfin on associera la valeur de cette cellule au vertex en question.
-
-Cette technique a l'avantage d'économiser le temps de projection de l'AMR sur une grille régulière
+Cette technique nécessite la génération de l'arbre sur la grille mais a l'avantage d'économiser le temps de projection de l'\ac{AMR} sur une grille régulière.
 
 
 \subsection{Application}
@@ -254,32 +262,32 @@ Cette technique a l'avantage d'économiser le temps de projection de l'AMR sur u
 \begin{figure}[bth]
         \includegraphics[height=.95\textheight]{img/04/equi.png} 
         \caption{Projection equirectangle d'une cube de densité.
-        Ce type d'image représente une vue de 360° par 180° (d'ou un ration d'aspec de 2:1) ici prise depuis le centre de la simulation.}
+        Ce type d'image représente une vue de $360°$ par $180°$ (d'ou un ratio d'aspect de $2:1$) ici prise depuis le centre de la simulation.}
  		\label{fig:equirectangle}
 \end{figure}
 
 Indépendamment de la méthode de lancé de rayon, il est nécessaire de définir la caméra.
-C'est a dire qu'il faut localiser le point de départ (la position de la caméra) et les points d'arrivés (Field Of View FOV et profondeur de champs) des rayons.
-Pour l'exemple présenté sur la figure \ref{fig:equirectangle} j'ai positionné la caméra au centre d'un cube de densité de gaz $P_i = (0.5,0.5,0.5)$.
+C'est a dire qu'il faut localiser le point de départ (la position de la caméra) et les points d'arrivés (\ac{FOV} et profondeur de champs) des rayons.
+Pour l'exemple présenté sur la figure \ref{fig:equirectangle}, la caméra est positionnée au centre d'un cube de densité de gaz $P_i = (0.5,0.5,0.5)$.
 J'ai ensuite défini une caméra sphérique avec HealPix (see Sec. \ref{sec:healpix}) pour lancer les rayons dans la sphère inscrite au cube.
-La projection a utilisée ici $786432$ rayons et chaque rayon à utilisé la réduction de l'eq \ref{eq:epop}.
+La projection a utilisée ici $786432$ rayons et chaque rayon à utilisé la réduction de l'équation \ref{eq:epop}.
 
 Il est ensuite nécessaire de projeter la sphère sur une surface plane.
 J'ai utilisé la projection equirectangle qui est la projection la plus utilisée en photographie et vidéo sphérique.
-Elle présente un ratio d'aspect de 2:1 correspondant a FOV de 360x180°.
+Elle présente un ratio d'aspect de 2:1 correspondant a un \ac{FOV} de 360x180°.
 
 %L'association Healpix vers equirectangle est trivial puisque qu'elle consiste a associer les position x,y de la projection equirectangle, au angle $\theta$ et $\phi$ de la projection Healpix.
-Cette projection est trivial puisqu'elle consiste a associer les positions cartésiennes des pixels aux angles des rayons:
+Cette projection est triviale puisqu'elle consiste à associer les positions cartésiennes des pixels aux angles des rayons:
 \begin{equation}
 x=\theta\\
 y=\phi.
 \end{equation}
 
 La densité de point n’étant pas uniforme dans ce référentiel, il est nécessaire de réaliser une interpolation sur une matrice régulière pour obtenir l'image finale.
-Ce type d'image se prêtent bien a la vulgarisation, car le résultat final est léger et peut être utilisé avec un Google Cardboard par exemple pour obtenir une visualisation interactive facilement diffuser.
+Ce type d'image se prêtent bien a la vulgarisation, car le résultat final est léger et peut être utilisé avec un visualisateur de type Google Cardboard par exemple pour obtenir une visualisation interactive facile à diffuser.
 
-Il est également possible d'utiliser ce type de méthode a des fin plus quantitatives.
-En fonction de la méthode de réduction des rayons, il peut être possible d'étudier, pour des halos spécifiques, l'escape fraction des photons ou les flux hydrodynamiques en fonction de la direction. 
+Il est également possible d'utiliser ce type de méthode à des fin plus quantitatives.
+En fonction de la méthode de réduction des rayons, il peut être possible d'étudier, pour des halos spécifiques, la fraction d'échappement des photons ou les flux hydrodynamiques en fonction de la direction. 
 Il est également possible de créer des observatoires virtuels en simulant différents types d'instruments.
 
 %\section{le compositing RGB (A)}
@@ -317,49 +325,46 @@ Il est également possible de créer des observatoires virtuels en simulant diff
 
 
 J'ai implémenté dans EMMA, la possibilité d'obtenir une matrice 2D par pas de temps, représentant la projection orthogonale suivant un axe donné.
-La projection est réalisée de la même manière que précédemment mais a la volée et a chaque pas de temps.
-Le choix a été fait de réaliser la projection a la fin de chaque pas de temps coarse.
-La résolution temporelle est donc la résolution temporelle du pas de temps coarse.
-Comme la résolution temporelle des niveaux raffinés est plus importante que le niveau coarse, 
-LA projection temporelle peux etre 
-En écrivant ces lignes je me rends compte que le dt de projection devrait être lié au dx de projection. 
+La projection est réalisée de la même manière que précédemment mais a la volée et à chaque pas de temps.
+Le choix a été fait de réaliser la projection a la fin de chaque pas de temps du niveau de base, ce qui limite la résolution temporelle a celle du niveau de base.
+
+%Comme la résolution temporelle des niveaux raffinés est plus importante que le niveau coarse, la projection temporelle peux etre 
+%En écrivant ces lignes je me rends compte que le dt de projection devrait être lié au dx de projection. 
 
 Les simulations que j'ai pu réalisées comportaient environs un millier de pas temps, et généraient donc autant d'images ($N_{dt} \approx 10^3$).
-A 25 FPS cela représente une durée de 40 secondes de vidéo.
-
-
-
+A 25 \ac{FPS} cela représente une durée d'environs 40 secondes de vidéo.
 
 \section{Light cone}
-La création d'un light cone se fait a partir des images générer par le mode movie.
-Le cube est 
 
-Si les images en sorties du mode movie on une résolution $N_p=1024$ pixel carré.
-On prend une tranche d'une épaisseur $dx$ donnée suivant l'axe $y$ sur l'image du pas de temps $i_{dt}$, puis une deuxième tranche de la même épaisseur, mais décalée dans l 'image $i_{dt+1}$, et ainsi de suite.
+A partir des images générées par le mode movie, il est possible de créer une image composite appelée "light cone".
+Un "light cone" est une image aillant une dimension spatiale sur un axe, et une dimension temporelle sur un second axe.
 
+En effet, il est possible de voir un film comme étant un parallélépipède avec deux dimensions spatiales et un dimension temporelle.
+En projetant ce parallélépipède sur un axe spatial, on obtient un "light cone"
+On parle de cone car en unités physique, la taille de la simulation augmente avec le temps, et donc, le parallélépipède s'élargit, formant un cone.
+
+%La création d'un "light cone" se fait a partir des images générer par le mode movie.
+En pratique, l'idée est de prendre des fines tranches successives dans les sorties movie.
+Si les images en sorties du mode movie ont une résolution $N_p=1024$ pixel carré.
+On prend une tranche d'une épaisseur $dx$ donnée suivant l'axe $y$ sur l'image du pas de temps $i_{dt}$, puis une deuxième tranche de la même épaisseur, mais décalée de $dx$ dans l 'image $i_{dt+1}$, et ainsi de suite.
 La position du début $S_i$ et de la fin $S_f$ de la tranche dans l'image sera :
 
 \begin{equation}
-S_i = (dx * i_{dt}) \% N_p 
-\end{equation} 
-\begin{equation}
+S_i = (dx \cdot i_{dt}) \% N_p \\
 S_f = S_i + dx 
 \end{equation} 
 
 Le modulo sur la taille de l'image permet de gérer les conditions périodiques simplement.
-On prendra également garde a utiliser une épaisseur de tranche qui soit un multiple entier du nombre de pixel de l'image de manière a respécter simplement les condition périodique
-
+On prendra également garde a utiliser une épaisseur de tranche qui soit un multiple entier du nombre de pixel de l'image de manière a respecter simplement les conditions périodique
 Le ratio d'aspect $\Phi$ est le rapport entre la hauteur et la longueur de l'image, et s'exprime :
 \begin{equation}
 \Phi = \frac{ N_{dt} * dx}{N_p}
 \end{equation}
-Étant donné que $N_{dt}$ et $N_p$ sont fixés par les paramètres de la simulation, il n'est possible de géré le ratio d'aspect qu'en fonction de l'épaisseur de la tranche $dx$, 
-
+Étant donné que $N_{dt}$ et $N_p$ sont fixés par les paramètres de la simulation, il n'est possible de gérer le ratio d'aspect qu'en fonction de l'épaisseur de la tranche $dx$.
 Plus le ratio d'aspect sera important, plus les structure vont se répéter sur le light cone.
 
-Un light cone réaliser avec cette méthode et a partir d'une simulation présenté dans la partie %TODO ref
-est présenté sur la figure \ref{fig:lightcone}
-
+Un light cone réalisé avec cette méthode et à partir d'une simulation présentée dans la partie \ref{sec:etoiles} est présenté sur la figure \ref{fig:lightcone}
+L'image résultante est un composite \ac{RGB} de la densité de matière noire, de la densité de gaz, de la température et de l'état d'ionisation.
 
 \begin{figure}[bth]
         \includegraphics[height=.90\textheight]{img/04/frise_wall.png} 
@@ -373,21 +378,6 @@ est présenté sur la figure \ref{fig:lightcone}
 \end{figure}
 
 \section{Projection interactive en 3D}
-
-Les projections présentées jusqu'ici sont toutes des projections pré-calculées.
-Explorer les simulations produites en trois dimensions et en temps réel, permettrait un énorme gain de temps au niveau de l'analyse, puisqu'il serait possible de localiser visuellement et très rapidement les régions d’intérêts et les patterns globaux.
-
-J'ai fait quelques essais de visualisations en temps réel en utilisant des frameworks existant.
-J'ai testé par exemple Blender %TODO ref
-un logiciel libre disposant d'une interface python qui permet de faire du rendu 3D professionnel et qui possède un moteur de jeux permettant de faire du temps réel.
-J'ai également utilisé Irrlicht %TODO ref
-un moteur de jeu open source extrêmement simple d'utilisation permettant des déplacement en temps réel dans un univers 3D a la manière d'un jeu de tir a la première personne.
-De plus, Irrlicht possède un module Occulus Rift qui m'a permis de réaliser un visualiseur en réalité virtuelle.
-Sont principal inconvénient était ses performances limitées.
-Ce test de visualiseur en réalité virtuelle a indirectement mené a la publication de l'article de conférence en annexe \ref{pap:visu}.
-
-
-
 %\subsection{avec un frame work} 
 %
 %Blender 
@@ -404,13 +394,28 @@ Ce test de visualiseur en réalité virtuelle a indirectement mené a la publica
 %posibilité de customiser les points
 %deplacement en temps réel dans l'univers 3D a la manière d'un FPS
 %(tres) mauvaise performance 
-
 %\subsection{Sans Framework}
 
-Dans le but d'obtenir de meilleur performance, j'ai développé un visualiseur de particule directement en OpenGL.
-L'OpenGL est un langage graphique bas niveau permettant de meilleurs optimisations que l'utilisation de moteurs de jeux préexistant.
-Une capture d'écran d'un cube de $128^3$ particules de matière noire, rendu de ce viewer est présenté sur la figure \ref{fig:viewer}.
 
+Les projections présentées jusqu'ici sont toutes des projections pré-calculées de grille \ac{AMR}.
+Dans cette section nous nous concentrons sur la visualisation de données sous formes de particules, et avec l'objectif de pouvoir explorer ces données en temps réel. 
+Explorer les simulations produites en trois dimensions et en temps réel, permettrait un énorme gain de temps au niveau de l'analyse, puisqu'il serait alors possible de localiser visuellement et très rapidement les régions d’intérêts.
+
+J'ai fait quelques essais de visualisations en temps réel en utilisant des frameworks existant.
+%J'ai testé par exemple Blender %TODO ref
+%un logiciel libre disposant d'une interface python qui permet de faire du rendu 3D professionnel et qui possède un moteur de jeux permettant de faire du temps réel.
+J'ai par exemple utilisé \cite{Irrlicht} un moteur de jeu open source simple d'utilisation permettant des déplacements en temps réel dans un univers 3D à la manière d'un jeu de tir a la première personne.
+L'utilisation de ce type de moteur de jeu permet l'utilisation d'une grande variété de fonction pré existante.
+Ces fonction permettent de créer un monde, d'y placer des particules, de créer une camera et d'y associer des mouvements de façon intuitive.
+De plus, Irrlicht possède un module Occulus Rift qui m'a permis d'explorer le monde ainsi créer en réalité virtuelle.
+Ce test de visualiseur en réalité virtuelle a indirectement mené a la publication de l'article de conférence en annexe \ref{pap:visu}.
+
+Son principal inconvénient est ses performances limitées.
+Dans Irrlicht, l'affichage d'une particule se fait par l'intermédiaire d'un "billboard" qui est une surface rectangulaire faisant toujours face à la camera.
+Une particule n'étant pas représentée par un simple point, le gain en performance peux être substantiel.
+Dans le but d'obtenir de meilleur performance, j'ai développé un visualiseur de particule directement en OpenGL, un langage graphique bas niveau permettant de meilleurs optimisations que l'utilisation de moteurs de jeux préexistant.
+Une capture d'écran d'un cube de $128^3$ particules de matière noire, rendu de ce viewer est présenté sur la figure \ref{fig:viewer}.
+Ce nouveau visualiseur est capable d'afficher environs huit fois plus de particules que le précédent avant de ressentir des ralentissement notable a l'affichage. 
 
 %LEs partivule sont des vertex en language OpenGL.
 %declaration de buffer, envois sur la carte graphique.
@@ -429,7 +434,7 @@ L'objectif est de réaliser un visualiseur capable de représenter un volume de 
 Pour se faire, il utilise un système de base de données organisée en AMR permettant un affichage adaptatif des particules en fonction de leurs distance.
 Cet outil est réalisé en JavaScript et utilise les technologies web pour un affichage a distance dans un navigateur internet.
 Cet outils dispose déjà de modules de mesure et de sélection permettant un usage 
-Les premiers pas de cet outil sont prometteurs 
+Les premiers pas de cet outil sont prometteurs.
 
 
 %Prochain objectif, ajouter du mouvement.
@@ -450,4 +455,10 @@ Les premiers pas de cet outil sont prometteurs
 
 \section{Conclusion}
 
-La visualisation de données de simulation touche un vaste public.
+La visualisation de données de simulations cosmologique représente un véritable challenge et peux s'adresser a un large public.
+Il existe différentes technique en fonction de l'objectif.
+Les travaux présentés dans cette partie ne sont qu'un survol de ce qu'il est possible de faire.
+Il existe des méthodes, déjà développées dans d'autres domaines qu'il serait intéressant d'exploiter à des fins de recherches.
+
+
+
