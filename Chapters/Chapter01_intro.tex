@@ -11,6 +11,8 @@ D'une manière générale, la méthode scientifique repose sur 3 piliers:
 \end{enumerate}
 L'astrophysique moderne n’échappe pas à cette règle.
 
+
+
 \paragraph{L'observation} est le plus ancien des piliers, et constitue le point de départ de toute démarche scientifique.
 Avant même de chercher aà comprendre un sujet, il faut recueillir des informations à son sujet. %le regarder et l'analyser.
 L'Homme a toujours regardé le ciel.
@@ -52,52 +54,53 @@ Les simulations numériques permettent de palier à ces problèmes en créant vi
 Cette thèse est articulée principalement sur le dernier pilier.
 La plus grande partie du temps a été consacrée a l'élaboration d'un modèle numérique dédié a l'étude de la réionisation.
 Puis, dans le but d'explorer ce modèle, un nombre important d'expériences (de simulations) ont été réalisées.
+Dans cette première partie, je vais introduire quelques grands concepts liés a l'étude numérique de la réionisation, puis je présenterai la structure du présent manuscrit en m'appuyant sur ces concepts.
 
 
+\subsection*{Le modèle standard}
 
 Notre compréhension actuelle de l'univers s'inscrit dans le cadre du modèle standard de la cosmologie.
 Ce modèle repose sur un univers non statique et en expansion, aillant une origine, le Bigbang.
 A une époque, l'univers était extrêmement chaud et concentré, il n'y avait alors ni étoiles ni galaxies.
-Mais en grandissant,  le plasma primordial s'est refroidit, les premiers atomes se sont formés lors de ce que l'on nomme la recombinaison, qui a mené a l'émission du fond diffus cosmologique.
-L'univers était alors extrêmement homogène que ce soit en densité ou en température, mais cette homogénéité n'était pas parfaite.
-S'en suit une période ou les in-homogénéités primordiales se sont effondrées sur elles même du fait de la gravité.
+Mais en grandissant, le plasma primordial s'est refroidit, les premiers atomes se sont formés lors de ce que l'on nomme la recombinaison, qui a mené a l'émission du fond diffus cosmologique.
+L'Univers était alors extrêmement homogène que ce soit en densité ou en température, mais cette homogénéité n'était pas parfaite.
+S'en suit une période où les in-homogénéités primordiales se sont effondrées sur elles même du fait de la gravité.
 Puis ces in-homogénéités sont devenues suffisamment dense pour former les première étoiles.
-%Le matériaux disponible pour leurs formations était alors abondant.
-%On pense que ces étoiles étaient beaucoup plus massives, et donc beaucoup plus énergétique que les étoiles observées actuellement.
-Ces étoiles ont émis un rayonnement suffisamment énergétique pour séparer les électrons et les protons lies au moment de la recombinaison.
-L'univers c'est alors retrouvé une nouvelle fois dans un état majoritairement ionisé. 
+Ces étoiles ont émis un rayonnement suffisamment énergétique pour séparer les électrons et les protons liés au moment de la recombinaison.
+L'univers c'est alors retrouvé une nouvelle fois dans un état majoritairement ionisé : c'est ce que l'on nomme la réionisation.
 
 \subsection*{La réionisation}
-Le dernier grand changement que l'univers a subit date de son premier milliard d'années.
+La réionisation constitue le dernier grand changement que l'univers ai subit lorsqu'il était âgé de moins d'un milliard d'années.
 L'apparition des premières étoiles a transformé l'Univers alors froid et sombre en un univers chaud et inondé de lumière.
 Cette transition est due a l'effondrement gravitationnel du gaz qui a permit, par endroits, une élévation de densité et de température suffisante pour réamorcer des réactions de fusion thermonucléaire.
 Il s'agit de la première génération d'étoiles.
 Le matériaux disponible pour leurs formations était alors abondant.
 On pense que ces étoiles étaient beaucoup plus massives, et donc beaucoup plus énergétique que les étoiles observées actuellement.
-Cette première génération à émis un fort rayonnement ultraviolet qui a grandement impacté le milieu environnant, en le chauffant par effet thermique et en le déplacant par effet de pression de radiation.
-De plus, a la fin de leur vie, ces étoiles massives ont explosées en supernovae, effectuant alors un puissant chauffage ainsi qu'un fort brassage du gaz.
+Cette première génération à émis un fort rayonnement ultraviolet qui a grandement impacté le milieu environnant, en le chauffant par effet thermique et en le déplaçant par effet de pression de radiation.
+De plus, a la fin de leur vie, ces étoiles massives ont explosées en supernovæ, effectuant alors un puissant chauffage ainsi qu'un fort brassage du gaz.
 En changeant la configuration du milieu, ces premières étoiles ont modelées les lieux d'apparition des générations suivantes et donc la distribution de matière observée aujourd'hui.
-La vitesse de la lumière étant finie, il fallut un certain temps pour celle ci puisse atteindre tous les recoins de l'univers. Il est estimé aujourd'hui que les premières étoiles sont apparues alors que l'univers était âgé d'environ 300 millions d'années. Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement atteigne tout ses recoins, situant donc la fin de la période de  réionisation à milliard d'années après le Big Bang.
+La vitesse de la lumière étant finie, il fallut un certain temps pour celle ci puisse atteindre tous les recoins de l'univers. Il est estimé aujourd'hui que les premières étoiles sont apparues alors que l'univers était âgé d'environ 300 millions d'années. 
+Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement atteigne tout ses recoins, situant ainsi la fin de la période de réionisation à milliard d'années après le Big Bang.
 
+%C'est cette transition entre un univers neutre et froid vers un univers chaud et ionisé que l'on appel l'époque de réionisation.
+%L'apparition des première sources lumineuse a eu un impact sur la façon dont la matière c'est organisée pour former les galaxies.
+%Il est probable que l'univers que l'on observe aujourd'hui, ai conservé les traces de cette grande époque de transition.
 
-C'est cette transition entre un univers neutre et froid vers un univers chaud et ionisé que l'on appel l'époque de réionisation.
-L'apparition des première sources lumineuse a eu un impact sur la façon dont la matière c'est organisée pour former les galaxies.
-Il est probable que l'univers que l'on observe aujourd'hui, ai conservé les traces de cette grande époque de transition.
-
-Une des difficulté a l'étude de la réionisation est l'époque a laquelle elle s'est produite, on considère actuellement qu'elle a eu lieu dans le premier milliard d'année de l'univers.
-Or, pour observer l'univers jeune, il faut regarder loin, tellement loin que les meilleur télescopes actuel sont tut juste assez performant pour atteindre des époques aussi lointaines.
+Une des difficulté a l'étude de la réionisation est l'époque à laquelle elle s'est produite. %on considère actuellement qu'elle a eu lieu dans le premier milliard d'année de l'univers.
+Pour observer l'univers jeune, il faut regarder loin, et les meilleurs télescopes actuel ne sont pas encore assez performant pour atteindre des époques aussi lointaines.
 Il faudra attendre encore au moins un décennie avant la mise en place des prochaine générations de télescope assez puissant pour observer les environnement de formation de ces première sources lumineuses.
 
 
 
-\subsection*{Les simulation numeriques}
+
+\subsection*{Les simulations numériques}
 Pour étudier des phénomènes aussi fortement couplés que ceux considérés dans le cas de l'époque de réionisation, il est nécessaire d'avoir recours à des simulations numérique. 
 Le but de ces simulations est de reproduire les observations sur la distribution de matière dans l'Univers.
 
 Les premières simulations cosmologiques ne considéraient l'évolution que de la composante non collisionnelle de la matière, ie la matière noire.
 Comme la matière noire constituent la masse la plus abondante de l'Univers, ces simulation permettent de suivre l'évolution de la distribution de matière sur les grandes échelles. 
 Mais par essence la matière noire est une matière invisible. 
-Il manquait donc une compossante importante : la matière visible, les barrions.
+Il manquait donc une composante importante : la matière visible, les baryons.
 
 Le calcul de l'hydrodynamique du gaz fut alors introduit, puis avec lui les premiers modèles de formation stellaire apparurent.
 Mais la communauté a vite été confronté a un important problème: le gaz refroidissait trop.
@@ -109,30 +112,28 @@ Cette énergie, introduite par les supernovae, permet de chauffer le gaz et rale
 Aujourd'hui, l'intérêt est porté sur l'introduction d'une nouvelle physique, celle du rayonnement.
 Le rayonnement émit par les étoiles, va changer les propriétés physico-chimique et thermique du gaz qui les environnent et ainsi modeler les lieux d\'apparitions des générations future d'étoiles
 
-
-Mais en attendant, si les possibilité d'observation sont restreinte, nous pouvons utiliser d'autre méthodes pour tenter de comprendre les phénomènes en cours a cette époque.
-Nous pouvons utiliser les simulations numériques.
+Mais en attendant, si les possibilité d'observation sont restreinte, nous pouvons utiliser les simulations numériques pour tenter de comprendre les phénomènes en cours à cette époque.
 En effet, les phénomènes en action pendant la réionisation sont nombreux et les modèles analytique trouvent leurs limites.
 Avec l'avancée exponentielle des capacités de calculs, les ordinateurs se transforme petits a petit en véritable laboratoire pour les astrophysiciens.
 A l'heure actuelle il commence a être possible de simuler l'effondrement de structures cosmologique, contenant du gaz, formant des étoiles qui émettent du rayonnement 
 
-Ces simulations ont pour objectifs d'aider à comprendre les grandes questions en suspend dans l'étude de la réionisation.
+Ces simulations ont pour objectifs d'aider à comprendre quelques unes des grandes questions en suspend dans l'étude de la réionisation.
 Voici un aperçu de ces questions : 
 
 \begin{itemize}
 \item Quand sont apparue les premières sources lumineuses?
 Nous verrons que les observations commencent a imposer certaines contraintes sur la fin de la réionisation mais  nous n'avons actuellement que peu de contraintes sur de la durée du processus.
 
-\item L'univers a t il été réionisé par quelques grosses sources très lumineuses ou par de nombreuses source moins énergétique.
-La question reste ouverte de savoir si ce sont les quasars, sources relativement rare mais pouvant être extrêmement énergétique, ou les galaxies plus modeste mais beaucoup plus nombreuse.
-Dans le cas ou lce serai les galaxies, serai ce les les plus légères, extrêmement nombreuses ou les plus massives.
+\item L'univers a t il été réionisé par quelques grosses sources très lumineuses ou par de nombreuses sources moins énergétique.
+La question reste ouverte de savoir si se sont les quasars, sources relativement rare mais pouvant être extrêmement énergétique, ou les galaxies plus modeste mais beaucoup plus nombreuse.
+Dans le cas où se serai les galaxies, serait ce les plus légères, extrêmement nombreuses ou les plus massives.
 
-\item Comment ces premières génération d'étoiles ont influencé l'apparitions des suivante, et ont elles laissées des traces encores visible dans l'environement proches?
+\item Comment ces premières génération d'étoiles ont influencé l'apparition des suivante, et ont elles laissées des traces encore visible dans l'environnement proches?
 
 \end{itemize} 
 
-En répondant a certaine de ces questions, les simulations numériques prépare les futures mission d'observation.
-En étudiant au préalable ce que l'on cherche a  observer, on a plus de chance d'observer au bon endroit et de la bonne facon.
+En répondant a certaine de ces questions, les simulations numériques prépare les futures mission d'observation, et augmente les chances d'observer les bonnes choses au bon endroits.
+%En étudiant au préalable ce que l'on cherche à observer, on a plus de chance d'observer au bon endroit et de la bonne facon.
 
 
 %Au stade actuel de notre compréhension de l'univers, les simulations numériques ont a la fois de très belles réussites mais souffres également de 
@@ -169,53 +170,82 @@ En étudiant au préalable ce que l'on cherche a  observer, on a plus de chance 
 %\item 
 %\end{itemize}
 
+Ce manuscrit est articulé autour de différents travaux auquel j'ai contribué pendant ma thèse.
+Le premier chapitre constitue une introduction aux concepts utiles en cosmologie.
+Ces concepts seront nécessaires pour aborder la deuxième partie qui explore plus spécifiquement la période de réionisation.
 
-J'ai participé au développement d'un code nommé \emma, capable de simuler l'évolution de la matière noire, du gaz et de la radiation a des échelles cosmologiques.
-Il a pour principal objectif l'étude de la période de réionisation.
+Une fois les grandes lignes du modèle physique introduites, et le contexte de la réionisation posé, j'aborderai mes travaux.
+je m'appuierais sur chacune des publications auxquelles j'ai contribué, et articulerai un chapitre autour de chacune d'elle.  
+
+Je commencerai par présenter les grande lignes de \emma, un code capable de simuler l'évolution de la matière noire, du gaz et de la radiation à des échelles cosmologiques, et aillant pour principal objectif l'étude de la période de réionisation.
 \emma\ est un code a maille adaptative (AMR) qui a la particularité d'être massivement parallèle et d'être accéléré par processeurs graphiques (\ac{GPU}).
+Je présenterai les différents solveurs physique et les concepts numériques associés.
+Cette approche permettra au lecteur de mieux appréhender les résultats obtenus a partir des simulations générées ensuite à partir de ce code.
 
-La première partie de se manuscrit sera consacré a introduire le cadre théorique de cette étude en présentant le modèle cosmologique actuel.
-Je présenterai ensuite les grande lignes de \emma, qui permettront au lecteur de mieux appréhender les résultats obtenus a partir des simulations générées a partir de ce code.
-
-Dans la première partie de ma thèse, ma tache principale a été d'implémenter un scénario de formation stellaire, ainsi qu'un modèle de feedback de supernovae.
-D'une manière plus générale j'ai contribué à divers aspect du code, comme la gestion des paramètres utilisateur, l'écriture des données de sorties ou encore la documentation.
-Je développe également une librairie d'analyse des fichiers générés par \emma.
-J'ai également contribué au développement d'un code de visualisation et d'exploration de simulations astrophysique.
-
-\subsection*{Mod\`ele de formation stellaire}
+Je consacrerai ensuite un chapitre à détailler un modèle de formation et d'évolution stellaire, ainsi que ses contraintes et ses limitations.
+Ce modèle constitue une de mes principale contributions à \emma{}.
 L'étude du rayonnement émis dans l'Univers, passe immanquablement par l'étude de la formation stellaire.
-J'ai implémenté dans \emma, un modèle de transformation du gaz en particule stellaire.
-Ce modèle est basé sur un critère de densité.
-Lorsque, sous l'effet de la gravitation, une cellule devient suffisamment dense, celle ci est marquée comme étant autorisée a former des étoiles.
-Ensuite, toute les cellules autorisées vont former une certaine quantité d'étoiles, fonction de l'état local de la cellule, et suivant une loi empirique issue de l'observation : la loi de Schmidt-Kennicutt.
-
-Cette recette nécessite l'introduction de plusieurs paramètres libres.
-Une partie importante du temps a été consacrée à la calibration de ces paramètres.
-
-\subsection*{Mod\`ele de supernovae}
-
-Historiquement, les modèles de formation stellaire se sont rapidement confronté à un problème majeur : ils n'arrivaient pas à reproduire les observations en terme de quantité d'étoiles crées.
-Une réponse à ce problème fut l'introduction des supernovaes. 
-Les explosions de supernovaes injectent une quantité non négligeable d'énergie dans le milieu environnant.
+%J'ai implémenté dans \emma, un modèle de transformation du gaz en particule stellaire.
+%Ce modèle se base sur un critère de densité pour 
+Lorsque, sous l'effet de la gravitation, une cellule devient suffisamment dense, celle ci devient autorisée à former des étoiles.
+Toute les cellules autorisées vont alors transformer une certaine quantité du gaz en particule stellaire, en fonction de l'état local de la cellule, et suivant une loi empirique issue de l'observation : la loi de Schmidt-Kennicutt.
+Les particules nouvellement créées vont alors émettre du rayonnement ionisant pendant un certain temps.
+A la fin de leurs vie, ces particules stellaires vont exploser en supernovæ, injectant ainsi une quantité non négligeable d'énergie dans le milieu environnant.
 Cette énergie supplémentaire perturbe le milieu et régule la formation stellaire.
+J'ai implémenté différents modèles d'injection d'énergie dans le solveur hydrodynamique d'\emma{ } et comparé ces modèles entre eux. 
 
-J'ai implémenté un modèle d'injection d'énergie dans le solveur hydrodynamique d'\emma.
-Ce modèle considère deux types d'énergie. 
-La première, thermique, va dissiper une certaine partie de l'énergie disponible dans le chauffage du gaz.
-La seconde, cinétique, va mettre en mouvement le gaz environnant avec le reste de l'énergie.
-Une certaine proportion de la masse de la particule stellaire est retournée dans le milieu. 
-L'énergie totale et la masse des éjectas étant contrainte par un autre modèle, Starburst99.
-
-De la même manière que précédemment, l'implémentation de ce modèle a introduit plusieurs paramètres libres qu'ils a fallut calibrer.
+%Comme ces modèles nécessite l'introduction de plusieurs paramètres libres, une partie importante du temps a été consacrée à l'exploration et à la calibration de ces paramètres.
 
 
-A partir de ce modèle numérique j'ai ensuite réalisé plusieurs études:
+%Ce modèle considère deux types d'énergie. 
+%La première, thermique, va dissiper une certaine partie de l'énergie disponible dans le chauffage du gaz.
+%La seconde, cinétique, va mettre en mouvement le gaz environnant avec le reste de l'énergie.
+%Une certaine proportion de la masse de la particule stellaire est retournée dans le milieu. 
+%L'énergie totale et la masse des éjectas étant contrainte par un autre modèle, Starburst99.
 
-\begin{itemize}
-\item en faisant varier le modèle de feedback stellaire j'ai tenté de quantifier son influence sur le déroulement du processus de réionisation.
-\item J'ai étudié la vitesse de propagation des fronts d'ionisations et montré que le reionisation s'éffectue en 2 phases. 
-\item Le develloppement de ce modèle a conduit a la réalisation de l'une des plus grosses simulations de la réionisation a l'heure actuelle la simulation CODA-EMMA.
-J'introduirais cette simulation ainsi que les premiers résultats obtenus.
-\item Enfin, je présenterai mes travaux concernant la visualisation de données de simulations.
-\end{itemize}
+Je présenterai ensuite dans un nouveau chapitre une étude que j'ai mené à l'aide de ce modèle, visant a mieux comprendre la physique à l'œuvre dans les grandes simulations de la réionisation.
+L'objectif est de comprendre quelles sont les galaxies qui contribue à la réionisation et quel est l'impact du feedback stellaire sur cette contribution.
 
+Le prochain chapitre sera consacré à une étude sur l'influence de la vitesse de la lumière réduite sur la propagation des fronts d'ionisation.
+Nous verrons que dans les simulations de la reionisation, la vitesse de la lumière peut être changée de manière a économiser du temps de calcul.
+J'ai cherché a quantifier dans quelle mesure celle ci peux être reduite avant que cela ai un impact sur les résultats des simulations.
+
+Nous verrons ensuite un court chapitre dédié à la présentation de la simulation "CODA II EMMA", une des plus grosse simulation de la reionisation a l'heure actuelle.
+J'y présenterai également les premiers résultats obtenus a propos du liens entre la masse des halos contenus dans la simulation aujourd'hui et leur histoire au moment de la réionisation.
+
+%J'ai contribué à différents aspects du code mais une de mes 
+%Au moment de mon arrivé en thèse,
+%D'une manière plus générale j'ai contribué à divers aspect du code, comme la gestion des paramètres utilisateur, l'écriture des données de sorties ou encore la documentation.
+%Dans la première partie de ma thèse, ma tache principale a été d'implémenter un scénario de formation stellaire, ainsi qu'un modèle de feedback de supernovae.
+
+
+%Je développe également une librairie d'analyse des fichiers générés par \emma.
+
+Le dernier chapitre sera consacré à la présentation de travaux liés à la visualisation des simulations cosmologique.
+J'y aborderai différentes méthodes de visualisations ainsi que quelques details technique liés a leurs implémentations.
+
+%J'ai également contribué au développement d'un code de visualisation et d'exploration de simulations astrophysique.
+
+
+%
+%\subsection*{Mod\`ele de formation stellaire}
+
+%
+%\subsection*{Mod\`ele de supernovae}
+%
+%Historiquement, les modèles de formation stellaire se sont rapidement confronté à un problème majeur : ils n'arrivaient pas à reproduire les observations en terme de quantité d'étoiles crées.
+%Une réponse à ce problème fut l'introduction des supernovaes. 
+
+%
+%De la même manière que précédemment, l'implémentation de ce modèle a introduit plusieurs paramètres libres qu'ils a fallut calibrer.
+%
+%A partir de ce modèle numérique j'ai ensuite réalisé plusieurs études:
+%
+%\begin{itemize}
+%\item en faisant varier le modèle de feedback stellaire j'ai tenté de quantifier son influence sur le déroulement du processus de réionisation.
+%\item J'ai étudié la vitesse de propagation des fronts d'ionisations et montré que le reionisation s'éffectue en 2 phases. 
+%\item Le develloppement de ce modèle a conduit a la réalisation de l'une des plus grosses simulations de la réionisation a l'heure actuelle la simulation CODA-EMMA.
+%J'introduirais cette simulation ainsi que les premiers résultats obtenus.
+%\item Enfin, je présenterai mes travaux concernant la visualisation de données de simulations.
+%\end{itemize}
+%
