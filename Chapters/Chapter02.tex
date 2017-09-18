@@ -1,45 +1,46 @@
 \chapter{Introduction a EMMA}\label{ch:introduction}
-Les échelles de temps sont radicalement opposées entre la cosmologie qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle (cf loi de \cite{moore1965cramming}). %\cite{THOMPSON200620}
-Les simulations numérique sont des produits possédant une valeur se dépréciant extrêmement rapidement, il faut les considérer comme éphémère.
+% (cf loi de \cite{moore1965cramming}). 
+%\cite{THOMPSON200620}
+
+Les échelles de temps sont radicalement opposées entre la cosmologie qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle.
+Du fait de l'avancée rapide des moyens de calculs, les simulations numérique sont des produits possédant une valeur se dépréciant rapidement et doivent être considérées comme éphémère.
 
 Nous avons vu dans la partie précédente qu'elles étaient les principales physiques à l’œuvre durant l'époque de réionisation.
-L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et implémenté informatiquement.
+L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et quelles sont le contraintes sur leurs  implémentations.
 
 %Comment modéliser la reionization?
 
-\section{Aperçu des différents types de code}
+\section{Aperçu des différents modèles numériques}
 
-Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles, la radiation ou le champ magnétique.
-Ces fluides sont de nature différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physique.
+Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et la radiation (et parfois le champs magnétique).
+Ces fluides sont de natures différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physiques.
 On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
 
 \paragraph{La physique non-collisionnelle} concerne les phénomènes qui n'interagissent pas par collision.
-Il s'agit principalement la matière noire et les étoiles. 
+Dans notre cas, il s'agit principalement la matière noire et les étoiles. 
 
 \paragraph{La physique collisionnelle} concerne principalement le gaz.
 
 Il existe conceptuellement deux principales façons de suivre un fluide dans l'espace.
-Ces deux approches sont dites \emph{Eulérienne} ou \emph{Lagrangienne}.
+%Ces deux approches sont dites \emph{Eulérienne} ou \emph{Lagrangienne}.
+En lien direct avec ces deux familles de représentations physique, il existe deux principales familles de codes cosmologique% : les codes \ac{SPH} et les codes \ac{AMR}.
 
 \paragraph{Représentation Lagrangienne : } 
-consiste a se placer au point de vue du fluide.
-On considère un élément de fluide de masse fixe pouvant se déplacer et/ou se dilater dans l'espace.
-On associera généralement les codes utilisant ce type de représentation avec une gestion de la physique sous forme de \emph{particules}.
+consiste à se placer au point de vue du fluide.
+Une série d'éléments de fluide de masse fixe pouvant se déplacer et/ou se dilater dans l'espace sera considérée.
+Les codes utilisant ce type de représentation seront généralement associés avec une gestion de la physique sous forme de \emph{particules}.
+Ces codes seront dit \ac{SPH}.
+
+%\paragraph{\ac{SPH} : } représente le gaz sous forme de particule de masse constante mais de taille variable.
+%Notion d'arbre -> KDtree
 
 \paragraph{Représentation Eulérienne : } 
 consiste a se placer au point de vue de l'espace.
 On considère un élément d'espace et le bilan de matière entrant et sortant de chacune de ses interfaces.
 On associera généralement les codes utilisant ce type de représentation avec une gestion de la physique sous forme de \emph{grille}.
+Si la grille est de résolution variable on parlera de grille \ac{AMR}.
 
-En lien direct avec ces deux familles de représentation physique, il existe deux principales famille de codes cosmologique : les codes \ac{SPH} et les codes \ac{AMR}.
-
-\paragraph{Smooth Particle Hydrodynamic (SPH) : } représente le gaz sous forme de particule de masse constante mais de taille variable.
-%Notion d'arbre -> KDtree
-
-\paragraph{Code sur grille} : représente l'espace sous forme de cellules organisées sur une grille. 
-Si la grille est de résolution variable on parlera de grille AMR (Adaptive Mesh Reffinement) 
-
-
+%\paragraph{Code sur grille} : représente l'espace sous forme de cellules organisées sur une grille. 
 %Notion d'arbre -> arbre AMR
 %La représentation Lagrangienne la plus populaire (dans le domaine des simulations cosmologiques) est sans doute le \emph{Smouth Particle Hydrodynamics (SPH) }
 %Les volumes cosmologiques étant généralement cubique, les éléments de grille le sont généralement aussi.
@@ -47,18 +48,18 @@ Si la grille est de résolution variable on parlera de grille AMR (Adaptive Mesh
 %avantage inconvénient AMR vs SPH
 %introduction de la grille et de la méthode AMR
 
-
-Un même code peux utiliser conjointement plusieurs des concepts qui viennent d'etre exposés.
-Par exemple EMMA utilise une représentation Lagrangienne pour simuler la physique non collisionnelle de la matière noire et une représentation Eulérienne pour simuler le gaz et la radiation.
+Un même code peux utiliser conjointement plusieurs des concepts qui viennent d'être introduits.
+Dans le cas présent, EMMA utilise une représentation Lagrangienne pour simuler la physique non collisionnelle de la matière noire et des étoiles, et une représentation Eulérienne pour simuler le gaz et la radiation.
 
 \section{Gestion de la grille}
 \label{sec_gestion_grille}
 %(nécessaire d'être positionné ici car la structure en arbre conditionne plusieur choix par la suite)
 
-La grille adaptative étant commune a tout les solveurs.
-Nous allons la dévelloper avant de détailler la gestion de la physique. 
+Un des concepts le plus central de EMMA est sa grille adaptative.
+Tout les solveurs sont basés dessus et sa structure conditionne un certain nombre de choix par la suite.
+C'est pourquoi nous allons la développer ici, avant de détailler la gestion de la physique. 
 
-Avant d'aborder le concept de grille adaptative faisons un leger détour par l'exemple d'une grille fixe et régulière.
+Avant d'aborder le concept de grille adaptative faisons un léger détour par l'exemple d'une grille fixe et régulière.
 Dans le cas des simulations sur grille fixe, les données sont réparties en mémoire de façon ordonnée.
 Dans un espace en 3D, on accédera à une cellule contenant le point de coordonnées normées $(x,y,z)$ sur une grille de $N_x*N_y*N_z$ cellules, a l'aide de son identifiant Id dans le tableau en mémoire.
 
@@ -75,12 +76,20 @@ j=\lfloor z \rfloor*N_z \\
 \end{equation}
 ou $\lfloor a \rfloor$ représente la partie entière de $a$.
 
-Les choses sont plus complexes dans le cas d'une grille adaptative (Fig \ref{fig:AMR}).
+Nous voyons ici que l'organisation en mémoire et la recherche de voisin sont relativement simple à gérer.
+Les vecteurs sont alloués de manière statique et la recherche de voisin est basée sur un jeu d'indice relativement simple.
+Les choses sont plus complexes dans le cas d'une grille adaptative.
+Étant amenée à évoluer, il faut introduire des mécanismes permettant de construire ou détruire certaines parties de la grille de façons dynamique.
+Ces mécanismes vont totalement changer l'organisation de la grille.
+
+Un exemple de grille \ac{AMR} générée par EMMA est présenté sur la figure \ref{fig:AMR}).
+Un fonction de critères prédéfinis par l'utilisateur la résolution de la grille peut être arbitrairement augmentée localement.
+L'avantage de ce type de grille est d'économiser des ressoucres de calcul par rapport au cas d'une grille fixe, ou il faudrait beaucoup plus de cellules pour obtenir une résolution équivalente.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/AMR.pdf} 
-        \caption{Exemple de grille AMR. 
-        La  résolution de la grille est augmentée dans les régions d'intérets.
+        \caption{Exemple de grille \ac{AMR} générée par EMMA. 
+        La  résolution de la grille est augmentée arbitrairement dans les régions d'intérêts.
 }
  		\label{fig:AMR}
 \end{figure}
@@ -88,46 +97,47 @@ Les choses sont plus complexes dans le cas d'une grille adaptative (Fig \ref{fig
 
 \subsubsection{Octree}
 
-Il existe deux grand groupe de maille adaptative.
-Le premier groupe utilise des grilles fixes imbriquées %TODO ref
+Il existe deux grands groupe de maille adaptative.
+Le premier groupe utilise une séries de grilles fixes imbriquées. %TODO ref
+Chaques région raffinée sera une grille fixe de résolution plus importante spatiallement liée a une grille de base.
+Chaque nouvelle grille aura une résolution double par rapport a la précédente.
+Il est possible d'ajouter autant de niveaux que voulu.
 
 Le second est le groupe qu'utilise EMMA : fully threated tree description \citep{khokhlov_fully_1998-1}.
-La base de cette représentation est de considérer que chaque cellule est associée a une grille 2x2x2 que l'on nommera un OCT (cf:\ref{lst:oct}), car décomposé en 8 sous parties qui sont elles même des cellules (cf:\ref{lst:cell}).
-Et récursivement, chacune de ses sous parties peut a leurs tour être divisé ou non.
-il en résultera un arbre nommé Octree.
+La base de cette représentation est de considérer que chaque cellule est associée à une grille fixe de taille 2x2x2 que l'on nommera un OCT , car décomposé en 8 cellules.
+%sous parties qui sont elles même des cellules.
+Et récursivement, chacune de ces cellules peuvent à leurs tour être divisée et  associée à un OCT.
+Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:octree}.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/octree.jpg} 
         \caption{Représentation d'une grille AMR a gauche, et de son octree associé a droite. 
         Image extraite de \cite{SU201659}
+     	\label{fig:octree}
 }
- 		\label{fig:octree}
 \end{figure}
 
-\subsubsection{Liste chainée}
 
-Comme la grille est amenées a évoluer, il n'y a plus une position unique en mémoire associé à une position dans l'espace.
-La grille est composée de cellules ordonnées sous forme de liste chainées.
+\subsubsection{La structure OCT}
+%et liste chainée
+
+Il existe une bimodalité entre la représentation de la grille en mémoire et la représentation de l'espace physique.
+Comme la grille est amenée à évoluer, il n'y a plus une position unique en mémoire associée à une position dans l'espace.
+De plus, le nombre d'éléments de la grille change au cours du temps.
+Il faut donc conserver à la fois l'information de la position dans l'espace physique et dans l'espace mémoire.
+
+En principe, on allouera une certaine quantité d'OCT en mémoire qui constituerons une réserve.
+On viendra ensuite piocher dans cette réserve pour ajouter des éléments à la grille.
+Les OCT de la grille seront organisés sous forme de liste chainées, il est donc nécessaire d'avoir l'information de la position de l'OCT précédent et de l'OCT suivant en mémoire.
+
 Pour créer un lien entre elle, il est nécessaire de stocker l'information de voisinage.
-Pour localiser un oct dans l'espace, on a besoin de stocker 2*D pointeurs vers les cellules voisine.
-Un oct est également composé de d'un tableau de huit pointeurs vers ses huit cellules filles,  ainsi que d'un pointeur vers sa cellule mère.
-On associera ensuite au cellules la partie physique (densité, pression, température, etc...).
-Ainsi chaque cellule peut, sous certaine condition, etre subdivisée en un OCT pour augmenter la résolution localement.
+L'information spatiale est aussi contenue dans les OCT, ceux ci disposent de  2*D pointeurs vers les cellules voisine.
+Un OCT est également composé d'un tableau de huit cellules filles, ainsi que d'un pointeur vers sa cellule mère.
+Un OCT qui n'a pas de cellule mère est appelé OCT racine, en pratique il n'y en a qu'un seul, de niveau 0, et il représente l'ensemble de l'espace de la grille..
+La génération de conditions périodique (généralement utilisées en cosmologies) se fait de manière naturelle en faisant pointer tout les voisins de l'OCT racine vers lui même.
+La structure minimal d'un OCT de EMMA est présenté sur le listing \ref{lst:oct}.
 
-
-On associera également les octs entre eux a l'aide d'une liste chainée. 
-Il est nécessaire d'ajouter deux pointeurs a l'objet OCT : un vers l'oct précédent en mémoire et un vers l'oct suivant.
-
-\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures cellule de EMMA},label=lst:cell]
-struct CELL{
-  int id;            // permet de determiner la position de la cellule dans l'oct
-  struct OCT *parent // l'oct pere de la cellule
-  struct OCT *child; // si child est different de NULL alors la cellule est raffinee et child point vers l'oct enfant
-  struct PHYSIC *data; // pointeur vers la partie physique
-};
-\end{lstlisting}
-
-\begin{lstlisting}[float=bth,language=C,frame=tb,caption={les structures OCT  de EMMA},label=lst:oct]
+\begin{lstlisting}[float=bth,language=C,frame=tb,caption={La structure OCT de EMMA},label=lst:oct]
 struct OCT{
   struct CELL cell[8]; // les 8 cellules de l'oct
   struct CELL *nei[6]; // pointeurs sur les cellule voisines
@@ -138,15 +148,26 @@ struct OCT{
 };
 \end{lstlisting}
 
+\subsubsection{La structure CELL}
 
-Terminologie:
-On parlera de :
+Les cellules contiennent l'information physique (densité, pression, température, etc...).
+Chaque cellule peut, sous certaine condition, être subdivisée en un OCT pour augmenter la résolution localement.
+L'information de la position de la cellule dans l'OCT parent est contenue dans son identifiant (allant de 0 à 7).
+Une CELL qui n'a pas d'OCT enfant est dite cellule feuille.
+La structure minimal d'une CELL de EMMA est présenté sur le listing \ref{lst:cell}.
 
-RACINE pour l'OCT de niveau 0. Il n'a pas de cellule mère et représente l'ensemble de l'espace de la grille.
-La génération de conditions périodique (généralement utilisées en cosmologies) se fait de manière naturelle en faisant pointer tout les voisins de l'OCT racine vers lui même.
+\begin{lstlisting}[float=bth,language=C,frame=tb,caption={La structure CELL de EMMA},label=lst:cell]
+struct CELL{
+  int id;            // permet de determiner la position de la cellule dans l'oct
+  struct OCT *parent // l'oct pere de la cellule
+  struct OCT *child; // si child est different de NULL alors la cellule est raffinee et child point vers l'oct enfant
+  struct PHYSIC *data; // pointeur vers la partie physique
+};
+\end{lstlisting}
 
 
-FEUILLE pour les cellules qui ne sont pas raffinées. 
+
+
 
 
 
@@ -159,27 +180,24 @@ FEUILLE pour les cellules qui ne sont pas raffinées.
 %sur le gradient de densité (shock)\\
 
 Il est possible de définir arbitrairement une condition de raffinement en fonction de la physique que l'on cherche a étudier.
-Par exemple, dans des tests unitaires de type sphère de Stömgren ou explosion de Sedov, on marquera les cellules qui sont soumises a un gradient d'ionisation ou de densité supérieur a un certain seuil.
-%TODO ajouter les ref des sections pour sedov et stromgren
+Par exemple, dans des tests unitaires de type sphère de Stömgren (cf \ref{sec:stromgren}) ou explosion de Sedov (cf \ref{sec:sedov}), on marquera les cellules qui sont soumises à un gradient d'ionisation ou de densité supérieur à un certain seuil.
 Dans le cas de simulations cosmologique, on utilisera généralement une condition dite semi-Lagrangienne.
 C'est a dire qu'une cellule sera marquée comme "a raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse de matière noire (ou de gaz) moyenne d'une cellule de ce niveau.
-
-
 
 En pratique, le raffinement se fera en trois temps:
 
 \begin{itemize}
-\item Dans un premier temps le code va passer en revue toutes les cellules d'un niveau, et les marquer comme "a raffiner" si une première condition physique est respectée.
+\item Dans un premier temps le code va passer en revue toutes les cellules d'un niveau, et les marquer comme "à raffiner" si une première condition physique est respectée.
 
-\item Une fois tout le niveau passé en revue, le code va ensuite faire une série de $N_{buffer}$ passages sur tout le niveau en marquant à chaque fois les cellules voisine des cellules précédemment marquées.
+\item Une fois tout le niveau passé en revue, le code va ensuite faire une série de $N_{buffer}$ passages sur tout le niveau en marquant à chaque fois toues les cellules voisine des cellules précédemment marquées.
 Cette série de passage a pour but d’élargir la zone de raffinement et ainsi permettre une transition douce entre les niveaux.
 Cette zone de $N_{buffer}$ cellules autour des zones soumises à la condition physique de raffinement sera appelée le "buffer de raffinement".
 
 \item Une fois les cellules respectant ces deux conditions marquées, le raffinement est effectué.
 \end{itemize}
 
-En pratique le raffinement d'une cellule se fera en lui associant un OCT.
-*child pointera alors vers le dernier OCT libre de la liste chaînée.
+%En pratique le raffinement d'une cellule se fera en lui associant un OCT.
+%*child pointera alors vers le dernier OCT libre de la liste chaînée.
 
 %le deraffinement
 On remarquera que la condition de raffinement ne prends pas en compte le fait qu'une cellule soit déjà raffinée ou non.
@@ -191,7 +209,9 @@ Les opérations de raffinement/dé-raffinement font intervenir des opérateurs d
 Le changement de résolution peut avoir lieu dans les deux sens :
 
 \begin{itemize}
-\item La \emph{restriction} consiste à dégrader la grille en résolution. La restriction la plus directe consiste à moyenner les cellules à dégrader. Par exemple, sur une grille à deux dimensions, pour diviser la résolution par deux, quatre cellules de la grille de départ devront être moyennées pour obtenir une nouvelle cellule de la grille à base résolution.
+\item La \emph{restriction} consiste à dégrader la grille en résolution. 
+La restriction la plus directe consiste à moyenner les cellules à dégrader. 
+Par exemple, sur une grille à deux dimensions, pour diviser la résolution par deux, quatre cellules de la grille de départ devront être moyennées pour obtenir une nouvelle cellule de la grille à base résolution.
 
 \item La \emph{prolongation} consiste à augmenter la résolution d'une grille, la prolongation la plus directe consiste à injecter les valeurs de l'ancienne grille dans un certain nombre de cellules de la nouvelle grille. (fig \ref{Opérateurs de changement de grille})
 \end{itemize}
@@ -203,18 +223,19 @@ Le changement de résolution peut avoir lieu dans les deux sens :
 \subfloat[Niveau L  ]{\includegraphics[width=.45\linewidth]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
 \subfloat[Niveau L+1]{\includegraphics[width=.45\linewidth]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
 \caption{Opérateurs de changement de grille. 
-Ils permettent de changer la résolution de la grille. Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.}
-\label{Opérateurs de changement de grille}
+Ils permettent de changer la résolution de la grille. 
+Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.
+\label{Opérateurs de changement de grille}}
 \end{center}
 \end{figure}
 
-La prolongation et la restriction sont des opérateurs aisément parallélisables. Chaque cellule (ou paquet de huit cellules) est indépendante des autres et il est possible de ne changer la résolution que d'une partie de la grille sans en affecter le reste.\\
+%La prolongation et la restriction sont des opérateurs aisément parallélisables. Chaque cellule (ou paquet de huit cellules) est indépendante des autres et il est possible de ne changer la résolution que d'une partie de la grille sans en affecter le reste.
 
-Il existe principalement deux conditions sur les opérateurs de changement de grille. 
-La première impose une certaine réciprocité entre eux, les opérateurs doivent être adjoints: il est nécessaire qu'après une prolongation, suivie d'une restriction la grille d'arrivée soit la même que la grille de départ. 
-L'inverse n'est pas nécessairement vrai: après une restriction, de l'information est perdue et aucune prolongation ne pourra la recomposer.
-La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. 
-Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
+%Il existe principalement deux conditions sur les opérateurs de changement de grille. 
+%La première impose une certaine réciprocité entre eux, les opérateurs doivent être adjoints: il est nécessaire qu'après une prolongation, suivie d'une restriction la grille d'arrivée soit la même que la grille de départ. 
+%L'inverse n'est pas nécessairement vrai: après une restriction, de l'information est perdue et aucune prolongation ne pourra la recomposer.
+%La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. 
+%Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
 
 
 \subsection{Recherche de voisin}
@@ -226,7 +247,6 @@ La recherche de voisin se fera suivant ces étapes:
 \begin{itemize}
 \item en fonction de l'ID de la cellule, déterminer si la voisine est dans le même OCT parent.
 
-
 \item
 \begin{itemize}
 \item Si c'est le cas, accéder a l'oct parent et a l'aide de l'indice du tableau de cellule, retrouver le voisin en question.
@@ -235,24 +255,20 @@ La recherche de voisin se fera suivant ces étapes:
 
 \end{itemize}
 
+\subsection{Gestion de l'expansion}
 
-Nous avons vu dans la partie d'introduction a la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers.
-Nous allons voir dans cette partie comme cette composante est simulée.
-
+Nous avons vu dans l'introduction a la physique de la reionisationque l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
+Nous allons voir dans cette partie comme cette composante est traité numériquement.
 Bien que nous sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
 Le solveur gérant l'énergie noire n'est pas a proprement parler un solveur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
 Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
 
-% mais est la plus simple a simuler.
-%Lien direct avec le facteur d'expansion (mettre ref section).
-
-L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code. %TODO ref
+L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code (cf Eq. \ref{eq:scale_t}).
 Il en résultera une table, conservée en mémoire pendant toute l'exécution.
-Le facteur d'expansion sera alors interpoler dans cette table ne fonction de l'avancement de la simulation (cf partie calcul du pas de temps) %TODO ref
+Le facteur d'expansion sera alors interpoler dans cette table ne fonction de l'avancement de la simulation.% (cf partie calcul du pas de temps) %TODO ref
 
-\subsection{Gestion de l'expansion}
-Il existe deux possibilités pour modéliser l'expansion de l'univers a l'aide d'une grille.
-La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, a y ajouter des éléments.
+Il existe deux possibilités pour modéliser l'expansion de l'univers à l'aide d'une grille.
+La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, à y ajouter des éléments.
 Le problème et que le coût numérique de la simulation croit, entre autre, avec le nombre d'éléments que l'on considère.
 La seconde possibilité est de faire varier la taille des éléments de calcul avec le facteur d'expansion.
 On appellera les longueurs ainsi exprimées des longueurs comobile.
@@ -262,9 +278,7 @@ r=a r'
 \end{equation}
 
 ou $r$ représente une longueur en unités physique et $r'$ en unités comobile.
-
 Ainsi un cube de 10 Mpc physique de coté, pris aujourd'hui, aura une taille de 10 Mpc comobile (cMpc) aujourd'hui, mais aussi a redshift z=9 ou sa taille physique ne sera plus que de de 1Mpc physique.
-
 De plus, il est généralement pratique de normaliser les grandeurs que l'on considère. 
 
 \begin{equation}
@@ -308,10 +322,8 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 \caption{Facteurs de normalisation des différents grandeurs physique} 
 \end{table}
 
-
-
-
 \subsection{Gestion du pas de temps}
+%TODO 
 
 
 \begin{equation}
@@ -322,65 +334,51 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 \chapter{Les principaux solveurs physique}
 
 Nous allons voir dans cette partie que plus une physique représente une part importante du contenu de l'Univers plus elle est simple et rapide a simuler.
-Nous nous intéresserons a quatre solveurs distinct:
+Nous nous intéresserons à trois solveurs distincts:
 \begin{itemize}
-\item d'énergie noire
 \item de matière noire
 \item du gaz
 \item de la radiation
 \end{itemize}
 Et ce, dans un ordre décroissant d'importance, relativement a la quantité d'énergie totale.
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Matière noire}
 \label{sec:solverDM}
-La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien a la représentation Lagrangienne, et donc a une simulation sous forme de particule.
-Pour la simuler, on utilisera le principe des code Ncorp., c'est a dire qu'on utilisera un champs de particules massive interagissante par gravitation.
-Ill existe différentes techniques pour suivre l'évolution d'un tel système.
-Toutes sont basé sur le meme principe.
+La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien à la représentation Lagrangienne, et donc a une simulation sous forme de particule.
+Pour la simuler, on utilisera le principe des code Ncorp., c'est à dire qu'on utilisera un champs de particules massive interagissante par gravitation.
+Il existe différentes techniques pour suivre l'évolution d'un tel système.
+Toutes sont basées sur le même principe.
 Les particules sont placée suivant une certaine condition initiale.
-Et on cherche a connaitre la force gravitationnelle a laquelle chaque particule est soumise, dans le but de calculer son déplacement
-
+Et on cherche a connaitre la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement
 
 \subsection{Génération des conditions initiales}
 \label{sec:IC}
-Nous avons vu (cf \ref{sec:CMB}) que le \ac{CMB} nous donne de l'information sur l'état de la distribution de matière dans l'univers tres tot dans son histoire (il est possible de determiner le spectre de puissance des fluctuation de densité de l'univers primitif).
-Le principe de la génération des condition iniales est d'utiliser ce spectre de puissance pour générer des surdensité repréentant statistiqument ces fluctuations.
+Nous avons vu (cf \ref{sec:CMB}) que le \ac{CMB} nous donne de l'information sur l'état de la distribution de matière dans l'univers très tôt dans son histoire.
+Il est possible de déterminer le spectre de puissance des fluctuations de densité de l'univers primitif a partir du \ac{CMB}.
+Le principe de la génération des condition initiales est d'utiliser ce spectre de puissance pour générer des surdensité représentant statistiquement ces fluctuations.
 
-Pour se faire on va générer une grille regulière sur laquelle on placera une particule au centre de chaque cellule.
+Pour se faire on va générer une grille régulière sur laquelle on placera une particule au centre de chaque cellule.
 Dans ce cas la densité est homogène.
-On va alors perturber la position des particules de manière a respecter les fluctuations statistique observées dans le CMB.
-
+On va alors perturber la position des particules de manière à respecter les fluctuations statistique observées dans le CMB.
 Pour ce faire, il faut générer un bruit aléatoire Gaussien.
-Tout les générateurs de condition initiales que j'ai pus rencontrer utilise une SEED aléatoire, dans le but de générer ce bruit aléatoire.
+%Tout les générateurs de condition initiales que j'ai pu rencontrer utilise une SEED aléatoire, dans le but de générer ce bruit aléatoire.
 On convoluera ensuite ce bruit avec le spectre de puissance que l'on cherche a reproduire.
-
 Et on appliquera les déplacement obtenus au particules.
-
-Cette approximation n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire.
-Cette approximation du regime linéraire s'appelle l’approximation de Zeldovitch %TODO ref
-\cite{2014MNRAS.439.3630W}
-
-
-Plus l'on cherche a simuler des petites échelles, plus l'on sort vite du domaine de précision accéptable.
-C'est pourquoi il est necessaire d'avoir recourt au simulations numériques.
+Cette approximation n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire et s'appelle l’approximation de Zeldovitch (eg \cite{2014MNRAS.439.3630W}).
+L’approximation de Zeldovitch est capable de prédire analytiquement la distribution de la matière à très grandes échelles.
+Mais plus l'on cherche à étudier des petites échelles, plus on sort vite du domaine de précision acceptable.
+C'est pourquoi il est nécessaire d'avoir recourt au simulations numériques.
 
 Nous voyons ici que le spectre est limité des deux cotés.
 D'un coté l'information des grandes échelles est tronquée par la taille de la boite considéré.
 Il n'est pas possible d'avoir de l’information sur des longueurs d'onde du spectre plus grande que cette taille limite.
 De l'autre coté, les petites échelles sont tronquées par la limite de résolution.
-Le spectre est troqué au niveau de la longueur d'onde correspondant a la résolution de la grille.
+Le spectre est troqué au niveau de la longueur d'onde correspondant à la résolution de la grille.
+Cette perte d'information sur les hautes fréquences peux être problématique dans le cas où la résolution est adaptative.
+Dans le cas de l'\ac{AMR} par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
 
-Au passage cette perte d'information sur les hautes fréquences peux être problématique dans le cas ou la résolution est adaptative.
-Dans le cas de l'AMR par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
-
-En pratique j'ai principalement utilisé MUSIC et GRAPHIC %TODO ref.
-
+%En pratique j'ai principalement utilisé MUSIC et GRAPHIC %TODO ref.
 
 %méthode
 %gaussian random noise
@@ -404,10 +402,6 @@ En pratique j'ai principalement utilisé MUSIC et GRAPHIC %TODO ref.
 %
 %approximation de zeldovich
 %perte de linéarité a un certain moment -> nécessité des simulation numériques
-
-
-
-
 
 \subsection{Solveur de gravité}
 

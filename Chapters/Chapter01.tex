@@ -234,6 +234,8 @@ La gravitation n'est pas suffisante pour contrer l'expansion, et ce type d'Unive
 
 
 \subsection{Énergie noire}
+\label{sec:dark_egy}
+
 %Dans un Univers, ou seule la gravité agit a grandes échelles, l'expansion ne peux que décélérer.
 
 Si nous avons vu que la taille de l'Univers évolue avec le temps, il reste la question de l’évolution de cette vitesse.
@@ -400,10 +402,19 @@ Le spectre de puissance correspond à la transformée de Fourrier de sa fonction
  		\label{fig:cmb_power_spectrum}
 \end{figure}
 
+Fig. \ref{fig:cmb_power_spectrum}
+
 Ce spectre de puissance contient de l'information sur la distribution de la matière au moment de l'émission du \ac{CMB}, et ces fluctuations de température sont essentielles pour expliquer la formation des grandes structures observées aujourd'hui.
 En effet, comme il existe un lien direct entre la température et la densité, les régions aillant une température légèrement plus élevées correspondent aux régions légèrement plus denses, et réciproquement. 
 Nous verrons plus tard (cf \ref{sec:IC}) que cette distribution de matière à très haut redshift permet la génération des conditions initiales nécessaire pour effectuer des simulations.
 La distribution des fluctuations de densité n'est pas la seule information contenue dans le \ac{CMB}, nous verrons dans la prochaine section que se spectre contient également de l'information sur l'abondance des différents constituants de l'Univers.
+
+
+
+
+
+
+
 
 \section{Le contenu de l'univers}
 \label{cosmoparam}
@@ -416,15 +427,29 @@ La distribution des fluctuations de densité n'est pas la seule information cont
 
 
 
-Pour simuler l'univers, on a besoin de savoir ce qu'il contient.
+La première étape pour simuler l'univers, est de déterminer ce qu'il contient, et quelles sont les physiques dominante à considérer, en fonction de ce que l'on cherche a étudier.
+La détermination des abondances respectives des différents constituants, utilise conjointement plusieurs observables.
+Chacune de ces observables va pouvoir être lier à un modèle disposant de plusieurs paramètres libres.
+
+Par exemple, il est possible de créer un modèle théorique du plasma primordial, ce modèle est capable de prédire le spectre de puissance de l'émission de recombinaison.
+Il est possible, en comparant le spectre de puissance théorique obtenu à celui du \ac{CMB} observé, de déterminer les paramètres libres du modèle par ajustement.
+La figure \ref{fig:cmb_power_spectrum} représente la comparaison entre le meilleur ajustement actuel et les observations, 
+
+Les supernovae considérées comme chandelle standard, suffisamment lointaines permettent d'obtenir de l'information sur l'accélération de l'expansion de l'Univers (un gamme de valeurs pour $\Omega_\Lambda$)
+(voir par exemple \cite{1999ApJ...517..565P} pour plus d'informations sur le sujet).
+
+Ou encore la distribution actuelles des galaxies, en partie reliquat des oscillations acoustiques dans le plasma primordial, permet de contraindre les paramètres cosmologique.
+
 
 %A partir de différents observables,
 %En recoupant les données obtenues a partir d'observations comme , 
 
-Le spectre de puissance du fond diffus cosmologique permet de déterminer les quantité respectives des différents constituants de l'univers.
-En recoupant ces données a d'autre observables, comme la distribution des amas de galaxies ou les supernovae lointaines, il est possible de contraindre les paramètres cosmologiques (Fig. \ref{fig:cosmoparam}).
+%Le spectre de puissance du fond diffus cosmologique permet de déterminer les quantité respectives des différents constituants de l'univers.
+%En recoupant ces données a d'autre observables, comme la distribution des amas de galaxies ou les supernovae lointaines, il est possible de contraindre les paramètres cosmologiques (Fig. \ref{fig:cosmoparam}).
 
-Les paramètres cosmologiques du modèle standard les plus récent ont été obtenus par \cite{planck_collaboration_planck_2016}, et sont présentés sur la figure \ref{fig:planck_parameters}.
+Une représentation de ces différentes contraintes sur le ration densité d'énergie noire / densité de matière est visible sur la figure \ref{fig:cosmoparam},
+Les abondances des différents constituants ne sont pas les seuls parametres libres du modèle standard et une compilation de ces paramètres sont présentés sur la figure \ref{fig:planck_parameters}.
+Ces paramètres sont les plus récent et ont été obtenus par \cite{planck_collaboration_planck_2016}.
 
 %A partir du spectre de puissance, on peut déterminer les différentes composantes de l'univers (paramètres cosmologique).
 %univers infini, homogène, isotrope
@@ -442,20 +467,27 @@ Les paramètres cosmologiques du modèle standard les plus récent ont été obt
 
 
 \subsection{Énergie noire}
+Nous avons deja abordé le sujet de l'énergie noire dans la section \ref{sec:dark_egy}
+
 Avec une abondance relative de près de 70 \%, l'énergie noire est le principal constituant de l'Univers.
 Elle a été introduite pour expliquer l'accélération de l'expansion l'Univers.
 Elle contraint la distribution de matière sur les plus grandes échelles (de l'ordre du Giga parsec).
 
-des future missions comme EUCLIDE %TODO ref
+Nous n'avons pas d'idée sur sa provenance mais des future missions comme EUCLIDE %TODO ref
+vont permettre d'obtenir plus d'information a son sujet.
 
 
 \subsection{Matière noire CDM}
+
+La matière noire est un vaste sujet 
+Courbe de rotation des galaxies,
+
+
 Le modèle $\Lambda$CDM nécessite une certaine quantité de matière pour expliquer les interactions gravitationnelles observées.
 Cette quantité de matière n'est pas en accord avec les observations réalisées sur la matière visible.
 Il a donc été nécessaire d’introduire une matière invisible appelée matière noire.
 La matière noire représente 26\% du bilan énergétique total et gouverne les échelles de l'ordre du Mega parsec.
 Elle est la principale source de gravitation et présente des propriétés non collisionnelles
-
 
 
 %echelle mega parsec\\
