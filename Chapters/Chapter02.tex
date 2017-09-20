@@ -3,7 +3,7 @@
 % (cf loi de \cite{moore1965cramming}). 
 %\cite{THOMPSON200620}
 
-Les échelles de temps sont radicalement opposées entre la cosmologie qui considère les temps les plus long de l'univers et les progrès informatiques qui vont a une vitesse exponentielle.
+Les échelles de temps sont radicalement opposées entre la cosmologie qui considère les temps les plus long de l'univers et les progrès informatiques qui vont à une vitesse exponentielle.
 Du fait de l'avancée rapide des moyens de calculs, les simulations numérique sont des produits possédant une valeur se dépréciant rapidement et doivent être considérées comme éphémère.
 
 Nous avons vu dans la partie précédente qu'elles étaient les principales physiques à l’œuvre durant l'époque de réionisation.
@@ -431,7 +431,7 @@ Ce système d'équation est appelé le système d'équation de Vlasov-Poisson :
 
 Il existe plusieurs méthodes pour résoudre ce système.
 Historiquement la première méthode était la méthode :
-\paragraph{Particule-Particule : } c'est la méthode la plus directe pour calculer l'évolution d'un system Ncorpsl. 
+\paragraph{Particule-Particule : } c'est la méthode la plus directe pour calculer l'évolution d'un system Ncorps. 
 Elle consiste, pour chaque particule, à sommer les contributions gravitationnelles de toutes les autres particules:
 \begin{equation}
 \vec{F}_i=-\sum_{j\neq i} G \frac{G m_i m_j(\vec{r}_i - \vec{r}_j) }{ |\vec{r}_i - \vec{r}_j |^3}
@@ -453,7 +453,7 @@ Cette approximation permet de limiter considérablement le nombre de calcul pour
 
 La méthode qui nous intéresse ici consiste à utiliser le potentiel pour déterminer la force.
 Le potentielle sera calculé sur une grille, cette méthode sera nommée :
-\paragraph{Particule-Mesh : } on projette les particules sur une grille dans l'objectif d'obtenir  une grille de densité pour ensuite obtenir le potentiel en resolvant l'équation de Poisson.
+\paragraph{Particule-Mesh : } on projette les particules sur une grille dans l'objectif d'obtenir  une grille de densité pour ensuite obtenir le potentiel en résolvant l'équation de Poisson.
 %ENZO %code, Bryan & Norman 1998
 %RAMSES
 La méthode de projection des particules sur la grille n'est pas unique.
@@ -520,7 +520,7 @@ S_{(\vec{x})} \overset{FFT}{\longrightarrow}  S_{(\vec{k})} \times \frac{1}{k^2}
 
 De par la nature des transformées de Fourier, le champ de densité doit être périodique pour que l'implémentation de cette technique ne se révèle pas trop complexe. 
 Ce qui n'est pas un problème en simulation cosmologique, où les conditions de bords sont toujours périodiques mais est plus problématique lors de la simulation de structures isolées, telles les galaxies ou les amas de galaxies. 
-De plus, les FFT nécessitent un échantillonnage régulier, ce qui implique que cette méthode est incompatible avec les méthodes AMR. 
+De plus, les FFT nécessitent un échantillonnage régulier, ce qui implique que cette méthode est incompatible avec les méthodes \ac{AMR}. 
 %Et dernièrement, le passage dans l'espace des fréquences nécessite des conditions de types plans parallèles lors parallélisation, conditions incompatible avec la gestion de grille utilisé par les code AMR dont EMMA} fait partie. \\
 
 Un autre type de méthode de résolution possible est une méthode itérative. 
@@ -686,7 +686,7 @@ Un seul appel génère un cycle nommé cycle en V (fig. \ref{Description du V-cy
 \subsection{Implémentation dans EMMA}
 Dans EMMA, la potentiel est calculé par multigrille sur la grille coarse et utilise l'arbre \ac{AMR} pour gérer les sous-niveaux.
 Sur les niveaux raffinés la relaxation est effectuée par Gauss Siedel rouge/noir.
-La solution déterminée sur les niveaux grossiers est projetée sur les niveaux raffinés, la solution anticipée est deja proche de sa vraie valeur. 
+La solution déterminée sur les niveaux grossiers est projetée sur les niveaux raffinés, la solution anticipée est déjà proche de sa vraie valeur. 
 Il en résulte une convergence rapide.
 
 On prendra garde, lors de calcul en parallèle, à utiliser un niveau minimum de telle sorte que chaque processeur dispose au minimum d'un oct lors du calcul sur la grille grossière du multigrille.
@@ -698,6 +698,7 @@ L_{min} = 1 + ceil \left(\frac{log_2(N_{cpu})}{3}  \right)
 
 
 \subsection{Liste chaînée de particule}
+\label{sec:chainepart}
 La gestion des particules dans EMMA utilise le principe de la liste chaînée déjà abordée pour les OCT. %TODO ref
 A chaque cellule est associée  un pointeur vers une particule de tète.
 Si ce pointeur est NULL, la cellule ne contient pas de particule.

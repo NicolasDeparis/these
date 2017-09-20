@@ -1,34 +1,31 @@
 \chapter{Le modele standard de la cosmologie moderne} \label{ch:introduction_physique}
 
 Cette thèse s'inscrit dans le cadre du modèle standard de la cosmologie.
-Ce modèle, aussi appelé modèle du Big Bang, considère un univers en expansion et composé essentiellement de matière noire froide $\Lambda$ Cold Dark Matter ($\Lambda$CDM).
+Ce modèle, aussi appelé modèle du Bigbang, considère un univers en expansion  $\Lambda$ et composé essentiellement de matière noire froide $\Lambda$ Cold Dark Matter ($\Lambda$CDM).
 Ce chapitre a pour objectif de présenter les grandes lignes de ce modèle.
-
 
 \section{Émergence de l'idée d'un Univers non statique}
 
 %découverte des galaxies\\
 %découverte de l'expansion de l'univers
 
-\subsection{Cadre théorique}
+%\subsection{Cadre théorique}
 
-L'idée d'un univers non statique a pris forme dans le début du XIXème siècle suite a deux événements majeurs.
-D'un coté l'élaboration de la théorie de la relativité générale d'Einstein en 1915 a permis la mise en place d'un cadre théorique propice.
+L'idée d'un univers non statique a pris forme dans le début du XIXème siècle suite à deux événements majeurs.
+D'un coté l'élaboration de la théorie de la relativité générale d'Einstein en 1915 à permis la mise en place d'un cadre théorique propice.
 %La notion d'un univers non statique a ete introduite par Einstein en 1917 en rapport avec ses travaux sur le relativité générale. 
-D'un autre coté, plus d'une décennie plus tard les observation de Hubble entre 1923 et 1929.
+D'un autre coté, plus d'une décennie plus tard les observations de Hubble ont confirmées l'expansion de l'Univers.
 
 \subsection{Les observations de Hubble}
 
-Hubble observe deux phénomènes qui vont mener à une redéfinition de notre notion de cosmologie.
-Il bénéficie à l'époque de l'accès au plus puissant télescope du monde (le télescope Hooker du mont Wilson)
-
+Entre 1923 et 1929 Hubble observe deux phénomènes qui vont mener à une redéfinition de notre notion de cosmologie.
+Il bénéficie à l'époque de l'accès au plus puissant télescope du monde (le télescope Hooker du mont Wilson).
 Cet instrument lui a permis, dans une publication de 1926, d'observer que des nébuleuses situées hors de notre galaxie présente des caractéristiques identiques à des système d'étoile \citep{1926ApJ....63..236H}.
 Il en déduit qu'il existe d'autre galaxies que notre voie lactée.
 
 Avec les moyens observationnels dont nous disposons aujourd'hui l’existence d'un grand nombre de galaxies en dehors de notre voie lactée est bien établie.
-La figure \ref{fig:hubbl_deep_field} présente le "Hubble Ultra Deep Field" \citep{1538-3881-132-5-1729} une image prise en 2014, montrant un grand nombre de galaxies dans une portion réduite du ciel.
+Le "Hubble Ultra Deep Field" \citep{1538-3881-132-5-1729} une image prise en 2014 (voir figure \ref{fig:hubbl_deep_field}) montre un grand nombre de galaxies dans une portion réduite du ciel.
 On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$.
-
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hudf.jpeg} 
@@ -43,13 +40,10 @@ On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$.
 \subsection{La loi de Hubble}
 Hubble observe également une relation entre la distance de ces nouvelles galaxies et leurs spectres lumineux \citep{1929CoMtW...3...23H}.
 Plus ces galaxies sont éloignées de l'observateur, plus leurs spectre est décalé vers le rouge.
-
-Ce décalage vers le rouge -- ou redshift en anglais -- est une notion qui sera beaucoup utilisée par la suite.
-%En cosmologie nous referons a l'age de l'Univers autant en temps qu'en redshift.
-Nous verrons dans la prochaine section qu'il existe un lien direct entre age de l'univers et redshift.
-
-Il interpréta ce décalage comme un effet Doppler et montra que ces galaxies s'éloignent de l'observateur avec une vitesse radiale directement proportionnelle a leur distance.
-Cette corrélation entre la distance et le décalage vers le rouge observé est aujourd'hui très bien établie et est présenté sur la Fig. \ref{fig:hubble_law} extraite de \citep{2015PNAS..112.3173B}.
+Ce redshift noté $z$ est une notion qui sera beaucoup utilisée par la suite car nous verrons dans la prochaine section qu'il existe un lien direct entre age de l'univers et redshift.
+Il interpréta ce décalage comme un effet Doppler et montra que ces galaxies s'éloignent de l'observateur avec une vitesse radiale directement proportionnelle à leur distance.
+Cette corrélation entre la distance et le décalage vers le rouge observé est aujourd'hui bien établie.
+Une série d'observations récentes est présenté sur la Fig. \ref{fig:hubble_law} extraite de \citep{2015PNAS..112.3173B}.
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hubble_law.jpg} 
@@ -60,12 +54,12 @@ Cette corrélation entre la distance et le décalage vers le rouge observé est 
  		\label{fig:hubble_law}
 \end{figure}
 
-Cette relation entre la distance des galaxies $D$ et leur vitesse radiale d'éloignement $V$ est aujourd'hui appelée loi de Hubble et peux être résumé par :
+La loi de Hubble est la relation entre la distance des galaxies $D$ et leur vitesse radiale d'éloignement $V$ : %est aujourd'hui appelée  et peux être résumé par :
 
 \begin{equation}
 V = H_0 D,
 \end{equation}
-ou $H_0 = 67 \mathrm{ \left[ km.s^{-1}.Mpc^{-1} \right ] }$ est la constante de Hubble \citep{planck_collaboration_planck_2016}.
+où $H_0 = 67 \mathrm{ \left[ km.s^{-1}.Mpc^{-1} \right ] }$ est la constante de Hubble \citep{planck_collaboration_planck_2016}.
 
 Conventionnellement, le sous script $0$ désigne le fait que la valeur de la variable qui lui est associé est celle prise aujourd'hui.
 Cette distinction est nécessaire car malgré son nom, la valeur de la constante de Hubble n'est pas constante dans le temps.
@@ -77,8 +71,7 @@ H=\frac{1}{a} \frac{da}{dt} = \frac{\dot{a}}{a},
 où $a = a_{(t)}$ est le facteur d'expansion.
 Par définition $a_0 = 1$,  représente la taille de l'Univers relativement à sa taille actuelle.
 
-Le redshift, noté $z$, s'exprime en fonction du facteur d'expansion de la manière suivante:
-
+Comme la longueur d'une onde lumineuse est aussi impactée par l'expansion, le redshift, s'exprime en fonction du facteur d'expansion de la manière suivante:
 \begin{equation}
 z= \frac{1}{a}-1
 \end{equation}
@@ -151,12 +144,11 @@ En manipulant l'équation \ref{eq:friedman1} il est possible de montrer que :
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/dark4.jpg} 
         \caption{Importance respective des différentes densité d'énergie en fonction de l'age de l'Univers (et donc de sa taille). Image extraite de \citep{2005univ.book.....F}
-        }
- 		\label{fig:cosmoparamt}
+ 		\label{fig:cosmoparamt} }
 \end{figure}
 
 
-Ou les paramètres $\Omega_{i,0}$ représente la densité d'énergie associé aux différent constituant, 
+Où les paramètres $\Omega_{i,0}$ représentent la densité d'énergie associé aux différent constituant, 
 \begin{equation}
  \Omega_{i,0} = \frac{\rho_{i,0}}{\rho_{c,0}},
  \end{equation}
@@ -173,16 +165,13 @@ Ce qui s'exprime par :
 \begin{equation}
 \Omega_{K,0} = 0,
 \end{equation}
-
-il s'en suis que :
+et
 \begin{equation}
-\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1 .
+\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1.
 \end{equation}
 
-
 \begin{itemize}
-
-\item $\Omega_{M,0}$ est la densité d'énergie associée a la matière (matière noire que nous introduiront dans la suite et la matière baryonique)
+\item $\Omega_{M,0}$ est la densité d'énergie associée à la matière (matière noire que nous introduiront dans la suite et la matière baryonique)
 Par simple effet de dilution, cette densité décroît avec le cube du facteur d'expansion.
 Un Univers constitué exclusivement de cette énergie serait nommé "Univers poussière"
 C'est le cas actuellement.
@@ -192,7 +181,6 @@ La densité de photon décroît avec le cube du facteur d'expansion, mais du fai
 Un Univers constitué exclusivement de cette énergie serait nommé "Univers lumière".
 Cette approximation est valable pour un Univers majoritairement remplis de matière relativiste.
 C'était le cas avant l’émission du fond diffus cosmologique.
-
 
 \item $\Omega_{\Lambda,0}$ est la densité d’énergie du vide.
 Cette énergie est associée a la constante cosmologique et a l'expansion de l'Univers. 
@@ -206,9 +194,7 @@ Selon l’équation \ref{eq:einstein}, l'énergie peut courber l'espace, mais si
 
 \end{itemize}
 
-
-
-
+Comme ces densité d'énergies sont liées au facteur d'expansion, celles si évoluent avec le temps (cf Fig. \ref{fig:cosmoparamt}).
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/scale_t.jpg} 
@@ -220,18 +206,17 @@ Selon l’équation \ref{eq:einstein}, l'énergie peut courber l'espace, mais si
 
 En intégrant l’équation \ref{eq:scale_t}, il est possible de déterminer l'évolution de la taille de l'Univers en fonction de la densité respectives de ses différents constituants.
 La figure \ref{fig:scale_t} présente quelques évolutions possibles.
-Toutes les courbes passe par le point (Now,1) car par définition $a_0 = 1$.
+Toutes les courbes passent par le point (Now,1) car par définition $a_0 = 1$.
 %TODO expliquer cette histoire de tangente
-Toutes les courbes ont la même tangente au point (Now,1) du fait que $\Omega_{K,0}=0$
+%Toutes les courbes ont la même tangente au point (Now,1) du fait que $\Omega_{K,0}=0$
 Nous observons ici que la valeur des paramètres cosmologique contraint l'age actuel de l'Univers (le point où la courbe passe l'axe horizontal).
 La valeur des paramètres contraint aussi l'avenir de l'Univers.
 Par exemple, la courbe orange représente un Univers dit fermé.
-Ce type d'Univers est voué à s'effondrer sur lui même a cause de la gravité de la matière qu'il contient.
+Ce type d'Univers est voué à s'effondrer sur lui même à cause de la gravité de la matière qu'il contient.
 A l'inverse, la courbe rouge représente un Univers dit ouvert.
 La gravitation n'est pas suffisante pour contrer l'expansion, et ce type d'Univers est voué a grandir indéfiniment.
 
 %\cite{2003PhT....56d..53P}
-
 
 \subsection{Énergie noire}
 \label{sec:dark_egy}
@@ -239,26 +224,25 @@ La gravitation n'est pas suffisante pour contrer l'expansion, et ce type d'Unive
 %Dans un Univers, ou seule la gravité agit a grandes échelles, l'expansion ne peux que décélérer.
 
 Si nous avons vu que la taille de l'Univers évolue avec le temps, il reste la question de l’évolution de cette vitesse.
-Si l'on considère que l'univers s'étend suite a une impulsion initiale (cf prochaine section), et que la gravité est la seule force qui agit à grande échelle, l'expansion devrait décélérer.
+Si l'on considère que l'univers s'étend suite à une impulsion initiale (cf section \ref{sec:BB}), et que la gravité est la seule force qui agit à grande échelle, l'expansion devrait décélérer.
 En effet comme la gravité est une force purement attractive, elle agit comme un ressort qui devrait ramener toute la masse a l'origine (scénario de la courbe orange sur la figure \ref{fig:scale_t}, ou la courbe retombe sur l'axe horizontal signifiant que la taille de l'univers tend à nouveau vers zero).
-
 Or ce n'est pas ce qui est observé: l'accélération de l'expansion de l'univers a été découverte a la fin du XXème siècle par 2 équipes simultanément :
 \begin{itemize}
 \item  High-Z supernovae search team \citep{1998AJ....116.1009R} %http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
 \item  Supernova Cosmology Project \citep{1999ApJ...517..565P} % http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
 \end{itemize}
-Les deux équipes aillant chacune obtenues le prix Nobel en 2011.
+Chacune aillant reçu le prix Nobel en 2011.
 
 L'accélération de l'expansion de l'Univers pose un problème majeur.
 Il est établis depuis les travaux de Newton que pour accélérer une masse une force est nécessaire.
 Or nous ne disposons actuellement d'aucune théorie permettant d'expliquer cette force répulsive.
-Il a fallu seulement quelques mois après cette découverte pour qu’apparaisse pour la première fois la mention d'énergie noire: \citep{1999PhRvD..60h1301H}.
+Il a fallu seulement quelques mois après cette découverte pour qu’apparaisse pour la première fois la mention d'énergie noire \citep{1999PhRvD..60h1301H}.
 
 %échelle gigaparsec\\
 %Facteur d'expansion
 
 \section{Le modèle du Big bang}
-
+\label{sec:BB}
 %le big bang\\
 %l'inflation\\
 %la nucléosynthèse\\
@@ -266,7 +250,6 @@ Il a fallu seulement quelques mois après cette découverte pour qu’apparaisse
 %la reionization
 
 Une fois établis que les galaxies s'éloigne de nous dans toutes les directions, plusieurs constats s'imposent.
-
 Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les unes des autres, et en poussant se constat à l’extrême, il fut imaginé qu'à un certain instant dans l'histoire de l'Univers, toute la matière devait être concentrée en un point (toutes les courbes de la figure \ref{fig:scale_t} passe par une taille nulle dans le passé)
 En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L} 
 Cette singularité à été baptisé Big Bang et donne son nom au modèle cosmologique actuel.
@@ -281,24 +264,22 @@ Plus l'on se rapproche temporellement du BigBang, plus l'Univers est dense et ch
 \subsection{Nucléosynthèse primordiale}
 \label{sec:nucleosynthese_primordiale}
 %Dans le modèle du Big Bang, le début de l'Univers est suivis par une phase d'expansion rapide appelé inflation.
-Après le Big Bang, l'Univers est tellement chaud qu'il est composé d'une soupe de particules élémentaire (quark, gluon, électron) qui vont former en se refroidissant les premiers protons, neutrons et électrons.
+Après le Big Bang, l'Univers est tellement chaud qu'il est composé d'un ensemble de particules élémentaire (quark, gluon, électron) qui vont former en se refroidissant les premiers protons, neutrons.
 Les protons et les neutrons vont à leur tour s'assembler pour former les premiers noyaux atomiques.
 La théorique de la nucléosynthèse primordiale a été présenté dans un article surnommé $\alpha \beta \gamma$ due aux initiales des noms de ses auteurs \citep{PhysRev.73.803}.
-
 Cette théorie permets d'expliquer avec precision l'abondance observée des différents atomes présent dans l'Univers.
-Il est aujourd'hui admis que l'Univers est constitué de : 
+Il est aujourd'hui admis que l'Univers est originellement constitué de : 
 
 \begin{itemize}
-\item 73,9\% D’Hydrogène,
-\item 24\% D’Hélium,
-\item et 2.1\% de l'intégralité des autres éléments du tableau périodique  (nous nommerons  ces éléments "métaux" par convention).
+\item 73,9\% d’hydrogène,
+\item 24\% d’hélium,
+\item et 2.1\% de l'intégralité des autres éléments du tableau périodique  (nous nommerons ces éléments "métaux" par convention).
 \end{itemize}
 
 \subsection{Refroidissement du plasma primordial}
-A cette période, les noyaux atomiques sont découplé des électrons, l'Univers est dans un état ionisé.
-Cet état correspond à un plasma proche de celui que l'on peux trouver au centre d'une étoile.
+A cette période, les noyaux atomiques sont découplé des électrons et l'Univers est dans un état ionisé correspondant à un plasma proche de celui que l'on peux trouver dans une étoile.
 Il faudra attendre $\approx 380 000$ ans pour que la température baisse suffisamment pour permettre l'apparition des premiers atomes neutres.
-Cet période est appelée "l'époque de la recombinaison" (voir \cite{2009AN....330..657S} pour plus d'informations sur le sujet) et a donné lieu à l'émission du fond diffus cosmologique que nous développerons plus en détails dans la section \ref{sec:CMB}.
+Cet période est appelée "époque de recombinaison" (voir \cite{2009AN....330..657S} pour plus d'informations sur le sujet) et a donné lieu à l'émission du fond diffus cosmologique que nous développerons plus en détails dans la section \ref{sec:CMB}.
 Durant cette transition, l'Univers a connu un changement d'état majeur puisque celui ci est passé d'un état globalement ionisé a un état globalement neutre.
 
 \section{Le fond diffus cosmologique}
@@ -310,8 +291,8 @@ Robert Herman et Ralph Alpher ont été les premiers à proposer l’existence d
 \subsection{Surface de dernière diffusion}
 
 Du au grand nombre d'électrons libres avant la recombinaison, la lumière était soumise a un grand nombre de diffusions.
-Et a la manière de la surface d'une étoile, ou nous ne voyons que les photons qui ont pu s’échapper de celle ci et non ceux qui ont été émis en son centre, nous ne pouvons pas observer de lumière émise avant le CMB.
-Le CMB étant la plus ancienne lumière que nous pouvons observer, il contient actuellement l'information que nous pouvons obtenir sur l'état de l'Univers lorsqu'il était le plus jeune possible.
+Et a la manière de la surface d'une étoile, ou nous ne voyons que les photons qui ont pu s’échapper de celle ci et non ceux qui ont été émis en son centre, nous ne pouvons pas observer de lumière émise avant le \ac{CMB}.
+Le \ac{CMB} étant la plus ancienne lumière que nous pouvons observer, il contient actuellement l'information que nous pouvons obtenir sur l'état de l'Univers lorsqu'il était le plus jeune possible.
 
 \subsection{Observations}
 
@@ -319,9 +300,7 @@ La quête de l'état de l'Univers à ses début a commencé de manière fortuite
 Ce signal était constant et extrêmement homogène. 
 %(l'anisotropie du CMB est remis en cause recement 
 %http://www.ca-se-passe-la-haut.fr/2013/09/lanisotropie-du-fond-diffus-cosmologique.html)
-
 Ils obtiennent le prix Nobel en 1978 pour la \cite{PenziasWilsonNobel}.
-
 L'observation de Penzias et Wilson constitue un argument de poids en faveur de la théorie du Big Bang et a été suivie d'une série de mission spatiale dans le but d'améliorer les mesures faites sur le \ac{CMB}.
 
 \begin{itemize}
@@ -332,11 +311,11 @@ L'observation de Penzias et Wilson constitue un argument de poids en faveur de l
 
 \subsection{Température}
 Le \ac{CMB} se présente sous la forme du corps noir à une température de T=2.73°K.
-La figure \ref{fig:cmb_thermal_spectrum} compare le spectre thermique observé à celui d'un corp noir théorique. 
+La figure \ref{fig:cmb_thermal_spectrum} compare le spectre thermique observé à celui d'un corps noir théorique. 
 La correspondance est presque parfaite.
 
-Le \ac{CMB} a été émis lorsque l'Univers était à une température de $\approx 3000$ K.
-Le signal reçut est donc redshifté d'un facteur $z\approx1100$ par rapport a celui émis lors de la recombinaison.
+Le \ac{CMB} a été émis lorsque l'Univers était à une température de $T \approx 3000$ K.
+Le signal reçut est donc redshifté d'un facteur $z\approx1100$ par rapport à celui émis lors de la recombinaison.
 
 \begin{figure}[htbp]
         \includegraphics[width=.95\linewidth]{img/01/Cmbr.pdf} 
@@ -347,7 +326,7 @@ Le signal reçut est donc redshifté d'un facteur $z\approx1100$ par rapport a c
 
 \subsection{Spectre de puissance}
 
-John C. Mather et George F. Smoot ont conjointement obtenus le prix Nobel de physique en 2006 pour la \cite{CMBanisotropiesNobel} grâce aux observations réalisées par le satellite  (COBE).
+John C. Mather et George F. Smoot ont conjointement obtenus le prix Nobel de physique en 2006 pour la \cite{CMBanisotropiesNobel} grâce aux observations réalisées par le satellite  COBE.
 Ce léger défaut d'uniformité (de l'ordre de $10^{-5}$ en relatif) nous renseigne sur l’état de l'univers au moment de son émission.
 Par la suite, les satellites WMAP et Planck ont grandement amélioré la précision des mesures des anisotropies du fond diffus (Fig. \ref{fig:cmb}).
 
@@ -402,19 +381,12 @@ Le spectre de puissance correspond à la transformée de Fourrier de sa fonction
  		\label{fig:cmb_power_spectrum}
 \end{figure}
 
-Fig. \ref{fig:cmb_power_spectrum}
+%Fig. \ref{fig:cmb_power_spectrum}
 
 Ce spectre de puissance contient de l'information sur la distribution de la matière au moment de l'émission du \ac{CMB}, et ces fluctuations de température sont essentielles pour expliquer la formation des grandes structures observées aujourd'hui.
 En effet, comme il existe un lien direct entre la température et la densité, les régions aillant une température légèrement plus élevées correspondent aux régions légèrement plus denses, et réciproquement. 
 Nous verrons plus tard (cf \ref{sec:IC}) que cette distribution de matière à très haut redshift permet la génération des conditions initiales nécessaire pour effectuer des simulations.
 La distribution des fluctuations de densité n'est pas la seule information contenue dans le \ac{CMB}, nous verrons dans la prochaine section que se spectre contient également de l'information sur l'abondance des différents constituants de l'Univers.
-
-
-
-
-
-
-
 
 \section{Le contenu de l'univers}
 \label{cosmoparam}
@@ -425,9 +397,7 @@ La distribution des fluctuations de densité n'est pas la seule information cont
  		\label{fig:cosmoparam}
 \end{figure}
 
-
-
-La première étape pour simuler l'univers, est de déterminer ce qu'il contient, et quelles sont les physiques dominante à considérer, en fonction de ce que l'on cherche a étudier.
+La première étape pour comprendre l'univers, est de déterminer ce qu'il contient, et quelles sont les physiques dominante à considérer, en fonction de ce que l'on cherche à étudier.
 La détermination des abondances respectives des différents constituants, utilise conjointement plusieurs observables.
 Chacune de ces observables va pouvoir être lier à un modèle disposant de plusieurs paramètres libres.
 
@@ -440,15 +410,14 @@ Les supernovae considérées comme chandelle standard, suffisamment lointaines p
 
 Ou encore la distribution actuelles des galaxies, en partie reliquat des oscillations acoustiques dans le plasma primordial, permet de contraindre les paramètres cosmologique.
 
-
 %A partir de différents observables,
 %En recoupant les données obtenues a partir d'observations comme , 
 
 %Le spectre de puissance du fond diffus cosmologique permet de déterminer les quantité respectives des différents constituants de l'univers.
 %En recoupant ces données a d'autre observables, comme la distribution des amas de galaxies ou les supernovae lointaines, il est possible de contraindre les paramètres cosmologiques (Fig. \ref{fig:cosmoparam}).
 
-Une représentation de ces différentes contraintes sur le ration densité d'énergie noire / densité de matière est visible sur la figure \ref{fig:cosmoparam},
-Les abondances des différents constituants ne sont pas les seuls parametres libres du modèle standard et une compilation de ces paramètres sont présentés sur la figure \ref{fig:planck_parameters}.
+Une représentation de ces différentes contraintes sur le ratio densité d'énergie noire / densité de matière est visible sur la figure \ref{fig:cosmoparam},
+Les abondances des différents constituants ne sont pas les seuls libres du modèle standard et une compilation de ces paramètres sont présentés sur la figure \ref{fig:planck_parameters}.
 Ces paramètres sont les plus récent et ont été obtenus par \cite{planck_collaboration_planck_2016}.
 
 %A partir du spectre de puissance, on peut déterminer les différentes composantes de l'univers (paramètres cosmologique).
@@ -467,8 +436,7 @@ Ces paramètres sont les plus récent et ont été obtenus par \cite{planck_coll
 
 
 \subsection{Énergie noire}
-Nous avons deja abordé le sujet de l'énergie noire dans la section \ref{sec:dark_egy}
-
+Nous avons déjà abordé le sujet de l'énergie noire dans la section \ref{sec:dark_egy}.
 Avec une abondance relative de près de 70 \%, l'énergie noire est le principal constituant de l'Univers.
 Elle a été introduite pour expliquer l'accélération de l'expansion l'Univers.
 Elle contraint la distribution de matière sur les plus grandes échelles (de l'ordre du Giga parsec).
@@ -479,16 +447,13 @@ vont permettre d'obtenir plus d'information a son sujet.
 
 \subsection{Matière noire CDM}
 
-La matière noire est un vaste sujet 
-Courbe de rotation des galaxies,
-
-
+La matière noire est un vaste sujet.
 Le modèle $\Lambda$CDM nécessite une certaine quantité de matière pour expliquer les interactions gravitationnelles observées.
 Cette quantité de matière n'est pas en accord avec les observations réalisées sur la matière visible.
 Il a donc été nécessaire d’introduire une matière invisible appelée matière noire.
+Elle à été introduite à l'origine pour expliquer une décalage entre les observations des courbes de rotation des galaxies, et la théorie Newtonienne.
 La matière noire représente 26\% du bilan énergétique total et gouverne les échelles de l'ordre du Mega parsec.
-Elle est la principale source de gravitation et présente des propriétés non collisionnelles
-
+Elle est la principale source de gravitation et présente des propriétés non collisionnelles.
 
 %echelle mega parsec\\
 %gouverne la gravité\\
@@ -503,17 +468,12 @@ Elle est la principale source de gravitation et présente des propriétés non c
 % 		\label{fig:matter_power_spectrum}
 %\end{figure}
 
-
-
 \subsection{Baryon}
 
-Les Baryons correspondent a la matière connue.
-Il s'agit de la matière avec laquelle la lumière interagis.
-Ils ne représente que 5\% du bilan global.
-Les baryons interagissent entre eux, ils ont une physique collisionnelle.
-Leur introduction dans les simulations a été nécessaire lorsque l'on a commencer a étudier des échelles de l'ordre du Kilo parsec.
-Elle est la matière qui constitue les étoiles.
-
+Les Baryons correspondent à la matière connue, avec laquelle la lumière interagis.
+Ils ne représentent qu'environ 5\% du bilan global.
+Les baryons interagissent également entre eux, et ont une physique collisionnelle.
+Leur introduction dans les simulations a été nécessaire lorsque l'on a commencer à étudier des échelles de l'ordre du Kilo parsec et la formation stellaire
 
 %echelle kilo parsec
 %collisionnelle
@@ -525,7 +485,6 @@ Elle est la matière qui constitue les étoiles.
 La radiation ne représente aujourd'hui que $10^{-4}$ de l'énergie totale.
 Elle représente notre seul source d'information sur l'univers (Ce n'est plus le cas depuis la récente découverte des ondes gravitationnelles) %TODO ref
 Elle est centrale dans le processus de réionisation.
-
 La radiation est capable d'impacter a la fois les petites échelles de l'ordre du parsec (en interagissant avec la formation stellaire)
 et aux grandes échelles de l'ordre de la centaine de Méga parsec en changeant les propriétés optiques de l'\ac{IGM}.
 
@@ -541,4 +500,3 @@ et aux grandes échelles de l'ordre de la centaine de Méga parsec en changeant 
 
 %perturbation lineaires:
 %https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html
-
