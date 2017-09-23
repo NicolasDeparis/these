@@ -3,11 +3,13 @@
 % (cf loi de \cite{moore1965cramming}). 
 %\cite{THOMPSON200620}
 
-Les échelles de temps sont radicalement opposées entre la cosmologie qui considère les temps les plus long de l'univers et les progrès informatiques qui vont à une vitesse exponentielle.
-Du fait de l'avancée rapide des moyens de calculs, les simulations numérique sont des produits possédant une valeur se dépréciant rapidement et doivent être considérées comme éphémère.
+%Les échelles de temps sont radicalement opposées entre la cosmologie qui considère les temps les plus long de l'univers et les progrès informatiques qui vont à une vitesse exponentielle.
+%Du fait de l'avancée rapide des moyens de calculs, les simulations numérique sont des produits possédant une valeur se dépréciant rapidement et doivent être considérées comme éphémère.
 
 Nous avons vu dans la partie précédente qu'elles étaient les principales physiques à l’œuvre durant l'époque de réionisation.
-L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et quelles sont le contraintes sur leurs  implémentations.
+L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et quelles sont le contraintes sur leurs implémentations.
+On se concentrera particulièrement sur le cas du code EMMA.
+
 
 %Comment modéliser la reionization?
 
@@ -36,10 +38,10 @@ Ces codes seront dit \ac{SPH}.
 %Notion d'arbre -> KDtree
 
 \paragraph{Représentation Eulérienne : } 
-consiste a se placer au point de vue de l'espace.
+consiste à se placer au point de vue de l'espace.
 On considère un élément d'espace et le bilan de matière entrant et sortant de chacune de ses interfaces.
 On associera généralement les codes utilisant ce type de représentation avec une gestion de la physique sous forme de \emph{grille}.
-Si la grille est de résolution variable on parlera de grille \ac{AMR}.
+Si la grille est de résolution variable, on parlera de grille \ac{AMR}.
 
 %\paragraph{Code sur grille} : représente l'espace sous forme de cellules organisées sur une grille. 
 %Notion d'arbre -> arbre AMR
@@ -56,36 +58,36 @@ Dans le cas présent, EMMA utilise une représentation Lagrangienne pour simuler
 \label{sec_gestion_grille}
 %(nécessaire d'être positionné ici car la structure en arbre conditionne plusieur choix par la suite)
 
-Un des concepts le plus central de EMMA est sa grille adaptative.
+Un des concepts central de EMMA est sa grille adaptative.
 Tout les solveurs sont basés dessus et sa structure conditionne un certain nombre de choix par la suite.
 C'est pourquoi nous allons la développer ici, avant de détailler la gestion de la physique. 
 
 Avant d'aborder le concept de grille adaptative faisons un léger détour par l'exemple d'une grille fixe et régulière.
 Dans le cas des simulations sur grille fixe, les données sont réparties en mémoire de façon ordonnée.
-Dans un espace en 3D, on accédera à une cellule contenant le point de coordonnées normées $(x,y,z)$ sur une grille de $N_x*N_y*N_z$ cellules, a l'aide de son identifiant Id dans le tableau en mémoire.
-
+Dans un espace en 3D, on accédera à une cellule contenant le point de coordonnées normées $(x,y,z)$ sur une grille de $N_x*N_y*N_z$ cellules, à l'aide de son identifiant Id dans le tableau en mémoire.
 \begin{equation}
 Id = i + j*N_x + k * N_x*N_y
 \end{equation}
 avec :
 \begin{equation}
 \begin{cases}
-i=\lfloor x \rfloor *N_x \\
-j=\lfloor y \rfloor*N_y \\
-j=\lfloor z \rfloor*N_z \\
+i=\lfloor x \rfloor \cdot N_x \\
+j=\lfloor y \rfloor \cdot N_y \\
+k=\lfloor z \rfloor \cdot N_z \\
 \end{cases}
 \end{equation}
 ou $\lfloor a \rfloor$ représente la partie entière de $a$.
 
 Nous voyons ici que l'organisation en mémoire et la recherche de voisin sont relativement simple à gérer.
 Les vecteurs sont alloués de manière statique et la recherche de voisin est basée sur un jeu d'indice relativement simple.
+%TODO devellope
 Les choses sont plus complexes dans le cas d'une grille adaptative.
 Étant amenée à évoluer, il faut introduire des mécanismes permettant de construire ou détruire certaines parties de la grille de façons dynamique.
 Ces mécanismes vont totalement changer l'organisation de la grille.
 
 Un exemple de grille \ac{AMR} générée par EMMA est présenté sur la figure \ref{fig:AMR}).
 Un fonction de critères prédéfinis par l'utilisateur la résolution de la grille peut être arbitrairement augmentée localement.
-L'avantage de ce type de grille est d'économiser des ressoucres de calcul par rapport au cas d'une grille fixe, ou il faudrait beaucoup plus de cellules pour obtenir une résolution équivalente.
+L'avantage de ce type de grille est d'économiser des ressources de calcul par rapport au cas d'une grille fixe, ou il faudrait beaucoup plus de cellules pour obtenir une résolution équivalente.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/AMR.pdf} 
@@ -95,20 +97,18 @@ L'avantage de ce type de grille est d'économiser des ressoucres de calcul par r
  		\label{fig:AMR}
 \end{figure}
 
-
-
 \subsubsection{Octree}
 
 Il existe deux grands groupe de maille adaptative.
 Le premier groupe utilise une séries de grilles fixes imbriquées. %TODO ref
-Chaques région raffinée sera une grille fixe de résolution plus importante spatiallement liée a une grille de base.
+Chaque région raffinée sera une grille fixe de résolution plus importante spatiallement liée a une grille de base.
 Chaque nouvelle grille aura une résolution double par rapport a la précédente.
 Il est possible d'ajouter autant de niveaux que voulu.
 
 Le second est le groupe qu'utilise EMMA : fully threated tree description \citep{khokhlov_fully_1998-1}.
-La base de cette représentation est de considérer que chaque cellule est associée à une grille fixe de taille 2x2x2 que l'on nommera un OCT , car décomposé en 8 cellules.
+La base de cette représentation est de considérer que chaque cellule est associée à une grille fixe de taille 2x2x2 que l'on nommera un OCT, car décomposé en 8 cellules.
 %sous parties qui sont elles même des cellules.
-Et récursivement, chacune de ces cellules peuvent à leurs tour être divisée et  associée à un OCT.
+Et récursivement, chacune de ces cellules peuvent à leurs tour être divisée et associée à un OCT.
 Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:octree}.
 
 \begin{figure}[bth]
@@ -120,8 +120,18 @@ Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:oct
 \end{figure}
 
 %TODO introduire construction de la grille et grille coarse
-Pour créer une telle grille, il faudra d'abord créer un OCT, et le forcer à raffiner jusqu'à un niveau défini, ce niveau de base sera appelé par la suite niveau coarse.
-Il en résultera une grille régulière qui ne pourra pas être dé-raffinée.
+Pour créer une grille de départ, il faudra d'abord créer un OCT, appelé racine, et le forcer à raffiner.
+Chacune de ces nouvelles cellules vont à leurs tours être raffinée.
+Cette opération est répétée pour toutes les cellule jusqu'à obtention d'une grille régulière de la taille désirée.
+A chaque nouveau raffinement de le nombre de cellule est multiplié par 8.
+Le nombre de cellules d'un niveau entièrement raffiné est donc de:
+\begin{equation}
+N_{cells} = 2^{3L}
+\end{equation}
+où $L$ est le niveau de raffinement.
+
+Il en résultera une grille régulière qui ne pourra pas être dé-raffinée par la suite.
+Le niveau de cette grille de base sera appelé niveau \textit{coarse}.
 
 \subsubsection{La structure OCT}
 %et liste chainée
@@ -136,7 +146,7 @@ On viendra ensuite piocher dans cette réserve pour ajouter des éléments à la
 Les OCT de la grille seront organisés sous forme de liste chainées, il est donc nécessaire d'avoir l'information de la position de l'OCT précédent et de l'OCT suivant en mémoire.
 
 Pour créer un lien entre elle, il est nécessaire de stocker l'information de voisinage.
-L'information spatiale est aussi contenue dans les OCT, ceux ci disposent de  2*D pointeurs vers les cellules voisine.
+L'information spatiale est aussi contenue dans les OCT, ceux ci disposent de six pointeurs vers les cellules voisine.
 Un OCT est également composé d'un tableau de huit cellules filles, ainsi que d'un pointeur vers sa cellule mère.
 Un OCT qui n'a pas de cellule mère est appelé OCT racine, en pratique il n'y en a qu'un seul, de niveau 0, et il représente l'ensemble de l'espace de la grille..
 La génération de conditions périodique (généralement utilisées en cosmologies) se fait de manière naturelle en faisant pointer tout les voisins de l'OCT racine vers lui même.
@@ -167,6 +177,7 @@ struct CELL{
   struct OCT *parent // l'oct pere de la cellule
   struct OCT *child; // si child est different de NULL alors la cellule est raffinee et child point vers l'oct enfant
   struct PHYSIC *data; // pointeur vers la partie physique
+  struct PARTICLE *part; // pointeur vers la chaine de particules.
 };
 \end{lstlisting}
 
@@ -179,9 +190,9 @@ struct CELL{
 %sur le gradient de densité (shock)\\
 
 Il est possible de définir arbitrairement une condition de raffinement en fonction de la physique que l'on cherche a étudier.
-Par exemple, dans des tests unitaires de type sphère de Stömgren (cf \ref{sec:stromgren}) ou explosion de Sedov (cf \ref{sec:sedov}), on marquera les cellules qui sont soumises à un gradient d'ionisation ou de densité supérieur à un certain seuil.
-Dans le cas de simulations cosmologique, on utilisera généralement une condition dite semi-Lagrangienne.
-C'est a dire qu'une cellule sera marquée comme "a raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse de matière noire (ou de gaz) moyenne d'une cellule de ce niveau.
+Par exemple, dans des tests unitaires de type sphère de Stömgren (cf \ref{sec:stromgren}) ou explosion de Sedov (cf \ref{sec:sedov}), on marquera les cellules qui sont soumises à un gradient d'ionisation ou de densité supérieur à un certain seuil pour suivre l'évolution du front.
+Dans le cas de simulations cosmologique, on utilisera généralement une condition en densité dite semi-Lagrangienne.
+C'est a dire qu'une cellule sera marquée comme "à raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse de matière noire (ou de gaz) moyenne d'une cellule de ce niveau.
 
 En pratique, le raffinement se fera en trois temps:
 
@@ -189,8 +200,9 @@ En pratique, le raffinement se fera en trois temps:
 \item Dans un premier temps le code va passer en revue toutes les cellules d'un niveau, et les marquer comme "à raffiner" si une première condition physique est respectée.
 
 \item Une fois tout le niveau passé en revue, le code va ensuite faire une série de $N_{buffer}$ passages sur tout le niveau en marquant à chaque fois toues les cellules voisine des cellules précédemment marquées.
-Cette série de passage a pour but d’élargir la zone de raffinement et ainsi permettre une transition douce entre les niveaux.
 Cette zone de $N_{buffer}$ cellules autour des zones soumises à la condition physique de raffinement sera appelée le "buffer de raffinement".
+Ce tampon a pour but d’élargir la zone de raffinement et ainsi permettre une transition douce entre les niveaux.
+De plus il ne sera autorisé à n'avoir qu'un seul niveau de décallage au maximum lors des transitions.
 
 \item Une fois les cellules respectant ces deux conditions marquées, le raffinement est effectué.
 \end{itemize}
@@ -200,9 +212,10 @@ Cette zone de $N_{buffer}$ cellules autour des zones soumises à la condition ph
 
 %le deraffinement
 On remarquera que la condition de raffinement ne prends pas en compte le fait qu'une cellule soit déjà raffinée ou non.
-Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "a raffinée" elle sera donc dé-raffinée.
+Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "à raffinée" elle sera donc dé-raffinée.
 
-\subsubsection{Opérateurs de changement de grilles} \label{Opérateurs de changement de grilles}
+\subsubsection{Opérateurs de changement de grilles} 
+\label{Opérateurs de changement de grilles}
 
 Les opérations de raffinement/dé-raffinement font intervenir des opérateurs de changement de grille.
 Le changement de résolution peut avoir lieu dans les deux sens :
@@ -236,30 +249,35 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 %La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. 
 %Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
 
-
 \subsection{Recherche de voisin}
 Nous verrons par la suite que l'état d'une cellule dépend des états des cellules qui l'entoure.
-La recherche de voisins sera donc une étape importante dans la gestion de la grille.
+La recherche de voisins est une étape importante dans la gestion de la grille et se fera en suivant les étapes présenté sur la figure \ref{fig:voisin}.
 
-La recherche de voisin se fera suivant ces étapes:
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/voisins.pdf} 
+        \caption{Arbre décisionnel pour la recherche de voisin dans l'octree.
+     	\label{fig:voisin} }
+\end{figure}
 
-\begin{itemize}
-\item en fonction de l'ID de la cellule, déterminer si la voisine est dans le même OCT parent.
-
-\item
-\begin{itemize}
-\item Si c'est le cas, accéder a l'oct parent et a l'aide de l'indice du tableau de cellule, retrouver le voisin en question.
-\item Si ce n'est pas le cas, accéder a la cellule mère de l'oct père et rechercher l'oct voisin
-\end{itemize}
-
-\end{itemize}
+%\begin{itemize}
+%\item en fonction de l'ID de la cellule courante, déterminer si la voisine recherchée est dans le même OCT parent.
+%
+%\item
+%\begin{itemize}
+%\item Si c'est le cas: accéder à l'OCT parent, et à l'aide de l'indice du tableau de cellule, retrouver le voisin en question.
+%\item Si ce n'est pas le cas, accéder à l'OCT parent, à l'aide des pointeurs sur les voisins, localiser l'OCT voisin et s'y rendre. Si l'OCT est raffiné déterminer 
+%\end{itemize}
+%
+%\end{itemize}
 
 \subsection{Gestion de l'expansion}
 \label{sec:supercomobil}
 
-Nous avons vu dans l'introduction a la physique de la reionisationque l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
-Nous allons voir dans cette partie comme cette composante est traité numériquement.
-Bien que nous sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
+%On parlera de simulations cosmologiques lorsque l'e volume considéré est en expansion.
+
+Nous avons vu dans l'introduction à la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
+Nous allons voir dans cette partie comme cette composante est traitée numériquement.
+Bien que nous ne sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
 Le solveur gérant l'énergie noire n'est pas a proprement parler un solveur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
 Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
 
@@ -330,53 +348,60 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 \frac{\delta a (\Delta t) } {a} < \epsilon
 \end{equation}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Les principaux solveurs physique}
 
-Nous allons voir dans cette partie que plus une physique représente une part importante du contenu de l'Univers plus elle est simple et rapide a simuler.
-Nous nous intéresserons à trois solveurs distincts:
+%Nous allons voir dans cette partie que plus une physique représente une part importante du contenu de l'Univers plus elle est simple et rapide a simuler.
+
+Lors d'une simulation la grande majorité des ressources de calculs sont utilisées pour résoudre la physique.
+Comme il a été abordée dans la section \ref{cosmoparam}, l'Univers est constitué de différents fluides.
+Chacun étant associé à un solveur particulier, nous nous intéresserons dans ce chapitre à trois solveurs distincts:
 \begin{itemize}
-\item de matière noire
-\item du gaz
-\item de la radiation
+\item gravitation,
+\item hydrodynamique,
+\item radiatif.
 \end{itemize}
-Et ce, dans un ordre décroissant d'importance, relativement a la quantité d'énergie totale.
+
+%Et ce, dans un ordre décroissant d'importance, relativement a la quantité d'énergie totale.
+
+%Plus une physique est 
+
+Un solveur numérique consiste à estimer l'évolution de l'état d'un système, soumis a un certain nombre de règles, connaissant son état à un instant donné.
+Les trois solveur que nous allons aborder ont pour objectif de suivre des système dont l'évolution est régie par un système d'équations différentielles.
+Il va être nécessaire de discétiser ces systèmes avant de pouvoir les traiter numériquement.
+L'objectif de cette partie est de présenter les différentes techniques et implémentations des solveurs physiques de EMMA.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Matière noire}
+\section{Gravitation et matière noire}
 \label{sec:solverDM}
 La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien à la représentation Lagrangienne, et donc a une simulation sous forme de particule.
-Pour la simuler, on utilisera le principe des code Ncorp., c'est à dire qu'on utilisera un champs de particules massive interagissante par gravitation.
-Il existe différentes techniques pour suivre l'évolution d'un tel système.
-Toutes sont basées sur le même principe.
-Les particules sont placée suivant une certaine condition initiale.
-Et on cherche a connaitre la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement
+Pour la simuler, on utilisera le principe des code N-corps., c'est à dire qu'on utilisera un champs de particules massive interagissante uniquement par gravitation.
+Il existe différentes techniques pour suivre l'évolution d'un tel système, toutes sont basées sur le même principe.
+Les particules sont placée suivant une certaine condition initiale et on cherche à connaitre la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement.
 
 \subsection{Génération des conditions initiales}
 \label{sec:IC}
 Nous avons vu (cf \ref{sec:CMB}) que le \ac{CMB} nous donne de l'information sur l'état de la distribution de matière dans l'univers très tôt dans son histoire.
-Il est possible de déterminer le spectre de puissance des fluctuations de densité de l'univers primitif a partir du \ac{CMB}.
+Il est possible de déterminer le spectre de puissance des fluctuations de densité de l'univers primitif à partir du \ac{CMB}.
 Le principe de la génération des condition initiales est d'utiliser ce spectre de puissance pour générer des surdensité représentant statistiquement ces fluctuations.
-
-Pour se faire on va générer une grille régulière sur laquelle on placera une particule au centre de chaque cellule.
-Dans ce cas la densité est homogène.
-On va alors perturber la position des particules de manière à respecter les fluctuations statistique observées dans le CMB.
-Pour ce faire, il faut générer un bruit aléatoire Gaussien.
+Pour se faire on va générer une grille régulière sur laquelle on placera une particule au centre de chaque cellule, dans ce cas la densité est homogène.
+On va alors perturber la position des particules de manière à respecter les fluctuations statistique observées dans le \ac{CMB}.
+Pour ce faire, on va générer un bruit aléatoire Gaussien que l'on 
 %Tout les générateurs de condition initiales que j'ai pu rencontrer utilise une SEED aléatoire, dans le but de générer ce bruit aléatoire.
-On convoluera ensuite ce bruit avec le spectre de puissance que l'on cherche a reproduire.
-Et on appliquera les déplacement obtenus au particules.
-Cette approximation n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire et s'appelle l’approximation de Zeldovitch (eg \cite{2014MNRAS.439.3630W}).
-L’approximation de Zeldovitch est capable de prédire analytiquement la distribution de la matière à très grandes échelles.
-Mais plus l'on cherche à étudier des petites échelles, plus on sort vite du domaine de précision acceptable.
-C'est pourquoi il est nécessaire d'avoir recourt au simulations numériques.
+convoluera ensuite avec le spectre de puissance que l'on cherche a reproduire.
+On déplacera finalement les particules en accord en leurs appliquant les perturbations obtenues. 
+Cette approximation est l’approximation de Zeldovitch (voir eg \cite{2014MNRAS.439.3630W}) et n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire.
+%L’approximation de Zeldovitch est capable de prédire analytiquement la distribution de la matière à très grandes échelles.
+%Mais plus l'on cherche à étudier des petites échelles, plus on sort vite du domaine de précision acceptable.
+En dehors de cette approximation, il est nécessaire d'avoir recourt aux simulations numériques.
 
 Nous voyons ici que le spectre est limité des deux cotés.
-D'un coté l'information des grandes échelles est tronquée par la taille de la boite considéré.
-Il n'est pas possible d'avoir de l’information sur des longueurs d'onde du spectre plus grande que cette taille limite.
-De l'autre coté, les petites échelles sont tronquées par la limite de résolution.
-Le spectre est troqué au niveau de la longueur d'onde correspondant à la résolution de la grille.
+D'un coté l'information des grandes échelles est tronquée par la taille de la boite considéré et il n'est pas possible d'avoir de l’information sur des longueurs d'onde du spectre plus grande que cette taille limite.
+De l'autre coté, les petites échelles sont tronquées par la limite de résolution et le spectre est troqué au niveau de la longueur d'onde correspondant à la résolution de la grille.
 Cette perte d'information sur les hautes fréquences peux être problématique dans le cas où la résolution est adaptative.
-Dans le cas de l'\ac{AMR} par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
+%Dans le cas de l'\ac{AMR} par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
 
 %En pratique j'ai principalement utilisé MUSIC et GRAPHIC %TODO ref.
 
@@ -410,38 +435,36 @@ Dans le cas de l'\ac{AMR} par exemple il peux paraître difficile d'autoriser un
 %Le sloveur que je connais le mieux.
 %Fluide non collisionnel -> particule\\
 
-A partir des condition initiales générées par un code dédié, on cherche ensuite à suivre dynamiquement l'évolution des particules.
+A partir des conditions initiales générées, on cherche ensuite à suivre dynamiquement l'évolution des particules.
 Le but est d'obtenir la position des particules à chaque instant.
-Pour cela, il faut leurs vitesses.
-Pour cela, il faut leurs accélération.
-Pour cela, il faut la force qui leur est appliquée.
-Et dans certain cas, il faut le potentiel gravitationnel.
-Ce système d'équation est appelé le système d'équation de Vlasov-Poisson :
+%Pour cela, il faut leurs vitesses.
+%Pour cela, il faut leurs accélération.
+%Pour cela, il faut la force qui leur est appliquée.
+%Et dans certain cas, il faut le potentiel gravitationnel.
+Ce système d'équations est appelé le système d'équation de Vlasov-Poisson :
 
 \begin{equation}
 \begin{cases}
-
 \frac{d{x}_p}{dt} = { v}_p, \\
 \frac{d{ v}_p}{dt} = -\nabla \phi , \\
 \Delta \phi= 4\pi G \rho.
-
 \end{cases}
 \label{eq:Ncorps}
 \end{equation}
 
 Il existe plusieurs méthodes pour résoudre ce système.
-Historiquement la première méthode était la méthode :
-\paragraph{Particule-Particule : } c'est la méthode la plus directe pour calculer l'évolution d'un system Ncorps. 
+%Historiquement la première méthode était la méthode
+\paragraph{Particule-Particule (PP) : } c'est la méthode la plus directe pour calculer l'évolution d'un system N-corps. 
 Elle consiste, pour chaque particule, à sommer les contributions gravitationnelles de toutes les autres particules:
 \begin{equation}
 \vec{F}_i=-\sum_{j\neq i} G \frac{G m_i m_j(\vec{r}_i - \vec{r}_j) }{ |\vec{r}_i - \vec{r}_j |^3}
 \end{equation}
 Ce type de code dispose d'une très bonne précision mais la quantité de calculs évolue en ordre $O(N^2)$, ce qui fait que ce type de code est très coûteux.
 
-Une évolution de cette méthode est la méthode :
-\paragraph{Particule-tree : } elle consiste a regrouper les particules les plus lointaine de la particule courante en amas aillant une interaction gravitationnelle commune.
+%Une évolution de cette méthode est la méthode :
+\paragraph{Particule-tree : } évolution de la méthode PP, elle consiste à regrouper les particules les plus lointaine de la particule courante en amas aillant une interaction gravitationnelle commune \citep{1986Natur.324..446B}.
 % (Barnes & Hut 1986) 
-Cette approximation permet de limiter considérablement le nombre de calcul pour les interactions lointaine qui sont de toute façons faibles.
+Cette approximation permet de limiter considérablement le nombre de calcul, ordre $O(n log n)$, pour les interactions lointaine qui sont de toute façons faibles 
 
 
 
@@ -451,17 +474,24 @@ Cette approximation permet de limiter considérablement le nombre de calcul pour
 %\vec{F}=-\Delta \Phi
 %\end{equation}
 
-La méthode qui nous intéresse ici consiste à utiliser le potentiel pour déterminer la force.
-Le potentielle sera calculé sur une grille, cette méthode sera nommée :
-\paragraph{Particule-Mesh : } on projette les particules sur une grille dans l'objectif d'obtenir  une grille de densité pour ensuite obtenir le potentiel en résolvant l'équation de Poisson.
+
+\paragraph{Particule-Mesh (PM) : } La méthode qui nous intéresse ici.
+Elle consiste à ne plus calculer directement la force, mais à la dériver à partir du potentiel.
+Le potentiel sera calculé sur une grille.
+En projetant les particules sur une grille on obtient une grille de densité utilisée ensuite obtenir le potentiel en résolvant l'équation de Poisson.
 %ENZO %code, Bryan & Norman 1998
 %RAMSES
+
+\paragraph{}
 La méthode de projection des particules sur la grille n'est pas unique.
-A l'ordre 0, il est possible de se contenter d'ajouter la masse de la particule dans la cellule a laquelle elle appartient.
-Le résultat obtenu étant très bruité, on utilisera une méthode d'ordre supérieure appelée \ac{CIC}:
-\paragraph{CIC} consiste à considérer une étendue spatiale aux particules et à pondérer la masse appliquée aux cellules par l'intersection de son volume et de celui de la cellule (voir Fig\,\ref{fig:CIC}).
+A l'ordre $0$, il est possible de se contenter d'ajouter la masse de la particule dans la cellule a laquelle elle appartient.
+On utilisera en pratique une méthode d'ordre supérieur appelée \ac{CIC}:
+
+\paragraph{CIC} : consiste à considérer une étendue spatiale aux particules et à pondérer la masse appliquée aux cellules par l'intersection de son volume et de celui de la cellule (voir Fig\,\ref{fig:CIC}).
 On associe généralement une taille à la particule similaire a celle des cellule sur laquelle on la projette.
 Dans le cas où l’étendue de la particule intersecte des cellules de différents niveaux on lui associera la taille de la plus grande cellule dans le but de lisser la transition entre les niveaux.
+%Il existe des méthodes d'ordre supérieur avec des kernel plus complexe que le top-hat du \ac{CIC} comme par exemple des kernel en triangle ou en gaussienne.
+%http://techfinder.stanford.edu/technology_detail.php?ID=30866
 
 \begin{figure}[bth]
 		\centering
@@ -473,13 +503,12 @@ Dans le cas où l’étendue de la particule intersecte des cellules de différe
  		\label{fig:CIC}
 \end{figure}
 
-Il existe des méthodes d'ordre supérieur avec des kernel plus complexe que le top-hat du \ac{CIC} comme par exemple des kernel en triangle ou en gaussienne.
-%http://techfinder.stanford.edu/technology_detail.php?ID=30866
-Une fois la grille de densité générée nous pouvons calculer le potentiel.
+\paragraph{}
+Une fois la grille de densité générée, nous pouvons calculer le potentiel en résolvant l'équation de Poisson.
 
-\subsubsection{l'équation de Poisson}
+\subsubsection{L'équation de Poisson}
 
-Connaissant la distribution de densité a un certain instant, il est possible de calculer le potentiel gravitationnel en résolvant l'équation de Poisson:
+Connaissant la distribution de densité à un instant donné, il est possible de calculer le potentiel gravitationnel en résolvant l'équation de Poisson:
 
 \begin{equation}
 \Delta \Phi = S_{(\rho)}
@@ -498,10 +527,10 @@ avec le contraste de densité:
 \delta_{(\rho)} = \rho / < \rho > - 1 
 \end{equation}
 
-L'objectif est donc d'intégrer deux fois la distribution de densité pour obtenir le potentiel gravitationnel:
+En intégrant deux fois la distribution de densité on obtient le potentiel gravitationnel:
 
 \begin{equation}
-\Delta \phi = S \longrightarrow \phi = \iint \Delta \phi = \iint S
+\Delta \phi = S \longrightarrow \phi = \iint \Delta \phi = \iint S_{(\rho)}
 \end{equation}
 
 Pour cela, il existe principalement deux types de méthodes. 
@@ -523,26 +552,29 @@ Ce qui n'est pas un problème en simulation cosmologique, où les conditions de 
 De plus, les FFT nécessitent un échantillonnage régulier, ce qui implique que cette méthode est incompatible avec les méthodes \ac{AMR}. 
 %Et dernièrement, le passage dans l'espace des fréquences nécessite des conditions de types plans parallèles lors parallélisation, conditions incompatible avec la gestion de grille utilisé par les code AMR dont EMMA} fait partie. \\
 
-Un autre type de méthode de résolution possible est une méthode itérative. 
-Elle consiste à faire converger le potentiel à partir d'une condition initiale arbitraire. 
-Ce type de méthode est plus lente que la méthode par FFT mais permet d'utiliser tout type de conditions de bords, d'être facilement parallélisable et surtout est compatible avec les méthodes basées sur des grilles adaptatives.
+Le second type de méthodes est dit itératif. 
+Il consiste à faire converger le potentiel à partir d'une condition initiale arbitraire. 
+Ces méthodes sont plus lente que la méthode par FFT mais permet d'utiliser tout type de conditions de bords, d'être facilement parallélisable et d'être compatible avec les méthodes basées sur des grilles adaptatives.
 %Par la suite, c'est donc une méthode itérative et plus précisément une méthode \emph{Multigrille} qui à été développée.
 %Le potentiel est alors dérivé pour obtenir la force ressentie dans chaque cellule. 
 %Il est ensuite aisé de calculer l'accélération subie par les particules de chaque cellule, et par intégration temporelle, leurs nouvelles positions et vitesses.
-Le principe de ces méthodes est d'introduire un terme temporel fictif et de rechercher un solution stationnaire a cette nouvelle équation.
-Par analogie à l'équation de la chaleur par exemple, la densité correspond aux sources chaudes et le potentiel à la température, à $t=0$ les sources chaudes sont allumées et la chaleur se propage jusqu'a ce que le milieu ait atteint sa température d'équilibre. 
-Ici, c'est donc la gravité qui se diffuse dans le milieu.
+Le principe de ces méthodes est d'introduire un terme temporel fictif et de rechercher un solution stationnaire à cette nouvelle équation.
+Par analogie à l'équation de la chaleur par exemple, la densité correspond aux sources chaudes et le potentiel à la température, à $t=0$ les sources chaudes sont allumées et la chaleur se propage jusqu'à ce que le milieu ait atteint sa température d'équilibre. 
+%Ici, c'est la gravité qui se diffuse dans le milieu.
+L'équation à résoudre est donc:
 
 \begin{equation}
-\dfrac{\partial \phi}{\partial t} = \Delta \Phi -S 
+\dfrac{\partial \phi}{\partial t} = \Delta \Phi -S_{(\rho)}
 \end{equation}
+
+
 
 \subsubsection{Méthode jacobi}
 
 La méthode de Jacobi est la façon la plus simple de relaxer ce type d'équation, elle consiste à utiliser directement la forme discrète de l'équation de Poisson modifiée. 
 L'équation à intégrer est:
 
-\[ \dfrac{\phi^{t+1}_i - \phi^{t}_i}{\Delta t}  =  \Delta \phi_i^t - S_i \]
+\[ \dfrac{\phi^{t+1}_i - \phi^{t}_i}{\Delta t}  =  \Delta \phi_i^t - S_i^t \]
 
 où, à 3 dimensions, le Laplacien s'exprime :
 
@@ -552,23 +584,23 @@ Le principal avantage de cette méthode est qu'elle ne nécessite de connaître 
 %Ainsi, chaque fils d'exécution parallèle (thread) est indépendant et n'a pas d'information à communiquer aux autres.
 
 \subsubsection{Gauss Seidel}
-Gauss-Seidel est une amélioration de Jacobi. 
+Gauss-Seidel est une amélioration de Jacobi et permet d'augmenter la vitesse de convergence.% En utilisant toujours la valeur estimée,
 Au lieu d'utiliser, à chaque pas de temps, les valeurs de la grille au niveau précédent, cette méthode consiste à toujours utiliser la valeur la plus à jour disponible. 
 Une fois $\phi^{t+1}_0$ calculé à l'aide de $\phi^{t}_i$, la valeur de $\phi^{t+1}_1$ n'est pas calculée à l'aide de $\phi^{t}_0$ mais avec $\phi^{t+1}_0$. 
-En utilisant toujours la valeur la mieux estimée, cette méthode accélère la convergence. 
+%En utilisant toujours la valeur la mieux estimée, cette méthode accélère la convergence. 
 L'intégration temporelle ne change pas, mais l'intégration spatiale devient: 
 
 \[ \Delta \phi_i^t = \dfrac{\phi_{x+1,y,z}^t  + \phi_{x-1,y,z}^\mathbf{t+1} + \phi_{x,y+1,z}^t  + \phi_{x,y-1,z}^\mathbf{t+1} + \phi_{x,y,z+1}^t + \phi_{x,y,z-1}^\mathbf{t+1}	- 6\phi_{x,y,z}^t}{\Delta x ^2} \]
 
 La parallélisation de cette méthode est plus compliquée que dans le cas de Jacobi. 
-La détermination de la valeur de chaque cellule nécessite de connaître l'état le plus à jour de ses voisins et donc de faire passer de l'information entre les threads.
-Cependant, une méthode nommée Gauss-Seidel Rouge-Noir permet une parallélisation sur multiprocesseurs en séparant l'espace en un damier de couleurs. 
-Chaque processeur ne calcule alors qu'une seule couleur. 
+La détermination de la valeur de chaque cellule nécessite de connaître l'état le plus à jour de ses voisins et donc de faire passer de l'information entre les processus.
+Cependant, une méthode nommée Gauss-Seidel Rouge-Noir facilite la parallélisation en séparant l'espace en un damier de couleurs. 
+%Chaque processeur ne calcule alors qu'une seule couleur. 
 Le premier processeur calcul par exemple les cases blanches de l'échiquier à partir de $\phi_i^t$, puis le second calcul le cases noires à partir des cases blanches déterminé par le premier.
 
 
 \subsubsection{Sur-relaxation successive (SOR)}
-La méthode de sur-relaxation successive consiste à appliquer un coefficient à la méthode de Gauss-Seidel (ou de Jacobi, en fonction de la méthode de dérivation spatiale) pour sur-estimer l'évolution de la convergence et ainsi l'accélérer. 
+La méthode de sur-relaxation successive consiste à appliquer un coefficient pour sur-estimer l'évolution de la convergence et ainsi l'accélérer. 
 L'équation à intégrer devient:
 \[ \phi^{t+1}_i = \phi^{t}_i + \omega  \Delta t \left (\Delta \phi_i^t -S^t_i \right )  \]
 où $\omega \in \left] 0,2 \right [$ est le paramètre de sur-relaxation.
@@ -598,8 +630,10 @@ A cette condition est ajouté un nombre d'itérations maximum fixe pour éviter 
 \subsubsection{Multigrille}
 
 La technique du multigrille a été développé pour améliorer la vitesse de convergence des méthodes itératives.
-Elle consiste à travailler non pas sur la grandeur elle même, mais sur l'erreur effectuée dans l'estimation de cette grandeur.
- 
+Elle consiste à utiliser le fait que les méthodes itératives converge rapidement les hautes fréquences spatiales en utilisant une série de grilles à différentes résolutions.
+De plus elles considère non plus la grandeur elle même, mais l'erreur effectuée dans l'estimation de cette grandeur.
+L'équation à résoudre est alors modifiée en considérant que l'inconnue n'est plus le potentiel mais l'erreur commise sur son estimation. Le terme source n'est plus la densité mais la densité moins son estimation grossière.
+
 Si l'équation à résoudre est de la forme : 
 \[ \mathcal{L} u = f \]
 Sa forme discrète est :
@@ -615,8 +649,6 @@ Et en utilisant la linéarité de l'opérateur Laplacien:
 \[ f_h   = \mathcal{L}_h \tilde{u_h} - d_h\]
 et finalement :
 \[ \mathcal{L}_h v_h = -d_h \]
-
-L'équation à résoudre est alors modifiée en considérant que l'inconnue n'est plus le potentiel mais l'erreur commise sur son estimation. Le terme source n'est plus la densité mais la densité moins son estimation grossière.\\
 
 Le cycle consiste à lisser (relaxer quelques fois) le potentiel à pleine résolution, les petites échelles vont alors rapidement converger, puis à calculer l'erreur commise à ce stade. 
 L'erreur est dégradée à plus basse résolution, elle ne contient alors que de l'information sur les basses fréquences de la grille de départ, les hautes fréquences de la grille à pleine résolution ont été supprimées par la dégradation. 
@@ -638,9 +670,8 @@ Corriger	&	$ \tilde{u}_h^{new} = \tilde{u_h} + v_h$\\
 Lisser		&	$ \mathcal{L} u_h = f_h $
 \end{tabular} 
 
-A partir de la méthode deux grilles, rien n'empêche d'estimer l'erreur sur l'erreur par la même méthode, ce processus peut être utilisé récursivement pour générer tout un ensemble de sous grilles et ainsi accélérer encore la convergence.\\
-
-L'algorithme devient alors:\\
+A partir de la méthode deux grilles, rien n'empêche d'estimer l'erreur sur l'erreur par la même méthode, ce processus peut être utilisé récursivement pour générer tout un ensemble de sous grilles et ainsi accélérer encore la convergence.
+L'algorithme devient alors:
 
 MG(level, $u_h$, $f_h$)
 \begin{itemize}	
@@ -660,28 +691,28 @@ MG(level, $u_h$, $f_h$)
 		\end{tabular} 
 \end{itemize}
 
-Où la taille de la grille au niveau "level" est de $2^{3L}$ ( si $L=9$, la taille de la grille est de $512^3$ ). $h$ est le pas de la grille au niveau $L$ est $H = 2h$. 
+Où "level" est le niveau de la grille. $h$ est le pas de la grille au niveau $L$ et $H = 2h$. 
 Les opérateurs $P$ et $R$ sont les opérateurs de prolongation et de restriction explicité section \ref{Opérateurs de changement de grilles}.
-Cet algorithme est représenté graphiquement sur la figure \ref{Description du V-cycle}.
+En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. 
+Un seul appel génère un cycle nommé cycle en V, deux un cycle en W, etc... 
+Cet algorithme est représenté graphiquement sur la figure \ref{fig:mgrid}.
 
-\begin{figure}[htbp]
+\begin{figure}
 \begin{center}
 \includegraphics[scale=0.35]{img/02/multigrid.png}
-\caption{\textbf{Vue des différents niveaux de grilles.} Image extraite de \href{http://MGNet.org}{MGNet.org} }
-\label{Vue des différents niveaux de grilles}
+\caption{Vue des différents niveaux de grilles et du V-cycle.
+ Image extraite de \href{http://MGNet.org}{MGNet.org} }
+\label{fig:mgrid}
 \end{center}
 \end{figure}	
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=0.35]{img/02/Vcycle.png}
-\caption{\textbf{Description du V-cycle.} Image extraite de \href{http://MGNet.org}{MGNet.org}}
-\label{Description du V-cycle}
-\end{center}
-\end{figure}		
-
-En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. 
-Un seul appel génère un cycle nommé cycle en V (fig. \ref{Description du V-cycle}), deux un cycle en W, etc... 
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[scale=0.35]{img/02/Vcycle.png}
+%\caption{\textbf{Description du V-cycle.} Image extraite de \href{http://MGNet.org}{MGNet.org}}
+%\label{Description du V-cycle}
+%\end{center}
+%\end{figure}		
 
 \subsection{Implémentation dans EMMA}
 Dans EMMA, la potentiel est calculé par multigrille sur la grille coarse et utilise l'arbre \ac{AMR} pour gérer les sous-niveaux.
@@ -689,28 +720,26 @@ Sur les niveaux raffinés la relaxation est effectuée par Gauss Siedel rouge/no
 La solution déterminée sur les niveaux grossiers est projetée sur les niveaux raffinés, la solution anticipée est déjà proche de sa vraie valeur. 
 Il en résulte une convergence rapide.
 
-On prendra garde, lors de calcul en parallèle, à utiliser un niveau minimum de telle sorte que chaque processeur dispose au minimum d'un oct lors du calcul sur la grille grossière du multigrille.
-%Dans le cas contraire, le calcul ne donnera pas le bon résultat.
+Pour des raisons techniques, on prendra garde lors de calcul en parallèle, à utiliser un niveau minimum de telle sorte que chaque processeur dispose au minimum d'un oct lors du calcul sur la grille grossière du multigrille.
+Le niveau minimum du V-cycle est : 
 
 \begin{equation}
 L_{min} = 1 + ceil \left(\frac{log_2(N_{cpu})}{3}  \right) 
 \end{equation}
 
 
-\subsection{Liste chaînée de particule}
-\label{sec:chainepart}
-La gestion des particules dans EMMA utilise le principe de la liste chaînée déjà abordée pour les OCT. %TODO ref
-A chaque cellule est associée  un pointeur vers une particule de tète.
-Si ce pointeur est NULL, la cellule ne contient pas de particule.
-Les particules entrant dans cette cellule seront ajoutées a la liste chaînée.
-On prendra garde a gérer cette liste au moment du raffinement et du déraffinement des cellules.
-
-
-
-\subsection{Le pas de temps}
-
-Le pas de temps sera calculer de telle sorte a respecter la condition de Courant.
-Une particule ne doit pas se déplacer de plus d'une fraction de case a chaque pas de temps.
+%\subsection{Liste chaînée de particule}
+%\label{sec:chainepart}
+%La gestion des particules dans EMMA utilise le principe de la liste chaînée déjà abordée pour les OCT. %TODO ref
+%A chaque cellule est associée  un pointeur vers une particule de tète.
+%Si ce pointeur est NULL, la cellule ne contient pas de particule.
+%Les particules entrant dans cette cellule seront ajoutées a la liste chaînée.
+%On prendra garde a gérer cette liste au moment du raffinement et du déraffinement des cellules.
+%
+%\subsection{Le pas de temps}
+%
+%Le pas de temps sera calculer de telle sorte a respecter la condition de Courant.
+%Une particule ne doit pas se déplacer de plus d'une fraction de case a chaque pas de temps.
 
 
 %	    dtloc=0.1*SQRT(2.*M_PI/(3.*(curoct->cell[icell].gdata.d+1.)*aexp));
@@ -723,7 +752,7 @@ Une particule ne doit pas se déplacer de plus d'une fraction de case a chaque p
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \clearpage
-\section{Le solveur hydrodynamique et la physique baryonique}
+\section{Hydrodynamique et la physique baryonique}
 
 %solveur hydro
 %partie la plus intensive en calcul
@@ -908,7 +937,7 @@ avec $cs = \gamma P/\rho$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \clearpage
-\section{Le solveur radiatif}
+\section{Radiation et énergie ionisante}
 \label{sec:rad_solver}
 
 Il existe deux grandes famille de code de transfert de rayonnement.
