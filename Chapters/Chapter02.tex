@@ -753,7 +753,7 @@ L_{min} = 1 + ceil \left(\frac{log_2(N_{cpu})}{3}  \right)
 
 \clearpage
 \section{Hydrodynamique et la physique baryonique}
-
+\label{sec:hydro}
 %solveur hydro
 %partie la plus intensive en calcul
 
@@ -940,13 +940,35 @@ avec $cs = \gamma P/\rho$
 \section{Radiation et énergie ionisante}
 \label{sec:rad_solver}
 
+L'objectif de cette section est de présenter les bases de la physique radiative, du transfert du rayonnement (RT) à son interaction avec les baryons.
+Ce solveur se déroule en deux temps.
+Premièrement, il faut calculer la propagation du rayonnement, on appelles cette étape \textit{le transport} des photons.
+Deuxièmement, il faut le couplage entre le rayonnement et le gaz, c'est a dire calculer l'impact \textit{chimie} du gaz.
+Nous nous intéresserons ici uniquement au transfert d'énergie ionisante.
+Nous verrons dans un premier temps le système d'équation a résoudre, puis dans un second temps, les méthodes de discrétisation.
+
+\subsection{L'équation du transfert du rayonnement}
+
+L'équation du transfert du rayonnement lie l'évolution de l'intensité spécifique $I_\nu(\vec{x},\vec{n},t)$, au champ de sources $\eta_\nu(\vec{x},\vec{n},t)$, en fonction du coefficient d'absorption $\kappa_\nu(\vec{x},\vec{n},t)$ :
+\begin{equation}
+\frac{1}{c} \frac{\partial I_\nu}{\partial t} + \vec{n}\cdot \vec{\nabla} I_\nu = \eta_\nu - \kappa_\nu I_\nu 
+\label{eq:rad}
+\end{equation}
+
+Le coefficient d'absorption s'exprime en fonction de la section efficace de photo-ionisation de l'hydrogène neutre $\sigma_\nu$ et de la densité d'hydrogène neutre $n_H$ :
+\begin{equation}
+\kappa_\nu(\vec{x},\vec{n},t) = \sigma_\nu n_H.
+\end{equation}
+
 Il existe deux grandes famille de code de transfert de rayonnement.
 \begin{itemize}
-\item La première famille utilise une représentation très physique de la lumière, et simule la radiation a l'aide de rayons se propageant dans l'espace.
+\item La première famille utilise une représentation très physique de la lumière, et simule la radiation à l'aide de rayons se propageant dans l'espace.
+ce spnt des méthodes dite de lancer de rayons.
+Dans le cas ou la vitesse de ces rayon est infinie, on appelle ces méthodes de Monté Carlo.
 CRASH \citep{2003MNRAS.345..379M}, C$^2$RAY\citep{2006NewA...11..374M}.
 Ce type de code utilise une principe qui se rapproche physiquement de la vraie nature de la lumière.
 Chaque source lance un certain nombre de groupe de photon, qui vont se propager et interagir avec le milieu.
-Plus les sources sont nombreuses, plus le nombre de groupe de photons a suivre devient important, et plus le cout numérique l'est également.
+Plus les sources sont nombreuses, plus le nombre de groupe de photons à suivre devient important, et plus le cout numérique l'est également.
 
 \item La seconde, celle utilisée dans EMMA, repose sur le principe de considérer la lumière comme un fluide. \citep{gnedin_multi-dimensional_2001, aubert_radiative_2008}.
 Ces méthodes dites méthodes aux moments utiliseront donc les même concepts que le solveur hydrodynamique, mais avec un système initial d'équations différentes. 
@@ -954,46 +976,32 @@ EMMA utilise une approximation du moment au premier ordre, son solveur repose su
 Son principal avantage est que le coût numérique est indépendant du nombre de sources.
 \end{itemize}
 
-Ce solveur se déroule en deux temps.
-Premièrement, il faut calculer la propagation du rayonnement, on appelles cette étape \textit{le transport} des photons.
-Deuxièmement, il faut le couplage entre le rayonnement et le gaz, c'est a dire calculer l'impact \textit{chimie} du gaz.
 
-
-\subsection{Les équations du transfert du rayonnement}
-\begin{equation}
-\frac{1}{c} \frac{\partial I_\nu}{\partial t} + \vec{n}\cdot \vec{\nabla} I_\nu = \eta_\nu - \kappa_\nu I_\nu 
-\end{equation}
-Avec: $I_\nu(\vec{x},\vec{n},t)$ l'intensité spécifique,
-$\eta_\nu(\vec{x},\vec{n},t)$ la source de rayonnement,
-le coefficient d'absorption $\kappa_\nu(\vec{x},\vec{n},t) = \sigma_\nu n_H$, 
-$\sigma_\nu$ la section efficace de photo-ionisation de l'hydrogène neutre et $n_H$ la densité d'hydrogène neutre
-
-
+\subsection{Méthode des moments}
+Les deux premiers moments (d'ordre 0 et 1) de l'équation \ref{eq:rad} s'exprime sous la forme:
 \begin{equation}
 \begin{cases}
-
 \frac{ \partial N_\nu }{ \partial t } + \vec{\nabla} \cdot \vec{F}_\nu = -\kappa_\nu c  N_\nu + S_\nu,\\
-
 \frac{ \partial \vec{F} }{ \partial t } + c^2 \vec{\nabla} P_\nu = -\kappa_\nu c \vec{F}_\nu ,
-
 \end{cases}
 \label{eq:densite_energie}
 \end{equation}
-Représentant respectivement les moments d'ordre 0 et 1 de $I_\nu$ avec:
+avec:
 $\vec{F}_\nu$ le flux radiatif, 
-$P_\nu $ la pression radiative
-et $S_\nu = \dot{N}_\nu^* + \dot{N}_\nu^{rec}$ le taux d’émission de photon due aux sources $\dot{N}_\nu^*$ et a la recombinaison $ \dot{N}_\nu^{rec}$
-
+$P_\nu $ la pression radiative (sous forme tensorielle),
+et $S_\nu = \dot{N}_\nu^* + \dot{N}_\nu^{rec}$ le taux d’émission de photon due aux sources $\dot{N}_\nu^*$ et à la recombinaison $ \dot{N}_\nu^{rec}$.
 
 \subsection{Relation de fermeture et approximation M1}
-La fermeture du système se fait par l’intermédiaire de l’équation d’état, avec $D$ le tenseur d’Eddington :
+
+De la même manière que l'équation d'état des gaz parfait est utilisée pour fermer le système d'équations d'Euler (voir \ref{sec:hydro}).
+Dans le cas du transfert du rayonnement, la fermeture du système se fait par l'intermédiaire de l’équation d’état :
 
 \begin{equation}
  P_\nu = D N\nu ,
 \label{eq:fermeture}
 \end{equation}
 
-où D est approximé par le modèle M1 \citep{levermore_relating_1984}%,gonzalez2005} :
+ou $D$ est le tenseur d’Eddington et est approximé par le modèle M1 \citep{levermore_relating_1984}%,gonzalez2005} :
 
 \begin{equation}
 \begin{cases}
@@ -1009,18 +1017,55 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 \end{equation}
 
 
-\subsection{Pas de temps et vitesse de la lumière réduite}
+\subsection{Vitesse de la lumière réduite}
 
-Condition de Courant radiative : $ c \leq \Delta x / \Delta t $.
-Le pas de temps est donc plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
-
-%Pour compenser cette 
-
-Les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux on des vitesses très inférieurs a celle de la lumière.
+La lumière étant extrêmement rapide, le suivi de son évolution demande un pas de temps réduit du fait de la condition de Courant : $ c \leq \Delta x / \Delta t $.
+D'une manière générale, le pas de temps radiatif est plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
+Or, les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux on des vitesses très inférieurs à celle de la lumière.
 L'idée est de diminuer la vitesse de la lumière dans le code tout en restant dans le domaine de l'approximation newtonienne.
-Cette idée est développée en détails dans la section %TODO ref
+On introduite $c_{num}$ la vitesse de la lumière numérique réduite en fonction de $c$ la vitesse de la lumière physique.
+\begin{equation}
+c_{num} = \tilde{c} \cdot{c},
+\end{equation}
+avec $\tilde{c}$ le facteur de proportionnalité. 
+Par exemple utiliser $\tilde{c}=0.1$ permet de réaliser 10 fois moins de pas de temps, et donc 10 fois moins de calcul.
+J'ai mené une étude dans le but de quantifier l'influence de la vitesse de la lumière réduite sur la propagation des fronts d'ionisation.
+Cette étude sera présenté en détails dans la section \ref{sec:lightspeed}.
 
+\subsection{Groupes de photons}
+\label{sec:groupedephotons}
 
+Il n'est pas possible avec la méthode au moment de considérer directement un spectre d'émission.
+Le spectre doit être discrétisé, c'est a dire qu'il devra être découpé en un certain nombre de groupe, et chaque groupe disposera des caractéristique moyenne de sa portion du spectre.
+Le problème est que chaque groupe de photon devient un fluide a simuler a part entière et le coût numérique augmente rapidement avec le nombre de groupes. 
+%Il est possible de choisir un nombre arbitraire de groupes, mais il faut prendre en compte que chaque groupe devient l'équivalent d'un fluide dont on veut suivre l'évolution.
+%l'augmentation du nombre de groupe devient vite coûteux en terme de temps de calculs.
+%Ce profil d’émission ionisante peut être découper en différents "groupe de photons" (cf section \ref{sec:groupedephotons}).
+
+Prenons l'exemple d'un spectre d'émission arbitraire.
+L’énergie moyenne d'un photon dans un groupe d'énergie comprissent entre $\nu_1$ et $\nu_2$ est calculée de la manière suivante:
+\begin{equation}
+<E> = \frac{1}{N} \int_{\nu_1}^{\nu_2} N_\nu h \nu d\nu
+\end{equation}
+et la section efficace d'interaction:
+\begin{equation}
+\sigma_E = \frac{1}{N<E>} \int_{\nu_1}^{\nu_2} N_\nu h \nu d\nu
+\end{equation}
+
+On prendra généralement la première borne au niveau de l'énergie d'ionisation de l'hydrogène : $\nu_1=13.6eV$.
+Dans le cas où on ne considère qu'un seul groupe, les intégrations sont réalisées jusqu'à l'infini : $\nu_2= + \inf$.
+J'ai également pu tester le cas de trois groupes, dans ce cas les bornes sont arbitrairement prisent aux niveaux des énergie d'ionisation de l'hélium : 
+$\nu_2= 24.6 eV$, $\nu_3= 54.4 eV $, $\nu_4= + \inf$.
+
+J'ai implémenté la possibilité de découper les groupes, non seulement en énergies, mais aussi en temps, car il est possible de considérer une évolution temporelle du spectre d'émission.
+Dans ce cas l'énergie moyenne d'un groupe devient : 
+\begin{equation}
+<E> = \frac{1}{N}  \int_{t_1}^{t_2}  \int_{\nu_1}^{\nu_2} N_{(\nu,t)} h \nu d\nu dt
+\end{equation}
+Une opération identique est réalisée pour la section efficace.
+
+Après de rapides tests, le ratio cout de calcul sur amélioration des prédictions n'est pas en faveur de l'augmentation du nombre de groupes, du moins dans le cas des résolutions considérées pendant ma thèse.
+En pratique je n'ai travaillé qu'avec un seul groupe de photons.
 
 \subsection{La chimie}
 
@@ -1061,17 +1106,5 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 
 Étant donné que le processus chimique sont uniquement local (ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du solveur chimique sur GPU est très intéressant du point de vue accélération.
 
-
-\subsection{Groupes de photons}
-\label{sec:groupedephotons}
-
-Il n'est pas possible avec la méthode au moment de considéré directement un spectre d'émission.
-Le spectre doit être discrétisé, c'est a dire qu'il devra être découpé en un certain nombre de groupe, et chaque groupe disposera des caractéristique moyenne de sa portion du spectre.
-Le problème est que chaque groupe de photon devient un fluide a simuler. 
-L'augmentation du nombre de groupe devient vite coûteux en terme de temps de calculs.
-
-%Les caratéristiques des photons\\
-
-Nous aborderons la mise en place du multi longueur d'onde dans la section %TODO ref
 
 
