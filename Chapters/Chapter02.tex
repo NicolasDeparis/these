@@ -91,7 +91,7 @@ L'avantage de ce type de grille est d'économiser des ressources de calcul par r
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/AMR.pdf} 
-        \caption{Exemple de grille \ac{AMR} générée par EMMA. 
+        \caption[Grille générée par EMMA]{Exemple de grille \ac{AMR} générée par EMMA. 
         La  résolution de la grille est augmentée arbitrairement dans les régions d'intérêts.
 }
  		\label{fig:AMR}
@@ -113,7 +113,7 @@ Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:oct
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/octree.jpg} 
-        \caption{Représentation d'une grille AMR a gauche, et de son octree associé a droite. 
+        \caption[Grille AMR et son octree]{Représentation d'une grille AMR a gauche, et de son octree associé a droite. 
         Image extraite de \cite{SU201659}
      	\label{fig:octree}
 }
@@ -234,7 +234,7 @@ Par exemple, sur une grille à deux dimensions, pour diviser la résolution par 
 \subfloat[Prolongation]{\includegraphics[width=.45\linewidth]{img/02/Prolongation.png}}\\
 \subfloat[Niveau L  ]{\includegraphics[width=.45\linewidth]{img/02/0090.png} \label{Opérateurs de changement de grille d}}
 \subfloat[Niveau L+1]{\includegraphics[width=.45\linewidth]{img/02/0088.png} \label{Opérateurs de changement de grille c}}
-\caption{Opérateurs de changement de grille. 
+\caption[Opérateurs de changement de grille]{Opérateurs de changement de grille. 
 Ils permettent de changer la résolution de la grille. 
 Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules, la prolongation associée consiste en une injection directe d'une valeur dans plusieurs cellules.
 \label{Opérateurs de changement de grille}}
@@ -249,26 +249,7 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 %La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. 
 %Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
 
-\subsection{Recherche de voisin}
-Nous verrons par la suite que l'état d'une cellule dépend des états des cellules qui l'entoure.
-La recherche de voisins est une étape importante dans la gestion de la grille et se fera en suivant les étapes présenté sur la figure \ref{fig:voisin}.
 
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/02/voisins.pdf} 
-        \caption{Arbre décisionnel pour la recherche de voisin dans l'octree.
-     	\label{fig:voisin} }
-\end{figure}
-
-%\begin{itemize}
-%\item en fonction de l'ID de la cellule courante, déterminer si la voisine recherchée est dans le même OCT parent.
-%
-%\item
-%\begin{itemize}
-%\item Si c'est le cas: accéder à l'OCT parent, et à l'aide de l'indice du tableau de cellule, retrouver le voisin en question.
-%\item Si ce n'est pas le cas, accéder à l'OCT parent, à l'aide des pointeurs sur les voisins, localiser l'OCT voisin et s'y rendre. Si l'OCT est raffiné déterminer 
-%\end{itemize}
-%
-%\end{itemize}
 
 \subsection{Gestion de l'expansion}
 \label{sec:supercomobil}
@@ -283,7 +264,7 @@ Il consiste a normaliser les grandeurs par une variable fonction du facteur d'ex
 
 L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code (cf Eq. \ref{eq:scale_t}).
 Il en résultera une table, conservée en mémoire pendant toute l'exécution.
-Le facteur d'expansion sera alors interpoler dans cette table ne fonction de l'avancement de la simulation.% (cf partie calcul du pas de temps) %TODO ref
+Le facteur d'expansion sera alors interpoler dans cette table en fonction de l'avancement de la simulation.% (cf partie calcul du pas de temps) %TODO ref
 
 Il existe deux possibilités pour modéliser l'expansion de l'univers à l'aide d'une grille.
 La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, à y ajouter des éléments.
@@ -341,18 +322,43 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 \end{table}
 
 \subsection{Gestion du pas de temps}
-%TODO 
-
-
+L'évolution de la grille sera limité d'un pas de temps à l'autre.
+La condition condition pour effectuer le calcul du pas de temps sera:
 \begin{equation}
 \frac{\delta a (\Delta t) } {a} < \epsilon
 \end{equation}
+
+\subsection{Recherche de voisin}
+Nous verrons par la suite que l'état d'une cellule dépend des états des cellules qui l'entoure.
+La recherche de voisins est une étape importante dans la gestion de la grille et se fera en suivant les étapes présenté sur la figure \ref{fig:voisin}.
+Dans le cas ou la voisine se trouve dans le même OCT la recherche est immédiate.
+Mais dans le cas ou la voisine n'est pas dans le même OCT, il faut trouver l'OCT voisin, vérifier que celui ci est géré par le même processus et vérifier si il est raffiné.
+Cette recherche peut être complexe et couteuse, on prendra donc garde à minimiser les appels de la fonction de recherche. 
+
+\begin{figure}[bth]
+        \includegraphics[width=.95\linewidth]{img/02/voisins.pdf} 
+        \caption[Recherche de voisin dans l'octree.]{Arbre décisionnel pour la recherche de voisin dans l'octree.
+        La recherche de voisins n'est pas triviale et peu avoir un coût non négligeable.
+     	\label{fig:voisin} }
+\end{figure}
+
+%\begin{itemize}
+%\item en fonction de l'ID de la cellule courante, déterminer si la voisine recherchée est dans le même OCT parent.
+%
+%\item
+%\begin{itemize}
+%\item Si c'est le cas: accéder à l'OCT parent, et à l'aide de l'indice du tableau de cellule, retrouver le voisin en question.
+%\item Si ce n'est pas le cas, accéder à l'OCT parent, à l'aide des pointeurs sur les voisins, localiser l'OCT voisin et s'y rendre. Si l'OCT est raffiné déterminer 
+%\end{itemize}
+%
+%\end{itemize}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Les principaux solveurs physique}
-
+\label{sec:solvers}
 %Nous allons voir dans cette partie que plus une physique représente une part importante du contenu de l'Univers plus elle est simple et rapide a simuler.
 
 Lors d'une simulation la grande majorité des ressources de calculs sont utilisées pour résoudre la physique.
@@ -496,7 +502,7 @@ Dans le cas où l’étendue de la particule intersecte des cellules de différe
 \begin{figure}[bth]
 		\centering
         \includegraphics[width=.5\linewidth]{img/02/CIC.jpg} 
-        \caption{Représentation en 2D du Cloud In Cell. 
+        \caption[CIC]{Représentation en 2D du Cloud In Cell. 
         La masse d'une particule est répartie dans le cellules environnantes en lui associant une étendue spatiale.
         %http://homepage.univie.ac.at/franz.vesely/cp_tut/nol2h/new/c6sm_s4lr.html
 }
@@ -700,7 +706,7 @@ Cet algorithme est représenté graphiquement sur la figure \ref{fig:mgrid}.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.35]{img/02/multigrid.png}
-\caption{Vue des différents niveaux de grilles et du V-cycle.
+\caption[Multigrille]{Vue des différents niveaux de grilles et du V-cycle.
  Image extraite de \href{http://MGNet.org}{MGNet.org} }
 \label{fig:mgrid}
 \end{center}
@@ -757,182 +763,272 @@ L_{min} = 1 + ceil \left(\frac{log_2(N_{cpu})}{3}  \right)
 %solveur hydro
 %partie la plus intensive en calcul
 
-Le solveur hydrodynamique est la partie du code sur laquelle j'ai le moins travaillé.
-C'est aussi certainement l'une des plus complexe.
-Dans un soucis de complétude, je vais tout de même en exposer les grandes lignes.
-Mais cette partie sera moins étoffée que celles des autres solveurs numériques.
+Le solveur hydrodynamique est certainement la partie du code la plus complexe et c'est aussi celle sur laquelle j'ai le moins travaillé.
+Je vais tout de même en exposer les grandes lignes, mais cette partie sera moins étoffée que celles des autres solveurs numériques.
 
 Comme nous l'avons vu plus tôt (cf \ref{sec:nucleosynthese_primordiale}), l'Univers est constitué d'une grande quantité d'hydrogène et d'hélium sous forme gazeuse.
 Dans le cas de l'étude de l'\ac{EoR} la physique du gaz est centrale, car l'objectif est précisément de déterminer les propriétés physicochimiques de ce gaz, et leurs impacts sur la formation des galaxies.
-
-Ici, le gaz est principalement soumis a deux forces : sa pression interne et la gravité.
-La physique du gaz est régie par les equations d'Euler auto-gravitantes :
+Ici, la physique du gaz est régie par les equations d'Euler auto-gravitantes car le gaz est principalement soumis à deux forces : sa pression interne et la gravité.
+Le système d'équations à résoudre est:
 
 \begin{equation}
 \begin{cases}
 
-{ \frac{ \partial \rho }{ \partial t } + \nabla \cdot (\rho v) = 0}, \\
+{ \frac{ \partial \rho }{ \partial t } + \nabla \cdot (\rho \vec{v}) = 0}, \\
 \\
-{ \frac{ \partial }{ \partial t } (\rho v) + \nabla \cdot (\rho v \otimes v ) \nabla p = -\rho\nabla \phi }, \\
+{ \frac{ \partial }{ \partial t } (\rho \vec{v}) + \nabla \cdot (\rho \vec{v} \otimes v + P1\!\!1 )  = -\rho\nabla \phi }, \\
 \\
-{ \frac{ \partial e }{ \partial t } + \nabla \cdot [ \rho v (e+p/\rho) ] = -\rho v \cdot \nabla \phi },
+{ \frac{ \partial E }{ \partial t } + \nabla \cdot [ \rho v (E+p)\vec{v} ] = -\rho \vec{v} \cdot \nabla \phi },
 
 \end{cases}
 \end{equation}
 \label{eq:hydro}
+%+ \rho^2 \Lambda
+%$\Lambda$ est la fonction de refroidissement.
 
-Ce set d'équations peut être réécris sous la forme:
+avec ;
+$\rho = \rho(\vec{x},t)$,
+$ \vec{v} = (u,v,w)^T$
+
+Ce système exprime la conservation de la masse, de l'impulsion et de l'énergie et pour être résolu, il nécessite l'introduction d'une equation de fermeture, ou équation d'état.
+Nous considérerons ici le cas d'un gaz parfait monoatomique, son équation d'état sera donc:
+
+%\begin{equation}
+%P=(\gamma - 1) \rho \epsilon, 
+%\end{equation}
+%avec l'indice adiabatique $\gamma = 5/3$.
+%
+%L'énergie totale est donc :
+\begin{equation}
+E = \frac{\rho}{2	}\vec{v}^2 + \frac{P}{\gamma -1}
+\end{equation}
+avec l'indice adiabatique $\gamma = 5/3$.
+
+
+%\begin{equation}
+%p=\rho k T, 
+%\end{equation}
+%avec $k=1.38064852 \cdot 10^{-23} \left[ \mathrm{m^2 \cdot kg \cdot s^{-2} \cdot K^{-1}} \right] $ la constante de Boltzmann.
+
+%\begin{itemize}
+%\item PDE
+%\item IC
+%\item BC
+%\end{itemize}
+
+
+%\begin{equation}
+% \frac{\partial U}{\partial t} + \nabla \cdot (F(U)) = S(U), 
+%\label{eq:rad_generale}
+%\end{equation}
+%
+%avec $U$ le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
+
+
+
+En analyse numérique ce système sera réécrit sous la forme:
 
 \begin{equation}
-U+F(U) = 0,
+U_t+F_x(U) = S(U),
+\label{eq:conservation}
 \end{equation}
 
 avec:
 \begin{equation}
+\begin{array}{c}
+
 U=
-\begin{cases}
+\left(
+\begin{array}{c}
 { \rho}\\
-{ u}\\
-{ v}\\
-{ w}\\
-{ E}
-\end{cases}
-,
+{\rho u}\\
+{\rho v}\\
+{\rho w}\\
+{\rho E}
+\end{array}
+\right),
+\\
 F(U)=
-\begin{cases}
-{ \rho u}\\
-{ \rho u^2+p}\\
-{ \rho uv}\\
-{ \rho uw}\\
-{ u(E+p)}
-\end{cases}
+\left(
+\begin{array}{ccc}
+\rho u & \rho v & \rho w \\ 
+\rho u^2 +P & \rho uv & rho uw \\ 
+\rho uv & \rho v^2 +P & rho vw \\ 
+\rho uw & rho vw &\rho w^2 +P \\ 
+(\rho \epsilon + P)u & (\rho \epsilon + P)v & (\rho \epsilon + P)w
+\end{array} 
+\right)
+\\
+S(U) =
+\left(
+\begin{array}{c}
+{ 0}\\
+{\rho \Phi_x}\\
+{\rho \Phi_y}\\
+{\rho \Phi_z}\\
+{- \rho u \cdot \nabla \Phi + \Lambda }
+\end{array}
+\right),
+\end{array} 
 \end{equation}
 
-Pour suivre l'évolution de ce gaz nous allons le considérer comme parfait et monoatomique.
-L’équation d'état du gaz sera donc:
-\begin{equation}
-p=\rho k T, 
-\end{equation}
-avec $k=1.38064852 \cdot 10^{-23} \left[ \mathrm{m^2 \cdot kg \cdot s^{-2} \cdot K^{-1}} \right] $ la constante de Boltzmann.
+où $U$ est le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source.
 
+%,
+%F(U)=
+%\begin{cases}
+%{ \rho u}\\
+%{ \rho u^2+p}\\
+%{ \rho uv}\\
+%{ \rho uw}\\
+%{ u(E+p)}
+%\end{cases}
+\subsection{Le problème de Riemann et volumes finis}
 
-\subsection{Le problème de Riemann}
-L'idée est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes. (Piecewise constant approximation)
-On utilisera ensuite les equations d'Euler pour résoudre localement le problème de Riemann a chaque interfaces de cellule.
-Nous aurons donc accès aux flux de matière et d'énergie entre les cellules pour pouvoir calculer l'état suivant  
+L'idée de base du solveur hydrodynamique est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes (Piecewise constant approximation).
+L'objectif est ensuite de résoudre localement le système d'équations d'Euler à chaque interfaces de cellule pour obtenir l'évolution globale du système.
+Chaque interfaces devient donc un problème de Riemann.
+Considérant un système, régi par des équations de conservations, aillant comme état initial deux milieux homogènes de densité constante, séparé par une continuité (cf figure \ref{fig:riemann}), qu'elle sera son évolution?
 
-Le problème de Riemann consiste a considérer l’évolution d'un system d’équations différentielles à partir d'une condition initiale.
-En aillant l’état d'un système régis par des equations différentielles un instant donné, qu'elle sera sont évolution?
+%Nous aurons donc accès aux flux de matière et d'énergie entre les cellules pour pouvoir calculer l'état suivant  
+%Connaissant l'état d'un système régit par des équation de conservation hyperbolique de type Euler a un instant donné.
+%Le problème de Riemann consiste a considérer l’évolution d'un system d’équations différentielles à partir d'une condition initiale.
+%En aillant l’état d'un système régis par des equations différentielles un instant donné, qu'elle sera sont évolution?
 
-\begin{itemize}
-\item PDE
-\item IC
-\item BC
-\end{itemize}
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/riemann.pdf} 
+        \caption[Problème de Riemann]{Problème de Riemann. Quelle sera l'évolution d'un système hydrodynamique considérant de telles conditions initiales.  
+ 		\label{fig:riemann}
+ 		}
+\end{figure}
 
-\subsection{La discrétisation du problème.}
-
-Contrairement à la résolution de l’équation de Poisson, il n'est plus possible d'utiliser une discrétisation des dérivées à l'aide d'un différence finie centrée.
-Nous allons rapidement voir pourquoi dans cette section.
+Il existe différents solveur de Riemann.
+Contrairement à la résolution de l’équation de Poisson, il n'est plus possible d'utiliser une discrétisation à base de différence finie.
 
 Une différence finie centrée peut être décomposée en deux différence finies : 
 \begin{equation}
 \frac{d u}{dx} \approx \frac{u_{i+1}  + u_i}{\Delta x} 
 \end{equation}
 
-\begin{equation}
-\frac{d u}{dx} \approx \frac{u_i  + u_{i+1}}{\Delta x} 
-\end{equation}
-
-Considérons que nous voulons résoudre l'équation :
-\begin{equation}
-\frac{du}{dt} + a\frac{du}{dx} = 0
-\end{equation}
-
-Dans le premier cas, la discrétisation pourra s'écrire : 
-%la propagation d'une onde a la vitesse $a$ pourra être discrétisée en utilisant.
+%Dans le premier cas, la discrétisation pourra s'écrire : 
+La propagation d'une onde a la vitesse $a$ pourra être discrétisée en utilisant.
 
 \begin{equation}
 \frac{u_i^{t+1} + u_i^t }{\Delta t}   +a \frac{u_{i+1}^t  + u_i^t}{\Delta x} = 0
 \end{equation}
 
-\begin{equation}
-u_i^{t+1}  = u_i^t +  c \left( u_{i+1}^t  + u_i^t \right) 
-\end{equation}
+En fonction du signe de $a$, on parlera de méthode UPWIND ou DOWNWIND.
+Il est possible de montrer à l'aide d'une analyse de von-Neumann (cf \cite{toro1999riemann} que la méthode UPWIND est stable sous certaine condition, et que la méthode DOWNWIND est inconditionnelement instable.
+Or il n'est pas possible de connaitre à l'avance le signe de $a$, la discrétisation par différence finies ne s'applique donc pas à ce problème. 
+Le principe de cette méthode est de ne plus calculer directement l'évolution des grandeurs au sein des cellules mais de passer par l'intermédiaire du calcul des flux entre elles.
+On parlera de discrétisation par volumes finis.
 
-ou : 
 
-\begin{equation}
-c= \frac{a \Delta t}{\Delta x},
-\end{equation}
-est le nombre de Courant
 
-A l'aide d'une analyse de von-Neumann (cf \cite{toro1999riemann}), on montre que la stabilité de ce schéma dépend du signe de a, la vitesse de propagation de l'onde.
+%\subsection{Discrétisation du problème.}
+%
+%Contrairement à la résolution de l’équation de Poisson, il n'est plus possible d'utiliser une discrétisation des dérivées à l'aide d'un différence finie centrée.
+%Nous allons rapidement voir pourquoi dans cette section.
+%
+%Une différence finie centrée peut être décomposée en deux différence finies : 
+%\begin{equation}
+%\frac{d u}{dx} \approx \frac{u_{i+1}  + u_i}{\Delta x} 
+%\end{equation}
+%
+%\begin{equation}
+%\frac{d u}{dx} \approx \frac{u_i  + u_{i+1}}{\Delta x} 
+%\end{equation}
+%
+%Considérons que nous voulons résoudre l'équation :
+%\begin{equation}
+%\frac{du}{dt} + a\frac{du}{dx} = 0
+%\end{equation}
+%
+%Dans le premier cas, la discrétisation pourra s'écrire : 
+%%la propagation d'une onde a la vitesse $a$ pourra être discrétisée en utilisant.
+%
+%\begin{equation}
+%\frac{u_i^{t+1} + u_i^t }{\Delta t}   +a \frac{u_{i+1}^t  + u_i^t}{\Delta x} = 0
+%\end{equation}
+%
+%\begin{equation}
+%u_i^{t+1}  = u_i^t +  c \left( u_{i+1}^t  + u_i^t \right) 
+%\end{equation}
+%
+%ou : 
+%
+%\begin{equation}
+%c= \frac{a \Delta t}{\Delta x},
+%\end{equation}
+%est le nombre de Courant
+%
+%A l'aide d'une analyse de von-Neumann (cf \cite{toro1999riemann}), on montre que la stabilité de ce schéma dépend du signe de a, la vitesse de propagation de l'onde.
+%
+%\begin{itemize}
+%\item si a est positif, ce schéma est conditionnellement stable (la condition étant que la condition de Courant soient respectée : $0<c<1$) .
+%Ce schema est appélé méthode UPWIND.
+%
+%\item A l'inverse on montre que que dans le cas de la seconde différence finie, le schéma est inconditionnellement instable. 
+%Ce shema est appelée méthode DOWNWIND.
+%\end{itemize}
+%
+%Seule la méthode upwind permet de suivre correctement la propagation d'onde.
+%Le problème est qu'a trois dimension, il est impossible de respecter cette condition pour un système quelconque.
+%% déterminer dans quelle direction se propage une onde quelconques.
+%
+%De plus il a été montré que cette méthode n'est pas conservative, et qu'elle était incapable de suivre les chocs (fortes discontinuités)
+%
 
-\begin{itemize}
-\item si a est positif, ce schéma est conditionnellement stable (la condition étant que la condition de Courant soient respectée : $0<c<1$) .
-Ce schema est appélé méthode UPWIND.
 
-\item A l'inverse on montre que que dans le cas de la seconde différence finie, le schéma est inconditionnellement instable. 
-Ce shema est appelée méthode DOWNWIND.
-\end{itemize}
-
-Seule la méthode upwind permet de suivre correctement la propagation d'onde.
-Le problème est qu'a trois dimension, il est impossible de respecter cette condition pour un système quelconque.
-% déterminer dans quelle direction se propage une onde quelconques.
-
-De plus il a été montré que cette méthode n'est pas conservative, et qu'elle était incapable de suivre les chocs (fortes discontinuités)
-
-\subsection{Méthode de Godunov}
-
-Godunov  \cite{MR0119433} a répondu a ce problème.
-
-methodes conservative
-
-introduction aux volumes finis
-consiste a estimer le flux aux interfaces des cellules.
-
+%\subsection{Méthode de Godunov}
+%
+%
+%introduction aux volumes finis
+%consiste a estimer le flux aux interfaces des cellules.
+%
 
 %\subsection{discretisation}
-\begin{equation}
- \frac{\partial U}{\partial t} + \nabla \cdot (F(U)) = S(U), 
-\label{eq:rad_generale}
-\end{equation}
-
-avec $U$ le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
+Godunov \cite{MR0119433} a été le premier à introduire une méthode pour la résolution exacte de ce système.
+%répondu à ce problème et introduit une méthode conservative.
+Son approche consistait à discrétiser l'équation \ref{eq:conservation} de la manière suivante : 
 
 \begin{equation}
 \frac{ u^{t+1}_i - u^t_i }{\Delta t} + \frac{ F^t_{i+1/2} - F^t_{i-1/2} }{\Delta x} =0,
 \label{eq:rad_solver}
 \end{equation}
 
-ou $F^t_{i+1/2}$ et $F^t_{i-1/2}$ sont les flux numérique intercellules, une estimations des flux physique.
+ou $F^t_{i+1/2}$ et $F^t_{i-1/2}$ sont les flux numérique intercellules, ou flux de Godunov, une estimations des flux physique.
+Tout le problème réside dans le calcul de ces flux aux interfaces. % : $F^t_{i+1/2}$
+Différentes méthodes ont été développées, et celle retenue dans EMMA est la méthode HLL/HLLC.
+%\subsection{Méhtode HLL et HLLC }
+La méthode de HLL Harten, Lax et van Leer  est une méthode pour résoudre approximer les flux de Godunov dans le cas de la résolution en 3D des équation d'Euler.
+La méthode HLL a été modifié par Toro 1992 et a donné lieu à la méthode HLLC, plus robuste.
 
-$F^t_{i+1/2}$
+%recalculation des flux entre les cellules
 
-\subsection{Méhtode HLL et HLLC }
-La méthode de HLL Harten, Lax et van Leer 
-recalculation des flux entre les cellules
+%\subsection{MUSCL et Minmod}
+Si dans le problème de Riemann, les deux parties sont considérées avoir des densités constantes, il est possible de considérer des schémas d'ordres supérieurs.
+Par exemple le schéma \ac{MUSCL} introduit par \cite{1979JCoPh..32..101V},  consiste à considérer une valeur dans la cellule, non plus constante mais interpolée linéairement (cf figure\ref{fig:MUSCL}).
 
-\subsection{MUSCL}
-Monotonic Upstream-Centered Scheme for Conservation Laws (van Leer, 1979)
-Consiste a considerer une valeur dans la cellule, non plus constante mais variable.
-Cette variation est interpolée linéairement
-%En utilisant la méthode de pente.
-
-\subsection{Minmod}
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/MUSCL_minmod.pdf} 
+        \caption[Méthode MUSCL]{Avec le \ac{MUSCL} la densité au sein des cellules est interpolée linéairement, ce qui améliore le calcul du flux aux interfaces.
+        La pente est cependant limitée par la méthode du Minmod.
+ 		\label{fig:MUSCL}
+ 		}
+\end{figure}
 
 
 
 \subsection{Le pas de temps}
 
-Le pas de temps respecte encore une fois la condition de courant.
+Le pas de temps respecte encore une fois la condition de courant qui s'exprime ici sous la forme.:
 
 \begin{equation}
 \frac{dx * CFL }{3*(max(v) + c_s)}
 \end{equation}
 
-avec $cs = \gamma P/\rho$
+avec $c_s = \sqrt{\gamma P/\rho}$ dans le cas d'un gaz parfais.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1018,11 +1114,13 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 
 
 \subsection{Vitesse de la lumière réduite}
+\label{sec:RSLA}
 
 La lumière étant extrêmement rapide, le suivi de son évolution demande un pas de temps réduit du fait de la condition de Courant : $ c \leq \Delta x / \Delta t $.
 D'une manière générale, le pas de temps radiatif est plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
-Or, les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux on des vitesses très inférieurs à celle de la lumière.
+Or, les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux ont des vitesses très inférieures à celle de la lumière.
 L'idée est de diminuer la vitesse de la lumière dans le code tout en restant dans le domaine de l'approximation newtonienne.
+Cette approximation s'appelle approximation de la vitesse de la lumière réduite ou \ac{RSLA}.
 On introduite $c_{num}$ la vitesse de la lumière numérique réduite en fonction de $c$ la vitesse de la lumière physique.
 \begin{equation}
 c_{num} = \tilde{c} \cdot{c},
@@ -1068,43 +1166,41 @@ Après de rapides tests, le ratio cout de calcul sur amélioration des prédicti
 En pratique je n'ai travaillé qu'avec un seul groupe de photons.
 
 \subsection{La chimie}
+\label{sec:chimie}
 
 La chimie fait le lien entre le solveur radiatif et le solveur hydrodynamique.
-C'est a ce moment qu'est appliquée l'énergie apportée par la radiation au gaz.
-gestion du refroidissement/ de la température/ énergie interne
-Contrairement au transport, la chimie est non conservative.
+C'est à ce moment qu'est appliquée l'énergie apportée par la radiation au gaz et que le gaz va être chauffé par la radiation.
+A l'inverse, et contrairement au transport , la chimie est non conservative, et c'est a se moment que la gestion du refroidissement du gaz à lieu.
+En effet, une partie des photon ionisant vont être intercepté par le gaz et réémis dans une autre partie du spectre.
+Cette réémission est numériquement interprété comme une perte d'énergie.
 
-Densité de photons
+Le système d'équations à résoudre lie la densité de photons, le flux de photons, l'état d'ionisation et l'énergie interne : 
+
 \begin{equation}
 \frac{dN}{dt} = S - c \sigma_N n_H N + \left( \alpha_A(T)  - \alpha_B(T) \right) x^2n_0^2
 \end{equation}
-
-Flux de photons
 \begin{equation}
 \frac{dF}{dt} = - c \sigma_N n_H F
 \end{equation}
-
-État d'ionisation
 \begin{equation}
 \frac{dn_H}{dt} =  \left( \alpha_A(T)x^2  - \alpha_B(T)x (1-x) \right) n_0^2 - c \sigma_N n_HN
 \end{equation}
-
-
-Énergie interne
 \begin{equation}
 \frac{de}{dt} = c n_H \Sigma_E N - \Lambda_{(n_0,x,T)}
 \end{equation}
 
+où $n_H$ est la densité d'atomes d'hydrogène (en nombre).
+Les taux de réaction chimique $\alpha_A(T)$, $\alpha_B(T)$ et $\beta_(T)$ sont repris de tables de \cite{theuns_p^3m-sph_1998} et les sections efficace d'interactions de \cite{hui_equation_1997}.
 
-Les taux de réaction chimique $\alpha_A(T)$, $\alpha_B(T)$ et $\beta_(T)$ sont repris de tables de \cite{theuns_p^3m-sph_1998}.
-Les sections efficace d'interactions viennent de \cite{hui_equation_1997}.
+Il est possible de considérer que toute l'énergie de recombinaison est localement réabsorbée en forçant $\alpha_A(T) = \alpha_B(T)$.
+Ceci est connu sous le nom de \ac{OTSA}.
 
 Les processus chimique agissant sur des échelles de temps courtes par rapport au transport des photons, le pas de temps sera plusieurs ordres de grandeurs plus faible.
 En pratique, a chaque pas de temps radiatif, on effectuera un sous-cyclage sur le pas de temps chimique.
 Après chaque pas de temps chimique, la variation d’énergie est calculée. 
 Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'étape courante est recalculée. (cf \cite{rosdahl_ramsesrt_2013}) 
 
-Étant donné que le processus chimique sont uniquement local (ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du solveur chimique sur GPU est très intéressant du point de vue accélération.
+Étant donné que le processus chimique sont uniquement local (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du solveur chimique sur GPU est très intéressant du point de vue accélération.
 
 
 
