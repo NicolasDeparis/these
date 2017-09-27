@@ -2,7 +2,7 @@
  \label{ch:introduction_physique}
 
 Cette thèse s'inscrit dans le cadre du modèle standard de la cosmologie.
-Ce modèle, aussi appelé modèle du Big-Bang, considère un univers en expansion et composé essentiellement de matière noire froide. %$\Lambda$ Cold Dark Matter ($\Lambda$CDM).
+Ce modèle, aussi appelé modèle du Big-Bang, ou $\Lambda$CDM, considère un univers en expansion et composé essentiellement d'énergie noire ($\Lambda$) et de matière noire froide (Cold Dark Matter). 
 Ce chapitre a pour objectif de présenter les grandes lignes de ce modèle.
 
 \section{Émergence de l'idée d'un Univers non statique}
@@ -22,11 +22,11 @@ D'un autre coté, plus d'une décennie plus tard les observations de Hubble ont 
 Entre 1923 et 1929 Hubble observe deux phénomènes qui vont mener à une redéfinition de notre notion de cosmologie.
 Il bénéficie à l'époque de l'accès au plus puissant télescope du monde (le télescope Hooker du mont Wilson).
 Cet instrument lui a permis, dans une publication de 1926, d'observer que des nébuleuses situées hors de notre galaxie présente des caractéristiques identiques à des système d'étoile \citep{1926ApJ....63..236H}.
-Il en déduit qu'il existe d'autre galaxies que notre voie lactée.
+Il en déduit qu'il existe d'autres galaxies que notre Voie Lactée.
 
 Avec les moyens observationnels dont nous disposons aujourd'hui l’existence d'un grand nombre de galaxies en dehors de notre voie lactée est bien établie.
-Le "Hubble Ultra Deep Field" \citep{1538-3881-132-5-1729} une image prise en 2014 (voir figure \ref{fig:hubbl_deep_field}) montre un grand nombre de galaxies dans une portion réduite du ciel.
-On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$.
+Le "Hubble Ultra Deep Field"  (voir figure \ref{fig:hubbl_deep_field}) une image prise en 2004 et publiée en 2006 \citep{1538-3881-132-5-1729} montre un grand nombre de galaxies dans une portion réduite du ciel.
+On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$ dans l'Univers observable.
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hudf.jpeg} 
@@ -41,7 +41,7 @@ On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$.
 \subsection{La loi de Hubble}
 Hubble observe également une relation entre la distance de ces nouvelles galaxies et leurs spectres lumineux \citep{1929CoMtW...3...23H}.
 Plus ces galaxies sont éloignées de l'observateur, plus leurs spectre est décalé vers le rouge.
-Ce redshift noté $z$ est une notion qui sera beaucoup utilisée par la suite car nous verrons dans la prochaine section qu'il existe un lien direct entre age de l'univers et redshift.
+Ce redshift noté $z$ est une notion qui sera beaucoup utilisée par la suite car nous verrons dans la prochaine section qu'il existe un lien direct entre âge de l'univers et redshift.
 Il interpréta ce décalage comme un effet Doppler et montra que ces galaxies s'éloignent de l'observateur avec une vitesse radiale directement proportionnelle à leur distance.
 Cette corrélation entre la distance et le décalage vers le rouge observé est aujourd'hui bien établie.
 Une série d'observations récentes est présenté sur la Fig. \ref{fig:hubble_law} extraite de \citep{2015PNAS..112.3173B}.
@@ -87,7 +87,7 @@ Il y introduit sa célèbre equation de champ décrivant le lien entre densité 
 %Equation d'Einstein 
 %http://cdsads.u-strasbg.fr/abs/1915SPAW.......844E
 \begin{equation}
-R_{\mu\nu} = \frac{1}{2} g_{\mu\nu}R + \Lambda g_{\mu\nu}  = \kappa T_{\mu\nu}.
+R_{\mu\nu} - \frac{1}{2} g_{\mu\nu}R + \Lambda g_{\mu\nu}  = \kappa T_{\mu\nu}.
 \label{eq:einstein}
 \end{equation} 
 
@@ -137,7 +137,7 @@ En manipulant l'équation \ref{eq:friedman1} il est possible de montrer que :
 %TODO introduire les differents fluides cosmologiques
 
 \begin{equation}
-\frac{\dot{a}}{a} = H_0 \sqrt{ \Omega_{r,0} a^{-4} +  \Omega_{M,0} a^{-3} + \Omega_{K,0}a^{-2} + \Omega_{\Lambda,0}  } 
+H = \frac{\dot{a}}{a} = H_0 \sqrt{ \Omega_{r,0} a^{-4} +  \Omega_{M,0} a^{-3} + \Omega_{K,0}a^{-2} + \Omega_{\Lambda,0}  } 
 \label{eq:scale_t}
 \end{equation}
 
@@ -195,14 +195,13 @@ Selon l’équation \ref{eq:einstein}, l'énergie peut courber l'espace, mais si
 
 \end{itemize}
 
-Comme ces densité d'énergies sont liées au facteur d'expansion, celles si évoluent avec le temps (cf Fig. \ref{fig:cosmoparamt}).
+Comme ces densité d'énergies sont liées au facteur d'expansion, celles ci évoluent avec le temps (cf Fig. \ref{fig:cosmoparamt}).
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/scale_t.jpg} 
         \caption[Taille de l'Univers]{Taille de l'Univers en fonction du temps pour différents paramètres cosmologiques.
-%https://map.gsfc.nasa.gov/universe/bb_concepts.html#Expansion
-        }
- 		\label{fig:scale_t}
+		Image \href{https://map.gsfc.nasa.gov/universe/bb_concepts_exp.html}{NASA/WMAP Science Team}.
+ 		\label{fig:scale_t}}
 \end{figure}
 
 En intégrant l’équation \ref{eq:scale_t}, il est possible de déterminer l'évolution de la taille de l'Univers en fonction de la densité respectives de ses différents constituants.
