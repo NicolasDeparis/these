@@ -1,3 +1,4 @@
+
 \chapter{Le modele standard de la cosmologie moderne}
  \label{ch:introduction_physique}
 
@@ -44,11 +45,12 @@ Plus ces galaxies sont éloignées de l'observateur, plus leurs spectre est déc
 Ce redshift noté $z$ est une notion qui sera beaucoup utilisée par la suite car nous verrons dans la prochaine section qu'il existe un lien direct entre âge de l'univers et redshift.
 Il interpréta ce décalage comme un effet Doppler et montra que ces galaxies s'éloignent de l'observateur avec une vitesse radiale directement proportionnelle à leur distance.
 Cette corrélation entre la distance et le décalage vers le rouge observé est aujourd'hui bien établie.
-Une série d'observations récentes est présenté sur la Fig. \ref{fig:hubble_law} extraite de \citep{2015PNAS..112.3173B}.
+Une série d'observations récentes est présenté sur la Fig. \ref{fig:hubble_law}.
 
 \begin{figure}[bth]
         \includegraphics[width=.9\linewidth]{img/01/hubble_law.jpg} 
         \caption[Loi de Hubble]{Loi de Hubble à partir d'observations actuelles. 
+        Figure extraite de \citep{2015PNAS..112.3173B}.
 %http://www.pnas.org/content/112/11/3173/F2.expansion.html
 %        Image ESO
         }
@@ -60,11 +62,11 @@ La loi de Hubble est la relation entre la distance des galaxies $D$ et leur vite
 \begin{equation}
 V = H_0 D,
 \end{equation}
-où $H_0 = 67 \mathrm{ \left[ km.s^{-1}.Mpc^{-1} \right ] }$ est la constante de Hubble \citep{planck_collaboration_planck_2016}.
+où la constante de Hubble $H_0 = 67 \mathrm{ \left[ km.s^{-1}.Mpc^{-1} \right ] }$  \citep{planck_collaboration_planck_2016}.
 
 Conventionnellement, le sous script $0$ désigne le fait que la valeur de la variable qui lui est associé est celle prise aujourd'hui.
 Cette distinction est nécessaire car malgré son nom, la valeur de la constante de Hubble n'est pas constante dans le temps.
-D'une manière plus générale la constante de Hubble représente la vitesse de variation relative entre deux points et s'exprime sous la forme:
+D'une manière plus générale la constante de Hubble représente la vitesse de variation relative de la distance entre deux points et s'exprime sous la forme:
 \begin{equation}
 H=\frac{1}{a} \frac{da}{dt} = \frac{\dot{a}}{a},
 \end{equation}
@@ -81,8 +83,7 @@ z= \frac{1}{a}-1
 
 Les observations de Hubble ont permises de confirmer ce qui avait été pressentis par Einstein plus d'une décennie plus tôt, lorsqu'il introduisit le concept de constante cosmologique ($\Lambda$). 
 
-Einstein publie en 1916 la théorie de la relativité générale \citep{1916AnP...354..769E}.
-Il y introduit sa célèbre equation de champ décrivant le lien entre densité d'énergie et déformation de l'espace-temps:
+La théorie de la relativité générale \citep{1916AnP...354..769E} introduit la célèbre equation de champ décrivant le lien entre densité d'énergie et déformation de l'espace-temps:
 
 %Equation d'Einstein 
 %http://cdsads.u-strasbg.fr/abs/1915SPAW.......844E
@@ -172,7 +173,7 @@ et
 \end{equation}
 
 \begin{itemize}
-\item $\Omega_{M,0}$ est la densité d'énergie associée à la matière (matière noire que nous introduiront dans la suite et la matière baryonique)
+\item $\Omega_{M,0}$ est la densité d'énergie associée à la matière.% (matière noire que nous introduiront dans la suite et la matière baryonique)
 Par simple effet de dilution, cette densité décroît avec le cube du facteur d'expansion.
 Un Univers constitué exclusivement de cette énergie serait nommé "Univers poussière"
 C'est le cas actuellement.
@@ -209,6 +210,7 @@ La figure \ref{fig:scale_t} présente quelques évolutions possibles.
 Toutes les courbes passent par le point (Now,1) car par définition $a_0 = 1$.
 %TODO expliquer cette histoire de tangente
 %Toutes les courbes ont la même tangente au point (Now,1) du fait que $\Omega_{K,0}=0$
+%TODO dire que nous somme la courbe rouge
 Nous observons ici que la valeur des paramètres cosmologique contraint l'age actuel de l'Univers (le point où la courbe passe l'axe horizontal).
 La valeur des paramètres contraint aussi l'avenir de l'Univers.
 Par exemple, la courbe orange représente un Univers dit fermé.
@@ -226,12 +228,11 @@ La gravitation n'est pas suffisante pour contrer l'expansion, et ce type d'Unive
 Si nous avons vu que la taille de l'Univers évolue avec le temps, il reste la question de l’évolution de cette vitesse.
 Si l'on considère que l'univers s'étend suite à une impulsion initiale (cf section \ref{sec:BB}), et que la gravité est la seule force qui agit à grande échelle, l'expansion devrait décélérer.
 En effet comme la gravité est une force purement attractive, elle agit comme un ressort qui devrait ramener toute la masse a l'origine (scénario de la courbe orange sur la figure \ref{fig:scale_t}, ou la courbe retombe sur l'axe horizontal signifiant que la taille de l'univers tend à nouveau vers zero).
-Or ce n'est pas ce qui est observé: l'accélération de l'expansion de l'univers a été découverte a la fin du XXème siècle par 2 équipes simultanément :
+Or ce n'est pas ce qui est observé: l'accélération de l'expansion de l'univers a été découverte a la fin du XXème siècle par 2 équipes simultanément, Cchacune aillant reçu le prix Nobel en 2011:
 \begin{itemize}
 \item  High-Z supernovae search team \citep{1998AJ....116.1009R} %http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
 \item  Supernova Cosmology Project \citep{1999ApJ...517..565P} % http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
 \end{itemize}
-Chacune aillant reçu le prix Nobel en 2011.
 
 L'accélération de l'expansion de l'Univers pose un problème majeur.
 Il est établis depuis les travaux de Newton que pour accélérer une masse une force est nécessaire.
@@ -250,8 +251,8 @@ Il a fallu seulement quelques mois après cette découverte pour qu’apparaisse
 %la reionization
 
 Une fois établis que les galaxies s'éloigne de nous dans toutes les directions, plusieurs constats s'imposent.
-Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les unes des autres, et en poussant se constat à l’extrême, il fut imaginé qu'à un certain instant dans l'histoire de l'Univers, toute la matière devait être concentrée en un point (toutes les courbes de la figure \ref{fig:scale_t} passe par une taille nulle dans le passé)
-En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L} 
+Premièrement, il est possible d'imaginer qu'en remontant le temps, elles devaient être plus proches les unes des autres, et en poussant se constat à l’extrême, il fut imaginé qu'à un certain instant dans l'histoire de l'Univers, toute la matière devait être concentrée en un point (toutes les courbes de la figure \ref{fig:scale_t} passe par une taille nulle dans le passé).
+En 1927, Georges Lemaire propose une théorie de l'atome primitif \cite{1927ASSB...47...49L}.
 Cette singularité à été baptisé Big Bang et donne son nom au modèle cosmologique actuel.
 
 \subsection{Température de l'Univers}
@@ -285,13 +286,13 @@ Durant cette transition, l'Univers a connu un changement d'état majeur puisque 
 \section{Le fond diffus cosmologique}
 \label{sec:CMB}
 
-Comme nous l'avons vu dans la section précédente, l’émission du fond diffus cosmologique, ou rayonnement de fond micro-ondes (\ac{CMB}) marque la transition entre deux état distincts de l'Univers.
+Comme nous l'avons vu dans la section précédente, l’émission du fond diffus cosmologique, ou rayonnement de fond micro-ondes (\ac{CMB}) marque la transition entre deux états distincts de l'Univers.
 Robert Herman et Ralph Alpher ont été les premiers à proposer l’existence du fond diffus cosmologique avant même sa découverte.
 
 \subsection{Surface de dernière diffusion}
 
 Du au grand nombre d'électrons libres avant la recombinaison, la lumière était soumise a un grand nombre de diffusions.
-Et a la manière de la surface d'une étoile, ou nous ne voyons que les photons qui ont pu s’échapper de celle ci et non ceux qui ont été émis en son centre, nous ne pouvons pas observer de lumière émise avant le \ac{CMB}.
+A la manière de la surface d'une étoile, ou nous ne voyons que les photons qui ont pu s’échapper de celle ci et non ceux qui ont été émis en son centre, nous ne pouvons pas observer de lumière émise avant le \ac{CMB}.
 Le \ac{CMB} étant la plus ancienne lumière que nous pouvons observer, il contient actuellement l'information que nous pouvons obtenir sur l'état de l'Univers lorsqu'il était le plus jeune possible.
 
 \subsection{Observations}
@@ -337,8 +338,8 @@ Par la suite, les satellites WMAP et Planck ont grandement amélioré la précis
  		\label{fig:cmb}
 \end{figure}
 
-On étudie les anisotropies du \ac{CMB} en décomposant ses fluctuations relatives de température en harmoniques sphériques.
-Le spectre de puissance correspond à la transformée de Fourrier de sa fonction de corrélation a deux points.
+Les anisotropies du \ac{CMB} sont étudiées en décomposant ses fluctuations relatives de température en harmoniques sphériques.
+Un spectre de puissance, correspond à la transformée de Fourrier de sa fonction de corrélation a deux points, caractérisique est obtenu (cf figure \ref{fig:cmb_power_spectrum}).
 
 %%decomposition en multipoles
 %%https://www.physicsforums.com/threads/can-someone-explain-angular-power-spectrum.309483/

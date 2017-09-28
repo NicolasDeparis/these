@@ -2,11 +2,10 @@
 \label{sec:etoiles}
 
 Dans les parties précédentes nous avons survolé quelles étaient les physiques à l’œuvre dans les simulations de la réionisation et la façon dont elles sont modélisées numériquement.
-Il manque encore une composante essentielle du problème qui est la modélisation des sources de rayonnement ionisant.
+Il manque encore une composante essentielle au problème qui est la modélisation des sources de rayonnement ionisant.
+L'objectif de cette section est d'exposer le modèle de source que j'ai développé, implémenté et calibré.
 Comme nous avons vu en introduction (cf section \ref{sec:introreio}), il existe deux types de sources, les étoiles et les quasars.
 Dans la suite de cette étude, je n'ai considéré que la partie stellaire sans me préoccuper des quasars.
-
-L'objectif de cette section est d'exposer le modèle stellaire que j'ai développé.
 Nous allons définir les différentes phase de la vie d'une étoile, et ses différentes évolutions possible.
 Nous verrons comment les contraintes imposées par les échelles cosmologique que l'on cherche à étudier vont imposer certain choix au niveau numérique.
 
@@ -21,7 +20,8 @@ Et nous verrons ensuite l'implémentation de ces trois phases dans EMMA.
 %lien avec la densité\\
 %Formation dans l'H moléculaire mais pas dans les simu
 
-Une étoile se forme par effondrement gravitationnel et cet effondrement ne s'arrête quand les réactions thermonucléaire s'enclenche et que le gaz forme une étoile.
+Les étoiles se forment au sein de nuage de gaz,  par effondrement gravitationnel.
+Si les conditions sont réunies, cet effondrement ne s'arrête quand les réactions thermonucléaire s'enclenche et que le gaz forme une étoile.
 En première approximation, un nuage de gaz s'effondre, si le temps de chute libre : 
 \begin{equation}
 t_{ff} = \frac{1}{\sqrt{G \rho}},
@@ -49,7 +49,7 @@ A haut redshift, au moment de l'apparition des premières étoiles, les métaux 
 De ce fait, le gaz disposait de relativement peu de possibilité de refroidissement, et donc la température du gaz devait être élevée.
 Les étoiles primordiales devaient donc être plus grosses que les étoiles de notre voisinage (plus de $100M_\odot$).
 Ce type d'étoiles est appelées étoiles de population III.
-Du fait de leur masse, elles émettait un fort rayonnement ionisant, et avaient une vie relativement courte.
+Du fait de leur masse, elles émettaient un fort rayonnement ionisant, et avaient une vie relativement courte.
 
 %La nucléosynthèse primordiale a créer peu de métaux. 
 %A haut redshift, les metaux etaient peu disponible.
@@ -59,74 +59,75 @@ Du fait de leur masse, elles émettait un fort rayonnement ionisant, et avaient 
 %
 %plus un étoiles est grosse, plus son spectre sera énergétique et plus la portion de spectre ionisant sera important.
 
-\subsection{Séquence principale}
+\subsection{Vie}
 
 %le diagram HR
 
-Une fois le nuage de gaz effondré et les réactions thermonucléaire amorcées.
-l'étoiles amorce sa séquence principale.
+Une fois le nuage de gaz effondré et les réactions thermonucléaire amorcées, l'étoile amorce sa séquence principale.
 C'est la phase qui représente la majore partie de la vie d'une étoile.
-Elle consiste en un équilibre hydrostatique entre gravitation et réaction de fusion nucléaire nucléaire.
-L'étoile va donc consommer son hydrogène pour résister a l'effondrement gravitationnel.
-Il en résultera la formation d'hélium.
+Elle consiste en un équilibre hydrostatique entre gravitation et pression interne, maintenue par les réactions de fusion nucléaire nucléaire.
+L'étoile va donc consommer son hydrogène pour résister à l'effondrement gravitationnel, il en résultera une formation d'hélium.
 %develloper le cycle proton proton ?
-Équation simplifié du processus de fusion:
+L'équation simplifié du processus de fusion, appelé cycle proton-proton (PP) est :
 \begin{equation}
-4p \leftrightarrow He^4 + 2e^+ + 2\nu + E
+4p \leftrightarrow He^4 + 2e^+ + 2\nu + E.
 \end{equation}
 
 Plus une étoile est grosse plus le taux de réaction doit être élevé pour lutter contre la gravité.
 Il en résulte que les grosse étoiles sont plus énergétique, et émettent donc plus de rayonnement ionisant.
-Mais ce taux de réaction élevé mène à une durée de vie plus courte.
+En contre partie, ce taux de réaction élevé mène à une durée de vie plus courte.
 
 %materiaux de base est l'hydrogene\\
 %plasma donc hydrogène ionisé 
 
 \subsection{Mort}
 
-Arrivé a un certain taux de consommation d'hydrogène, les réactions PP ne sont plus suffisante et l'étoile s'effondre sur elle même.
-A la fin de sa vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
-L'équilibre entre la gravité et la pression radiative est rompu et l'étoile s'effondre, ce qui mène à une augmentation de la pression interne.
-Cette augmentation de la pression amorce une nouvelle série de fusions nucléaires, qui va consommer des éléments plus lourd que l’hydrogène, jusqu'au fer où le processus s'arrête.
-Une fois arrivé au Fe, l'étoile explose en supernovae et injecte $10^{51}$ erg d'énergie dans le milieu..
-%Une fois arrivé au Fe, il devient coûteux de continuer a fusionner des éléments car Fe est le plus stable.
+Arrivé a un certain taux de consommation d'hydrogène, les réactions protons-protons ne sont plus suffisante et l'étoile s'effondre sur elle même.
+%A la fin de sa vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
+L'équilibre entre la gravité et la pression est rompu, ce qui mène à une augmentation de la pression interne.
 % Géante rouge ?
+Cette augmentation de la pression amorce une nouvelle série de fusions nucléaires, qui va consommer des éléments plus lourd que l’hydrogène, tel le carbonne, l'azote ou l'oxygène (cycle CNO) jusqu'au fer où le processus s'arrête.
+A ce stade, les couches externes de l'étoiles se contracte rapidement, et rebondissent sur le noyau de fer.
+L'étoile explose alors en supernovae et injecte énormément d'énergie dans le milieu, de l'ordre de $10^{51}$ erg par explosion. 
+%Une fois arrivé au Fe, il devient coûteux de continuer a fusionner des éléments car Fe est le plus stable.
+
 Il existe principalement deux types de supernovæ : 
 \begin{itemize}
-\item les types I.
-L'étoile n'est pas assez massive à la base pour amorcer les réactions de fusion permettant de  créer du fer.
+\item Les types I où l'étoile n'est pas assez massive à la base pour amorcer les réactions de fusion permettant de créer du fer.
 Ce sont des étoiles binaire où une étoile accrète une partie de son compagnon, ce qui mène au passage au dessus de la limite.
-\item les types II.
-Les étoiles de plus de 8M$_\odot$  sont assez massive pour exploser en supernovæ sans avoir besoin de masse supplémentaire
+\item Les types II : les étoiles de plus de 8$M_\odot$  sont assez massive pour exploser en supernovæ sans avoir besoin de masse supplémentaire
 \end{itemize}
 
-Pendant l'explosion, l'énergie libérée est suffisamment importante pour amorcer la formation d'éléments lourd (>Fe).
-Ces éléments vont être expulsés en vont participer à l'enrichissement du milieu.
-Ce qui va avoir des conséquences sur la formation des prochaines générations d'étoiles.
+Pendant l'explosion, l'énergie libérée est suffisamment importante pour amorcer la formation d'éléments plus lourds que le fer.
+Ces éléments, ainsi que ceux formés pendant la vie de l'étoile vont être expulsés, et vont participer à l'enrichissement du milieu.
+Ce qui va changer les propriétés physicochimiques du gaz environnant et avoir des conséquences sur la formation des prochaines générations d'étoiles.
 
-Après l'explosion de la supernova, le cœur subsiste et en fonction de sa masse, plusieurs scénario d'évolution sont possibles:
-\begin{itemize}
-\item Naine blanche (pression de dégénérescence des électrons)
-\item Étoile a neutron (pression de dégénérescence des neutrons)
-\item Trou noir (singularité)
-\end{itemize}
-Dans tout les cas, le résidu continue a interagir gravitationnellement.
+Après l'explosion de la supernova, le cœur subsiste et en fonction de sa masse, plusieurs scénario d'évolution sont possibles.
+En fonction de la masse de l'étoiles, le résidu peux devenir soit une naine blanche, soit une étoile a neutron, ou un trou noir.
+Dans tout les cas, le résidu continue à interagir gravitationnellement.
+
+%\begin{itemize}
+%\item Naine blanche %(maintenue par le pression de dégénérescence des électrons)
+%\item Étoile a neutron %(pression de dégénérescence des neutrons)
+%\item Trou noir %(singularité)
+%\end{itemize}
 
 \section{Population stellaire et modèle sous grille}
 
-\subsection{Problème de résolution}
+\subsection{Considérations de résolution}
 %En fonction des echelles de travail, nous considererons soit les etoiles individuelles soit une population stellaire.
 
-Une des difficulté majeurs dans les simulations de réionisation, est l'impossibilité d'obtenir des résolutions suffisante pour suivre la formation des sources de radiation, tout en simulant un volume suffisamment important.
+Une des difficulté majeurs dans les simulations de la réionisation, est l'impossibilité d'obtenir des résolutions suffisante pour suivre la formation des sources de radiation individuellement, tout en simulant un volume suffisamment important.
 %Il existe toujours ce conflit en réionisation entre simuler des grands volume, et obtenir la meilleur résolution possible.
-Actuellement les simulations capable de suivre un volume d'Univers de l'ordre de $(100Mpc)^3$ atteigne un résolution de l'ordre de la centaine de parsec.
+Actuellement les simulations capable de suivre un volume d'Univers de l'ordre de $(100Mpc)^3$ atteigne un résolution de l'ordre du kilo-parsec.
 Or les échelles de formation stellaire sont de l'ordre de l'unité astronomique, soit un facteur $\approx 10^8$ plus petit.
-Il est donc actuellement impossible de suivre la formation des étoiles individuellement.
-Il  est nécessaire de créer un modèle qui va tenter de prendre en compte au mieux la physique non résolue.
+Il est donc actuellement impossible de résoudre les deux coté du spectre d'échelles spatiales.
+%de suivre la formation des étoiles individuellement.
+Il est nécessaire de créer un modèle qui va tenter de prendre en compte au mieux la physique non résolue.
 Ce type de modèle est appelé modèle \textit{sous grille}.
 
-Dans le cas présent le modèle sous grille consiste à transformer une partie du gaz en particule stellaire.
-On appelle ces particules des particules puits.
+Dans le cas présent le modèle sous grille consiste à transformer une partie du gaz en particule stellaire, cette particule ne représentant pas une étoiles mais une population stellaire de manière statistique.
+%On appelle ces particules des particules puits.
 Toute la difficulté du modèle de formation stellaire sera de déterminer la façon dont est réalisée cette conversion.
 Malgré tout, nous verrons qu'il est possible d'obtenir un modèle statistiquement viable a grandes échelles assez facilement.
 
@@ -140,13 +141,12 @@ Malgré tout, nous verrons qu'il est possible d'obtenir un modèle statistiqueme
 %Puis a la fin de sa vie, l'étoile va injecter de l'énergie dans le solveur hydrodynamique.
 %Une particule stellaire va donc devoir interagir avec tout les solveurs du code.
 
-
 %Seul la partie du spectre capable de ioniser l'hydrogène est considérée. E>13.6eV
 
 \subsection{Fonction de masse Initiale}
 
-%Les étoiles naissent en groupe.
-La probabilité de former une étoile d'une certaine masse est régie par la fonction de masse initiale (\ac{IMF})
+Les étoiles naissent en groupe, et toutes ne sont pas identique.
+Pour caractériser cette diversité, la notion de fonction de masse initiale (\ac{IMF}), qui exprime la probabilité de former une étoile d'une certaine masse dans un population.
 Parmi les \ac{IMF} plus connues il y a :
 
 \begin{itemize}
@@ -163,27 +163,30 @@ Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la reionisatio
 %: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
 %Fonction de masse IMF Top Heavy
 
+
 \subsection{Starburst99}
 \label{sec:staburst}
 %Pour modeliser 
 %paramètre d'entrée
 %sorties
 
-La modélisation de population stellaire est complexe, et il existe différent modèles complets.
+Les étoiles d'une population ayant des masses et des évolutions différentes, l'émission résultante sera la somme des contributions individuelles.
+La modélisation de population stellaire est complexe, et il existe différent modèles dédiés a cette tache.
+Il existe entre autres :
+
 \begin{itemize}
 \item Starburst99 \citep{leitherer_starburst99:_1999} 
 \item \cite{2003MNRAS.344.1000B}
 \item FSPS \cite{2009ApJ...699..486C}
 \end{itemize}
 
-A partir d'informations caractéristique d'une population stellaire, comme sa masse, son \ac{IMF} ou sa métallicité, ces modèle retourne un spectre d'émission en fonction du temps (cf Fig \ref{fig:spectre_starburst}).
-Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retourne plusieurs informations utiles au modèle (cf ) %TODO ref
-
+A partir d'informations caractéristique d'une population stellaire, comme sa masse, son \ac{IMF} ou sa métallicité, ces modèle retourne un spectre d'émission et son évolution en fonction du temps (cf Fig \ref{fig:spectre_starburst}).
+Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retourne plusieurs informations utiles au modèle comme l'énergie et la masse injectées par les supernovae. %TODO ref  (cf )
 
 \begin{figure}[htbp]
         \includegraphics[width=.95\linewidth]{img/03/spectre_starburst.jpg} 
         \caption{Spectre d'émission d'une population stellaire généré par Starburst99.
-        Ici avec les paramètres M=1$0^6$ $_\odot$, \ac{IMF} de Salpeter ($\alpha=2.35$ et intégration de 1 a 100 M$_\odot$ 
+        Ici avec les paramètres sont $M_{pop}=10^6$ $_\odot$, \ac{IMF} de Salpeter ($\alpha=2.35$ et intégration de 1 à 100 M$_\odot$ 
  		\label{fig:spectre_starburst}}
 \end{figure}
 
