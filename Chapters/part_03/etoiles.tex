@@ -7,8 +7,8 @@ Comme nous avons vu en introduction (cf section \ref{sec:introreio}), il existe 
 Dans la suite de cette étude, je n'ai considéré que la partie stellaire sans me préoccuper des quasars.
 
 L'objectif de cette section est d'exposer le modèle stellaire que j'ai développé.
-Nous allons définir les différentes phase de la vie d'une étoile, et ses différentes évolution possible.
-Nous verrons comment les contraintes imposées par les échelles cosmologique que l'on cherche à étudiée vont imposer certain choix au niveau numérique.
+Nous allons définir les différentes phase de la vie d'une étoile, et ses différentes évolutions possible.
+Nous verrons comment les contraintes imposées par les échelles cosmologique que l'on cherche à étudier vont imposer certain choix au niveau numérique.
 
 \section{Les différentes phases de la vie d'une étoile}
 
@@ -32,19 +32,20 @@ Cette perturbation étant mécanique, le temps de réaction sera équivalent au 
 t_{sound} = \frac{R}{C_s},
 \end{equation}
 avec $R$ la taille du nuage et $C_s$ la vitesse du son dans ce nuage.
-Le milieu n'a pas le temps de résister et le gaz s'effondre sur lui même si:
+Si le temps de réaction est plus long que le temps de chute libre
 \begin{equation}
 t_{ff} < t_{sound},
 \end{equation}
+alors le milieu n'a pas le temps de résister et le nuage s'effondre sur lui même.
 
-Ici intervient la densité, plus le milieu est dense plus il aura tendance à s'effondrer sur lui même.
+$t_{ff}$ fait intervient la densité, plus le milieu est dense plus il aura tendance à s'effondrer sur lui même.
 Et de l'autre coté intervient aussi la vitesse du son $C_s$, elle même dépendante de la température $C_s \propto \sqrt{T}$.
-Plus le gaz sera chaud, plus le nuage devra être gros pour pouvoir s’effondrer.
+Plus le gaz sera chaud, plus le nuage va résister a son effondrement.
 %\subsection{Population III}
 %tres peu de ligne de refroisdissment
 %étoiles plus grosse
 % temps de vie court
-Or a haut redshift, au moment de l'apparition des premières étoiles, les métaux étaient très peux disponible  (voir :\ref{sec:nucleosynthese_primordiale})
+A haut redshift, au moment de l'apparition des premières étoiles, les métaux étaient très peux disponible (voir :\ref{sec:nucleosynthese_primordiale}).
 De ce fait, le gaz disposait de relativement peu de possibilité de refroidissement, et donc la température du gaz devait être élevée.
 Les étoiles primordiales devaient donc être plus grosses que les étoiles de notre voisinage (plus de $100M_\odot$).
 Ce type d'étoiles est appelées étoiles de population III.
@@ -457,9 +458,3 @@ Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important
 }
  		\label{fig:mstar}
 \end{figure}
-
-
-
-
-\input{Chapters/Chapter03_supernovae.tex}
-

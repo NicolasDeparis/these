@@ -74,54 +74,66 @@
 %*******************************************************
 
 
+%
+%\includepdf{FrontBackmatter/couverture/1ere.pdf} 
+%
+%%\include{FrontBackmatter/DirtyTitlepage}
+%\include{FrontBackmatter/Titlepage}
+%\include{FrontBackmatter/Titleback}
+%\cleardoublepage\include{FrontBackmatter/Dedication}
+%%\cleardoublepage\include{FrontBackmatter/Foreword}
+%\cleardoublepage\include{FrontBackmatter/Abstract}
+%%\cleardoublepage\include{FrontBackmatter/Publications}
+%\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+%\pagestyle{scrheadings}
+%\cleardoublepage\include{FrontBackmatter/Contents}
+%%********************************************************************
+%% Mainmatter
+%%*******************************************************
+%\cleardoublepage\pagenumbering{arabic}
+%%\setcounter{page}{90}
+%% use \cleardoublepage here to avoid problems with pdfbookmark
+%\cleardoublepage
 
-\includepdf{FrontBackmatter/couverture/1ere.pdf} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\include{FrontBackmatter/DirtyTitlepage}
-\include{FrontBackmatter/Titlepage}
-\include{FrontBackmatter/Titleback}
-\cleardoublepage\include{FrontBackmatter/Dedication}
-%\cleardoublepage\include{FrontBackmatter/Foreword}
-\cleardoublepage\include{FrontBackmatter/Abstract}
-%\cleardoublepage\include{FrontBackmatter/Publications}
-\cleardoublepage\include{FrontBackmatter/Acknowledgments}
-\pagestyle{scrheadings}
-\cleardoublepage\include{FrontBackmatter/Contents}
-%********************************************************************
-% Mainmatter
-%*******************************************************
-\cleardoublepage\pagenumbering{arabic}
-%\setcounter{page}{90}
-% use \cleardoublepage here to avoid problems with pdfbookmark
-\cleardoublepage
+%\include{Chapters/part_00/preface}
+%\include{Chapters/part_00/intro}
 
-%\include{Chapters/Chapter00}
-\include{Chapters/Chapter01_intro}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\part{Contexte}
+%\part{Contexte}
+\include{Chapters/part_01/CDM}
+%\include{Chapters/part_01/reionization}
 
-\include{Chapters/Chapter01}
-\include{Chapters/Chapter01_reionization}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\ctparttext{\begin{flushright}{\slshape    
 %	Premature optimisation is the root of all evil.} \\ \medskip 
 %	-- Donald Knuth
 %\end{flushright}
 %}
-\cleardoublepage
-\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:EMMA}.\medskip
 
-\emph{"EMMA: an adaptive mesh refinement cosmological simulation code with radiative transfert"}\medskip
-
-Dominique Aubert, Nicolas Deparis et Pierre Ocvirk
-2015 MNRAS
-}
-\part{Methodes numeriques}
-\include{Chapters/Chapter02}
-\include{Chapters/Chapter02_materiel}
-
-%
 %\cleardoublepage
+%\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:EMMA}.\medskip
+%
+%\emph{"EMMA: an adaptive mesh refinement cosmological simulation code with radiative transfert"}\medskip
+%
+%Dominique Aubert, Nicolas Deparis et Pierre Ocvirk
+%2015 MNRAS
+%}
+%\part{Methodes numeriques}
+%\include{Chapters/part_02/EMMA}
+%\include{Chapters/part_02/solver}
+%\include{Chapters/part_02/materiel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\cleardoublepage
 %\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:feedback}.\medskip
 %
 %\emph{"Radiation and supernovae feedback during the epoch of reionization with EMMA"} \medskip
@@ -139,12 +151,13 @@ Dominique Aubert, Nicolas Deparis et Pierre Ocvirk
 %
 %}
 %\part{La composante stellaire}
-%
-%%\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
-%\include{Chapters/Chapter03}
-%%\include{multiToC} % <--- just debug stuff, ignore for your documents
-%\include{Chapters/Chapter03_Halos}
-%
+%\include{Chapters/part_03/etoiles}
+%\include{Chapters/part_03/halos}
+%\include{Chapters/part_03/supernovae}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %\cleardoublepage
 %\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:c}.\medskip
 %
@@ -155,7 +168,12 @@ Dominique Aubert, Nicolas Deparis et Pierre Ocvirk
 %}
 %\part{Influence du l'approximation de vitesse de la lumière réduite sur la propagation des fronts d'ionisation}
 %\include{Chapters/Chapter04_Carte_reio}
-%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %\cleardoublepage
 %\ctparttext{Cette partie est liée a la publication présentée en annexe\,\ref{pap:z0}.\medskip
 %
@@ -167,21 +185,27 @@ Dominique Aubert, Nicolas Deparis et Pierre Ocvirk
 %}
 %\part{COsmic DAwn EMMA}
 %\include{Chapters/Chapter05_z0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\cleardoublepage
+%\ctparttext{Cette partie est liée proceeding de conférence présentée en annexe\,\ref{pap:visu}.\medskip
 %
-\cleardoublepage
-\ctparttext{Cette partie est liée proceeding de conférence présentée en annexe\,\ref{pap:visu}.\medskip
+%\emph{"Immersive 3D visualization of astronomical data"}\medskip
+%
+%A. Schaaff, J. Berthier, J. Da Rocha, N. Deparis, S. Derriere, P. Gaultier, R. Houpin, J. Normand et P. Ocvirk.
+%}
+%\include{Chapters/part_06/visualisation}
 
-\emph{"Immersive 3D visualization of astronomical data"}\medskip
-
-A. Schaaff, J. Berthier, J. Da Rocha, N. Deparis, S. Derriere, P. Gaultier, R. Houpin, J. Normand et P. Ocvirk.
-}
-\include{Chapters/Chapter04_Visualisation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 % ********************************************************************
 % Backmatter
 %*******************************************************
-\appendix
+%\appendix
 %\renewcommand{\thechapter}{\alph{chapter}}
 %\cleardoublepage\include{FrontBackmatter/papers/publications}
 
@@ -195,7 +219,7 @@ A. Schaaff, J. Berthier, J. Da Rocha, N. Deparis, S. Derriere, P. Gaultier, R. H
 % Game Over: Restore, Restart, or Quit?
 %*******************************************************
 
-\includepdf{FrontBackmatter/couverture/4eme.pdf} 
+%\includepdf{FrontBackmatter/couverture/4eme.pdf} 
 
 
 \end{document}
