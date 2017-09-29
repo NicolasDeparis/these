@@ -190,6 +190,7 @@ Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retou
  		\label{fig:spectre_starburst}}
 \end{figure}
 
+\clearpage
 \section{La formation stellaire}
 
 \subsection{Localisation des zones de formation stellaire}
@@ -342,7 +343,7 @@ La figure \ref{fig:test_SFH} présente un test après calibration des paramètre
 Le seuil de formation à été réglé a 50$\bar{\rho}$ et l'efficacité de formation stellaire a $1\%$.
 Avec ses paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/SFR.pdf}
         \caption{Histoire de formation stellaire (SFH) d'une simulation de (8/h cMpc)$^3$.
         Il est possible d'obtenir une SFH qui respecte les observations avec un modèle relativement simple.
@@ -352,6 +353,7 @@ Avec ses paramètres, la \ac{SFH} obtenue respecte les contraintes observationne
 
 %Des test plus poussés seront développés plus loin.
 
+\clearpage
 \section{La vie radiative}
 %injection d'énergie dans le solveur radiatif, ok mais combien?\\
 %calibration energetique et Starburst99\\
@@ -439,25 +441,25 @@ La table \ref{tab_photon} présente les caractéristique des photons obtenus.
 \end{figure}
 
 
-\section{Le problème de la masse des étoiles}
-
-
-
-%le paramètre de masse des étoiles change la reionization\\
-%effet numérique\\
-%le rayonnement est piégé dans les cellules\\
-
-Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire avait une grande importance dans l'évolution de la fraction ionisée.
-Même si celui ci n'a pas d'impact sur la SFR globale, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf Fig .\ref{fig:mstar}).
-Plus la résolution stellaire est élevée, plus la boite réionise tard.
-Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important.
-
-
-\begin{figure}[bth]
-        \includegraphics[width=.45\linewidth]{img/02/Mstar_SFH.png} 
-        \includegraphics[width=.45\linewidth]{img/02/Mstar_xion.png} 
-        \caption{
-        En changeant le parametre de résolution en masse des particules stellaire, la SFH moyenne reste constante mais l'histoire d'ionisation s'en trouve impacté.
-}
- 		\label{fig:mstar}
-\end{figure}
+%\section{Le problème de la masse des étoiles}
+%
+%
+%
+%%le paramètre de masse des étoiles change la reionization\\
+%%effet numérique\\
+%%le rayonnement est piégé dans les cellules\\
+%
+%Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire avait une grande importance dans l'évolution de la fraction ionisée.
+%Même si celui ci n'a pas d'impact sur la SFR globale, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf Fig .\ref{fig:mstar}).
+%Plus la résolution stellaire est élevée, plus la boite réionise tard.
+%Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important.
+%
+%
+%\begin{figure}[bth]
+%        \includegraphics[width=.45\linewidth]{img/02/Mstar_SFH.png} 
+%        \includegraphics[width=.45\linewidth]{img/02/Mstar_xion.png} 
+%        \caption{
+%        En changeant le parametre de résolution en masse des particules stellaire, la SFH moyenne reste constante mais l'histoire d'ionisation s'en trouve impacté.
+%}
+% 		\label{fig:mstar}
+%\end{figure}
