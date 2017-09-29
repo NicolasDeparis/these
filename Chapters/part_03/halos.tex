@@ -113,6 +113,7 @@ Cette méthode permettra d'associer des sous parties de cellules aux halos en ap
 
 \begin{figure}
 	\centering
+	%TODO refaire cette image
 	\includegraphics[width=.45\linewidth]{img/03/intersec.png}
     \caption[Projection des petits halo]{Les plus petits halos peuvent avoir des tailles comparable aux cellules.
     Il est nécessaire d’estimer l'intersection cube/sphère.
@@ -120,13 +121,40 @@ Cette méthode permettra d'associer des sous parties de cellules aux halos en ap
 \end{figure}
 
 \clearpage
-
 \section{Étude de la composition des halos}
 
-Maintenant que nous pouvons associer toutes la physique au sein de chaque halo, nous pouvons regarder  différentes caractéristiques en fonction du type de feedback.
+A ce stade, nous avons définis la position et la taille de tout les halos et définis les galaxies par associations.
+%Maintenant que nous pouvons associer toutes la physique au sein de chaque halo, 
+Nous pouvons étudier l'influence du feedback de supernovae sur différentes caractéristiques des galaxies.
+%différentes caractéristiques en fonction du type de feedback.
+
+4 simus 
+sans rayonnement
+sans supernovae
+modèle thermique 
+modèle cinetique
+
+8cMpc
+
+
+\subsection{Approche visuelle}
+
+Réaliser des cartes de champs permet d'aborder la problème.
+La figure \ref{fig:halo} présente le halo le plus massif extrait de trois simulations identiques à l’exception du modèle de supernovæ (cf section \ref{sec:SNmodel}).
+On y observe que le modèle cinétique est capable de générer des vents 
+
+\begin{figure}
+		\includegraphics[width=.95\linewidth]{img/03/halos.pdf}
+        \caption{Influence du modèle de supernovae sur la distribution de densité et de température d'un halo.
+        le cercle représente le $R_{200}$.
+        Le modèle cinétique permet la création de vents formant des coquilles autour du halo.
+        De plus la région chaude est bien plus large que dans le cas du modèle thermique.
+ 		\label{fig:halo}}
+\end{figure}
+
 
 \subsection{Les fonctions de masse}
-
+\label{sec:hmf}
 Les fonctions de masse des galaxies 
 Figure \ref{fig:ghmf}
 
@@ -137,8 +165,6 @@ Figure \ref{fig:ghmf}
  		\label{fig:ghmf}}
 \end{figure}
 
-
-
 \subsection{La masse d'étoiles en fonction de la masse du halo}
 Plus un halo est massif, plus celui ci va contenir d'étoiles.
 
@@ -148,12 +174,17 @@ Plus un halo est massif, plus celui ci va contenir d'étoiles.
 \label{sec:sfr_halo}
 Connaissant, a un instant donné, les étoiles appartenant a chaque halo, il est possible de déterminer leurs ages, et donc de connaitre l'histoire de formation stellaire de chaque halo.
 Nous allons voir que la masse 
+Il existe deux facons de voir 
+ce problème peux être abordé de deux facon.
+Dans un cas l'objectif est de determiner la SFR moyenne d'un halo d'une certaine masse.
+Dans l'autre, on cherche a mesurer la contribution d'une classe de masse a la SFR globale.
+Le lien entre les deux, n'est autre que la \ac{HMF} présentée à la section \ref{sec:hmf}.
 
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_avg.pdf}
 		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_tot.pdf}
-        \caption{SFR en fonction de la masse du halo moyenne en haut et total en bas.
+        \caption[SFR en fonction de la masse du halo]{SFR en fonction de la masse du halo moyenne en haut et total en bas.
         }
  		\label{fig:sfr_halo}
 \end{figure}
@@ -172,7 +203,7 @@ f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/baryon_frac.pdf}
-        \caption{Fraction baryonique en fonction de la masse du halo et des feedback.
+        \caption[Fraction baryonique]{Fraction baryonique en fonction de la masse du halo et des feedback.
         }
  		\label{fig:bfrac}
 \end{figure}
@@ -232,14 +263,24 @@ IL sera donc nécessaire de projeter les vecteurs de flux sur la normale des cel
 %Pour déterminer les flux autours de chaque halo, il est nécessaire de les englober d'une sphère.
 %Cette sphère serra discrétisée a l'aide de Healpix (TODO ref) un outils qui permets de répartir des points de manière uniforme sur une surface sphérique .
 
-
-
 \subsection{La vitesse du gaz au $R_{200}$}
 
 Dans le but de mettre en évidence l'efficacité des supernovae a expulser le gaz des halos, j'ai quantifié la vitesse moyenne du gaz autour des halos au niveau de leur R200.
 Par convention, la normale a la sphère pointe vers l'extérieur.
 Donc si la vitesse moyenne est positive, le halo perd de la matière baryonnique, et sinon il en accrète.
-%TODO inserrer figure flux
+
+
+
+Figure \ref{fig:R200speed}.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/03/flux_speed_kinetic.pdf} 
+        \caption{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo}
+ 		\label{fig:R200speed}
+\end{figure}
+
+
+
 Dans le cas idéal, la matière chute sur le halo à la vitesse de chute libre.
 
 \begin{equation}

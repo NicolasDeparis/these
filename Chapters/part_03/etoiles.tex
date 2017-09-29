@@ -93,7 +93,7 @@ L'étoile explose alors en supernovae et injecte énormément d'énergie dans le
 
 Il existe principalement deux types de supernovæ : 
 \begin{itemize}
-\item Les types I où l'étoile n'est pas assez massive à la base pour amorcer les réactions de fusion permettant de créer du fer.
+\item Les types I où l'étoile n'est pas assez massive à la base pour permettre l'explosion en supernovae.
 Ce sont des étoiles binaire où une étoile accrète une partie de son compagnon, ce qui mène au passage au dessus de la limite.
 \item Les types II : les étoiles de plus de 8$M_\odot$  sont assez massive pour exploser en supernovæ sans avoir besoin de masse supplémentaire
 \end{itemize}
@@ -175,7 +175,7 @@ La modélisation de population stellaire est complexe, et il existe différent m
 Il existe entre autres :
 
 \begin{itemize}
-\item Starburst99 \citep{leitherer_starburst99:_1999} 
+\item Starburst99 \cite{leitherer_starburst99:_1999} 
 \item \cite{2003MNRAS.344.1000B}
 \item FSPS \cite{2009ApJ...699..486C}
 \end{itemize}
@@ -268,6 +268,8 @@ A partir de ce taux de formation on obtient la masse de gaz a convertir en étoi
 	M_{star} = SFR \cdot dv \cdot dt .
 \end{equation}
 
+\subsection{Implémentation}
+
 %resolution en masse\\
 Nous avons donc à ce stade la masse totale de gaz a convertir en étoile.
 Il devient rapidement couteux de générer pour chaque cellule éligible, et à chaque pas de temps, une nouvelles particule stellaire (le nombre de particule peux rapidement exploser).
@@ -332,7 +334,7 @@ Du fait de la parallélisation cette incrémentation demande des communications 
 Pour minimiser les communications, la pratique retenue consiste à former toutes les particules de toutes les processeurs, en leur assignant un identifiant caractéristique (eg -1) et d'assigner les identifiants finaux dans un second temps.
 Une fois les particules créées, chaque processeurs compte son nombre de nouvelles particules et le transmet aux autres, ce qui permet d'allouer une plage d'identifiants par processeur, et ainsi allouer les identifiants finaux.
 
-\section{le SFH cosmique}
+\section{La \ac{SFH} cosmique}
 
 Dans le but de tester cette implémentation, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} simulée en accord avec les contraintes observationnelles.
 Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
@@ -403,11 +405,13 @@ Ce profil peut être raisonnablement approximé par:
     S = 
 \begin{cases}
     S_0 ,         & \text{if } t < t_{life}\\
-    S_0.t^{-4},   & \text{if } t_{life} \leq t < 100.t_{life} \\
+    S_0.t^{-4},   & \text{if } t_{life} \leq t < 100t_{life} \\
     0,   & \text{if } 100t_{life} \leq t
 \end{cases}
 \end{equation}
 
+où $t_{life}$ est définis comme étant l'age de la population au moment de changement de régime.
+Étant donné la rapide décroissance en luminosité, les étoiles sont arbitrairement éteintes après $t_{life}$.
 Ce flux correspond au flux d'une population de $10^6M_\odot$, et ces valeurs seront pondérées au prorata de la masse de la particule stellaire : une particule de $10^5M_\odot$ émettra  simplement 10 fois moins de photons ionisant qu'une population de $10^6 M_\odot$.
 
 La gestion des groupes de photons a été abordée dans la section \ref{sec:groupedephotons}.
@@ -433,7 +437,7 @@ Avec les paramètres déterminés par Starburst99 et une fraction d'échappement
 Cette histoire est comparée aux contraintes observationnelles déterminées par \cite{fan_constraining_2006}.
 
 J'ai également pu vérifier à ce stade que l'introduction du rayonnement ionisant dans la simulation n'impacte pas la \ac{SFH} cosmique.
-Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité.
+Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des sources.
 
 
 %TODO intégration de l'énergie et de la section efficace
@@ -453,14 +457,12 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité.
 %Multigroupe frequence\\
 %multigroup temporel\\
 
-
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/xion.pdf} 
-        \caption{Histoire de la fraction d'ionisation dans la simulation présentée sur la figure \ref{fig:test_SFH}.
-        Après calibration de la fraction d’échappement interne, il est possible d'obtenir une histoire d'ionisation en accord avec les observations.
+        \caption{Évolution de la fraction d'ionisation (trais plein) et de la fraction de neutre (tirets) dans la simulation présentée sur la figure \ref{fig:test_SFH}.
+        Après calibration de la fraction d’échappement intrinsèque, il est possible d'obtenir une histoire d'ionisation en accord avec les observations.
  		\label{fig:test_xion}}
 \end{figure}
-
 
 %\section{Le problème de la masse des étoiles}
 %
@@ -472,7 +474,6 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité.
 %Même si celui ci n'a pas d'impact sur la SFR globale, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf Fig .\ref{fig:mstar}).
 %Plus la résolution stellaire est élevée, plus la boite réionise tard.
 %Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important.
-%
 %
 %\begin{figure}[bth]
 %        \includegraphics[width=.45\linewidth]{img/02/Mstar_SFH.png} 

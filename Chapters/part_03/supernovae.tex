@@ -2,84 +2,75 @@
 \section{Les supernovæ}
 
 
-Les supernovae ont été introduite dans les simulations cosmologiques pour contre balancer "l'overcooling problem".
+Les supernovae ont été introduite dans les simulations cosmologiques pour réduire l'effondrement du gaz sur lui même.
 Sans l'introduction d'énergie dans le gaz par les supernovæ, le gaz s'effondre de manière importante et créer un nombre élevé d'étoiles.
-cela mène a un taux de formation stellaire trop important par rapport a ce qui est observé.
+Cela mène à un taux de formation stellaire trop important par rapport à ce qui est observé.
+Ce problème est connus sous le nom de "overcooling problem"
+
+L'objectif est de casser les structures pour diminuer les surdensité et limiter la formation stellaire.
+
+%\subsection{Le modèle théorique}
+%Il existe principalement deux événement pouvant mener a un explosion de supernovæ : 
+%
+%\begin{itemize}
+%\item soit l'étoile est a l'origine suffisamment massive (plus de 8Mo) pour s'effondrer a la fin de sa vie.
+%\item soit l'étoile n'est pas suffisamment massive (elle va donc mourir en naine blanche) mais dispose de suffisamment de matière a proximité (généralement étoiles double ou le compagnon pas en phase géante rouge) pour que sa masse augmente avec le temps.
+%la matière accreté va faire passer la masse de cette étoile au dessus de la limite.
+%\end{itemize}
+%
+%Les étoiles de plus de 8mo exploses en SN en injectant 1e51 erg dans le milieu\\
+%Cette injection limite fortement la formation stellaire dans le milieu.\\
+%modèle sous grille\\
 
 
+Une fois que la supernovae a explosée, il en résulte une onde de choc qui va se propager dans le milieu environnant.
 
-\subsection{Le modèle théorique}
-il existe principalement deux événement pouvant mener a un explosion de supernovæ : 
-
-\begin{itemize}
-\item soit l'étoile est a l'origine suffisamment massive (plus de 8Mo) pour s'effondrer a la fin de sa vie.
-\item soit l'étoile n'est pas suffisamment massive (elle va donc mourir en naine blanche) mais dispose de suffisamment de matière a proximité (généralement étoiles double ou le compagnon pas en phase géante rouge) pour que sa masse augmente avec le temps.
-la matière accreté va faire passer la masse de cette étoile au dessus de la limite.
-\end{itemize}
-
-Les étoiles de plus de 8mo exploses en SN en injectant 1e51 erg dans le milieu\\
-Cette injection limite fortement la formation stellaire dans le milieu.\\
-modèle sous grille\\
- 
 \subsection{Les différentes phases}
+L'évolution du front d'onde à lieu en plusieurs phases, on en distinguera principalement deux : 
 
 \begin{itemize}
 \item Expansion adiabatique.
-Dans la phase d'expansion adiabatique, l'énergie est conservée, le choc est violent et le gaz n'a pas le temps de perdre de l'énergie par radiation.
+Dans la phase d'expansion adiabatique, l'énergie cinétique est conservée, le choc est violent et le gaz n'a pas le temps de perdre de l'énergie par radiation.
 Dans cette phase, l'expansion est suffisamment rapide pour que la dissipation d'énergie par radiation soit négligeable.
-C'est le cas dans le test de Sedov.
+%C'est le cas dans le test de Sedov.
 
 \item Snowplow.
-Dans la phase snowplow, le choc a suffisamment ralentis pour que le gaz commence a rayonner de l'énergie, l'énergie n'est plus conservée.
+Dans la phase snowplow, le choc a suffisamment ralentis pour que le gaz commence à dissiper de l'énergie par rayonnement.
 Dans ce cas, il se forme un bourrelet de compression dans lequel le gaz est poussé, comme dans le cas d'un chasse neige. 
-Les pertes par radiation deviennent importantes. 
+Les pertes par radiation deviennent importantes et l'énergie cinétique n'est plus conservée
 \end{itemize}
 
-\subsection{les superbubles}
+\subsection{Les Superbubles}
 
 %A la manière de la percolation des bulles de HII, les bulles de supernovae 
 
-Dans les endroits de formation stellaire, les étoiles ne sont pas isolées mais apparaisent ensemble au sein d'un même nuage de gas.
-L'effondrement gravitationnel du nuage mêne a créer un génération d'etoile en un cours laps de temps.
-Toutes ces étoiles vont mourrir dans un laps de temps rapproché et ainsi, les differentes supernovae vont injectée de l'energy dans le milieu dans un temsp tres rapproché.
-Les différentes bulle vont se rencontrer (a la manière des bulles ionizées) en mener a une bulle plus grande appelée superbuble.
+Dans les endroits de formation stellaire, les étoiles ne sont pas isolées mais apparaissent ensemble au sein d'un même nuage de gaz.
+L'effondrement gravitationnel du nuage mène a créer un génération D’étoile en un cours laps de temps.
+Toutes ces étoiles vont mourir dans un laps de temps rapproché et ainsi, les différentes supernovæ vont injectée de l’énergie dans le milieu dans un temps très rapproché.
+Les différentes bulle vont se rencontrer (à la manière des bulles ionisées) et mener à une bulle plus grande appelée superbubble.
 
-
-\subsection{les considérations d'échelles}
+\subsection{Considérations d'échelles}
 La façon de gérer les supernovae sera donc fonction de l'échelle que l'on considère.
 Dans des simulations très détaillées de galaxies, il sera nécessaire de résoudre la phase adiabatique d'explosion individuelle.
-Dans des simulations cosmologiques de la reionisation, l'interet sera plus porté sur la phase snowplow des superbubbles.
+Dans des simulations cosmologiques de la réionisation, L’intérêt sera plus porté sur la phase snowplow des superbubbles.
 
-
-\subsection{ Différentes implémentations existantes}
-
-
-
-\subsubsection{Navaro and white}
-
-
-\subsubsection{Stinson et al}
-
-
-
-\subsubsection{dubois et Teyssier}
-
-Utilisation de particule fantômes pour simuler les différentes phase
-
-\subsubsection{Dalla Veccia et Schaye}
-
-Modèle probabiliste, injection d'énergie seulement si l'énergie est suffisante pour générer un mouvement suffisant.
-
+%\subsection{ Différentes implémentations existantes}
+%\subsubsection{Navaro and white}
+%\subsubsection{Stinson et al}
+%\subsubsection{dubois et Teyssier}
+%Utilisation de particule fantômes pour simuler les différentes phase
+%
+%\subsubsection{Dalla Veccia et Schaye}
+%Modèle probabiliste, injection d'énergie seulement si l'énergie est suffisante pour générer un mouvement suffisant.
 
 \subsection{Mes Implémentations}
+\label{sec:SNmodel}
 
-
-\subsubsection{le model thermique}
-Le modèle thermique consiste a injecter l'energie sous forme d'energie interne.
-Il existe 2 variables d'etat liées a l'energie interne: la pression et la température.
-Modifié l'une de ses 2 variables est equivalent.
-
-Dans l'implementation actuelle, la pression est modifiée en utilisant cette conversion:
+\subsubsection{Modèle thermique}
+Le modèle thermique consiste a injecter l’énergie sous forme d’énergie interne.
+Il existe 2 variables d’état liées a l’énergie interne: la pression et la température, modifier l'une de ces variables est équivalent.
+Dans l’implémentation actuelle, le choix a été fait de travailler sur la pression.
+Elle est modifiée en utilisant cette conversion:
 
 \begin{equation}
 P^{0+} = P^{0-}  + E_0 * (\gamma-1)
@@ -91,6 +82,11 @@ Ce modèle est connu pour avoir de fortes pertes de d'énergie dans le cas ou le
 \subsubsection{le model cinetique}
 
 
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/03/oct_kinetic.pdf} 
+        \caption{
+ 		\label{fig:kin}}
+\end{figure}
 Le modèle cinétique consiste a modifier directement la vitesse du gaz autour de l'explosion dans le but de shunter la conversion de l'énergie interne en mouvement.
 Ce type de model a été utilisé pour 
 
