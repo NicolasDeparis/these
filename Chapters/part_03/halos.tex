@@ -1,35 +1,35 @@
 \chapter{Les galaxies}
 \label{sec:galaxies}
 
-Les étoiles se forment rarement de manière isolée mais généralement par paquet que l'on nomme galaxies.
+Les étoiles se forment rarement de manière isolée mais généralement par paquet dans des régions bien définies.% que l'on nomme galaxies.
 Ces zones ont une densité de gaz particulièrement élevée, et disposent donc de suffisamment de matériaux pour amorcer la formation stellaire.
-Comme la densité de gaz suit la distribution de matière noire, c'est grâce a cette dernière que l'on détecte les galaxies.
-L'idée est d'utiliser un halo finder pour détecter les surdensités de matière noire.
-On cherchera ensuite a associer les baryons aux halos.
+Comme la densité de gaz suit la distribution de matière noire, c'est grâce à cette dernière que l'on détecte les galaxies.
+L'idée est d'utiliser un "détecteur de halo" (ou "halo finder") pour détecter les surdensités de matière noire, auquel on cherchera ensuite à associer la composante baryonique.
 
-Nous verrons dans cette partie différentes propriétés des baryons en fonction de la masse de leur halo hôte.
-Nous regarderons des propriétés telle la fraction de masse baryonique ou le taux de formation stellaire.
+Cette partie a pour objectif de présenter les méthodes de détection des galaxies, pour pouvoir ensuite mener une série d'études statistiques.
+Nous analyserons différentes propriétés des galaxies en fonction de la masse de leur halo hôte.
+Nous nous intéresserons à des propriétés telle que la fraction de masse baryonique, le taux de formation stellaire, le taux d'éjection de matière en fonction des supernovæ, ou encore la fraction d'échappement du rayonnement.
 
 %L'étude des simulation se fait souvent halos par halos.
 %Quand on cherche a déterminer es propriétés des galaxies, un paramètre important est leur masse.
 %Comme le gaz suit la dynamique des baryons, les galaxies sont situées dans les surdensités de matière noire.
 
 \section{La détection des halos}
-La première étape est de détecter les halos.
-L'objectif d'un halo finder est de détecter les surdensités dans le champs de matière noire.
+La première étape consiste à détecter les halos.
 Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
+L'objectif d'un halo finder est de détecter les surdensités dans ce champs de particule.
 
-J'ai principalement utilisé l’algorithme Friend Of Friend (FOF) pour détecter les sur-densités et plus particulièrement pFOF l'implémentation parallèle de \cite{2014A&A...564A..13R}.
-pFOF lie les particules regroupées en surdensité, en utilisant une taille de lien caractéristique.
+
+Il existe différents techniques, mais j'ai principalement utilisé l’algorithme \ac{FOF} pour détecter les sur-densités et plus particulièrement \textit{pFOF} une implémentation parallèle de \ac{FOF} \citep{2014A&A...564A..13R}.
+\textit{pFOF} lie les particules regroupées en surdensité, en utilisant une taille de lien caractéristique.
 Il retourne ensuite une liste de groupes de particules et une liste de positions déterminées par le centre de masse des particules de chaque halos.
-
 %FOF retourne une liste de position de halo, une liste permettant de lier les particules détecté aux halos.
-Il existe plusieurs possibilités pour ensuite déterminer l'étendue spatiale des halos.
+%Il existe plusieurs possibilités pour ensuite déterminer l'étendue spatiale des halos.
 
 \subsection{Le rayon de Viriel}
-La première possibilité pour déterminer l'étendue spatiale du halo consiste a utiliser l'approximation du $R_{200}$ \citep{1997ApJ...490..493N}.
-Elle consiste à considérer une sphère aillant une densité moyenne de $200$ fois la densité moyenne de l'univers $\bar{\rho}$.
-
+La possibilité la plus directe pour déterminer l'étendue spatiale d'un halo consiste à utiliser l'approximation du $R_{200}$ \citep{1997ApJ...490..493N}.
+Elle consiste à considérer autour du centre de masse, une sphère aillant une densité moyenne de $200$ fois la densité moyenne de l'univers $\bar{\rho}$.
+Le $R_{200}$ est défini comme : 
 \begin{equation}
 R_{200}= \left( \frac{3\cdot M_{FoF} }{4\pi\cdot 200 \bar{\rho}} \right)^{1/3}
 \end{equation}
@@ -51,19 +51,15 @@ R_{200}= \left( \frac{3\cdot M_{FoF} }{4\pi\cdot 200 \bar{\rho}} \right)^{1/3}
 %\item stocker les indices dans une structure
 %\end{itemize}
 
-Nous avons donc a ce stade une position et une étendue pour chaque halo.
-On cherchera ensuite a y associer les galaxies (surdensité d'étoiles).
-J'ai utilisé un KD-tree, généré sur les étoiles, pour faire des recherches sphérique de manière efficace.
-
+Nous avons donc à ce stade une position et une étendue pour chaque halo.
+On cherchera ensuite à y associer les baryons formant les galaxies.
+Pour se faire j'ai utilisé un KD-tree, qui est un arbre permettant d'effectuer des recherches spatiales de manière optimisées.
+A l'aide d'un arbre généré sur les étoiles, j'ai associé a chaque halo toutes les étoiles présentes a l'intérieur de son $R_{200}$.
 Nous chercherons également a obtenir des informations sur les champs physique contenus pas la grille AMR.
-Il sera possible d'utiliser un KDtree pour déterminer quelles sont les cellules qui se trouvent dans le $R_{200}$ du halo.
-IL suffi pour cela d'utiliser les centres de cellule a la place de la position des étoiles.
+Il sera possible d'utiliser un KD-tree pour déterminer quelles sont les cellules qui se trouvent dans le $R_{200}$ du halo.
+Il suffit pour cela de générer un arbre sur les centres des cellules à la place de la position des étoiles.
 %Comme les particules de matière noire  données par FoF ne represente pas le meme volume, dans un soucis de cohérence, on appliquera cette méthodes a la matière noire également.
 A ce stade nous avons donc la possibilité, pour chaque halo, de connaître n'importe qu'elle grandeurs comprissent dans son $R_{200}$.
-
-Pour les petits halos, peu résolus, la taille des cellules peu être grandes par rapport au $R_{200}$.
-Pour minimiser l'erreur commise, la grille AMR pourra être projeter sur une grille régulière de résolution arbitraire.
-Cette méthode permettra d'associer des sous parties de cellules aux halo et améliorera la precision global de l'association.
 
 \subsection{Le problème de la forme des halos}
 
@@ -71,27 +67,27 @@ Cette méthode permettra d'associer des sous parties de cellules aux halo et am�
 %beaucoup de dynamique et merger dans les filemments
 
 L'approximation du $R_{200}$ est valide et a fait ses preuves dans le cas de halos virialisés.  %TODO ref
-Cependant, a haut redshift (z>5) les halos sont encore en formation et peuvent être fortement non virialisé.
-Il devient alors difficile pour FOF de séparer les différentes sous parties d'une même sur-densité.
+Cependant, à haut redshift (z>5) les halos sont encore en formation et peuvent être fortement non virialisé.
+Il devient alors difficile pour \ac{FOF} de séparer les différentes sous parties d'une même sur-densité.
 La figure \ref{fig:part_halo} illustre particulièrement bien ce problème de détection.
-
 La sur-densité détectée par \ac{FOF} est loin d'être sphérique, et l'approximation du $R_{200}$ n'est pas valide dans ce cas.
-Du fait de l'effondrement hiérarchique de la matière noire, changer la longueur de lissage ne changera pas le problème et ne ferait que le reporter a d'autres échelles.
+Du fait de l'effondrement hiérarchique de la matière noire, changer la longueur de lissage ne changera pas le problème et ne ferait que le reporter à d'autres échelles.
 
-
-\begin{figure}[bth]
-        \includegraphics[width=.95\textwidth]{img/03/part_halo_R200.pdf} 
-        \caption{La détection des halos par FOF peux être difficile au moment de la réionisation car les structure peuvent ne pas être virialisée.
-        }
- 		\label{fig:part_halo}
+\begin{figure}
+	\centering
+	\includegraphics[width=.75\textwidth]{img/03/part_halo_R200.pdf} 
+    \caption{La détection des halos par \ac{FOF} peux être difficile au moment de la réionisation car les structure peuvent ne pas être virialisée.
+    Les points bleus représentent les particules de matière noire et le cercle le $R_{200}$.
+ 	\label{fig:part_halo}}
 \end{figure}
 
 
 \subsection{Association "fine"}
 
-Dans le but d'améliorer ces problèmes d'identification dans les halos fortement non virialisé, j'ai développé une méthode pour associer plus précisément les halos et la grille.
-Cette méthode consiste a rechercher, pour chaque particule de matière noire, sa plus proche cellule.
-Malgré que cette recherche soit effectué de manière efficace a l'aide d'un KD tree, cette méthode est évidemment bien plus longue qu'une simple recherche dans la sphere.
+Dans le but d'améliorer ces problèmes d'identification dans les halos fortement asphérique, j'ai développé une méthode pour associer plus précisément la grille aux halos.
+Cette méthode consiste à rechercher pour chaque particule de matière noire, sa plus proche cellule.
+Malgré la recherche effectué à l'aide d'un KD-tree, cette méthode est évidemment bien plus longue qu'une simple recherche dans la sphere.
+La figure \ref{fig:R200_fine} présente la détection des cellules entre les deux méthodes pour le halo de la figure \ref{fig:part_halo}.
 
 %\begin{itemize}
 %\item générer un KDtree sur la grille
@@ -99,19 +95,31 @@ Malgré que cette recherche soit effectué de manière efficace a l'aide d'un KD
 %\item filtrer les cellules doublons
 %\end{itemize}
 
-La figure \ref{fig:R200_fine} présente la détection des cellule entre les deux méthodes pour le halo de la figure \ref{fig:part_halo}.
 
 
-\begin{figure}[bth]
-	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/part_cells.pdf} }
-	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/part_cells_fine.pdf} }
-        \caption{Cellule associées au halo dans le cas de l'estimation R200 vs dans le cas de la méthode fine.
-        }
- 		\label{fig:R200_fine}
+\begin{figure}
+	\subfloat[$R_{200}$]{\includegraphics[width=.45\linewidth]{img/03/part_cells.pdf} }
+	\subfloat[\textit{fine}]{\includegraphics[width=.45\linewidth]{img/03/part_cells_fine.pdf} }
+    \caption[Méthodes d'association matière noire - grille]{Cellules associées au halo présenté sur la figure \ref{fig:part_halo} dans le cas de l'estimation du $R_{200}$ à gauche et dans le cas de la méthode fine à droite.       
+ 	\label{fig:R200_fine}}
 \end{figure}
 
 
+\subsection{Association des petits halos}
+Pour les petits halos, peu résolus, la taille des cellules peu être grandes par rapport au $R_{200}$.
+Pour minimiser l'erreur commise, il est nécessaire d’estimer l'intersection entre le cube de la cellule et la sphère du halo.
+J'ai résolu ce problème géométrique en projetant la grille \ac{AMR} sur une grille régulière de résolution arbitraire.
+Cette méthode permettra d'associer des sous parties de cellules aux halos en approximant l'intersection avec la cellule et améliorera la precision global de l'association (cf figure \ref{fig:intersec}).
 
+\begin{figure}
+	\centering
+	\includegraphics[width=.45\linewidth]{img/03/intersec.png}
+    \caption[Projection des petits halo]{Les plus petits halos peuvent avoir des tailles comparable aux cellules.
+    Il est nécessaire d’estimer l'intersection cube/sphère.
+ 	\label{fig:intersec}}
+\end{figure}
+
+\clearpage
 
 \section{Étude de la composition des halos}
 
@@ -120,14 +128,13 @@ Maintenant que nous pouvons associer toutes la physique au sein de chaque halo, 
 \subsection{Les fonctions de masse}
 
 Les fonctions de masse des galaxies 
+Figure \ref{fig:ghmf}
 
-
-\begin{figure}[bth]
+\begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/ghmf.pdf}
         \caption{Fonction de masse des galaxies (GMF) et des halos (HMF) pour différents type de feedback de supernovae.
         Le feedback n'a pas d'influence directe sur la function de masse des halos, mais a un impact mesurable sur la formation stellaire.
-        }
- 		\label{fig:ghmf}
+ 		\label{fig:ghmf}}
 \end{figure}
 
 
@@ -143,7 +150,7 @@ Connaissant, a un instant donné, les étoiles appartenant a chaque halo, il est
 Nous allons voir que la masse 
 
 
-\begin{figure}[bth]
+\begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_avg.pdf}
 		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_tot.pdf}
         \caption{SFR en fonction de la masse du halo moyenne en haut et total en bas.
@@ -163,7 +170,7 @@ f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
 \end{equation}
 
 
-\begin{figure}[bth]
+\begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/baryon_frac.pdf}
         \caption{Fraction baryonique en fonction de la masse du halo et des feedback.
         }
@@ -179,9 +186,6 @@ La figure \ref{fig:bfrac} présente les résultats obtenus.
 
 Nous cherchons ici a quantifier les flux entrants et sortant des halos en fonction de leurs masses.
 Nous présenterons la méthodologie utilisé pour la détection de ces flux, ainsi que les résultats obtenus pour les flux hydrodynamique et radiatif.
-
-
-
 
 \subsection{Détermination des flux au $R_{200}$}
 \label{sec:healpix}
@@ -204,7 +208,7 @@ Healpix est un outils qui permets de répartir des points de manière uniforme s
 L'avantage de cette méthode est que toutes les cellules ont la même pondération.
 
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/healpix.jpg} 
         \caption{Exemple de sphere HealPix}
  		\label{fig:HealPix}

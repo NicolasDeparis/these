@@ -164,7 +164,7 @@ struct OCT{
 \end{lstlisting}
 
 \subsubsection{La structure CELL}
-
+\label{sec:CELL}
 Les cellules contiennent l'information physique (densité, pression, température, etc...).
 Chaque cellule peut, sous certaine condition, être subdivisée en un OCT pour augmenter la résolution localement.
 L'information de la position de la cellule dans l'OCT parent est contenue dans son identifiant (allant de 0 à 7).
@@ -180,6 +180,41 @@ struct CELL{
   struct PARTICLE *part; // pointeur vers la chaine de particules.
 };
 \end{lstlisting}
+
+
+\subsubsection{La structure PARTICULE}
+\label{sec:PART}
+
+%TODO introduire liste chainée de particule
+
+\begin{lstlisting}[float=bth,language=C,frame=tb,caption={La structure PARTICULE de EMMA},label=lst:part]
+struct CELL{
+  struct PART
+{
+  REAL x;
+  REAL y;
+  REAL z;
+
+  REAL vx;
+  REAL vy;
+  REAL vz;
+
+  REAL mass;
+
+  struct PARTICULE *next;
+  struct PARTICULE *prev;
+
+  int idx;
+
+  int  isStar;
+  REAL age;
+
+};
+\end{lstlisting}
+
+
+
+%TODO introduire la structure part
 
 \subsubsection{Gestion du raffinement}
 \label{sec:raffinement}

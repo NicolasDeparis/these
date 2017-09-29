@@ -1,7 +1,7 @@
 \chapter{Les étoiles}
 \label{sec:etoiles}
 
-Dans les parties précédentes nous avons survolé quelles étaient les physiques à l’œuvre dans les simulations de la réionisation et la façon dont elles sont modélisées numériquement.
+Dans les parties précédentes nous avons survolé quelles étaient les différentes physiques à l’œuvre dans les simulations de la réionisation et la façon dont elles sont modélisées numériquement.
 Il manque encore une composante essentielle au problème qui est la modélisation des sources de rayonnement ionisant.
 L'objectif de cette section est d'exposer le modèle de source que j'ai développé, implémenté et calibré.
 Comme nous avons vu en introduction (cf section \ref{sec:introreio}), il existe deux types de sources, les étoiles et les quasars.
@@ -183,10 +183,10 @@ Il existe entre autres :
 A partir d'informations caractéristique d'une population stellaire, comme sa masse, son \ac{IMF} ou sa métallicité, ces modèle retourne un spectre d'émission et son évolution en fonction du temps (cf Fig \ref{fig:spectre_starburst}).
 Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retourne plusieurs informations utiles au modèle comme l'énergie et la masse injectées par les supernovae. %TODO ref  (cf )
 
-\begin{figure}[htbp]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/spectre_starburst.jpg} 
         \caption{Spectre d'émission d'une population stellaire généré par Starburst99.
-        Ici avec les paramètres sont $M_{pop}=10^6$ $_\odot$, \ac{IMF} de Salpeter ($\alpha=2.35$ et intégration de 1 à 100 M$_\odot$ 
+        Ici avec les paramètres sont $M_{pop}=10^6 M_\odot$, \ac{IMF} de Salpeter ($\alpha=2.35$ et intégration de 1 à 100 M$_\odot$ 
  		\label{fig:spectre_starburst}}
 \end{figure}
 
@@ -195,7 +195,7 @@ Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retou
 
 \subsection{Localisation des zones de formation stellaire}
 
-Il est admis que les étoiles se forment dans les nuage d'hydrogène moléculaires. %TODO ref
+Il est admis que les étoiles se forment dans les nuage d'hydrogène moléculaires (voir eg \cite{krumholz_universal_2012}).
 Ces nuages se trouvent eux même dans des zones suffisamment dense pour que les molécules puissent se former.
 En pratique dans EMMA, la physique de l'hydrogène moléculaire n'est pas encore prisent en compte, et les zones autorisées à former des étoiles sont localisées à l'aide d'un seuil en densité.
 Toutes les cellules plus dense qu'un certain seuil sont pas autorisée à créer des particules stellaire.
@@ -224,7 +224,7 @@ En pratique on pourra définir ces deux seuil, et le seuil final sera le plus co
 
 ou $\delta_{in}$ et $\rho_{in}$  sont respectivement les paramètre de surdensité et de densité physique.
 $\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps en unité du code,
- $\rho_{in}$ est exprimé en unité physique (en atome par mètre cube), sa valeur évolue dans le temps du point de vue des unité du code.
+ $\rho_{in}$ est exprimé en unité physique (en atome par mètre cube), sa valeur évolue dans le temps du point de vue des unité du code (cf section \ref{sec:supercomobil}).
 
 % determination de la valeur de 55\\ 
 
@@ -233,10 +233,10 @@ $\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps
 %rho 1.5\\
 %temps de free fall\\
 
-Maintenant que nous avons définis où former des étoiles, il nous faut calculer combien nous devons en former.
+Maintenant que nous avons définis où former des étoiles, il nous faut calculer la quantité à former.
 
 La loi de Schmidt \citep{1959ApJ...129..243S}  est une loi observationnelle qui lie la densité surfacique de gaz dans les galaxies au taux de formation stellaire (\ac{SFR}) dans cette galaxie.
-Kennicut \citep{1998ApJ...498..541K} à utilisé un modèle de galaxie pour dé-projeter la densité surfacique observée et ainsi déterminer une loi qui lie le \ac{SFR} à la densité volumique de gaz:
+Kennicut \citep{1998ApJ...498..541K} a utilisé un modèle de galaxie pour dé-projeter la densité surfacique observée et ainsi déterminer une loi qui lie le \ac{SFR} à la densité volumique de gaz:
 \begin{equation}
 SFR \propto \rho ^{\alpha},
 \end{equation}
@@ -251,14 +251,13 @@ t_{ff} = \sqrt{\frac{3\pi}{32G\rho_g}}.
 
 Au final, le \ac{SFR} prend la forme:
 \begin{equation}
-	SFR = \epsilon_{sf} \frac{\rho_g}{t_{ff}}
+	SFR = \epsilon_{sf} \frac{\rho_g}{t_{ff}} \propto \rho_g^{1.5}
     \label{eq_sfr}
 \end{equation}
 avec  $\epsilon_{sf}$ le paramètre d'efficacité de formation stellaire.
 Observationellement, $\epsilon_{sf}$  est de l'ordre du \%. %TODO ref
 Ce qui signifie que la formation stellaire est relativement inefficace.
-
-Il est possible de considérer le temps caractéristique de formation stellaire:
+Il est également possible de considérer le temps caractéristique de formation stellaire:
 \begin{equation}
 t_{sf} =  \frac{t_{ff}}{ \epsilon_{sf} },
 \end{equation}
@@ -277,17 +276,18 @@ Nous définissons une masse d'étoiles $m_{star}$ qui correspondra à notre "qua
 Toutes les étoiles aurons donc la même masse et cette masse est calculée d'une manière comparable à celle d'une particule de matière noire.
 La masse d'une étoile correspond à la masse moyenne de gaz dans une cellules d'un certain niveau :
 \begin{equation}
- m_{star} = M_{DM} \frac{\Omega_b}{\Omega_m}\cdot 2^{3L}
+ m_{star} = M_{DM} \frac{\Omega_b}{\Omega_m}\cdot 2^{-3L}
 \end{equation}
 % pouvant aller du niveau coarse  au niveau plusieurs niveau raffiné.
 
-Le nombre de quanta a ajouter aléatoirement est ensuite tiré dans une lois de Poisson.
+%TODO cite RAMSES
+Le nombre de quanta à ajouter est ensuite tiré aléatoirement dans une lois de Poisson.
 
 \begin{equation}
 	P(N) = \frac{\lambda^N}{N!} e^{-\lambda}
 \end{equation}
 
-Ou $\lambda$ correspond au nombre de particule moyen a créer dans la cellule :
+Où $\lambda$ correspond au nombre de particule moyen a créer dans la cellule :
 \begin{equation}
 \lambda = \frac{ M_{star}}{m_{star}}
 \end{equation}
@@ -297,12 +297,12 @@ On obtiendra au final $N_{star}$ le nombre de quanta de masse d'étoile à crée
 En pratique j'ai implémenté deux méthodes de transformations.
 Si  $N_{star}>1$ il est possible de créer : 
 \begin{itemize}
-\item  $N_{star}$ particules aillant chacune une mass  $m_{star}$.
+\item  $N_{star}$ particules aillant chacune une masse  $m_{star}$.
 \item une seule particule de masse  $N_{star} \cdot m_{star}$.
 \end{itemize}
 
-Dans le premier cas le nombre de particules sera plus élevée et la résolution stellaire meilleure, mais en contrepartie le cout numérique sera plus important.
-Le choix de la méthode est laissé a l'utilisateur.
+Dans le premier cas le nombre de particules sera plus élevée et la résolution stellaire meilleure, mais en contrepartie le coût numérique sera plus important.
+Le choix de la méthode est laissé à l'utilisateur et dépend de la situation.
 
 %En pratique la création d'une particule stellaire consistera a 
 %\begin{itemize}
@@ -318,29 +318,33 @@ Le choix de la méthode est laissé a l'utilisateur.
 %\end{itemize}
 %\end{itemize}
 
-En pratique la création d'une particule stellaire consistera à prendre dans la réserve une nouvelle particule vierge, ajouter ce nouveau maillons à la liste chainée de particule de la cellule.
-Il faut ensuite initialiser cette nouvelle particule.
+En pratique la création d'une particule stellaire consistera à prendre une nouvelle particule vierge dans la réserve (cf section \ref{sec:PART}), ajouter ce nouveau maillons à la liste chaînée de particule de la cellule et initialiser cette nouvelle particule.
 
 On associera un temps de création à la particule stellaire et non un age, ceci permet de ne pas avoir à remettre à jour cette valeur à chaque pas de temps.
 Pendant les analyses post simulation, on prendra garde à définir l'age des étoiles comme étant le temps associé au snapshot courant moins le temps de création de la particule.
 
-Les étoiles créées auront une vitesse correspondant aàla vitesse du gas au moment de leurs création.
-Pour éviter les effets de "collier", à cette vitesse sera ajouté une composante aléatoire, aillant une direction aléatoire et une amplitude aléatoirement comprise entre $\pm C_s$ la vitesse du son dans la cellule.
+Les étoiles créées auront une vitesse correspondant à la vitesse du gas au moment de leurs création.
+Pour éviter les effets de "collier", à cette vitesse sera ajouté une composante aléatoire, aillant une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule.
 
-Il est utile d'associer un identifiant unique aux nouvelles particules pour pouvoir suivre leur évolution et les retrouver entre les différents snapshot.
+Il est utile d'associer un identifiant unique aux nouvelles particules pour pouvoir suivre leur évolution et les retrouver entre les différentes sorties.
 La technique la plus simple est d'associer la valeur d'un entier que l'on incrémente à chaque création d'une nouvelle particule.
 Du fait de la parallélisation cette incrémentation demande des communications à chaque création de particule.
 Pour minimiser les communications, la pratique retenue consiste à former toutes les particules de toutes les processeurs, en leur assignant un identifiant caractéristique (eg -1) et d'assigner les identifiants finaux dans un second temps.
-Une fois les particules créées, chaque processeurs compte le nombre de nouvelles particules et le transmet aux autres, ce qui permet d'allouer une plage d'identifiants par processeurs, et ainsi allouer les identifiants finaux.
+Une fois les particules créées, chaque processeurs compte son nombre de nouvelles particules et le transmet aux autres, ce qui permet d'allouer une plage d'identifiants par processeur, et ainsi allouer les identifiants finaux.
 
 \section{le SFH cosmique}
 
-Dans le but de tester cette implémentation, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} simulée en accord avec les observations.
-Les observations 
+Dans le but de tester cette implémentation, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} simulée en accord avec les contraintes observationnelles.
+Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
 %le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
 %Les points d'observations de Bouwens %TODO ref
-La figure \ref{fig:test_SFH} présente un test après calibration des paramètres libres.
-Le seuil de formation à été réglé a 50$\bar{\rho}$ et l'efficacité de formation stellaire a $1\%$.
+Une difficulté est qu'il existe une dégénérescence entre le seuil en densité et l'efficacité de formation stellaire.
+En effet, il semble à priori possible d'obtenir des résultats similaire en utilisant, soit un seuil très permissif et une efficacité très faible, ou à l'inverse en ne formant des étoiles que dans les quelques cellules les plus dense avec une efficacité élevée.
+Dans la littérature %dédiée aux simulations comparables %TODO ref
+un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé.
+J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
+La figure \ref{fig:test_SFH} présente un test après calibration. 
+L'efficacité de formation stellaire est fixée à $1\%$.
 Avec ses paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
 
 \begin{figure}
@@ -350,6 +354,13 @@ Avec ses paramètres, la \ac{SFH} obtenue respecte les contraintes observationne
 }
  		\label{fig:test_SFH}
 \end{figure}
+
+%\begin{figure}
+%        \includegraphics[width=.95\linewidth]{img/02/luminosity_function.pdf}
+%        \caption{Fonction de luminosité dans la bande $M_{1600}$.
+%}
+% 		\label{fig:test_SFH}
+%\end{figure}
 
 %Des test plus poussés seront développés plus loin.
 
@@ -370,36 +381,37 @@ Si c'est le cas, on calculera son émissivité et on injectera cette énergie so
 Le calcul de $\dot{N}_\nu^*$ sera effectué dans toutes les cellules.
 
 Pour déterminer quel est le lien entre age, masse et luminosité d'une particule stellaire on utilisera un modèle de population stellaire.
-A partir des spectres obtenus avec Starburst99 (cf \ref{sec:staburst}) , nous allons ne garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus petite que 911$\AA$) :
+A partir des spectres obtenus avec Starburst99 (cf section \ref{sec:staburst}) , nous n'allons garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus courte que 911$\AA$) :
 
 \begin{equation}
 E_{ion (t)} = \int_{13.6eV}^{+\inf} h \nu_{(t)} d\nu
 \end{equation}
 
-On obtient a partir de cette intégration, le profil d'émmissivité ionisante présenté sur la figure \ref{fig:flux}.
+En divisant l'énergie totale obtenue à partir de cette intégration, par l'énergie moyenne des photons obtenue à partir des spectres (cf section \ref{sec:groupedephotons}), on obtient l'évolution du flux de photons ionisant, présenté sur la figure \ref{fig:flux}.
 
 \begin{figure}[htbp]
         \includegraphics[width=.95\linewidth]{img/03/flux.pdf} 
-        \caption{Émissivité ionisante intégrée en fonction du temps}
- 		\label{fig:flux}
+        \caption{Émissivité ionisante intégrée en fonction du temps.
+        La population présente deux phases d'émission, une phases constante suivie d'une rapide décroissance.
+ 		\label{fig:flux}}
 \end{figure}
 
 Le profil obtenu présente un plateau d'émissivité constante suivie d'une rapide décroissance.
 Ce profil peut être raisonnablement approximé par:
 
-$
+\begin{equation}
     S = 
 \begin{cases}
     S_0 ,         & \text{if } t < t_{life}\\
     S_0.t^{-4},   & \text{if } t_{life} \leq t < 100.t_{life} \\
     0,   & \text{if } 100t_{life} \leq t
 \end{cases}
-$
+\end{equation}
 
-Ce flux correspond au flux d'une population de $10^6M_\odot$, et ces valeurs seront pondérées au prorata de la masse de la particule stellaire : une particule de $10^5M_\odot$ émettra 10 fois moins de photons ionisant.
+Ce flux correspond au flux d'une population de $10^6M_\odot$, et ces valeurs seront pondérées au prorata de la masse de la particule stellaire : une particule de $10^5M_\odot$ émettra  simplement 10 fois moins de photons ionisant qu'une population de $10^6 M_\odot$.
 
-La gestion des groupes de photons a été abordé dans la section \ref{sec:groupedephotons}.
-Pour une IMF TopHeavy, les valeurs obtenues pour une émission mono-groupe sont:
+La gestion des groupes de photons a été abordée dans la section \ref{sec:groupedephotons}.
+Les caractéristique des photons obtenues dans le cas d'une \ac{IMF} TopHeavy et pour une émission mono-groupe sont présentés sur la table \ref{tab_photon}.
 
 \begin{table}
 \begin{tabular}{l l }
@@ -408,10 +420,20 @@ Pour une IMF TopHeavy, les valeurs obtenues pour une émission mono-groupe sont:
 	$\alpha_i$	&  $1.82.10^{-22}$ m$^2$ \\
 \end{tabular}
 \caption{Propriété des photons émis par les sources.
+Ces valeurs ont été calculées à partir des spectres obtenus avec Starburst99.
 \label{tab_photon}}
 \end{table}
 
-La table \ref{tab_photon} présente les caractéristique des photons obtenus.
+Cette émissivité sera ensuite pondérée par un paramètre d'efficacité.
+Ce paramètre libre reflète l'impact d'une grande partie de la physique sous grille, sur le rayonnement.
+En effet, nous ne résolvons pas certains processus, comme par exemple l'absorption par la poussière, qui va empêcher la radiation de sortir de l’environnement de la population.
+Ce paramètre est analogue à une fraction d'échappement intrinsèque et ne doit pas être confondu avec la fraction d'échappement des galaxies que nous aborderons par la suite. %TODO ref
+
+Avec les paramètres déterminés par Starburst99 et une fraction d'échappement intrinsèque de 40\%, j'obtiens l'histoire de reionisation présenté sur la figure \ref{fig:test_xion}.
+Cette histoire est comparée aux contraintes observationnelles déterminées par \cite{fan_constraining_2006}.
+
+J'ai également pu vérifier à ce stade que l'introduction du rayonnement ionisant dans la simulation n'impacte pas la \ac{SFH} cosmique.
+Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité.
 
 
 %TODO intégration de l'énergie et de la section efficace
@@ -434,16 +456,13 @@ La table \ref{tab_photon} présente les caractéristique des photons obtenus.
 
 \begin{figure}[bth]
         \includegraphics[width=.95\linewidth]{img/02/xion.pdf} 
-        \caption{Histoire de la fraction d'ionization dans la simulation présentée en \ref{fig:test_SFH}.
-        Après calibration de la fraction d'échapement interne, il est possible d'obtenir une histoire d'ionisation en accord avec les observations.
-}
- 		\label{fig:test_xion}
+        \caption{Histoire de la fraction d'ionisation dans la simulation présentée sur la figure \ref{fig:test_SFH}.
+        Après calibration de la fraction d’échappement interne, il est possible d'obtenir une histoire d'ionisation en accord avec les observations.
+ 		\label{fig:test_xion}}
 \end{figure}
 
 
 %\section{Le problème de la masse des étoiles}
-%
-%
 %
 %%le paramètre de masse des étoiles change la reionization\\
 %%effet numérique\\
@@ -463,3 +482,4 @@ La table \ref{tab_photon} présente les caractéristique des photons obtenus.
 %}
 % 		\label{fig:mstar}
 %\end{figure}
+
