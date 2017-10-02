@@ -1,13 +1,21 @@
 \clearpage
 \section{Les supernovæ}
 
+Dans cette section, nous allons aborder la modélisation des supernovae dans les simualtion cosmologiques.
+Je présenterai deux des modèles que j'ai implémenté, ainsi que les tests numériques qui permettent de les valider.
+Nous verrons que ces modèles sont équivalent dans un cas idéal mais divergent lors de l'introduction de la physque du refroidissment.
+Nous aborderons également la problématique de la calibration de ces modèles.
 
-Les supernovae ont été introduite dans les simulations cosmologiques pour réduire l'effondrement du gaz sur lui même.
+%Il a fallut trouver un mécanisme d'introduction d'énergie dans le gaz.
+%Les supernoavae ont été proposées comme mécanisme.
+
+Les supernovae ont été introduites dans les simulations cosmologiques pour réduire l'effondrement du gaz sur lui même.
 Sans l'introduction d'énergie dans le gaz par les supernovæ, le gaz s'effondre de manière importante et créer un nombre élevé d'étoiles.
 Cela mène à un taux de formation stellaire trop important par rapport à ce qui est observé.
 Ce problème est connus sous le nom de "overcooling problem"
-
 L'objectif est de casser les structures pour diminuer les surdensité et limiter la formation stellaire.
+Une fois que la supernovae a explosé, il en résulte une onde de choc qui va se propager dans le milieu environnant.
+
 
 %\subsection{Le modèle théorique}
 %Il existe principalement deux événement pouvant mener a un explosion de supernovæ : 
@@ -22,9 +30,6 @@ L'objectif est de casser les structures pour diminuer les surdensité et limiter
 %Cette injection limite fortement la formation stellaire dans le milieu.\\
 %modèle sous grille\\
 
-
-Une fois que la supernovae a explosée, il en résulte une onde de choc qui va se propager dans le milieu environnant.
-
 \subsection{Les différentes phases}
 L'évolution du front d'onde à lieu en plusieurs phases, on en distinguera principalement deux : 
 
@@ -32,27 +37,27 @@ L'évolution du front d'onde à lieu en plusieurs phases, on en distinguera prin
 \item Expansion adiabatique.
 Dans la phase d'expansion adiabatique, l'énergie cinétique est conservée, le choc est violent et le gaz n'a pas le temps de perdre de l'énergie par radiation.
 Dans cette phase, l'expansion est suffisamment rapide pour que la dissipation d'énergie par radiation soit négligeable.
-%C'est le cas dans le test de Sedov.
+%C'est par exemple le cas du test de Sedov.
 
 \item Snowplow.
 Dans la phase snowplow, le choc a suffisamment ralentis pour que le gaz commence à dissiper de l'énergie par rayonnement.
 Dans ce cas, il se forme un bourrelet de compression dans lequel le gaz est poussé, comme dans le cas d'un chasse neige. 
-Les pertes par radiation deviennent importantes et l'énergie cinétique n'est plus conservée
+Les pertes par radiation deviennent importantes et l'énergie cinétique n'est plus conservée.
 \end{itemize}
 
 \subsection{Les Superbubles}
-
 %A la manière de la percolation des bulles de HII, les bulles de supernovae 
 
 Dans les endroits de formation stellaire, les étoiles ne sont pas isolées mais apparaissent ensemble au sein d'un même nuage de gaz.
-L'effondrement gravitationnel du nuage mène a créer un génération D’étoile en un cours laps de temps.
-Toutes ces étoiles vont mourir dans un laps de temps rapproché et ainsi, les différentes supernovæ vont injectée de l’énergie dans le milieu dans un temps très rapproché.
-Les différentes bulle vont se rencontrer (à la manière des bulles ionisées) et mener à une bulle plus grande appelée superbubble.
+L'effondrement gravitationnel du nuage mène à créer une génération d’étoiles en un cours laps de temps.
+Toutes ces étoiles vont mourir dans un laps de temps rapproché et ainsi, les différentes supernovæ vont injecter de l’énergie dans le milieu dans un laps temps rapproché.
+Les différentes ondes de chocs vont se cumuler et la résultante va mener à la création d'une bulle de gaz chaud pouvant englober les galaxies.
+On appelle ces régions des  superbubble.
 
 \subsection{Considérations d'échelles}
 La façon de gérer les supernovae sera donc fonction de l'échelle que l'on considère.
-Dans des simulations très détaillées de galaxies, il sera nécessaire de résoudre la phase adiabatique d'explosion individuelle.
-Dans des simulations cosmologiques de la réionisation, L’intérêt sera plus porté sur la phase snowplow des superbubbles.
+Dans des simulations détaillées de galaxies, il sera nécessaire de résoudre la phase adiabatique des explosions d'étoiles individuelles. %TODO ref simu de galaxie zoom
+Dans les simulations cosmologiques de la réionisation qui nous intéresses ici, l’intérêt sera plus porté sur la phase snowplow des superbubbles.
 
 %\subsection{ Différentes implémentations existantes}
 %\subsubsection{Navaro and white}
@@ -67,155 +72,104 @@ Dans des simulations cosmologiques de la réionisation, L’intérêt sera plus 
 \label{sec:SNmodel}
 
 \subsubsection{Modèle thermique}
-Le modèle thermique consiste a injecter l’énergie sous forme d’énergie interne.
-Il existe 2 variables d’état liées a l’énergie interne: la pression et la température, modifier l'une de ces variables est équivalent.
-Dans l’implémentation actuelle, le choix a été fait de travailler sur la pression.
-Elle est modifiée en utilisant cette conversion:
+Le modèle thermique consiste à injecter l’énergie de l'explosion sous forme d’énergie interne.
+Il existe 2 variables d’état liées à l’énergie interne : la pression et la température.
+Modifier l'une ou l'autre est équivalent et dans l’implémentation actuelle, le choix a été fait de travailler sur la pression.
+Elle est modifiée de la façon suivante :
 
 \begin{equation}
-P^{0+} = P^{0-}  + E_0 * (\gamma-1)
+P^{0+} = P^{0-}  + E_0 \cdot  (\gamma-1)
 \end{equation}
 
-Ce modèle est connu pour avoir de fortes pertes de d'énergie dans le cas ou le refroidissement est autorisé.
+L'injection de l'énergie va donc résulter en une augmentation de la pression dans la cellule et le gaz sera mis en mouvement par conversion de l'énergie interne en énergie cinétique. 
+L'avantage de cette méthode est que l'injection ne nécessite la modification que d'une seule cellule.
+Cependant il est connu pour avoir de fortes pertes de d'énergie dans le cas ou le refroidissement est autorisé.
 
+\subsubsection{Modèle cinétique}
 
-\subsubsection{le model cinetique}
+Le modèle cinétique a pour objectif d'éviter le conversion entre énergie interne et énergie cinétique en modifiant directement cette dernière.
+Le modèle cinétique consiste à modifier directement la vitesse du gaz autour de l'explosion dans le but de shunter la conversion de l'énergie interne en mouvement.
+%Ce type de model a été utilisé pour 
+Il n'est plus possible ici de ne modifier qu'une seule cellule.
+Plus le nombre de cellules dont la vitesse sera modifiée autour de l'explosion sera important, meilleure en sera la sphéricité de l'onde choc.
+Le choix a été fait de limiter le nombre de cellules utilisées à 8 correspondant a 1 oct de la structure \ac{AMR} d'\emma .
+Ceci à deux conséquences.
+Premièrement la recherche de voisin est réduite à l'exploration de l'OCT parent de la cellule ou a lieu l'explosion, le cout numérique est donc réduit à son strict minimum (voir section \ref{sec:voisins}).
+Deuxièmement, un OCT ne peut pas être divisé entre les processeurs, ce qui assure que l'explosion a lieu au sein d'un processeur unique et permet d'éviter les communications.
 
-
-\begin{figure}
-        \includegraphics[width=.95\linewidth]{img/03/oct_kinetic.pdf} 
-        \caption{
- 		\label{fig:kin}}
-\end{figure}
-Le modèle cinétique consiste a modifier directement la vitesse du gaz autour de l'explosion dans le but de shunter la conversion de l'énergie interne en mouvement.
-Ce type de model a été utilisé pour 
-
-Nous avons fait le choix de limiter le nombre de cellules utilisées a 8 correspondant a 1 oct de la structure AMR d'\emma
+En pratique l'énergie de l'explosion sera uniformément répartie sur les 8 cellules de l'OCT, ainsi chaque cellule recevra : 
 
 \begin{equation}
-e_{SN} = E_{SN}/8
+e_{SN} = E_{SN}/8.
 \end{equation}
 
-Ensuite cette énergie est utilisé pour changer la vitesse du gaz en utilisant : 
+Cette énergie est utilisée pour changer la vitesse du gaz de chaque cellule en utilisant : 
+
 \begin{equation}
     \Delta \overrightarrow{v_{gas}} = \sqrt{\frac{2e_{SN}}{\rho_g.dV}} \overrightarrow{u}
     \label{eq_sn_direct}
 \end{equation}
 
+Où les vecteurs $\overrightarrow{u}$ sont les directions radiales au centre de l'OCT (cf figure \ref{fig:kin}).
 
-\subsection{Test numérique (Sedov)}
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/03/oct_kinetic.pdf} 
+        \caption{Avec le modèle cinétique l'explosion a lieu au sein d'un OCT, et radialement au centre de celui ci.
+ 		\label{fig:kin}}
+\end{figure}
+
+
+\subsection{Test numérique - Explosion de Sedov}
 \label{sec:sedov}
 
 %la dérivation des solutions du test de Sedov se trouve :
 %chapitre 17 de Shu the physique of astrophysic Volume 2.\\
 
-Dans le but de tester l'implémentation des différents modèles d'injection d'énergie, je l'es ai soumis au test de Sedov.
-Ce test est utilisé pour tester le cas d'une explosion parfaite.
+Dans le but de tester l'implémentation des différents modèles d'injection d'énergie, je les ai soumis au test de Sedov.
+Ce test est utilisé pour tester le cas d'une explosion parfaite et a l'avantage de posséder une solution analytique.
 Il consiste a relâcher instantanément une quantité d'énergie $E_0$ dans un milieu homogène d'indice adiabatique $\gamma$, de densité $\rho_0$ et de pression $P_0$ (ou de température $T_0$).
 Ce brusque changement dans l'état du système créer une discontinuité que le solveur va devoir gérer.
-
-L'avantage de ce test est qu'il dispose d'une solution analytique.
-Sedov a exprimé  en 1959 que le rayon de l'explosion en fonction du temps peux s'exprime : %TODO ref
+\cite{sedov_similarity_1959} a exprimé le rayon de l'explosion en fonction du temps  : 
 
 \begin{equation}
 r_{(t)}=\left( \frac{E_0}{\alpha \rho_0 }\right)^{1/5} t^{2/5}
 \end{equation}
 
+%TODO expression analytique du profil
 
-\subsubsection{Sedov évolution temporelle }
+\subsubsection{Évolution temporelle }
 
+%parametre du test :
+%rho=1
+%p=1e-5
+%v=0
+%gamma=5/3
 
-parametre du test :
-rho=1
-p=1e-5
-v=0
-gamma=5/3
-
-
-Ce test consiste a suivre l'onde de choc et a s'assurer que son profil et sa position sont correct dans le temps.
-On calcul pour chaque cellule sa distance au centre de l'explosion, puis en utilisant un histogramme sur les rayons, pondéré par la valeur du champ que l'on veux analyser, on obtient rapidement le profil radial moyen.
-Le résultats présentés utilise l'injection thermique simple (dans une seule cellule).
-
+Ce premier test consiste à injecter l'énergie dans le milieu et à suivre l'évolution du profil et de la position de l'onde de choc dans le temps.
+%On s'assure alors que son profil et sa position sont correct 
+%On calcul pour chaque cellule sa distance au centre de l'explosion, puis en utilisant un histogramme sur les rayons, pondéré par la valeur du champ que l'on veux analyser, on obtient rapidement le profil radial moyen.
+Le résultats présentés utilisent l'injection thermique dans une seule cellule.
 Le domaine de calcul est en une grille régulière décomposé en $256^3$ éléments  de calcul et le raffinement n'est pas autorisé.
 
-La Fig. \ref{fig:sedov_evol} présentes le trois principaux champs (densité, pression et vitesse radiale) a trois instant différents, comparé a la solution analytique.
-On observe un très bon accord en la simulation et le théorie.
-Notre méthode d'injection d'énergie est correcte et bien dimensionnée.
-%
-%\begin{figure}[bth]
-%        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
-%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_pres.pdf} 
-%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_evol_8_vel.pdf} 
-%        \caption{Test de Sedov, évolution des différentes variables d'états. La densité en haut, la pression au milieu et la vitesse radiale en bas.}
-% 		\label{fig:sedov_evol}
-%\end{figure}
+La colonne de gauche de la figure \ref{fig:sedov_profil} présente les profils radiaux de densité, de pression et de vitesse radiale à trois instant différents, comparé a la solution analytique.
+On observe un très bon accord entre la simulation et la théorie, l'implémentation de la méthode d'injection d'énergie thermique est donc correcte et bien dimensionnée.
 
-\begin{figure}[bth]
-   \begin{minipage}[c]{.46\linewidth}
-        \includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
-		\includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_pres.pdf} 
-		\includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_vel.pdf} 
+\subsubsection{Comparaison des modèles}
 
-   \end{minipage} \hfill
-   \begin{minipage}[c]{.46\linewidth}
-		
-		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_den.pdf} 
-		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_pres.pdf} 
-		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_vel.pdf} 
-
-   \end{minipage}
-
-        \caption{Test de Sedov, évolution des différentes variables d'états. La densité en haut, la pression au milieu et la vitesse radiale en bas.        
-        Test de Sedov, comparaison des profil radial en fonction des  méthodes d'injection. 
-        Densité en haut, pression au milieu et vitesse radial en bas.
-        La position et la forme du front d'onde ne dépendent pas de la méthodes d'injection utilisée.
-% 		\label{fig:sedovmethod} 
- 		}
- 		\label{fig:sedov_evol}
-\end{figure}
-
-
-
-\subsubsection{Sedov comparaison entre les méthodes}
-
-Nous avons vu qu'il existe différents moyens d'injecter de l'énergie dans le solveur hydrodynamique.
-Le test présenté ici consiste a vérifié que les différentes méthodes sont équivalentes entre elles.
-
-Nous allons comparer 3 méthodes : 
+Le test présenté ici consiste à vérifier la validité de différentes méthodes d'injection, nous allons en comparer trois : 
 \begin{itemize}
-\item l'injection thermique dans une cellule 
-\item l'injection thermique dans un cube de huit cellules
-\item l'injection cinétique  dans un cube de huit cellules
+\item l'injection thermique dans une cellule,
+\item l'injection thermique dans un cube de huit cellules,
+\item l'injection cinétique dans un cube de huit cellules.
 \end{itemize}
 
+Les trois simulations utilisent cette fois ci un espace discret de $128^3$ éléments, mais en autorisant le raffinement sur 3 niveaux.
+Dans le but de concentrer le raffinement sur le front de l'onde choc, le raffinement est effectué sur le gradient de densité : une cellule est raffinée si son gradient de densité est supérieur à un seuil donné.
 
-Ces 3 tests utilisent cette fois ci espace discret de  $128^3$ éléments, mais en autorisant le raffinement sur 3 niveaux.
-Le raffinement est effectué sur le gradient de densité, ie une cellule est divisé si le gradient de densité qu'elle contient est supérieur a une certaine valeur.
-Cette méthode permet de concentrer le raffinement sur le front de l'onde choc.
-
-La figure \ref{fig:sedovraff} présente le motif de raffinement obtenu pour le test d'injection thermique sur une cellule.
-Tout les tests présentent un motif de raffinement similaire.
-
-%\begin{figure}[htpb]
-%        \includegraphics[width=.95\linewidth]{img/03/sedov/slice_th_1raf.pdf} 
-%        \caption{Test de Sedov, raffinement (mettre la color map) }
-% 		\label{fig:sedovraff}
-%\end{figure}
-
-La figure \ref{fig:sedovmethod} presente les profils obtenus a un instant donné pour les différentes méthodes d'injection d'énergie et pour les différents champs.
+La colonne de droite de la figure \ref{fig:sedov_profil} présente les profils obtenus a un instant donné pour les différentes méthodes d'injection d'énergie et pour les différents champs.
 On observe que le front est bien situé au même endroits indépendamment de la méthode.
+Les profils sont identiques 
 %Le profil de densité est présenté en échelle logarithmique pour accentuer les difference au niveau du centre. 
-
-%\begin{figure}[htpb]
-%        \includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_den.pdf} 
-%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_pres.pdf} 
-%		\includegraphics[height=.3\textheight]{img/03/sedov/sedov_comp_profile_vel.pdf} 
-%        \caption{Test de Sedov, comparaison des profil radial en fonction des  méthodes d'injection. 
-%        Densité en haut, pression au milieu et vitesse radial en bas.
-%        La position et la forme du front d'onde ne dépendent pas de la méthodes d'injection utilisée.}
-% 		\label{fig:sedovmethod} 
-%\end{figure}
-
 
 Même si les profils radiaux moyens sont comparables, on observe des différences sur la forme de l'explosion.
 La figure \ref{fig:sedovslice} présente une coupe suivant l'axe z de la grille, contenant la cellule d'injection, pour les trois méthodes.
@@ -225,45 +179,60 @@ Ce qui donne ce motif en forme de "+" bien particulier.
 Dans le cas de l'injection cinétique, les sont forcés a être dans des directions obliques, a 45°, par rapport a la l'axe de la grille.
 Nous avons cette fois si une figure en forme de "x".
 
-%\begin{figure}[htpb]
-%        \includegraphics[height=.3\textheight]{img/03/sedov/slice_therm1.pdf} 
-%		\includegraphics[height=.3\textheight]{img/03/sedov/slice_therm4.pdf} 
-%		\includegraphics[height=.3\textheight]{img/03/sedov/slice_kin.pdf} 
-%        \caption{Test de Sedov}
-% 		\label{fig:sedovslice}
-%\end{figure}
+La figure \ref{fig:sedovraff} présente le motif de raffinement obtenu pour le test d'injection thermique sur une cellule.
+Le motif de raffinement est similaire pour les trois simulations.
 
+\begin{figure}
+   \begin{minipage}[c]{.5\linewidth}
+        \includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_den_lin.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_pres.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_evol_8_vel.pdf} 
 
+   \end{minipage} \hfill
+   \begin{minipage}[c]{.5\linewidth}
+		
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_den.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_pres.pdf} 
+		\includegraphics[width=\textwidth]{img/03/sedov/sedov_comp_profile_vel.pdf} 
 
-\begin{figure}[htpb]
+   \end{minipage}
+
+        \caption[Test de Sedov - Profils]{Profils radiaux des différentes variables d'états lors du test de Sedov, . 
+        La densité en haut, la pression au milieu et la vitesse radiale en bas.     
+        Colonne de gauche :
+        Comparaison des profils à différents instants avec le méthode d'injection thermique.
+        L'accord avec la théorie est excellent.
+        Colonne de droite :    
+        Comparaison en fonction des méthodes d'injection. 
+        La position et la forme du front d'onde ne dépendent pas de la méthodes d'injection utilisée.
+ 		\label{fig:sedov_profil}
+ 		}
+\end{figure}
+
+\begin{figure}
 
 	\centering
-	\subfloat[]{        \includegraphics[width=.45\linewidth]{img/03/sedov/slice_therm1.pdf}} 
-	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/sedov/slice_therm4.pdf}} \\
+	\subfloat[]{ \includegraphics[width=.45\linewidth]{img/03/sedov/slice_therm1.pdf}} 
+	\subfloat[]{	\includegraphics[width=.45\linewidth]{img/03/sedov/slice_therm4.pdf}} \\
 
-	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/sedov/slice_kin.pdf} }
-	\subfloat[]{		\includegraphics[width=.45\linewidth]{img/03/sedov/slice_th_1raf_cut.pdf}  }
+	\subfloat[]{	\includegraphics[width=.45\linewidth]{img/03/sedov/slice_kin.pdf} }
+	\subfloat[]{	\includegraphics[width=.45\linewidth]{img/03/sedov/slice_th_1raf_cut.pdf}}
 
-    \caption{Différents motif d'explosion en fonction de la méthodes d'injection.
+    \caption[Test de Sedov - Tranches]{Différents motif d'explosion en fonction de la méthodes d'injection.
     Chaque figure représente une tranche d'une cellule d'épaisseur contenant le site de l'explosion.
     (a), (b) et (c) représente le log de la densité avec une colormap quantitative.
     A cause de la grille de calcul, il existe des axes privilégiés pour les flux, il en résulte des motif en croix et ou en losange.
-    La figure (d) représente les niveaux de raffinements, le niveau 10 est aligné sur le front d'onde.
+    La figure (d) représente les niveaux de raffinements, l'échelle est différent et le niveau 10 est aligné sur le front d'onde.
     }
  	\label{fig:sedovslice}
 \end{figure}
 
-
-
-\subsubsection{Conclusion}
-
-La conclusion de ses tests est que les différentes méthodes d'injection sont équivalentes, au moins dans le contexte du test de Sedov.
-
+%\subsubsection{Conclusion}
+%
+%La conclusion de ses tests est que les différentes méthodes d'injection sont équivalentes, au moins dans le contexte du test de Sedov.
 %OK\\
 %mais pas en cosmo
-
-le pas de temps\\
-
+%le pas de temps\\
 
 \section{Tests en conditions de production}
 
@@ -271,23 +240,23 @@ Dans le but de tester ces différentes méthodes d'injections dans un contexte c
 Chacune de ces simulation est strictement identique a l'exception de la méthode d'injection d'énergie.
 Les paramètres communs a toutes les simulations qui vont suivre sont les suivants:
 
-Elles représentes un volume de 8/h cMpc cube échantillonnées par 256 cube particules de matière noire.
-Ce sui mène a une résolution en masse de 3.4 10 6 M0 et une résolution spatiale de 46 ckpc sur la grille coarse.
-La grille est raffinée suivant une méthode semi lagrangienne (voir Sec. \ref{sec:raffinement}).
-
-Les condition initiales ont été générées avec MUSIC avec une cosmologie de Planck \citep{planck_collaboration_planck_2016} : 
+Elles représentes un volume de $8h^{-1}$ cMpc cube échantillonnées par $256^3$ éléments de résolutions. % particules de matière noire.
+Ce qui mène à une résolution en masse de $3.4 \cdot 10^6 M_\odot$ et une résolution spatiale de $46$ ckpc sur le niveau de base.
+La grille est raffinée suivant une méthode semi lagrangienne (voir Sec. \ref{sec:raffinement}) avec une limite de résolution de 1 kpc.
+Les condition initiales ont été générées avec MUSIC \citep{hahn_multi-scale_2011} avec une cosmologie de Planck \citep{planck_collaboration_planck_2016} : 
 $\Omega_m=0.3175$, 
 $\Omega_v=0.6825$,
 $\Omega_b=0.0490$,
 $H_0=67.11$,
 $\sigma_8=0.830$. 
-Les simulations commences a redshift z=150.
+Les simulations commencent à redshift $z=150$.
 
+\subsection{Influence de la méthode d'injection}
 
-Le premier test consiste a essayer les différents feedback avec la même quantité d'énergie injectée, et a mesurer leur impact sur la SFH cosmique.
+Le premier test consiste à essayer les différents feedback avec la même quantité d'énergie injectée, et a mesurer leur impact sur la \ac{SFH} cosmique.
 La figure \ref{fig:sfr_methode} présente les résultats obtenus.
 La méthode d'injection cinétique a plus d'impact en condition cosmologique.
-Ceci est du a l'introduction de la physique du refroidissement.
+Ceci est du à l'introduction de la physique du refroidissement.
 La méthode thermique repose sur le principe de conversion de l'énergie interne en énergie cinétique.
 La méthode thermique est connue %TODO ref
 pour subir d'importante perte d'énergie.
@@ -295,21 +264,23 @@ La méthode cinétique outre passe cette conversion et mets directement le gaz e
 
 %TODO parler du feedback radiatif
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFRmethode.pdf} 
-        \caption{SFH cosmique en fonction de la méthode d'injection.
-        Les méthodes n'impactent pas le milieu de la même manière
+        \caption{SFH cosmique en fonction de la méthode d'injection d'énergie.
+        Contrairement au test de Sedov, les différents méthodes n'impactent pas le milieu de la même manière.
         }
  		\label{fig:sfr_methode}
 \end{figure}
 
-Nous aurons donc tendance préférer la méthode cinétique par la suite, vu que celle ci est plus efficace a nos échelles.
-Le deuxième test consiste a utilisé la méthode cinétique et a varier la quantité d'énergie injectée.
+Nous aurons donc tendance préférer la méthode cinétique par la suite, vu que celle ci est plus efficace pour mettre le gaz en mouvement à nos échelles à nos échelles.
+
+\subsection{Influence de la quantité d'énergie injectée}
+Le deuxième test consiste à utiliser la méthode cinétique et à varier la quantité d'énergie injectée.
 La figure \ref{fig:sfr_egy} présente les résultats obtenus.
-On y observe que plus on injecte d'énergie, plus la SFR instantanée diminue.
+On y observe que plus on injecte d'énergie, plus le \ac{SFR} instantané diminue.
 Ce qui est le comportement attendus puisque plus les supernovae sont puissante, plus les sur-densités de gaz sont "cassées", et donc plus difficile il devient de former de nouvelles étoiles.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/sneff_SFR.pdf} 
         \caption{SFH cosmique en fonction de la quantité d'énergie injectée. 
         Plus la quantité d'énergie injecté est importante, plus le taux de formation stellaire diminue.
@@ -317,15 +288,15 @@ Ce qui est le comportement attendus puisque plus les supernovae sont puissante, 
  		\label{fig:sfr_egy}
 \end{figure}
 
-
-
-Un troisième test consiste a injecter une certaine quantité d'énergie par supernovae, et a faire varier l'efficacité de formation stellaire.
-En effet plus on forme d'étoiles et plus le feedback devient important, mais plus il y a de feedback, moins il est facile de former de nouvelles étoiles.
+\subsection{Couplage entre feedback et efficacité de formation stellaire}
 Le couplage entre feedback et formation stellaire n'est pas clair et mérite d'être exploré.
+En effet, plus on forme d'étoiles et plus le feedback devient important, mais plus il y a de feedback, moins il est facile de former de nouvelles étoiles.
+Un troisième test consiste à injecter une quantité donnée d'énergie par supernovae, et à faire varier l'efficacité de formation stellaire.
+L'idée est de tester si la diminution du SFR observé lors de l'injection d'énergie peut être compensée par l'augmentation de l'efficacité de formation stellaire.
 La figure \ref{fig:sfr_sfe} présente ce test pour trois efficacité de formation stellaire avec un modèle de feedback cinétique et une efficacité de supernovae de 100 \%.
-On observe un fort couplage entre feedback et formation stellaire, a tel point que pour une efficacité de formation stellaire de 10\% le feedback mène a une SFH décroissante.
+On observe un fort couplage entre feedback et formation stellaire, à tel point que pour une efficacité de formation stellaire de 10\% le feedback mène à une SFH décroissante.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFR_sfeff.pdf} 
         \caption{SFH cosmique en fonction de l'efficacité de formation stellaire.
         Toutes les simulation utilise la même méthode d'injection et la même quantité d'énergie.
@@ -334,10 +305,11 @@ On observe un fort couplage entre feedback et formation stellaire, a tel point q
  		\label{fig:sfr_sfe}
 \end{figure}
 
-Une observation importante par rapport au deuxième test est qu’indépendamment de la quantité d'énergie injectée, et que même si la SFR est significativement impacté, l'histoire d'ionisation reste quasiment constante (cd fig \ref{fig:xion_sneff}).
+\subsection{Impact sur la fraction d'ionisation}
 
+Une observation importante par rapport au deuxième test est qu’indépendamment de la quantité d'énergie injectée, et que même si le \ac{SFR} est significativement impacté, l'histoire d'ionisation reste quasiment constante (cd fig \ref{fig:xion_sneff}).
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sneff_xion.pdf} 
         \caption{Malgré une SFH différente (voir figure \ref{fig:sfr_egy}), l'histoire d'ionisation est conservée en changeant la quantité d'énergie injectée.
         }

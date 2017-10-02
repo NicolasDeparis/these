@@ -82,7 +82,7 @@ En contre partie, ce taux de réaction élevé mène à une durée de vie plus c
 
 \subsection{Mort}
 
-Arrivé a un certain taux de consommation d'hydrogène, les réactions protons-protons ne sont plus suffisante et l'étoile s'effondre sur elle même.
+Arrivé à un certain taux de consommation d'hydrogène, les réactions protons-protons ne sont plus suffisante et l'étoile s'effondre sur elle même.
 %A la fin de sa vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
 L'équilibre entre la gravité et la pression est rompu, ce qui mène à une augmentation de la pression interne.
 % Géante rouge ?
@@ -334,12 +334,11 @@ Du fait de la parallélisation cette incrémentation demande des communications 
 Pour minimiser les communications, la pratique retenue consiste à former toutes les particules de toutes les processeurs, en leur assignant un identifiant caractéristique (eg -1) et d'assigner les identifiants finaux dans un second temps.
 Une fois les particules créées, chaque processeurs compte son nombre de nouvelles particules et le transmet aux autres, ce qui permet d'allouer une plage d'identifiants par processeur, et ainsi allouer les identifiants finaux.
 
-\section{La \ac{SFH} cosmique}
+\section{La SFH cosmique}
 
 Dans le but de tester cette implémentation, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} simulée en accord avec les contraintes observationnelles.
 Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
 %le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
-%Les points d'observations de Bouwens %TODO ref
 Une difficulté est qu'il existe une dégénérescence entre le seuil en densité et l'efficacité de formation stellaire.
 En effet, il semble à priori possible d'obtenir des résultats similaire en utilisant, soit un seuil très permissif et une efficacité très faible, ou à l'inverse en ne formant des étoiles que dans les quelques cellules les plus dense avec une efficacité élevée.
 Dans la littérature %dédiée aux simulations comparables %TODO ref
