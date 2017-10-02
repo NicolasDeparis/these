@@ -114,7 +114,7 @@ Où les vecteurs $\overrightarrow{u}$ sont les directions radiales au centre de 
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/oct_kinetic.pdf} 
-        \caption{Avec le modèle cinétique l'explosion a lieu au sein d'un OCT, et radialement au centre de celui ci.
+        \caption[Injection d'énergie cinétique]{Avec le modèle cinétique l'explosion a lieu au sein d'un OCT, et radialement au centre de celui ci.
  		\label{fig:kin}}
 \end{figure}
 
@@ -176,10 +176,10 @@ La figure \ref{fig:sedovslice} présente une coupe suivant l'axe z de la grille,
 Ces différence sont dues a la grille et a la façon dont les flux sont calculés.
 Dans le cas de l'injection thermique, les flux auront tendance à être suivant les axes principaux de la grille.
 Ce qui donne ce motif en forme de "+" bien particulier.
-Dans le cas de l'injection cinétique, les sont forcés a être dans des directions obliques, a 45°, par rapport a la l'axe de la grille.
+Dans le cas de l'injection cinétique, les vitesses sont forcées à être dans des directions obliques, à 45° par rapport à la l'axe de la grille.
 Nous avons cette fois si une figure en forme de "x".
 
-La figure \ref{fig:sedovraff} présente le motif de raffinement obtenu pour le test d'injection thermique sur une cellule.
+Le panneau inférieur droit de la figure \ref{fig:sedovslice} présente le motif de raffinement obtenu pour le test d'injection thermique sur une cellule.
 Le motif de raffinement est similaire pour les trois simulations.
 
 \begin{figure}
@@ -237,12 +237,15 @@ Le motif de raffinement est similaire pour les trois simulations.
 \section{Tests en conditions de production}
 
 Dans le but de tester ces différentes méthodes d'injections dans un contexte cosmologique j'ai réalisé une série de simulations.
+
+
+\subsection{Présentation des simulations}
+\label{sec:pres_simu}
 Chacune de ces simulation est strictement identique a l'exception de la méthode d'injection d'énergie.
 Les paramètres communs a toutes les simulations qui vont suivre sont les suivants:
-
 Elles représentes un volume de $8h^{-1}$ cMpc cube échantillonnées par $256^3$ éléments de résolutions. % particules de matière noire.
 Ce qui mène à une résolution en masse de $3.4 \cdot 10^6 M_\odot$ et une résolution spatiale de $46$ ckpc sur le niveau de base.
-La grille est raffinée suivant une méthode semi lagrangienne (voir Sec. \ref{sec:raffinement}) avec une limite de résolution de 1 kpc.
+La grille est raffinée suivant une méthode semi-lagrangienne (voir Sec. \ref{sec:raffinement}) avec une limite de résolution de 1 kpc.
 Les condition initiales ont été générées avec MUSIC \citep{hahn_multi-scale_2011} avec une cosmologie de Planck \citep{planck_collaboration_planck_2016} : 
 $\Omega_m=0.3175$, 
 $\Omega_v=0.6825$,
@@ -266,7 +269,7 @@ La méthode cinétique outre passe cette conversion et mets directement le gaz e
 
 \begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFRmethode.pdf} 
-        \caption{SFH cosmique en fonction de la méthode d'injection d'énergie.
+        \caption[SFH cosmique en fonction de la méthode d'injection d'énergie]{SFH cosmique en fonction de la méthode d'injection d'énergie.
         Contrairement au test de Sedov, les différents méthodes n'impactent pas le milieu de la même manière.
         }
  		\label{fig:sfr_methode}
@@ -282,7 +285,7 @@ Ce qui est le comportement attendus puisque plus les supernovae sont puissante, 
 
 \begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/sneff_SFR.pdf} 
-        \caption{SFH cosmique en fonction de la quantité d'énergie injectée. 
+        \caption[SFH cosmique en fonction de la quantité d'énergie injectée]{SFH cosmique en fonction de la quantité d'énergie injectée. 
         Plus la quantité d'énergie injecté est importante, plus le taux de formation stellaire diminue.
         }
  		\label{fig:sfr_egy}
@@ -298,7 +301,7 @@ On observe un fort couplage entre feedback et formation stellaire, à tel point 
 
 \begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFR_sfeff.pdf} 
-        \caption{SFH cosmique en fonction de l'efficacité de formation stellaire.
+        \caption[SFH cosmique en fonction de l'efficacité de formation stellaire]{SFH cosmique en fonction de l'efficacité de formation stellaire.
         Toutes les simulation utilise la même méthode d'injection et la même quantité d'énergie.
 		L'effet du couplage est bien présent.
         }
@@ -306,12 +309,12 @@ On observe un fort couplage entre feedback et formation stellaire, à tel point 
 \end{figure}
 
 \subsection{Impact sur la fraction d'ionisation}
-
+\label{sec:pbfesc}
 Une observation importante par rapport au deuxième test est qu’indépendamment de la quantité d'énergie injectée, et que même si le \ac{SFR} est significativement impacté, l'histoire d'ionisation reste quasiment constante (cd fig \ref{fig:xion_sneff}).
 
 \begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sneff_xion.pdf} 
-        \caption{Malgré une SFH différente (voir figure \ref{fig:sfr_egy}), l'histoire d'ionisation est conservée en changeant la quantité d'énergie injectée.
+        \caption[Fonction d'ionisation en fonction de la quantité d'énergie injectée]{Malgré une SFH différente (voir figure \ref{fig:sfr_egy}), l'histoire d'ionisation est conservée en changeant la quantité d'énergie injectée.
         }
  		\label{fig:xion_sneff}
 \end{figure}
@@ -319,14 +322,3 @@ Une observation importante par rapport au deuxième test est qu’indépendammen
 Cet effet est inattendu car si la quantité d'étoiles diminue, la quantité de radiation diminue d'autant, et donc la fonction d'ionisation globale devrait être impacté.
 Or ce n'est pas ce qui est observé ici.
 Dans le but d'explorer cet effet, nous allons nous concentrer dans la suite a une étude galaxies par galaxies.
-
-
-
-
-
-
-
-
-
-
-

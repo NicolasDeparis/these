@@ -185,7 +185,7 @@ Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retou
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/spectre_starburst.jpg} 
-        \caption{Spectre d'émission d'une population stellaire généré par Starburst99.
+        \caption[Spectres Starburst99]{Spectre d'émission d'une population stellaire généré par Starburst99.
         Ici avec les paramètres sont $M_{pop}=10^6 M_\odot$, \ac{IMF} de Salpeter ($\alpha=2.35$ et intégration de 1 à 100 M$_\odot$ 
  		\label{fig:spectre_starburst}}
 \end{figure}
@@ -272,7 +272,7 @@ A partir de ce taux de formation on obtient la masse de gaz a convertir en étoi
 
 %resolution en masse\\
 Nous avons donc à ce stade la masse totale de gaz a convertir en étoile.
-Il devient rapidement couteux de générer pour chaque cellule éligible, et à chaque pas de temps, une nouvelles particule stellaire (le nombre de particule peux rapidement exploser).
+Il devient rapidement coûteux de générer pour chaque cellule éligible, et à chaque pas de temps, une nouvelles particule stellaire (le nombre de particule peux rapidement exploser).
 Nous adoptons une approche probabiliste.
 Nous définissons une masse d'étoiles $m_{star}$ qui correspondra à notre "quanta stellaire".
 Toutes les étoiles aurons donc la même masse et cette masse est calculée d'une manière comparable à celle d'une particule de matière noire.
@@ -334,7 +334,7 @@ Du fait de la parallélisation cette incrémentation demande des communications 
 Pour minimiser les communications, la pratique retenue consiste à former toutes les particules de toutes les processeurs, en leur assignant un identifiant caractéristique (eg -1) et d'assigner les identifiants finaux dans un second temps.
 Une fois les particules créées, chaque processeurs compte son nombre de nouvelles particules et le transmet aux autres, ce qui permet d'allouer une plage d'identifiants par processeur, et ainsi allouer les identifiants finaux.
 
-\section{La SFH cosmique}
+\subsection{La SFH cosmique}
 
 Dans le but de tester cette implémentation, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} simulée en accord avec les contraintes observationnelles.
 Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
@@ -350,7 +350,7 @@ Avec ses paramètres, la \ac{SFH} obtenue respecte les contraintes observationne
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/SFR.pdf}
-        \caption{Histoire de formation stellaire (SFH) d'une simulation de (8/h cMpc)$^3$.
+        \caption[Histoire de formation stellaire]{Histoire de formation stellaire (SFH) d'une simulation de (8/h cMpc)$^3$.
         Il est possible d'obtenir une SFH qui respecte les observations avec un modèle relativement simple.
 }
  		\label{fig:test_SFH}
@@ -390,9 +390,9 @@ E_{ion (t)} = \int_{13.6eV}^{+\inf} h \nu_{(t)} d\nu
 
 En divisant l'énergie totale obtenue à partir de cette intégration, par l'énergie moyenne des photons obtenue à partir des spectres (cf section \ref{sec:groupedephotons}), on obtient l'évolution du flux de photons ionisant, présenté sur la figure \ref{fig:flux}.
 
-\begin{figure}[htbp]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/flux.pdf} 
-        \caption{Émissivité ionisante intégrée en fonction du temps.
+        \caption[Émissivité ionisante]{Émissivité ionisante intégrée en fonction du temps.
         La population présente deux phases d'émission, une phases constante suivie d'une rapide décroissance.
  		\label{fig:flux}}
 \end{figure}
@@ -422,7 +422,7 @@ Les caractéristique des photons obtenues dans le cas d'une \ac{IMF} TopHeavy et
 	$\alpha_e$	&  $2.35.10^{-22}$ m$^2$ \\
 	$\alpha_i$	&  $1.82.10^{-22}$ m$^2$ \\
 \end{tabular}
-\caption{Propriété des photons émis par les sources.
+\caption[Propriété des photons]{Propriété des photons émis par les sources.
 Ces valeurs ont été calculées à partir des spectres obtenus avec Starburst99.
 \label{tab_photon}}
 \end{table}
@@ -456,9 +456,9 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des so
 %Multigroupe frequence\\
 %multigroup temporel\\
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/xion.pdf} 
-        \caption{Évolution de la fraction d'ionisation (trais plein) et de la fraction de neutre (tirets) dans la simulation présentée sur la figure \ref{fig:test_SFH}.
+        \caption[Histoire d'ionisation]{Évolution de la fraction d'ionisation (trais plein) et de la fraction de neutre (tirets) dans la simulation présentée sur la figure \ref{fig:test_SFH}.
         Après calibration de la fraction d’échappement intrinsèque, il est possible d'obtenir une histoire d'ionisation en accord avec les observations.
  		\label{fig:test_xion}}
 \end{figure}

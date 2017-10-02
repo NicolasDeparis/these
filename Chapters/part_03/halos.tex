@@ -76,7 +76,7 @@ Du fait de l'effondrement hiérarchique de la matière noire, changer la longueu
 \begin{figure}
 	\centering
 	\includegraphics[width=.75\textwidth]{img/03/part_halo_R200.pdf} 
-    \caption{La détection des halos par \ac{FOF} peux être difficile au moment de la réionisation car les structure peuvent ne pas être virialisée.
+    \caption[Détection des halos]{La détection des halos par \ac{FOF} peux être difficile au moment de la réionisation car les structure peuvent ne pas être virialisée.
     Les points bleus représentent les particules de matière noire et le cercle le $R_{200}$.
  	\label{fig:part_halo}}
 \end{figure}
@@ -109,7 +109,7 @@ La figure \ref{fig:R200_fine} présente la détection des cellules entre les deu
 Pour les petits halos, peu résolus, la taille des cellules peu être grandes par rapport au $R_{200}$.
 Pour minimiser l'erreur commise, il est nécessaire d’estimer l'intersection entre le cube de la cellule et la sphère du halo.
 J'ai résolu ce problème géométrique en projetant la grille \ac{AMR} sur une grille régulière de résolution arbitraire.
-Cette méthode permettra d'associer des sous parties de cellules aux halos en approximant l'intersection avec la cellule et améliorera la precision global de l'association (cf figure \ref{fig:intersec}).
+Cette méthode permettra d'associer des sous parties de cellules aux halos en approximant l'intersection avec la cellule et améliorera la precision globale de l'association (cf figure \ref{fig:intersec}).
 
 \begin{figure}
 	\centering
@@ -121,31 +121,33 @@ Cette méthode permettra d'associer des sous parties de cellules aux halos en ap
 \end{figure}
 
 \clearpage
-\section{Étude de la composition des halos}
+\section{Étude de la composition des halos en fonction du feedback de supernovae}
 
 A ce stade, nous avons définis la position et la taille de tout les halos et définis les galaxies par associations.
 %Maintenant que nous pouvons associer toutes la physique au sein de chaque halo, 
 Nous pouvons étudier l'influence du feedback de supernovae sur différentes caractéristiques des galaxies.
 %différentes caractéristiques en fonction du type de feedback.
 
-4 simus 
-sans rayonnement
-sans supernovae
-modèle thermique 
-modèle cinetique
-
-8cMpc
+Pour ce faire réalisé quatre simulation de $\left(8/h cMpc \right)^3$ avec des caractéristiques identiques à celles présentées en section \ref{sec:pres_simu}.
+Parmi ces simulations, il y en a :
+\begin{itemize}
+\item une sans rayonnement ni supernovae (NoFEED),
+\item une sans supernovae (NoSN),
+\item une avec supernovae - modèle thermique (Thermal),
+\item une avec supernovae - modèle cinetique (Kinetic).
+\end{itemize}
 
 
 \subsection{Approche visuelle}
 
 Réaliser des cartes de champs permet d'aborder la problème.
-La figure \ref{fig:halo} présente le halo le plus massif extrait de trois simulations identiques à l’exception du modèle de supernovæ (cf section \ref{sec:SNmodel}).
-On y observe que le modèle cinétique est capable de générer des vents 
+La figure \ref{fig:halo} présente le halo le plus massif ($M\approx10^{11} M_\odot$) extrait des trois simulations avec rayonnement et un modèle de supernovæ différent (cf section \ref{sec:SNmodel}).
+On y observe que le modèle cinétique est capable de générer bulles de gaz chaud significativement plus grande que le modèle thermique.
+De plus on observe dans la densité des coquilles dues aux vents généré, autour du halo central dans le cas du modèle cinétique.
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/halos.pdf}
-        \caption{Influence du modèle de supernovae sur la distribution de densité et de température d'un halo.
+        \caption[Influence du modèle de supernovae sur la forme des halos]{Influence du modèle de supernovae sur la distribution de densité et de température d'un halo.
         le cercle représente le $R_{200}$.
         Le modèle cinétique permet la création de vents formant des coquilles autour du halo.
         De plus la région chaude est bien plus large que dans le cas du modèle thermique.
@@ -155,31 +157,34 @@ On y observe que le modèle cinétique est capable de générer des vents
 
 \subsection{Les fonctions de masse}
 \label{sec:hmf}
-Les fonctions de masse des galaxies 
-Figure \ref{fig:ghmf}
+
+Sur la figure \ref{fig:ghmf} sont présentés les fonction de masses des halos et des galaxies, en cumulative (n>M).
+La fonction de masse des halos n'est pas impactée par le feedback de supernovae dans nos modèles.
+Par contre, la fonction de masse des galaxies est significativement réduite avec le feedback.
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/ghmf.pdf}
-        \caption{Fonction de masse des galaxies (GMF) et des halos (HMF) pour différents type de feedback de supernovae.
+        \caption[Fonctions de masses G/HMF]{Fonction de masse des galaxies (\ac{GMF}) et des halos (\ac{HMF}) pour différents type de feedback de supernovae.
         Le feedback n'a pas d'influence directe sur la function de masse des halos, mais a un impact mesurable sur la formation stellaire.
  		\label{fig:ghmf}}
 \end{figure}
 
-\subsection{La masse d'étoiles en fonction de la masse du halo}
-Plus un halo est massif, plus celui ci va contenir d'étoiles.
-
+%\subsection{La masse d'étoiles en fonction de la masse du halo}
+%Plus un halo est massif, plus celui ci va contenir d'étoiles.
 
 
 \subsection{La formation stellaire en fonction de la masse du halo}
 \label{sec:sfr_halo}
-Connaissant, a un instant donné, les étoiles appartenant a chaque halo, il est possible de déterminer leurs ages, et donc de connaitre l'histoire de formation stellaire de chaque halo.
-Nous allons voir que la masse 
-Il existe deux facons de voir 
-ce problème peux être abordé de deux facon.
-Dans un cas l'objectif est de determiner la SFR moyenne d'un halo d'une certaine masse.
-Dans l'autre, on cherche a mesurer la contribution d'une classe de masse a la SFR globale.
+Connaissant, à un instant donné, les étoiles appartenant à chaque halo, il est possible de déterminer leurs ages, et donc de connaître l'histoire de formation stellaire de chaque halo.
+%Nous allons voir que la masse 
+%Il existe deux facons de voir 
+Ce problème peux être abordé de deux façons.
+Dans un cas l'objectif est de déterminer la \ac{SFR} moyenne d'un halo d'une certaine masse.
+Dans l'autre, on cherche à mesurer la contribution d'une classe de masse a la \ac{SFR} globale.
 Le lien entre les deux, n'est autre que la \ac{HMF} présentée à la section \ref{sec:hmf}.
-
+Les résultats obtenus sont présentés sur la figure \ref{fig:sfr_halo}.
+On observe que pour le feedback cinétique, la \ac{SFR} moyenne est réduite pour les halos les plus lourd, ce qui n'est pas le cas pour le feedback thermique où la \ac{SFR} a tendance à être réduite pour les petites masses de halos.
+Sur les courbes de \ac{SFR} totale, on observe que les halos de masses $M\approx10^{10}M_\odot$ contribues le plus a la formation stellaire dans ces simulations.
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_avg.pdf}
@@ -200,31 +205,33 @@ En effet, le rayonnement n'interagit qu'avec les baryons et plus un halo aura de
 f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
 \end{equation}
 
-
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/baryon_frac.pdf}
         \caption[Fraction baryonique]{Fraction baryonique en fonction de la masse du halo et des feedback.
-        }
- 		\label{fig:bfrac}
+ 		\label{fig:bfrac}}
 \end{figure}
 
-
 La figure \ref{fig:bfrac} présente les résultats obtenus.
+On y observe une décroissance de la fraction baryonique pour les halos les plus massifsavec le feedback cinétique.
+Cette décroissance est similaire à celle observée sur la figure \ref{fig:sfr_halo}.
+La \ac{SFR} est réduite car les baryons sont expulsés par le feedback.
 
 
+\clearpage
+\section{Étude à la surface des halos}
 
-\section{Étude a la surface des halos}
-
+Nous venons d'observer que le feedback de supernovae a un impact sur la composition interne des halos et nous avons interprété ce changement par une expulsion du gaz en dehors des halos.
 Nous cherchons ici a quantifier les flux entrants et sortant des halos en fonction de leurs masses.
-Nous présenterons la méthodologie utilisé pour la détection de ces flux, ainsi que les résultats obtenus pour les flux hydrodynamique et radiatif.
+Je présenterai la méthodologie utilisé pour la détection des flux, ainsi que les résultats obtenus pour les flux hydrodynamiques.
+Dans le but de comprendre pourquoi l'histoire d'ionisation n'est pas impactée par le feedback (voir section \ref{sec:pbfesc}), une étude similaire sera réalisée sur les flux radiatifs.
 
-\subsection{Détermination des flux au $R_{200}$}
-\label{sec:healpix}
+%, nous verrons .
+
+%\subsection{Détermination des flux au $R_{200}$}
+%\label{sec:healpix}
 
 Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
-Nous avons vu que le rayonnement interagis les baryons, et nous verrons qu'il existe un liens entre la fraction baryonique déterminée plus haut (sec. \ref{sec:baryon_frac})
-et les flux radiatif.
-
+Nous avons vu que le rayonnement interagis les baryons, et nous verrons qu'il existe un liens entre la fraction baryonique déterminée plus haut (sec. \ref{sec:baryon_frac}) et les flux radiatif.
 
 Nous cherchons a déterminer les flux a la surface des halos.
 Par soucis de simplicité, nous utiliserons l'approximation du $R_{200}$.
@@ -238,13 +245,6 @@ Cette discrétisation de sphère sera réalisée grâce a Healpix \citep{gorski_
 Healpix est un outils qui permets de répartir des points de manière uniforme sur la sphere (c.f. figure \ref{fig:HealPix}).
 L'avantage de cette méthode est que toutes les cellules ont la même pondération.
 
-
-\begin{figure}
-        \includegraphics[width=.95\linewidth]{img/03/healpix.jpg} 
-        \caption{Exemple de sphere HealPix}
- 		\label{fig:HealPix}
-\end{figure}
-
 %L'association Healpix/grille sera réalisée par recherche de plus proche voisin 
 Par la suite, les halos seront discrétisé en utilisant $3072$ point Healpix.
 Une fois la sphère générée, on la centrera sur la position du halo, et on la redimensionnera de telle manière a ce qu'elle corresponde aux R200 du halo en question.
@@ -255,31 +255,44 @@ Nous avons donc accès aux cellules correspondant a la surface du halo.
 %Nous connaissons maintenant l'ensemble des cellules au R200 de chaques halos.
 Nous pouvons donc travailler directement avec les grandeurs scalaires.
 Mais nous cherchons a réaliser une étude sur les flux.
-IL sera donc nécessaire de projeter les vecteurs de flux sur la normale des cellules de la sphere.
+Il sera donc nécessaire de projeter les vecteurs de flux sur la normale des cellules de la sphere.
 
 
 
 
 %Pour déterminer les flux autours de chaque halo, il est nécessaire de les englober d'une sphère.
 %Cette sphère serra discrétisée a l'aide de Healpix (TODO ref) un outils qui permets de répartir des points de manière uniforme sur une surface sphérique .
+\begin{figure}
+	\centering
+    \includegraphics[width=.45\linewidth]{img/03/healpix.jpg} 
+    \caption[Sphère HealPix]{Exemple de sphère HealPix. Toutes les cellules sont uniformément réparties et de surfaces identiques.}
+ 	\label{fig:HealPix}
+\end{figure}
 
 \subsection{La vitesse du gaz au $R_{200}$}
 
-Dans le but de mettre en évidence l'efficacité des supernovae a expulser le gaz des halos, j'ai quantifié la vitesse moyenne du gaz autour des halos au niveau de leur R200.
+Dans le but de mettre en évidence l'efficacité des supernovae à expulser le gaz des halos, j'ai quantifié la vitesse moyenne du gaz autour des halos au niveau de leur R200.
 Par convention, la normale a la sphère pointe vers l'extérieur.
-Donc si la vitesse moyenne est positive, le halo perd de la matière baryonnique, et sinon il en accrète.
-
+Donc si la vitesse moyenne est positive, le halo perd de la matière baryonique, et sinon il en accrète.
 
 
 Figure \ref{fig:R200speed}.
 
 \begin{figure}
-        \includegraphics[width=.95\linewidth]{img/03/flux_speed_kinetic.pdf} 
-        \caption{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo}
- 		\label{fig:R200speed}
+	\centering
+	\includegraphics[width=.95\linewidth]{img/03/flux_speed_noFEED.pdf} 
+	\includegraphics[width=.95\linewidth]{img/03/flux_speed_noSN.pdf} 
+    \caption[Vitesse du gaz au $R_{200}$ 1]{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo. L'introduction de la radiation fait apparaître des flux sortants aux petites masses.}
+ 	\label{fig:R200speed1}
 \end{figure}
 
-
+\begin{figure}
+	\centering
+	\includegraphics[width=.95\linewidth]{img/03/flux_speed_therm.pdf} 
+	\includegraphics[width=.95\linewidth]{img/03/flux_speed_kinetic.pdf} 
+    \caption[Vitesse du gaz au $R_{200}$ 2]{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo. le feedback cinétique est capable de générer des flux sortants pour des halos plus massifs que dans le cas du feedback thermique.}
+ 	\label{fig:R200speed2}
+\end{figure}
 
 Dans le cas idéal, la matière chute sur le halo à la vitesse de chute libre.
 
