@@ -224,40 +224,28 @@ Nous venons d'observer que le feedback de supernovae a un impact sur la composit
 Nous cherchons ici a quantifier les flux entrants et sortant des halos en fonction de leurs masses.
 Je présenterai la méthodologie utilisé pour la détection des flux, ainsi que les résultats obtenus pour les flux hydrodynamiques.
 Dans le but de comprendre pourquoi l'histoire d'ionisation n'est pas impactée par le feedback (voir section \ref{sec:pbfesc}), une étude similaire sera réalisée sur les flux radiatifs.
-
-%, nous verrons .
-
-%\subsection{Détermination des flux au $R_{200}$}
-%\label{sec:healpix}
-
-Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
+%Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
 Nous avons vu que le rayonnement interagis les baryons, et nous verrons qu'il existe un liens entre la fraction baryonique déterminée plus haut (sec. \ref{sec:baryon_frac}) et les flux radiatif.
-
-Nous cherchons a déterminer les flux a la surface des halos.
-Par soucis de simplicité, nous utiliserons l'approximation du $R_{200}$.
-Il faut donc discrétiser la sphère de rayon $R_{200}$.
 
 
 \subsubsection{Healpix}
 \label{sec:healpix}
 
-Cette discrétisation de sphère sera réalisée grâce a Healpix \citep{gorski_healpix:_2005}.
-Healpix est un outils qui permets de répartir des points de manière uniforme sur la sphere (c.f. figure \ref{fig:HealPix}).
-L'avantage de cette méthode est que toutes les cellules ont la même pondération.
-
+Nous cherchons à déterminer les flux à la surface des halos.
+Par soucis de simplicité, nous utiliserons l'approximation du $R_{200}$.
+Il faut donc discrétiser la sphère de rayon $R_{200}$ autour de chaque halo.
+Pour se farie, cette discrétisation sera réalisée grâce à Healpix \citep{gorski_healpix:_2005}, un outil qui permets de répartir des points de manière uniforme sur la sphere (c.f. figure \ref{fig:HealPix}).
 %L'association Healpix/grille sera réalisée par recherche de plus proche voisin 
-Par la suite, les halos seront discrétisé en utilisant $3072$ point Healpix.
-Une fois la sphère générée, on la centrera sur la position du halo, et on la redimensionnera de telle manière a ce qu'elle corresponde aux R200 du halo en question.
-Puis, pour chaque point de la sphère Healpix, on effectuera une recherche de plus proche voisin à l'aide d'un KD tree, pour déterminer avec qu'elle cellule l'associer.
-
-
-Nous avons donc accès aux cellules correspondant a la surface du halo.
+Par la suite, tous les halos seront discrétisés en utilisant $3072$ points Healpix.
+Il est probable, pour les halos les plus petits, qu'une cellule puisse être associée à plusieurs points Healpix.
+%L'avantage de cette méthode est que toutes les cellules ont la même pondération.
+Comme chaque point Healpix représente une portion constante de la surface de la sphère, la pondération en surface nécessaire pour la gestion des flux, se fait automatiquement.
+Une fois la sphère générée, elle sera centrée sur la position du halo, et redimensionner de telle manière à ce que sa taille corresponde au $R_{200}$ du halo en question.
+Puis, pour chaque point de la sphère Healpix, on effectuera une recherche de plus proche voisin à l'aide d'un KD-tree généré sur les centres de cellules, pour déterminer avec qu'elle cellule l'associer.
+Nous avons donc accès aux cellules correspondant à la surface du halo.
 %Nous connaissons maintenant l'ensemble des cellules au R200 de chaques halos.
-Nous pouvons donc travailler directement avec les grandeurs scalaires.
-Mais nous cherchons a réaliser une étude sur les flux.
-Il sera donc nécessaire de projeter les vecteurs de flux sur la normale des cellules de la sphere.
-
-
+Si il est possible de travailler directement avec les grandeurs scalaires, lors d'une analyse vectorielle, les vecteurs seront projetés sur la normale à la sphere.
+%Mais nous cherchons a réaliser une étude sur les flux.
 
 
 %Pour déterminer les flux autours de chaque halo, il est nécessaire de les englober d'une sphère.
@@ -271,80 +259,134 @@ Il sera donc nécessaire de projeter les vecteurs de flux sur la normale des cel
 
 \subsection{La vitesse du gaz au $R_{200}$}
 
-Dans le but de mettre en évidence l'efficacité des supernovae à expulser le gaz des halos, j'ai quantifié la vitesse moyenne du gaz autour des halos au niveau de leur R200.
-Par convention, la normale a la sphère pointe vers l'extérieur.
+Dans le but de mettre en évidence l'efficacité des supernovae à expulser le gaz des halos, j'ai quantifié la vitesse moyenne du gaz autour des halos au niveau de leur $R_{200}$.
+Pour chaque halos, la vitesse moyenne du gaz a sa surface est calculée.
+Il s'agit des $3072$ vitesses obtenues avec Healpix, chacune projetée sur la surface à la sphère.
+Par convention, la normale a la sphère pointe vers l'extérieur, les vitesses positives sont sortantes.
 Donc si la vitesse moyenne est positive, le halo perd de la matière baryonique, et sinon il en accrète.
-
-
-Figure \ref{fig:R200speed}.
+Les figures \ref{fig:R200speed1} et \ref{fig:R200speed2} représentes les résultats obtenus pour les quatre simulations de comparaison.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.95\linewidth]{img/03/flux_speed_noFEED.pdf} 
-	\includegraphics[width=.95\linewidth]{img/03/flux_speed_noSN.pdf} 
-    \caption[Vitesse du gaz au $R_{200}$ 1]{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo. L'introduction de la radiation fait apparaître des flux sortants aux petites masses.}
- 	\label{fig:R200speed1}
+	\includegraphics[height=.45\textheight]{img/03/flux_speed_noFEED.pdf} 
+	\includegraphics[height=.45\textheight]{img/03/flux_speed_noSN.pdf} 
+    \caption[Vitesse du gaz au $R_{200}$ 1]{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo.
+    Les tirets représentent la vitesse de chute libre et d'échappement.
+    L'introduction de la radiation fait apparaître des flux sortants aux petites masses.
+ 	\label{fig:R200speed1}}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.95\linewidth]{img/03/flux_speed_therm.pdf} 
-	\includegraphics[width=.95\linewidth]{img/03/flux_speed_kinetic.pdf} 
-    \caption[Vitesse du gaz au $R_{200}$ 2]{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo. le feedback cinétique est capable de générer des flux sortants pour des halos plus massifs que dans le cas du feedback thermique.}
- 	\label{fig:R200speed2}
+	\includegraphics[height=.45\textheight]{img/03/flux_speed_therm.pdf} 
+	\includegraphics[height=.45\textheight]{img/03/flux_speed_kinetic.pdf} 
+    \caption[Vitesse du gaz au $R_{200}$ 2]{Vitesse moyenne du gaz au $R_{200}$ en fonction de la masse du halo.
+    Les tirets représentent la vitesse de chute libre et d'échappement.
+    L'introduction des supernovæ génère des flux sortants dans une population de halo avec des étoiles veilles (ayant explosées en supernovae).
+    Le feedback cinétique est capable de générer des flux sortants pour des halos plus massifs que dans le cas du feedback thermique.
+ 	\label{fig:R200speed2}}
 \end{figure}
 
 Dans le cas idéal, la matière chute sur le halo à la vitesse de chute libre.
-
+A l'inverse, si de la matière est expulsé plus rapidement que cette vitesse limite, elle n'est plus gravitationnellement liée au halo.
+Cette vitesse limite est représentée en tirets et s'exprime:
 \begin{equation}
-v_{lim} = \sqrt{\frac{2 GM (r<R_{200})} {R_{200}} } 
+v_{lim} = \pm \sqrt{\frac{2 GM (r<R_{200})} {R_{200}} } 
 \end{equation}
 
-A l'inverse, si de la matière est expulsé plus rapidement que cette vitesse limite, elle n'est plus gravitationnelement liée au halo.
-
 En absence de feedback, la quasi totalité des halos se trouvent sur cette relation limite.
-De part la nature collisionnelle des baryons, cette vitesse est une limite superieure, les baryons accrétés étant ralentit par la présence des baryons initialement prsent au sein du halo.
+De part la nature collisionnelle des baryons, cette vitesse est une limite supérieure, les baryons accrétés étant ralentit par la présence des baryons initialement présent au sein du halo.
 
-Un des résultat obtenu est qu'au moment de l'introduction de la radiation dans les simulation, il y a apparition d'une population de halo de faible masses avec des vitesses moyenne positives.
-Dans ce cas, la radiation est en mesure de générer des flux sortant, et donc de diminuer la fraction baryonnique de cette classe de masse. $M<qq 10^8$.
+Avec l'introduction de la radiation (figure \ref{fig:R200speed1}), il y a apparition d'une population de halos de faibles masses avec des vitesses moyenne positives.
+Dans ce cas, la radiation est en mesure de générer des flux sortant, et donc de diminuer la fraction baryonique de cette classe de masse. $M< qq 10^8 M_\odot$.
 Cette population ne possède pas d'étoile, ce qui suggère un effet extérieur au halo.
 La vitesse d'expulsion moyenne est significativement plus faible que la vitesse d'échappement (1 ou 2 ordres de grandeurs).
+Ces flux sortants observés peuvent expliquer la coupure de formation stellaire par le radiation pour les halos de moins $10^9 M_\odot$, observée dans des précédents travaux (eg \cite{ocvirk_cosmic_2015}).
 
 De plus dans la partie accrétante du diagramme on observe que la vitesse limite est globalement plus faible (la population s'est légèrement écartée de la ligne limite).
 Également, la dispersion des valeurs moyennes est plus grande, signifiant que la radiation n'agit pas de la même façon sur tout les halos.
 
-Avec l'introduction des supernovae, il y a apparition d'une nouvelle population dans la partie haute du diagramme.
-Cette population possède des étoiles aillant déjà exposées en supernovae, ce qui suggère un effet provenant de l'intérieur.
+Avec l'introduction des supernovae (figure \ref{fig:R200speed2}), il y a apparition d'une nouvelle population dans la partie haute du diagramme.
+Cette population possède des étoiles aillant déjà explosées en supernovae, ce qui suggère un effet provenant de l'intérieur.
 On observe que les halos possédant des vitesses positives peuvent avoir des masse plus élevées que dans le cas du simple feedback radiatif.
 De plus, le feedback cinétique permet de générer des outflows sur des halos plus massif que dans le cas du feedback thermique.
 Les vitesses moyennes sont proches de la vitesse d'échappement.
 
 \subsection{Le flux radiatif au $R_{200}$}
-%TODO inserrer figure flux
+\label{sec:radflow}
 
-Comme dans ces simulations, la lumière est décrite comme une fluide (cf Sec. ) %TODO ref
-Un travail identique a celui de la section précédente peux être réalisé sur les flux radiatif.
+Comme dans ces simulations, la lumière est décrite comme une fluide (cf section \ref{sec:rad_solver}) 
+Un travail identique à celui de la section précédente peux être réalisé sur les flux radiatif.
 
-Nous observons que la quantité de photon s'échappant des halos ne dépend pas (ou tres peux) de la méthode de feedback de supernovae.
+Nous observons que la quantité de photon s'échappant des halos ne dépend pas (ou très peux) de la méthode de feedback de supernovae (cf section \ref{sec:pbfesc}).
 
-problème du coarserad %TODO ref
-Résolution plus faible que pour l'hydro.
+problème du coarserad section \ref{sec:crta}
+Résolution plus faible que pour l'hydrodynamique car pas de raffinement.
 (résolution des CODA)
 
+Seuls les halos avec des étoiles jeunes ont un flux de radiation sortant.
 
+figure \ref{fig:R200rad}
+
+\begin{figure}
+	\centering
+	\includegraphics[height=.30\textheight]{img/03/flux_rad_noSN.pdf} 
+	\includegraphics[height=.30\textheight]{img/03/flux_rad_therm.pdf} 
+	\includegraphics[height=.30\textheight]{img/03/flux_rad_kinetic.pdf} 
+    \caption[Flux de photons au $R_{200}$]{Flux de photons au total $R_{200}$ en fonction de la masse du halo. 
+    Les halos les plus massifs ont un flux de photons sortant. 
+    Une partie des halos les moins massifs ont un flux entrant.}
+ 	\label{fig:R200rad}
+\end{figure}
+
+
+\subsection{Budget de photons}
+
+Connaissant les flux radiatif des halos, il est possible de déterminer la répartition du budget de photon en fonction de la masse du halo.
+L'objectif est de déterminer quels sont les halos qui contribuent le plus à ioniser effectivement l'\ac{IGM} dans les simulations.
+La figure \ref{fig:budget} présente les résultats obtenus en faisant la somme des flux sortant de tous les halos d'une certaine classe de masse.
+Seuls les flux sortant sont considérés (et non les moyennes globales calculées en \ref{sec:radflow})
+Ce sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.95\linewidth]{img/03/totout.pdf} 
+    \caption[Budget de photon]{Budget de photons en fonction de la masse du halo et du modèle de supernovae. Ce sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
+ 	\label{fig:budget}}
+\end{figure}
 
 
 \subsection{Fraction d'échappement}
 
-Par contre nous avons vu que le taux de formation stellaire et donc le taux de production de photon, dépend du modèle de supernovae (Sec. \ref{sec:sfr_halo}).
-En comparant les flux radiatif sortant, a la production de photon interne au halo, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échapement des photons.
 
-Les emmisivité sont corrigées du temps necessaire au parcours des photons entre le centre du halo et son $R_{200}$.
-%fonction de luminosité 
+En comparant les flux radiatif sortant, à la production de photon interne au halo, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échappement des photons.
+Nous avons vu que le taux de formation stellaire et donc le taux de production de photon, dépend du modèle de supernovae (Sec. \ref{sec:sfr_halo}).
+Mais nous avons vu que le flux de radiation sortant, lui ne dépend pas du modèle de supernovae.
+
+Il existe cependant un décallage entre le moment d'émmission et le moment de passage de la radiation par son $R_{200}$.
+Les émissivités sont corrigées du temps nécessaire au parcours des photons entre le centre du halo et son $R_{200}$.
+
+Le rapport de ces deux grandeurs et présenté sur la figure \ref{fig:fesc}.
+On y observe une nette augmentation de la fraction d'échappement pour les halos massifs, lors de l'introduction de supernovae cinétique?
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.95\linewidth]{img/03/fesc.pdf} 
+    \caption[Fraction d'échappement des photons]{Fraction d'échappement des photons en fonction de la masse du halo et du modèle de supernovae.
+    Le modèle cinétique augmente significativement la fraction d'échappement des photons.
+ 	\label{fig:fesc}}
+\end{figure}
+
+
+
+
+
+
 
 
 \section{Conclusion}
-
+%fonction de luminosité 
 
 Nous avons vu dans cette partie différentes méthodes pour gérer les supernovae dans les simulations cosmologique.
 Nous avons vu que la formation stellaire est fortement couplée a la méthode d'injection d'énergie.

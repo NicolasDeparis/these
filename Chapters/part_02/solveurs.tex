@@ -841,5 +841,10 @@ En pratique, a chaque pas de temps radiatif, on effectuera un sous-cyclage sur l
 Après chaque pas de temps chimique, la variation d’énergie est calculée. 
 Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'étape courante est recalculée. (cf \cite{rosdahl_ramsesrt_2013}) 
 
-Étant donné que le processus chimique sont uniquement local (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du solveur chimique sur GPU est très intéressant du point de vue accélération.
+Étant donné que le processus chimique sont uniquement local (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du solveur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
+
+\subsection{Transport sur grille de base}
+\label{sec:crta}
+%TODO 
+Le transport sur grille de base ou \ac{CRTA}
 

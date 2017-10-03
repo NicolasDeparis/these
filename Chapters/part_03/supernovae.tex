@@ -118,6 +118,21 @@ Où les vecteurs $\overrightarrow{u}$ sont les directions radiales au centre de 
  		\label{fig:kin}}
 \end{figure}
 
+\subsection{Calibration}
+La quantité d'énergie injectée est calibrée en utilisant les informations en sortie de Starburst99.
+Celui ci retourne également la quantité de masse perdue lors de l'explosion.
+Le modèle actuel ne considère pas la possibilité d'une explosion continue, avec un retour de masse ou d'énergie s'étalant dans le temps.
+L'injection est réalisée instantanément quand la quantité d’énergie théorique de Starburt99 représente 50\% de l’énergie totale.
+La comparaison entre les sorties de Starburst99 et le modèle implémenté est présenté sur la figure \ref{fig:SNloss}.
+Dans ce modèle, un particule stellaire injectera $9.7\cdot 10^{11} J.kg^{-1}$ et perdra 53\% de sa masse dans le milieu environant, $17.6$ millions d'années après sa formation.
+
+\begin{figure}
+        \includegraphics[width=.95\textwidth]{img/03/energy_loss.pdf} 
+		\includegraphics[width=.95\textwidth]{img/03/mass_loss.pdf} 
+        \caption[Calibration des supernovæ]{ Quantité d'énergie et de masse injectés par les supernovae. Comparaison entre le modèle théorique de Starburst99 et le modèle d'injection instantané implémenté dans EMMA.
+ 		\label{fig:SNloss}}
+\end{figure}
+
 
 \subsection{Test numérique - Explosion de Sedov}
 \label{sec:sedov}
@@ -302,7 +317,7 @@ On observe un fort couplage entre feedback et formation stellaire, à tel point 
 \begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFR_sfeff.pdf} 
         \caption[SFH cosmique en fonction de l'efficacité de formation stellaire]{SFH cosmique en fonction de l'efficacité de formation stellaire.
-        Toutes les simulation utilise la même méthode d'injection et la même quantité d'énergie.
+        Toutes les simulations utilisent la même méthode d'injection et la même quantité d'énergie.
 		L'effet du couplage est bien présent.
         }
  		\label{fig:sfr_sfe}
