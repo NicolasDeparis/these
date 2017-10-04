@@ -19,7 +19,6 @@ La première étape consiste à détecter les halos.
 Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
 L'objectif d'un halo finder est de détecter les surdensités dans ce champs de particule.
 
-
 Il existe différents techniques, mais j'ai principalement utilisé l’algorithme \ac{FOF} pour détecter les sur-densités et plus particulièrement \textit{pFOF} une implémentation parallèle de \ac{FOF} \citep{2014A&A...564A..13R}.
 \textit{pFOF} lie les particules regroupées en surdensité, en utilisant une taille de lien caractéristique.
 Il retourne ensuite une liste de groupes de particules et une liste de positions déterminées par le centre de masse des particules de chaque halos.
@@ -139,6 +138,7 @@ Parmi ces simulations, il y en a :
 
 
 \subsection{Approche visuelle}
+\label{sec:snmaps}
 
 Réaliser des cartes de champs permet d'aborder la problème.
 La figure \ref{fig:halo} présente le halo le plus massif ($M\approx10^{11} M_\odot$) extrait des trois simulations avec rayonnement et un modèle de supernovæ différent (cf section \ref{sec:SNmodel}).
@@ -258,7 +258,7 @@ Si il est possible de travailler directement avec les grandeurs scalaires, lors 
 \end{figure}
 
 \subsection{La vitesse du gaz au $R_{200}$}
-
+\label{sec:snvitesses}
 Dans le but de mettre en évidence l'efficacité des supernovae à expulser le gaz des halos, j'ai quantifié la vitesse moyenne du gaz autour des halos au niveau de leur $R_{200}$.
 Pour chaque halos, la vitesse moyenne du gaz a sa surface est calculée.
 Il s'agit des $3072$ vitesses obtenues avec Healpix, chacune projetée sur la surface à la sphère.
@@ -315,18 +315,20 @@ Les vitesses moyennes sont proches de la vitesse d'échappement.
 \subsection{Le flux radiatif au $R_{200}$}
 \label{sec:radflow}
 
-Comme dans ces simulations, la lumière est décrite comme une fluide (cf section \ref{sec:rad_solver}) 
-Un travail identique à celui de la section précédente peux être réalisé sur les flux radiatif.
+Comme dans ces simulations, la lumière est décrite comme une fluide (cf section \ref{sec:rad_solver}), un travail identique à celui de la section précédente peux être réalisé sur les flux radiatif.
+La figure \ref{fig:R200rad} présente les résultats obtenus.
+On observe que seul les halos avec des étoiles jeunes ont un flux de radiation sortant.
+Que tous les halos de $M>2 \cdot 10^9 M_\odot$ ont un flux radiatif sortant et que le flux est d'autant plus important que ceux ci sont massifs.
+Il n'y a pas de différences notables, dans la façon dont la radiation s'échappe des halos, entre les différents types de feedback, 
+Cette observation est en accord avec les observations réalisées en section \ref{sec:pbfesc}, l'évolution de la fraction ionisée ne dépend pas du feedback car la quantité de photon s'échappant des halos ne dépend pas de la méthode de feedback de supernovae.
 
-Nous observons que la quantité de photon s'échappant des halos ne dépend pas (ou très peux) de la méthode de feedback de supernovae (cf section \ref{sec:pbfesc}).
-
-problème du coarserad section \ref{sec:crta}
-Résolution plus faible que pour l'hydrodynamique car pas de raffinement.
-(résolution des CODA)
-
-Seuls les halos avec des étoiles jeunes ont un flux de radiation sortant.
-
-figure \ref{fig:R200rad}
+Les tirets représentes la masse d'un halo ayant un $R_200$ de taille équivalente à la résolution radiative.
+En effet le transport des photons étant réalisé sur la grille de base (voir section \ref{sec:crta}) la résolution est plus faible que pour l'hydrodynamique.
+% car le raffinement n'agit pas sur la radiation.
+Il a déjà été observé qu'une partie des halos de moins de quelques $10^9 M_\odot$ voyaient leurs \ac{SFR} impacté par la radiation. %TODO ref
+Malheureusement, cette limite en résolution correspond aussi à la taille limite des halos présentant un flux net entrant.
+Des simulations à plus hautes résolution sont nécessaires pour déterminer si la limite en flux entrant n'est pas due à un effet de résolution.
+Le fait que tous les halos ayant des étoiles jeunes aient un flux sortant et en faveur d'une résolution suffisante.% car si ce n'était pas le cas .
 
 \begin{figure}
 	\centering
@@ -342,32 +344,37 @@ figure \ref{fig:R200rad}
 
 \subsection{Budget de photons}
 
-Connaissant les flux radiatif des halos, il est possible de déterminer la répartition du budget de photon en fonction de la masse du halo.
+Connaissant les flux radiatif des halos, il est possible de déterminer la répartition du budget de photon en fonction de la masse des halos.
 L'objectif est de déterminer quels sont les halos qui contribuent le plus à ioniser effectivement l'\ac{IGM} dans les simulations.
 La figure \ref{fig:budget} présente les résultats obtenus en faisant la somme des flux sortant de tous les halos d'une certaine classe de masse.
-Seuls les flux sortant sont considérés (et non les moyennes globales calculées en \ref{sec:radflow})
+Seuls les flux sortant sont considérés (et non les moyennes globales calculées en \ref{sec:radflow}).
 Ce sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.95\linewidth]{img/03/totout.pdf} 
-    \caption[Budget de photon]{Budget de photons en fonction de la masse du halo et du modèle de supernovae. Ce sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
+    \caption[Budget de photon]{Budget de photons en fonction de la masse du halo et du modèle de supernovae. 
+    Ce sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
+    Les tirets représentes la résolution radiative.
  	\label{fig:budget}}
 \end{figure}
 
 
 \subsection{Fraction d'échappement}
+\label{sec:fesc}
 
-
-En comparant les flux radiatif sortant, à la production de photon interne au halo, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échappement des photons.
-Nous avons vu que le taux de formation stellaire et donc le taux de production de photon, dépend du modèle de supernovae (Sec. \ref{sec:sfr_halo}).
+En comparant la quantité de photon produite au sein du halo au flux de radiation sortants, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échappement des photons $f_esc$.
+La fraction d'échappement fait le lien entre ce qu'il est possible d'observer et la physique interne au halo.
+%Le rapport de la quantité de photon produite sur la quantité de photon sortante, est la fraction d'échappement .
+Nous avons vu que le taux de formation stellaire et donc le taux de production de photon, dépend du modèle de supernovae (vois section \ref{sec:sfr_halo}).
 Mais nous avons vu que le flux de radiation sortant, lui ne dépend pas du modèle de supernovae.
+Les $f_esc$ obtenues sont présentées sur la figure \ref{fig:fesc}.
+Pour les halos en dessous de la limite en résolution (cf section \ref{sec:radflow}) l'interprétation est difficile, mais il semble que la $f_esc$ ne dépend pas du modèle de supernovae.
+On y observe une nette augmentation de la fraction d'échappement pour les halos massifs, lors de l'introduction de supernovae cinétique.
 
-Il existe cependant un décallage entre le moment d'émmission et le moment de passage de la radiation par son $R_{200}$.
+Pour compenser le décalage entre le moment d'émmission des photons et le moment de leurs passage au $R_{200}$.
 Les émissivités sont corrigées du temps nécessaire au parcours des photons entre le centre du halo et son $R_{200}$.
 
-Le rapport de ces deux grandeurs et présenté sur la figure \ref{fig:fesc}.
-On y observe une nette augmentation de la fraction d'échappement pour les halos massifs, lors de l'introduction de supernovae cinétique?
 
 
 \begin{figure}
@@ -375,30 +382,39 @@ On y observe une nette augmentation de la fraction d'échappement pour les halos
 	\includegraphics[width=.95\linewidth]{img/03/fesc.pdf} 
     \caption[Fraction d'échappement des photons]{Fraction d'échappement des photons en fonction de la masse du halo et du modèle de supernovae.
     Le modèle cinétique augmente significativement la fraction d'échappement des photons.
+    Les tirets représentes la résolution radiative.
  	\label{fig:fesc}}
 \end{figure}
-
-
-
-
-
-
 
 
 \section{Conclusion}
 %fonction de luminosité 
 
-Nous avons vu dans cette partie différentes méthodes pour gérer les supernovae dans les simulations cosmologique.
-Nous avons vu que la formation stellaire est fortement couplée a la méthode d'injection d'énergie.
-Une injection d'énergie sous forme cinétique sera plus efficace pour réguler la formation stellaire qu'une methode thermique.
-La régulation de la formation stellaire se fait par l'intermédiaire de l'expulsion des baryons des halos, privant ainsi les zone de formation de matière première.
-Or, cette diminution de la quantité de baryon, permet a la radiation de s'échapper plus facilement.
+Nous avons comparer dans cette partie deux méthodes pour gérer les supernovae dans les simulations cosmologique.
+L'objectif est de réaliser des simulations de type échantillons, dans le but de mieux cerner les processus actifs dans les simulations plus grandes.
+Nous avons vu (sections \ref{sec:snmethod} et \ref{sec:snegy}) que la formation stellaire est fortement couplée à la méthode et à la quantité d'énergie injectée.
+Une injection d'énergie sous forme cinétique sera plus efficace pour réguler la formation stellaire qu'une méthode par injection thermique, et plus la quantité d'énergie injectée sera élevée, meilleure sera la régulation.
+La formation stellaire ne dépend que de la quantité de gaz présent dans la cellule (section \ref{sec:schmidt-kennicut}).
+Sa régulation se fait par l'intermédiaire de l'expulsion des baryons des halos, qui est visible sur les cartes de champs (section \ref{sec:snmaps}), au sein des halos (section \ref{sec:baryon_frac}) et au niveau du $R_{200}$ (section \ref{sec:snvitesses}), privant ainsi les zone de formation stellaire de matière première.
+Comme se sont les particules stellaires jeunes qui émettent du rayonnement ionisant (section \ref{sec:etoilerad}), la formation stellaire est directement liée a la quantité de radiation produite au sein des halos.
+La production de photons est réduite en même temps que le \ac{SFR}.
+En ayant moins de photons produit, le milieu devrait ioniser moins vite ce qui devrait être visible sur l'évolution de la fraction d'ionisation.
+Or nous avons observé en section \ref{sec:pbfesc} que ce n'est pas le cas, l'histoire d'ionisation est presque indépendante de la méthode d'injection d'énergie de supernovae, alors que le budget de photon est impacté.
+Nous avons expliqué cet effet en observant que les flux de radiation à la surface des halos ne semble pas impactés par le modèle d'injection d'énergie (section \ref{sec:radflow}).
+Dans le cas du feedback cinétique, comme le flux sortant est inchangé alors que la production interne diminue, la fraction d'échappement augmente (section \ref{sec:fesc}).
 
-Au final, la compétition entre la diminution du taux de production de photon et l'augmentation de la fraction d'échappement semble neutre.
+Au final cette augmentation de la fraction d'échappement peut être expliquée par la diminution de la fraction baryonique.
+En effet, comme la \ac{HMF} n'est pas impacté par le feedback (section \ref{sec:hmf}), la quantité de baryon dans les halos diminue avec l'introduction de supernovae.
+Or, cette diminution de la quantité de baryon, permet à la radiation de s'échapper plus facilement.
 
-Cette conclusion n'est valable qu'au résolution considérées dans cette étude, c'est a dire la résolution des plus grosses simulations de la réionisation comme CODA ou CROC. %TODO ref.
+Aux résolutions considérées dans cette étude, c'est a dire la résolution des plus grosses simulations de la réionisation de type CODA,  %TODO ref.
+la compétition entre la diminution du taux de production de photon et l'augmentation de la fraction d'échappement semble neutre.
+De plus, plus les supernovae sont puissante, plus le pas de temps est réduit, et plus le coût global de la simulation est important.
+Ce qui fait que si une telle simulation est exécutée dans le seul intérêt d'étudier l'\ac{IGM}, l'introduction des supernovae n'est pas fondamentale.
+A l'inverse, si L’intérêt est plus porté sur la morphologie des galaxies pendant la réionisation, il n'est plus possible de se passer de l'introduction du feedback.
 
-De plus nous observons que le budget de photons est principalement gouverné par les halos de masses intermédiaire. $10^{10} M_\odot$
+%De plus nous observons que le budget de photons est principalement gouverné par les halos de masses intermédiaire autour de $10^{10} M_\odot$.
+
 
 
 
