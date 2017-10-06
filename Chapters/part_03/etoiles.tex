@@ -3,11 +3,13 @@
 
 Dans les parties précédentes nous avons survolé quelles étaient les différentes physiques à l’œuvre dans les simulations de la réionisation et la façon dont elles sont modélisées numériquement.
 Il manque encore une composante essentielle au problème qui est la modélisation des sources de rayonnement ionisant.
-L'objectif de cette section est d'exposer le modèle de source que j'ai développé, implémenté et calibré.
+L'objectif de cette section est d'exposer le modèle de sources que j'ai développé, implémenté et calibré.
 Comme nous avons vu en introduction (cf section \ref{sec:introreio}), il existe deux types de sources, les étoiles et les quasars.
 Dans la suite de cette étude, je n'ai considéré que la partie stellaire sans me préoccuper des quasars.
 Nous allons définir les différentes phase de la vie d'une étoile, et ses différentes évolutions possible.
 Nous verrons comment les contraintes imposées par les échelles cosmologique que l'on cherche à étudier vont imposer certain choix au niveau numérique.
+Une attention particulière sera mise sur la modélisation des supernovae, puisque une étude comparative entre deux modèles d'injection d'énergie suivra.
+Lors de cette comparaison, il s'est avéré que les supernovae étaient capable de réguler le \ac{SFR}, sans changer l'histoire de réionisation.
 
 \section{Les différentes phases de la vie d'une étoile}
 
@@ -20,14 +22,15 @@ Et nous verrons ensuite l'implémentation de ces trois phases dans EMMA.
 %lien avec la densité\\
 %Formation dans l'H moléculaire mais pas dans les simu
 
-Les étoiles se forment au sein de nuage de gaz,  par effondrement gravitationnel.
-Si les conditions sont réunies, cet effondrement ne s'arrête quand les réactions thermonucléaire s'enclenche et que le gaz forme une étoile.
+Les étoiles se forment au sein de nuage de gaz, par effondrement gravitationnel.
+Si les conditions sont réunies, cet effondrement ne s'arrête quand les réactions thermonucléaire s'enclenchent et que le gaz forme une étoile.
 En première approximation, un nuage de gaz s'effondre, si le temps de chute libre : 
 \begin{equation}
-t_{ff} = \frac{1}{\sqrt{G \rho}},
+t_{ff} =  \sqrt{\frac{3\pi}{32G\rho_g}} \propto \frac{1}{\sqrt{G \rho}},
+\label{eq:tff}
 \end{equation}
 est supérieur au temps de réaction à une perturbation.
-Cette perturbation étant mécanique, le temps de réaction sera équivalent au temps de traversée par une onde sonore :
+Considérant que cette perturbation est d'origine mécanique, le temps de réaction sera équivalent au temps de traversée du nuage par une onde sonore :
  \begin{equation}
 t_{sound} = \frac{R}{C_s},
 \end{equation}
@@ -48,8 +51,7 @@ Plus le gaz sera chaud, plus le nuage va résister a son effondrement.
 A haut redshift, au moment de l'apparition des premières étoiles, les métaux étaient très peux disponible (voir :\ref{sec:nucleosynthese_primordiale}).
 De ce fait, le gaz disposait de relativement peu de possibilité de refroidissement, et donc la température du gaz devait être élevée.
 Les étoiles primordiales devaient donc être plus grosses que les étoiles de notre voisinage (plus de $100M_\odot$).
-Ce type d'étoiles est appelées étoiles de population III.
-Du fait de leur masse, elles émettaient un fort rayonnement ionisant, et avaient une vie relativement courte.
+Ce type d'étoiles est appelées étoiles de population III ou popIII.
 
 %La nucléosynthèse primordiale a créer peu de métaux. 
 %A haut redshift, les metaux etaient peu disponible.
@@ -63,10 +65,10 @@ Du fait de leur masse, elles émettaient un fort rayonnement ionisant, et avaien
 
 %le diagram HR
 
-Une fois le nuage de gaz effondré et les réactions thermonucléaire amorcées, l'étoile amorce sa séquence principale.
-C'est la phase qui représente la majore partie de la vie d'une étoile.
-Elle consiste en un équilibre hydrostatique entre gravitation et pression interne, maintenue par les réactions de fusion nucléaire nucléaire.
-L'étoile va donc consommer son hydrogène pour résister à l'effondrement gravitationnel, il en résultera une formation d'hélium.
+Une fois le nuage de gaz effondré et les réactions thermonucléaires amorcées, l'étoile amorce sa séquence principale.
+C'est la phase qui représente la majeure partie de la vie d'une étoile.
+Elle consiste en un équilibre hydrostatique entre gravitation et pression interne, maintenue par les réactions de fusion nucléaire.
+L'étoile va consommer son hydrogène pour résister à l'effondrement gravitationnel, il en résultera une formation d'hélium.
 %develloper le cycle proton proton ?
 L'équation simplifié du processus de fusion, appelé cycle proton-proton (PP) est :
 \begin{equation}
@@ -76,17 +78,18 @@ L'équation simplifié du processus de fusion, appelé cycle proton-proton (PP) 
 Plus une étoile est grosse plus le taux de réaction doit être élevé pour lutter contre la gravité.
 Il en résulte que les grosse étoiles sont plus énergétique, et émettent donc plus de rayonnement ionisant.
 En contre partie, ce taux de réaction élevé mène à une durée de vie plus courte.
+Du fait de leurs masses, les popIII, émettaient un fort rayonnement ionisant, et avaient une vie relativement courte.
 
 %materiaux de base est l'hydrogene\\
 %plasma donc hydrogène ionisé 
 
 \subsection{Mort}
-
-Arrivé à un certain taux de consommation d'hydrogène, les réactions protons-protons ne sont plus suffisante et l'étoile s'effondre sur elle même.
+\label{sec:snmort}
+Arrivé à un certain taux de consommation d'hydrogène, les réactions protons-protons ne sont plus suffisantes et l'étoile s'effondre sur elle même.
 %A la fin de sa vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
 L'équilibre entre la gravité et la pression est rompu, ce qui mène à une augmentation de la pression interne.
 % Géante rouge ?
-Cette augmentation de la pression amorce une nouvelle série de fusions nucléaires, qui va consommer des éléments plus lourd que l’hydrogène, tel le carbonne, l'azote ou l'oxygène (cycle CNO) jusqu'au fer où le processus s'arrête.
+Cette augmentation de la pression amorce une nouvelle série de fusions nucléaires, qui va consommer des éléments plus lourds que l’hydrogène, tel le carbone, l'azote ou l'oxygène (cycle CNO) jusqu'au fer où le processus s'arrête.
 A ce stade, les couches externes de l'étoiles se contracte rapidement, et rebondissent sur le noyau de fer.
 L'étoile explose alors en supernovae et injecte énormément d'énergie dans le milieu, de l'ordre de $10^{51}$ erg par explosion. 
 %Une fois arrivé au Fe, il devient coûteux de continuer a fusionner des éléments car Fe est le plus stable.
@@ -94,17 +97,17 @@ L'étoile explose alors en supernovae et injecte énormément d'énergie dans le
 Il existe principalement deux types de supernovæ : 
 \begin{itemize}
 \item Les types I où l'étoile n'est pas assez massive à la base pour permettre l'explosion en supernovae.
-Ce sont des étoiles binaire où une étoile accrète une partie de son compagnon, ce qui mène au passage au dessus de la limite.
-\item Les types II : les étoiles de plus de 8$M_\odot$  sont assez massive pour exploser en supernovæ sans avoir besoin de masse supplémentaire
+Ce sont généralement des étoiles binaire où une des deux étoiles accrète une partie de son compagnon, ce qui mène au passage au dessus de la masse limite et provoque l'explosion.
+\item Les types II : les étoiles de plus de 8$M_\odot$ sont assez massives pour exploser en supernovæ sans avoir besoin de masse supplémentaire.
 \end{itemize}
 
 Pendant l'explosion, l'énergie libérée est suffisamment importante pour amorcer la formation d'éléments plus lourds que le fer.
 Ces éléments, ainsi que ceux formés pendant la vie de l'étoile vont être expulsés, et vont participer à l'enrichissement du milieu.
-Ce qui va changer les propriétés physicochimiques du gaz environnant et avoir des conséquences sur la formation des prochaines générations d'étoiles.
+Ce qui va changer les propriétés physico-chimiques du gaz environnant et avoir des conséquences sur la formation des prochaines générations d'étoiles.
 
 Après l'explosion de la supernova, le cœur subsiste et en fonction de sa masse, plusieurs scénario d'évolution sont possibles.
-En fonction de la masse de l'étoiles, le résidu peux devenir soit une naine blanche, soit une étoile a neutron, ou un trou noir.
-Dans tout les cas, le résidu continue à interagir gravitationnellement.
+En fonction de la masse de l'étoiles, le résidu peux devenir une naine blanche, une étoile a neutron ou un trou noir.
+Dans tout les cas, le résidu continue à interagir gravitationnellement avec son environnement.
 
 %\begin{itemize}
 %\item Naine blanche %(maintenue par le pression de dégénérescence des électrons)
@@ -112,24 +115,24 @@ Dans tout les cas, le résidu continue à interagir gravitationnellement.
 %\item Trou noir %(singularité)
 %\end{itemize}
 
-\section{Population stellaire et modèle sous grille}
+\clearpage
+\section{Modèle sous grille et population stellaire}
 
 \subsection{Considérations de résolution}
 %En fonction des echelles de travail, nous considererons soit les etoiles individuelles soit une population stellaire.
 
 Une des difficulté majeurs dans les simulations de la réionisation, est l'impossibilité d'obtenir des résolutions suffisante pour suivre la formation des sources de radiation individuellement, tout en simulant un volume suffisamment important.
 %Il existe toujours ce conflit en réionisation entre simuler des grands volume, et obtenir la meilleur résolution possible.
-Actuellement les simulations capable de suivre un volume d'Univers de l'ordre de $(100Mpc)^3$ atteigne un résolution de l'ordre du kilo-parsec.
+Actuellement les simulations capables de suivre un volume d'Univers de l'ordre de $(100Mpc)^3$ atteignent un résolution de l'ordre du kilo-parsec.
 Or les échelles de formation stellaire sont de l'ordre de l'unité astronomique, soit un facteur $\approx 10^8$ plus petit.
-Il est donc actuellement impossible de résoudre les deux coté du spectre d'échelles spatiales.
+Il est donc actuellement impossible de résoudre les deux cotés du spectre d'échelles spatiales.
 %de suivre la formation des étoiles individuellement.
 Il est nécessaire de créer un modèle qui va tenter de prendre en compte au mieux la physique non résolue.
 Ce type de modèle est appelé modèle \textit{sous grille}.
-
 Dans le cas présent le modèle sous grille consiste à transformer une partie du gaz en particule stellaire, cette particule ne représentant pas une étoiles mais une population stellaire de manière statistique.
 %On appelle ces particules des particules puits.
 Toute la difficulté du modèle de formation stellaire sera de déterminer la façon dont est réalisée cette conversion.
-Malgré tout, nous verrons qu'il est possible d'obtenir un modèle statistiquement viable a grandes échelles assez facilement.
+Malgré tout, nous verrons qu'il est possible d'obtenir un modèle statistiquement viable à grandes échelles assez facilement.
 
 % Un second type de modèle intervient au moment de l'explosion en supernovae.
 % Les processus de diffusion de l'énergie libérée aux échelles plus petite que la grille sont complexe et il en résulte une série de paramètres libres assez conséquente.
@@ -146,7 +149,7 @@ Malgré tout, nous verrons qu'il est possible d'obtenir un modèle statistiqueme
 \subsection{Fonction de masse Initiale}
 
 Les étoiles naissent en groupe, et toutes ne sont pas identique.
-Pour caractériser cette diversité, la notion de fonction de masse initiale (\ac{IMF}), qui exprime la probabilité de former une étoile d'une certaine masse dans un population.
+Pour caractériser cette diversité, il existe la notion de fonction de masse initiale (\ac{IMF}), qui exprime la probabilité de former une étoile d'une certaine masse dans un population.
 Parmi les \ac{IMF} plus connues il y a :
 
 \begin{itemize}
@@ -158,11 +161,10 @@ Parmi les \ac{IMF} plus connues il y a :
 
 %Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendance a être très massive.
 
-Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la reionisation, il y avait formation d'une forte proportion d'étoile massive, et donc une \ac{IMF} top heavy.
+Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisation, il y avait formation d'une forte proportion d'étoile massive, j'ai donc utilisé par la suite une \ac{IMF} Top-Heavy.
 
 %: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
 %Fonction de masse IMF Top Heavy
-
 
 \subsection{Starburst99}
 \label{sec:staburst}
@@ -171,8 +173,8 @@ Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la reionisatio
 %sorties
 
 Les étoiles d'une population ayant des masses et des évolutions différentes, l'émission résultante sera la somme des contributions individuelles.
-La modélisation de population stellaire est complexe, et il existe différent modèles dédiés a cette tache.
-Il existe entre autres :
+La modélisation de population stellaire est complexe, et il existe différent modèles dédiés à cette tache.
+On peut citer entre autres :
 
 \begin{itemize}
 \item Starburst99 \cite{leitherer_starburst99:_1999} 
@@ -180,8 +182,8 @@ Il existe entre autres :
 \item FSPS \cite{2009ApJ...699..486C}
 \end{itemize}
 
-A partir d'informations caractéristique d'une population stellaire, comme sa masse, son \ac{IMF} ou sa métallicité, ces modèle retourne un spectre d'émission et son évolution en fonction du temps (cf Fig \ref{fig:spectre_starburst}).
-Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retourne plusieurs informations utiles au modèle comme l'énergie et la masse injectées par les supernovae. %TODO ref  (cf )
+A partir d'informations caractéristiques d'une population stellaire, comme sa masse, son \ac{IMF} ou sa métallicité, ces modèles retournent un spectre d'émission et son évolution en fonction du temps (cf Fig \ref{fig:spectre_starburst}).
+Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retourne plusieurs informations utiles au modèle comme l'énergie et la masse injectées par les supernovae (section \ref{sec:sncali}).
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/spectre_starburst.jpg} 
@@ -193,13 +195,16 @@ Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retou
 \clearpage
 \section{La formation stellaire}
 
+L'objectif de cette section est de présenter le modèle de formation stellaire que j'ai implémenté dans EMMA.
+Dans ce modèle, la formation stellaire a lieu en trois temps.
+Il faut d'abord localiser les régions de formation, puis calculer la quantité d'étoile à former, et enfin former les particules.
+ 
 \subsection{Localisation des zones de formation stellaire}
 
-Il est admis que les étoiles se forment dans les nuage d'hydrogène moléculaires (voir eg \cite{krumholz_universal_2012}).
-Ces nuages se trouvent eux même dans des zones suffisamment dense pour que les molécules puissent se former.
+Il est admis que les étoiles se forment dans les nuages d'hydrogène moléculaire (voir eg \cite{krumholz_universal_2012}).
+Ces nuages se trouvent eux même dans des zones suffisamment denses pour que des molécules puissent se former.
 En pratique dans EMMA, la physique de l'hydrogène moléculaire n'est pas encore prisent en compte, et les zones autorisées à former des étoiles sont localisées à l'aide d'un seuil en densité.
-Toutes les cellules plus dense qu'un certain seuil sont pas autorisée à créer des particules stellaire.
-%TODO justifier
+Toutes les cellules plus dense qu'un certain seuil sont autorisées à créer des particules stellaire.
 
 %Seuil en densité \\
 \begin{equation}
@@ -211,10 +216,10 @@ Toutes les cellules plus dense qu'un certain seuil sont pas autorisée à créer
 \end{equation} 
 
 Cette densité de seuil $\rho_{thresh}$ peux être définie arbitrairement, et comme toute densité, elle est dépendante de la résolution.
-De plus il en possible de définir une densité en unité physique ou en unité commobile.
+De plus il en possible de définir une densité en unité physique ou en unité commobile (voir section \ref{sec:supercomobil}).
 Un seuil en densité physique sera plus représentatif de se qui se passe réellement.
-Mais à haut redshift, la densité était haute partout, et un seuil en unité comobile est utile pour limité l'apparition des premières étoiles a un redshift donné.
-En pratique on pourra définir ces deux seuil, et le seuil final sera le plus contraignant des deux.
+Mais à haut redshift, la densité était haute partout, et un seuil en unité comobile est utile pour limiter l'apparition des premières étoiles à un redshift donné.
+En pratique on pourra définir ces deux seuils, et le seuil final sera le plus contraignant des deux.
 
 %TODO figure du seuil en fonction du redshift
 
@@ -222,9 +227,9 @@ En pratique on pourra définir ces deux seuil, et le seuil final sera le plus co
 	\rho_{thresh} = max\left(  \delta_{in} \bar{\rho}, \rho_{in} a^3 \right)
 \end{equation} 
 
-ou $\delta_{in}$ et $\rho_{in}$  sont respectivement les paramètre de surdensité et de densité physique.
-$\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps en unité du code,
- $\rho_{in}$ est exprimé en unité physique (en atome par mètre cube), sa valeur évolue dans le temps du point de vue des unité du code (cf section \ref{sec:supercomobil}).
+ou $\delta_{in}$ et $\rho_{in}$  sont respectivement les paramètres de surdensité et de densité physique.
+$\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps en unités du code,
+ $\rho_{in}$ est exprimé en unité physique (en atome par mètre cube), sa valeur évolue dans le temps du point de vue des unités du code (cf section \ref{sec:supercomobil}).
 
 % determination de la valeur de 55\\ 
 
@@ -235,21 +240,17 @@ $\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps
 %temps de free fall\\
 
 Maintenant que nous avons définis où former des étoiles, il nous faut calculer la quantité à former.
-
 La loi de Schmidt \citep{1959ApJ...129..243S}  est une loi observationnelle qui lie la densité surfacique de gaz dans les galaxies au taux de formation stellaire (\ac{SFR}) dans cette galaxie.
-Kennicut \citep{1998ApJ...498..541K} a utilisé un modèle de galaxie pour dé-projeter la densité surfacique observée et ainsi déterminer une loi qui lie le \ac{SFR} à la densité volumique de gaz:
+\cite{1998ApJ...498..541K} a utilisé un modèle de galaxie pour dé-projeter la densité surfacique observée et ainsi déterminer une loi qui lie le \ac{SFR} à la densité volumique de gaz.
+Cette loi a la forme:
 \begin{equation}
 SFR \propto \rho ^{\alpha},
 \end{equation}
 avec $\alpha \approx 1.4 \pm 0.15$
 
-Le taux de formation stellaire s'exprime généralement en $M_\odot \cdot Mpc^{-3}  \cdot yr^{-1}$  
+Le taux de formation stellaire s'exprime généralement en $M_\odot \cdot cMpc^{-3} \cdot yr^{-1}$  
 Ce qui est homogène à une densité divisé par un temps.
-En pratique divisera $\rho_g$ la densité de gaz locale par le temps de chute libre, qui est en théorie le temps nécessaire à un nuage de gaz pour s'effondrer si il n'y avait aucune résistance:
-\begin{equation}
-t_{ff} = \sqrt{\frac{3\pi}{32G\rho_g}}.
-\end{equation}
-
+En pratique divisera $\rho_g$ la densité locale de gaz par le temps de chute libre (equation \ref{eq:tff}), qui est en théorie le temps nécessaire à un nuage de gaz pour s'effondrer si il n'y avait aucune résistance.
 Au final, le \ac{SFR} prend la forme:
 \begin{equation}
 	SFR = \epsilon_{sf} \frac{\rho_g}{t_{ff}} \propto \rho_g^{1.5}
@@ -262,39 +263,40 @@ Il est également possible de considérer le temps caractéristique de formation
 \begin{equation}
 t_{sf} =  \frac{t_{ff}}{ \epsilon_{sf} },
 \end{equation}
-qui est de l'ordre de quelques milliard d'années.
+qui est de l'ordre de quelques milliards d'années.
 
-A partir de ce taux de formation on obtient la masse de gaz a convertir en étoile dans chaque cellule en multipliant par $dv$ le volume de la cellule en question et $dt$ le pas de temps entre deux passage dans la fonction de formation stellaire:
+
+
+\subsection{Implémentation}
+
+A partir du taux de formation, on obtient la masse de gaz à convertir en étoiles dans chaque cellule en multipliant par $dv$ le volume de la cellule en question et $dt$ le pas de temps entre deux passage dans la fonction de formation stellaire:
 \begin{equation}
 	M_{star} = SFR \cdot dv \cdot dt .
 \end{equation}
 
-\subsection{Implémentation}
-
 %resolution en masse\\
-Nous avons donc à ce stade la masse totale de gaz a convertir en étoile.
+Nous avons donc à ce stade la masse totale de gaz à convertir en étoile.
 Il devient rapidement coûteux de générer pour chaque cellule éligible, et à chaque pas de temps, une nouvelles particule stellaire (le nombre de particule peux rapidement exploser).
 Nous adoptons une approche probabiliste.
 Nous définissons une masse d'étoiles $m_{star}$ qui correspondra à notre "quanta stellaire".
 Toutes les étoiles aurons donc la même masse et cette masse est calculée d'une manière comparable à celle d'une particule de matière noire.
 La masse d'une étoile correspond à la masse moyenne de gaz dans une cellules d'un certain niveau :
 \begin{equation}
- m_{star} = M_{DM} \frac{\Omega_b}{\Omega_m}\cdot 2^{-3L}
+ m_{star} = M_{DM} \frac{\Omega_b}{\Omega_m}\cdot 2^{-3L},
 \end{equation}
-% pouvant aller du niveau coarse  au niveau plusieurs niveau raffiné.
+où $L$ peux varier du niveau de base à niveau plusieurs niveaux raffinés.
 
 %TODO cite RAMSES
-Le nombre de quanta à ajouter est ensuite tiré aléatoirement dans une lois de Poisson.
-
+Le nombre de quanta à ajouter est ensuite tiré aléatoirement dans une loi de Poisson \citep{rasera_history_2006}.
 \begin{equation}
 	P(N) = \frac{\lambda^N}{N!} e^{-\lambda}
 \end{equation}
 
-Où $\lambda$ correspond au nombre de particule moyen a créer dans la cellule :
+Où $\lambda$ correspond au nombre de particules moyen à créer dans la cellule :
 \begin{equation}
 \lambda = \frac{ M_{star}}{m_{star}}
 \end{equation}
-On obtiendra au final $N_{star}$ le nombre de quanta de masse d'étoile à créer.
+On obtiendra au final $N_{star}$ le nombre de quanta de masse d'étoiles à créer.
 Étant donné le grand nombre de tirage cette loi est en moyenne valide.
 
 En pratique j'ai implémenté deux méthodes de transformations.
@@ -324,16 +326,16 @@ Le choix de la méthode est laissé à l'utilisateur et dépend de la situation.
 En pratique la création d'une particule stellaire consistera à prendre une nouvelle particule vierge dans la réserve (cf section \ref{sec:PART}), ajouter ce nouveau maillons à la liste chaînée de particule de la cellule et initialiser cette nouvelle particule.
 
 On associera un temps de création à la particule stellaire et non un age, ceci permet de ne pas avoir à remettre à jour cette valeur à chaque pas de temps.
-Pendant les analyses post simulation, on prendra garde à définir l'age des étoiles comme étant le temps associé au snapshot courant moins le temps de création de la particule.
+Pendant les analyses post-simulations, on prendra garde à définir l'age des étoiles comme étant le temps associé au snapshot courant moins le temps de création de la particule.
 
-Les étoiles créées auront une vitesse correspondant à la vitesse du gas au moment de leurs création.
-Pour éviter les effets de "collier", à cette vitesse sera ajouté une composante aléatoire, aillant une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule.
+Les étoiles créées auront une vitesse correspondant à la vitesse du gaz au moment de leurs création.
+Pour éviter les effets de "collier", à cette vitesse sera ajoutée une composante aléatoire, aillant une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule.
 
-Il est utile d'associer un identifiant unique aux nouvelles particules pour pouvoir suivre leur évolution et les retrouver entre les différentes sorties.
+Il est utile d'associer un identifiant unique aux nouvelles particules pour pouvoir suivre leurs évolutions et les retrouver entre les différentes sorties.
 La technique la plus simple est d'associer la valeur d'un entier que l'on incrémente à chaque création d'une nouvelle particule.
 Du fait de la parallélisation cette incrémentation demande des communications à chaque création de particule.
-Pour minimiser les communications, la pratique retenue consiste à former toutes les particules de toutes les processeurs, en leur assignant un identifiant caractéristique (eg -1) et d'assigner les identifiants finaux dans un second temps.
-Une fois les particules créées, chaque processeurs compte son nombre de nouvelles particules et le transmet aux autres, ce qui permet d'allouer une plage d'identifiants par processeur, et ainsi allouer les identifiants finaux.
+Pour minimiser les communications, la pratique retenue consiste à former toutes les particules de toutes les processus, en leur assignant un identifiant caractéristique (eg -1) et d'assigner les identifiants finaux dans un second temps.
+Une fois les particules créées, chaque processus compte son nombre de nouvelles particules et le transmet aux autres, ce qui permet d'allouer une plage d'identifiants par processus, et ainsi allouer les identifiants finaux.
 
 \subsection{La SFH cosmique}
 
@@ -341,11 +343,11 @@ Dans le but de tester cette implémentation, j'ai réalisé une série de simula
 Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
 %le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
 Une difficulté est qu'il existe une dégénérescence entre le seuil en densité et l'efficacité de formation stellaire.
-En effet, il semble à priori possible d'obtenir des résultats similaire en utilisant, soit un seuil très permissif et une efficacité très faible, ou à l'inverse en ne formant des étoiles que dans les quelques cellules les plus dense avec une efficacité élevée.
+En effet, il semble à priori possible d'obtenir des résultats similaire en utilisant, soit un seuil très permissif et une efficacité très faible, ou à l'inverse en ne formant des étoiles que dans les quelques cellules les plus denses avec une efficacité élevée.
 Dans la littérature %dédiée aux simulations comparables %TODO ref
 un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé.
 J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
-La figure \ref{fig:test_SFH} présente un test après calibration. 
+La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de (8/h cMpc)$^3$ obtenue après calibration. 
 L'efficacité de formation stellaire est fixée à $1\%$.
 Avec ses paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
 
@@ -376,29 +378,21 @@ Avec ses paramètres, la \ac{SFH} obtenue respecte les contraintes observationne
 %La majorité des simulations que j'ai réalisées ensuite utilisent une \ac{IMF} Top-Heavy.
 
 Une fois les étoiles formées, il est nécessaire de les faire rayonner.
-Pour ce faire il faut passer en revue toute les étoiles, et à partir de leurs masses et de leurs ages, calculer leurs émissivité.
-Cette opération est simplifiée par l'utilisation de la liste chaînée de particule associées à chaque cellule (cf \ref{sec:chainepart}).
-En effet, en pratique, on passera en revue toutes les cellules, et pour chaque cellules on passera en revue toutes ses particules.
-On testera alors si une particules est une étoiles (la liste chainée contient également les particules de matière noire), et si cette étoiles est dans un stade où elle émet de l'énergie lumineuse.
-Si c'est le cas, on calculera son émissivité et on injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.
-Le calcul de $\dot{N}_\nu^*$ sera effectué dans toutes les cellules.
-
+Pour ce faire il faut, à partir de leurs masses et de leurs ages, calculer leurs émissivité.
 Pour déterminer quel est le lien entre age, masse et luminosité d'une particule stellaire on utilisera un modèle de population stellaire.
-A partir des spectres obtenus avec Starburst99 (cf section \ref{sec:staburst}) , nous n'allons garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus courte que 911$\AA$) :
+A partir des spectres obtenus avec Starburst99 (cf section \ref{sec:staburst}), nous n'allons garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus courte que 912$\AA$) :
 
 \begin{equation}
 E_{ion (t)} = \int_{13.6eV}^{+\inf} h \nu_{(t)} d\nu
 \end{equation}
 
 En divisant l'énergie totale obtenue à partir de cette intégration, par l'énergie moyenne des photons obtenue à partir des spectres (cf section \ref{sec:groupedephotons}), on obtient l'évolution du flux de photons ionisant, présenté sur la figure \ref{fig:flux}.
-
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/flux.pdf} 
         \caption[Émissivité ionisante]{Émissivité ionisante intégrée en fonction du temps.
         La population présente deux phases d'émission, une phases constante suivie d'une rapide décroissance.
  		\label{fig:flux}}
 \end{figure}
-
 Le profil obtenu présente un plateau d'émissivité constante suivie d'une rapide décroissance.
 Ce profil peut être raisonnablement approximé par:
 
@@ -412,11 +406,20 @@ Ce profil peut être raisonnablement approximé par:
 \end{equation}
 
 où $t_{life}$ est définis comme étant l'age de la population au moment de changement de régime.
-Étant donné la rapide décroissance en luminosité, les étoiles sont arbitrairement éteintes après $t_{life}$.
-Ce flux correspond au flux d'une population de $10^6M_\odot$, et ces valeurs seront pondérées au prorata de la masse de la particule stellaire : une particule de $10^5M_\odot$ émettra  simplement 10 fois moins de photons ionisant qu'une population de $10^6 M_\odot$.
+Par la suite nous utiliserons la valeur de $t_{life} = 3.7$Myrs.
 
-La gestion des groupes de photons a été abordée dans la section \ref{sec:groupedephotons}.
-Les caractéristique des photons obtenues dans le cas d'une \ac{IMF} TopHeavy et pour une émission mono-groupe sont présentés sur la table \ref{tab_photon}.
+Étant donné la rapide décroissance en luminosité, les étoiles sont arbitrairement éteintes après $100 \cdot t_{life}$.
+
+Le flux obtenu correspond au flux d'une population de $10^6M_\odot$, et ces valeurs seront pondérées au prorata de la masse de la particule stellaire : une particule de $10^5M_\odot$ émettra  simplement 10 fois moins de photons ionisant qu'une population de $10^6 M_\odot$.
+
+Cette émissivité sera ensuite pondérée par un paramètre d'efficacité.
+Ce paramètre libre reflète l'impact d'une grande partie de la physique sous grille, sur le rayonnement.
+En effet, nous ne résolvons pas certains processus, comme par exemple l'absorption par la poussière, qui va empêcher la radiation de sortir de l’environnement de la population.
+Ce paramètre est analogue à une fraction d'échappement intrinsèque et ne doit pas être confondu avec la fraction d'échappement des galaxies que nous aborderons par la suite (voir section \ref{sec:fesc}).
+
+Il nous reste encore à caractériser le type de photons à émettre.
+La gestion des groupes de photons a été abordée dans la section \ref{sec:groupedephotons}, nous ne travaillerons par la suite qu'en émission mono-groupe.
+Les caractéristiques des photons émis dans le cas d'une \ac{IMF} Top-Heavy sont présentés sur la table \ref{tab_photon}.
 
 \begin{table}
 \begin{tabular}{l l }
@@ -429,16 +432,19 @@ Ces valeurs ont été calculées à partir des spectres obtenus avec Starburst99
 \label{tab_photon}}
 \end{table}
 
-Cette émissivité sera ensuite pondérée par un paramètre d'efficacité.
-Ce paramètre libre reflète l'impact d'une grande partie de la physique sous grille, sur le rayonnement.
-En effet, nous ne résolvons pas certains processus, comme par exemple l'absorption par la poussière, qui va empêcher la radiation de sortir de l’environnement de la population.
-Ce paramètre est analogue à une fraction d'échappement intrinsèque et ne doit pas être confondu avec la fraction d'échappement des galaxies que nous aborderons par la suite. %TODO ref
+
+En pratique, il faudra calculer l'émissivité sur toute la grille.
+Cette opération est simplifiée par l'utilisation de la liste chaînée de particule (cf \ref{sec:chainepart}).
+En effet, on passera en revue toutes les cellules, et pour chaque cellules on passera en revue toutes ses particules.
+On testera alors si une particules est une étoiles (la liste chaînée contient également les particules de matière noire), et si cette étoiles est dans un stade où elle émet de l'énergie lumineuse.
+Si c'est le cas, on calculera son émissivité et on injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.
+Le calcul de $\dot{N}_\nu^*$ sera effectué dans toutes les cellules.
 
 Avec les paramètres déterminés par Starburst99 et une fraction d'échappement intrinsèque de 40\%, j'obtiens l'histoire de reionisation présenté sur la figure \ref{fig:test_xion}.
 Cette histoire est comparée aux contraintes observationnelles déterminées par \cite{fan_constraining_2006}.
-
 J'ai également pu vérifier à ce stade que l'introduction du rayonnement ionisant dans la simulation n'impacte pas la \ac{SFH} cosmique.
 Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des sources.
+
 
 
 %TODO intégration de l'énergie et de la section efficace
