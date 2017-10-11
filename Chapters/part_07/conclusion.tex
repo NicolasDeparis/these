@@ -1,55 +1,79 @@
 \chapter{Conclusions}
 
-\section{Conclusions des différents travaux}
+\section{Conclusions numériques}
+
+EMMA est un code "RAMSES like" qui a comme avantage d'etre hautement parallisé sur GPU.
+Le facteur d'accélération global est de l'ordre 3.
+indépendament les solveurs ont un facteur d'accélération de l'ordre de 20, mais les communication CPU/GPU limitent l'accélération globale.
+
+CEpendant le potentiel est encore grand.
 
 
+\section{Conclusions physiques}
+
+\subsection{sur la formation stellaire}
 la taille maximum des simulation nous limite en résolution.
 Il faut de grands volumes cosmologiques.
 nous n'avons pas la résolution suffisante pour modéliser correctement la formation et le feedback stellaire.
 Il faut faire avec mais cela impose certain 
 
+\subsection{sur les cartes de reonisation}
+Les carte de reionisation offre une approche globale de l'histoire de reionisation de l'igm.
+Elle est entremement dense en information et quelques piste de son utilisation ont été exploré durant cette thèse.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \chapter{Perspectives}
 
-\section{Perspectives numériques}
+\section{Étude de résolution}
+Un des facteurs les plus limitant de cette étude est l'utilisation d'une résolution unique, celle qui est utilisée par les plus grandes simulations de la reionisation a l'heure actuelle.
+Cette résolution est définie par l'equilibre entre les capacités de calculs disponibles et la taille necessaire a la modelisation de l'igm. 
+réaliser des simulations haute résolution et petites échelles pour en tirer des conclusions a basse résolution grandes echelles
 
-Amélioration d'EMMA
-+ de GPU
-Z order curve
 
+\section{Amélioration des performances d'EMMA}
 
-carte de reio lagrangienne
+Aux niveau numérique, les perceptives se focalisent sur l'amélioration d'EMMA. 
+Même si l'accélération apportée par les GPU est intérressante, certaines pistes sont prométteuse.
+Par exemple, l'utilisation de Z-order curve permettrait une gestion efficace de l'arbre AMR par le GPU, rendant possible la copie integrale de l'arbre dans la memoire du GPU et évitant ainsi les manipulations et copies de données couteuses en ressources.
 
-\section{Perspectives scientifiques}
+\section{Carte de reio lagrangienne}
+LEs cartes de reionisation présentées ici sont des cartes Euleriennes car basées sur la grille.
+Il est en théorie possible d'associer un redshift de réionisation aux particules dans l'objectif de créer une parte de reionisation Lagrangienne.
+Ce type de carte permettrait de compléter la représentation existante et de rendre bien plus rapide l'association avec les halos
 
-\subsection{introduction des AGN}
+\section{Les AGN}
 
-\subsection{ajout de chimie}
-introduction de la physique de l'hydrogène moléculaire
-introduction de la chimie de l'hélium
+Selon certains travaux \cite{chardin_large-scale_2017}, les AGN sont des sources rares mais suffisamment lumineuse pour être essentiels au processus de reionisation.
+L'introduction de cette physique supplémentaire dans les simulations constitue une piste intéressante pour l'avenir.
+Cependant les AGN étant extrêmement lumineux, les simulations doivent couvrir des volume encore plus grand que ceux considérer dans le cas de la formation stellaire.
 
-\subsection{Influence post réionisation}
+\section{La chimie}
+
+L'introduction de la physique de l'hydrogène moléculaire permettrait une meilleur modélisation des processus de refroidissement et 
+
+L'introduction de la chimie de l'hélium
+
+\section{Influence post réionisation}
 par  rapport au papier z=0
 suppression de la radiation après la réionisation pour pouvoir pousser la simulation jusqu'a z=0 sans faire de lien indirect
 Le travail à été amorcé
 
-réaliser des simulations haute résolution et petites échelles pour en tirer des conclusions a basse résolution grandes echelles
 
-\subsection{Vulgarisation}
+\section{Vulgarisation}
 Visu pour vulgariser
 
 projection equirectange en live pour movie 360
 
 visualisateur grosse données
 
-\subsection{réseaux de neurones}
-
+\section{Réseaux de neurones}
+Pendant ma thèse, une étude a été menée sur l'utilisation des reseaux de neurones appliqué a l'EoR.
+Les premiers résultats semblaient prometteurs et poursuivre dans cette voie semble une piste à privilégier.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
