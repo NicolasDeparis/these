@@ -9,30 +9,30 @@ Cette taille présente l'avantage de pouvoir réaliser un grand nombre de simula
 Mais il est admit que cette taille est trop faible pour étudier la réionisation dans son ensemble.
 Les séries de simulations présentées ont pour vocation de calibrer et d'améliorer notre compréhension une simulation plus ambitieuse que je vais présenter dans ce chapitre.
 
-
-%Lettre donc partie courte.
-
 Cette partie repose sur une lettre qui s'inscrit dans une stratégie de travail a long terme.
 Elle a pour vocation de présenter la simulation "\ac{CoDa} I AMR" ainsi que les premiers résultats obtenus.
 Ces résultats utilise deux simulation pour faire le lien entre la période de réionisation et l’époque actuelle.
 Je vais présenter les deux simulations utilisées et la façon dont le lien entre les deux est fait.
 Cette étude montre que les halos les plus massifs a z=0 sont réionisé plus tôt que le reste de l'Univers.
 
+%Lettre donc partie courte.
 %Objectif connaitre le Z reio des halo en fonction de leur masse.
 %Sur grosse simu donc beaucoup de stats
-
 %\subsection{Présentation de la simulation CODA II EMMA}
 
-\subsection{Présentation des simulations et conditions initiales}
+\subsection{Présentation du projet}
 
-Le projet \ac{CoDa} a pour objectif d'étudier la réionisation du groupe local, et de comprendre si il s'est fait réionisé par  ou si il s'est réionisé de manière autonome.
+Le projet \ac{CoDa} a pour objectif d'étudier la réionisation du groupe local, et de comprendre si il s'est fait réionisé par l'extérieur ou si il s'est réionisé de manière autonome.
 Pour se faire, un contexte cosmologique suffisamment large est nécessaire pour modéliser l'influence des grandes structures comme Virgo ou Fornax par exemple.
 Les conditions initiales ont été générées par la collaboration \ac{CLUES}, avec pour objectif de retrouver dans la simulation, des structures ayant des caractéristiques proches de ce qui est observé dans l'univers local.
 On cherchera par exemple à obtenir un couple Andromède - Voie Lacté avec des masses, distances et vitesses relative en accord avec les contraintes actuelles.
 
-Les conditions initiales utilisées ici sont une version basse résolution de celles utilisée par la simulation \ac{CoDa} I \citep{ocvirk_cosmic_2015}.
-Cette simulation a été réalisé avec le code RAMSES CUDATON %TODO ref
-considère un volume de $\left( 64/h \mathrm{cMpc} \right)^3$ et est échantillonné par $4096^3$ particules de matière noire.
+\subsection{Conditions initiales}
+
+
+Les conditions initiales utilisées ici sont une version basse résolution de celles utilisées par la simulation \ac{CoDa} I \citep{ocvirk_cosmic_2015}.
+Cette simulation a été réalisé avec le code RAMSES CUDATON, %TODO ref
+considère un volume de $\left( 64/h \mathrm{cMpc} \right)^3$ et est échantillonné par $4096^3$ élements de résolutions (particules de matière noire et cellules de grille).
 Dans le cas de l'étude présentée ici, cette résolution a été dégradée en $2048^3$, ce qui mène à une résolution en masse $3.4 \cdot 10^6 M_\odot$ et une résolution spatiale de 46 ckpc sur la grille de base, permettant d'explorer une gamme de masse de halos comprise entre $10^8 M_\odot$ et $10^{13}M_\odot$.
 La perte d'un niveau de résolution est compensé par l'utilisation de l'\ac{AMR} de EMMA, permettant d’augmenter la résolution spatiale au détriment de la résolution en masse.
 L'objectif est de pouvoir faire une comparaison directe entre les deux versions de cette simulation (CoDa I RAMSES CUDATON vs CoDa I AMR) dans un avenir proche.
@@ -41,11 +41,13 @@ L'objectif est de pouvoir faire une comparaison directe entre les deux versions 
 %8x moins résolue en masse 
 %Mais mieux résolue en dx
 
+\subsection{Présentation des simulations}
+
 A partir de ces conditions initiales plusieurs simulations ont été réalisées.
 Le première est une simulation de N-corps pur, ne considérant que la matière noire.
 Elle a été réalisée avec le code Gadget \citep{springel_cosmological_2005} jusqu'à redshift $z=0$.
 Cette première a pour objectif de suivre l'évolution des structures jusqu'à redshift $z=0$.
-La seconde est une simulation \ac{RHD} entièrement couplé réalisé avec EMMA.
+La seconde est une simulation \ac{RHD} entièrement couplée et réalisée avec EMMA.
 Elle est focalisée sur l'\ac{EoR} et elle s’arrête donc à redshift $z=6$, une fois l'Univers réionisé.
 Cette simulation a été exécutée sur le calculateur TITAN (voir section \ref{sec:titan}) et a utilisée 32768 cœurs \ac{CPU} et 4096 \ac{GPU}.
 Les travaux présentés dans la section \ref{sec:etoiles} ont aidés de calibrer correctement la simulation.
@@ -88,12 +90,11 @@ La figure \ref{fig:methodes} est une représentation graphique de ces deux méth
 \begin{figure}
 		\centering
         \includegraphics[width=.95\linewidth]{img/05/maphaloh.pdf} 
-        \caption[Carte de redshift et halos]{Carte de redshift de reionisation calculée par la simulation \ac{RHD} et positions des halos à redsihft z=0 calculées avec la simulation, matière noire pure.
-        La concordance des deux simulations est correcte, les halos de trouvent aux centre des régions ionisées.
+        \caption[Carte de redshift et halos]{Carte de redshift de reionisation calculée par la simulation \ac{RHD} EMMA et positions des halos à redsihft z=0 calculées avec la simulation, matière noire pure Gadget.
+        La concordance des deux simulations est correcte, les halos de trouvent aux centres des régions ionisées.
 		\label{fig:zmapcomp}}
 \end{figure}
 
-\clearpage
 
 \begin{figure}
 		\centering
@@ -125,7 +126,7 @@ Cette méthode permet de sonder les halos moins massifs qui n'avaient pas de pro
 Les résultats qui vont être présentés dans cette section représente une étude préliminaire globale de la simulation.
 Évidemment, les simulations \ac{CoDa} ont encore énormément de potentiel scientifique à exploiter.
 
-\subsection{Temps d'ionisation des halos}
+\subsection{Instant d'ionisation des halos}
 
 Nous avons associé, pour chaque halos à redshift $z=0$ de la simulation Gadget, une liste de redshift de réionisation.
 Il est donc possible de déterminer un redshift de réionisation moyen, ainsi qu'un temps de réionisation.
@@ -135,7 +136,29 @@ Les traits représentent la valeur médiane dans l'intervalle de masses, les ré
 On mesure ici que les halos les plus massifs reionises plus tôt indépendamment de la méthode.
 Cependant la méthode du progéniteur a tendance a réioniser plus tôt, car elle se concentre sur les halo les plus massifs
 
-Le second panneau de la figure \ref{fig:CODA_t} présente les durée necessaire à la réionisation des halos en fonction de leurs masses.
+
+La ligne noire horizontale représente l'instant où la fraction ionisée moyenne de la totalité du volume devient supérieure à 50\%.
+Il existe une gamme de masses autour de $M <10^{11} M_\odot$, qui réionise plus tard que la moyenne du volume.
+Ces halos semblent être soumis à une influence externe contrairement aux halos plus massifs qui se réionise de manière interne plus tôt que la moyenne.
+%dont la médiane est supérieur a
+Pour les halos les moins massifs ($M<10^9 M_\odot$), la méthode du progéniteur tend à diverger, car la probabilité qu'un halo de $10^8 M_\odot$ ait un progéniteur à $z=6$ est relativement faible.
+
+En ce qui concerne le couple MW-M31, il sont ionisé légèrement plus tard que la médiane de leur classe de masse.
+
+
+\begin{figure}
+		\centering
+        \includegraphics[height=.45\textheight]{img/05/track_treion_LG.pdf}
+        \includegraphics[height=.45\textheight]{img/05/track_dt_2sig_LG.pdf} 
+        \caption[Instant et durée de réionisation]{Instant (panneau supérieur) et durée (panneau inférieur) de réionisation en fonction de la masse des halos à redshift $z=0$, pour les deux méthodes d'association. 
+        La ligne horizontale représente $z\approx7.8$ l'instant ou la volume total atteint 50\% d'ionisation.
+        Les points représentent le couple Voie Lacté - Andromède.
+		\label{fig:CODA_t}}
+\end{figure}
+
+
+\subsection{Durée d'ionisation des halos}
+Le second panneau de la figure \ref{fig:CODA_t} présente les durées nécessaires à la réionisation des halos en fonction de leurs masses.
 La méthode des particules a été utilisée, et pour chaque halo, une liste de redshift est associée.
 \begin{itemize}
 \item Dans un premier cas, la durée de réionisation a été associée à la différence entre l'instant où la première particule à été ionisé et l'instant où la dernière particule à été ionisée.
@@ -144,36 +167,65 @@ Cette méthode limite les durées extrêmes et en moyenne la durée est toujours
 \end{itemize}
 
 Dans les deux méthodes, les halos les plus massifs ont une durée de réionisation plus importante. 
-Pour les halos les moins massifs ($M<10^9 M_\odot$)
+Les plus petits halos ont une durée qui tend vers zéro car leur taille est proche de celle de la résolution de la carte de redshift et peuvent être inscrit dans une cellule.
+Dans les deux cas la durée de réionisation de MW est plus courte que la médiane.
+%Pour M31 ça dépend de la méthode.
 
-\begin{figure}
-		\centering
-        \includegraphics[width=.95\linewidth]{img/05/track_treion_LG.pdf}
-        \includegraphics[width=.95\linewidth]{img/05/track_dt_2sig_LG.pdf} 
-        \caption[t et dt reio]{
-		\label{fig:CODA_t}}
-\end{figure}
 
-\clearpage
+
+
+%\begin{figure}
+%		\centering
+%    %    \includegraphics[width=.95\linewidth]{img/05/track_treion_LG.pdf}
+%        \includegraphics[width=.95\linewidth]{img/05/track_dt_2sig_LG.pdf} 
+%        \caption[t et dt reio]{
+%		\label{fig:CODA_t}}
+%\end{figure}
+
 \subsection{Étude d’environnement}
 
-Le volume total de la simulation a été découpé en parties égales.
-A cause de la variance cosmique, chacune de ses sous partie dispose de sa propre densité moyenne
+Dans le cas d'un environnement dense, le milieu aura tendance a produire plus de sources de photons mais sera en même temps plus dur à réioniser car plus d'atomes sont présent et le taux de recombinaison y est plus élevé. %TODO ref
+%dans la section  Nous avons abordé le problème de la compétition 
+Dans le but d'explorer la balance entre ces deux effets, le volume total de la simulation a été découpé en huit parties égales.
+Du fait de la variance cosmique, chacune de ces sous-parties dispose de sa propre densité moyenne.
 La figure \ref{fig:CODA_environnement} présent la comparaison des durées de réionisation obtenues avec la méthode 2$\sigma$, sur l'ensemble du volume, dans le sous volume le moins dense et dans le sous volume le plus dense.
-Nous mesurons, qu'un environnement dense mène en moyenne à une durée de réionisation plus courte.
+Nous mesurons, que le sous-volume le moins dense a une durée d'ionisation comparable à celle du volume total.
+Nous mesurons également qu'un environnement plus dense mène en moyenne à une durée de réionisation plus courte.%, et donc la production de photon supérieure compense les effets 
 
 \begin{figure}
 		\centering
 		\includegraphics[width=.95\linewidth]{img/05/median_dt_envir.pdf}
-        \caption[influence de l'environement]{
+        \caption[Durée de réionisation et environnement]{Durée de réionisation en fonction de l'environnement.
+        Un environnement dense diminue la durée médiane d'ionisation des halos.
 		\label{fig:CODA_environnement}}
 \end{figure}
 
+
 \subsection{Le cas du groupe local}
+
+
+Les progéniteurs du couple Voie Lactée - Andromède sont représentés sur la figure \ref{fig:CODA_LG}.
+Ceux ci sont pris à redshift $z=10.8$ et superposés à la carte de redshift d'ionisation.
+On mesure que la dispersion spatiale de M31 est plus importante que celle de MW.
+Le fait que M31 ait une durée de réionisation plus importante que MW est sans doute lié a cette étendue spatiale.
+
 \begin{figure}
 		\centering
 		\includegraphics[width=.95\linewidth]{img/05/map_LG.pdf}
-        \caption[Groupe local]{
+        \caption[Réionisation du groupe local]{Progéniteurs du couple M31-MW à redshift $z=10.8$ superposé à la carte de redshift d'ionisation.
 		\label{fig:CODA_LG}}
 \end{figure}
+
+\subsection{Conclusion et perspective}
+
+Les méthodes diffères mais la tendance générale reste la même.
+Les halos les plus massifs à $z=0$ réionisent plus tôt que les autres, du fait de leurs source interne apparaissant tôt
+Les halos les plus massifs à $z=0$ ont des durées de réionisations plus grandes du fait de leurs étendue spatiale plus importante.
+
+
+La méthode proposée ici se base sur la carte de redshift de réionisation.
+Cette carte utilise la grille, et donc une représentation Eulérienne, pour stocker l'information.% des instant de réionisation.
+La problème peut être abordé sous un autre angle en utilisant une carte de réionisation Lagrangienne, se basant sur les particules de matière noire et permettant d'obtenir une information complémentaire a la carte actuelle.
+Ce type de carte permettrait d'obtenir l'information de reionisation, instantanément après la recherche de halos, facilitant grandement l'analyse de la simulation.
+
 
