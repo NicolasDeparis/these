@@ -1,10 +1,11 @@
-\chapter{Les principaux solveurs physique}
+\chapter{Les principaux moteurs physiques}
 \label{sec:solvers}
+
 %Nous allons voir dans cette partie que plus une physique représente une part importante du contenu de l'Univers plus elle est simple et rapide a simuler.
 
 Lors d'une simulation la grande majorité des ressources de calculs sont utilisées pour résoudre la physique.
 Comme il a été abordée dans la section \ref{cosmoparam}, l'Univers est constitué de différents fluides.
-Chacun étant associé à un solveur particulier, nous nous intéresserons dans ce chapitre à trois solveurs distincts:
+Chacun étant associé à un moteur physique particulier, nous nous intéresserons dans ce chapitre à trois moteurs distincts:
 \begin{itemize}
 \item gravitation,
 \item hydrodynamique,
@@ -15,14 +16,15 @@ Chacun étant associé à un solveur particulier, nous nous intéresserons dans 
 
 %Plus une physique est 
 
-Un solveur numérique consiste à estimer l'évolution de l'état d'un système, soumis a un certain nombre de règles, connaissant son état à un instant donné.
-Les trois solveur que nous allons aborder ont pour objectif de suivre des système dont l'évolution est régie par un système d'équations différentielles.
-Il va être nécessaire de discétiser ces systèmes avant de pouvoir les traiter numériquement.
-L'objectif de cette partie est de présenter les différentes techniques et implémentations des solveurs physiques de EMMA.
+Un moteur numérique consiste à estimer l'évolution de l'état d'un système, soumis a un certain nombre de règles, connaissant son état à un instant donné.
+Les trois moteurs que nous allons aborder ont pour objectif de suivre des système dont l'évolution est régie par un système d'équations différentielles.
+Il va être nécessaire de discrétiser ces systèmes avant de pouvoir les traiter numériquement.
+L'objectif de cette partie est de présenter les différentes techniques et implémentations des moteurs physiques de EMMA.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Gravitation et matière noire}
 \label{sec:solverDM}
+
 La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien à la représentation Lagrangienne, et donc a une simulation sous forme de particule.
 Pour la simuler, on utilisera le principe des code N-corps., c'est à dire qu'on utilisera un champs de particules massive interagissante uniquement par gravitation.
 Il existe différentes techniques pour suivre l'évolution d'un tel système, toutes sont basées sur le même principe.
@@ -30,6 +32,7 @@ Les particules sont placée suivant une certaine condition initiale et on cherch
 
 \subsection{Génération des conditions initiales}
 \label{sec:IC}
+
 Nous avons vu (cf \ref{sec:CMB}) que le \ac{CMB} nous donne de l'information sur l'état de la distribution de matière dans l'univers très tôt dans son histoire.
 Il est possible de déterminer le spectre de puissance des fluctuations de densité de l'univers primitif à partir du \ac{CMB}.
 Le principe de la génération des condition initiales est d'utiliser ce spectre de puissance pour générer des surdensité représentant statistiquement ces fluctuations.
@@ -75,7 +78,7 @@ Cette perte d'information sur les hautes fréquences peux être problématique d
 %approximation de zeldovich
 %perte de linéarité a un certain moment -> nécessité des simulation numériques
 
-\subsection{Solveur de gravité}
+\subsection{Moteur de gravité}
 \label{sec:gravity}
 
 %Je vais plus détailler le solveur de gravité que les autres puisque c'est celui sur lequel j'ai le plus travaillé.
@@ -109,7 +112,7 @@ Elle consiste, pour chaque particule, à sommer les contributions gravitationnel
 Ce type de code dispose d'une très bonne précision mais la quantité de calculs évolue en ordre $O(N^2)$, ce qui fait que ce type de code est très coûteux.
 
 %Une évolution de cette méthode est la méthode :
-\paragraph{Particule-tree : } évolution de la méthode PP, elle consiste à regrouper les particules les plus lointaine de la particule courante en amas aillant une interaction gravitationnelle commune \citep{1986Natur.324..446B}.
+\paragraph{Tree code: } évolution de la méthode PP, elle consiste à regrouper les particules les plus lointaine de la particule courante en amas aillant une interaction gravitationnelle commune \citep{1986Natur.324..446B}.
 % (Barnes & Hut 1986) 
 Cette approximation permet de limiter considérablement le nombre de calcul, ordre $O(n log n)$, pour les interactions lointaine qui sont de toute façons faibles 
 
@@ -140,14 +143,13 @@ Dans le cas où l’étendue de la particule intersecte des cellules de différe
 %Il existe des méthodes d'ordre supérieur avec des kernel plus complexe que le top-hat du \ac{CIC} comme par exemple des kernel en triangle ou en gaussienne.
 %http://techfinder.stanford.edu/technology_detail.php?ID=30866
 
-\begin{figure}[bth]
+\begin{figure}
 		\centering
         \includegraphics[width=.5\linewidth]{img/02/CIC.jpg} 
         \caption[CIC]{Représentation en 2D du Cloud In Cell. 
         La masse d'une particule est répartie dans le cellules environnantes en lui associant une étendue spatiale.
         %http://homepage.univie.ac.at/franz.vesely/cp_tut/nol2h/new/c6sm_s4lr.html
-}
- 		\label{fig:CIC}
+ 		\label{fig:CIC}}
 \end{figure}
 
 \paragraph{}
@@ -196,12 +198,12 @@ S_{(\vec{x})} \overset{FFT}{\longrightarrow}  S_{(\vec{k})} \times \frac{1}{k^2}
 
 De par la nature des transformées de Fourier, le champ de densité doit être périodique pour que l'implémentation de cette technique ne se révèle pas trop complexe. 
 Ce qui n'est pas un problème en simulation cosmologique, où les conditions de bords sont toujours périodiques mais est plus problématique lors de la simulation de structures isolées, telles les galaxies ou les amas de galaxies. 
-De plus, les FFT nécessitent un échantillonnage régulier, ce qui implique que cette méthode est incompatible avec les méthodes \ac{AMR}. 
+De plus, les \ac{FFT} nécessitent un échantillonnage régulier, ce qui implique que cette méthode est incompatible avec les méthodes \ac{AMR}. 
 %Et dernièrement, le passage dans l'espace des fréquences nécessite des conditions de types plans parallèles lors parallélisation, conditions incompatible avec la gestion de grille utilisé par les code AMR dont EMMA} fait partie. \\
 
 Le second type de méthodes est dit itératif. 
 Il consiste à faire converger le potentiel à partir d'une condition initiale arbitraire. 
-Ces méthodes sont plus lente que la méthode par FFT mais permet d'utiliser tout type de conditions de bords, d'être facilement parallélisable et d'être compatible avec les méthodes basées sur des grilles adaptatives.
+Ces méthodes sont plus lente que la méthode par \ac{FFT} mais permet d'utiliser tout type de conditions de bords, d'être facilement parallélisable et d'être compatible avec les méthodes basées sur des grilles adaptatives.
 %Par la suite, c'est donc une méthode itérative et plus précisément une méthode \emph{Multigrille} qui à été développée.
 %Le potentiel est alors dérivé pour obtenir la force ressentie dans chaque cellule. 
 %Il est ensuite aisé de calculer l'accélération subie par les particules de chaque cellule, et par intégration temporelle, leurs nouvelles positions et vitesses.
@@ -404,8 +406,8 @@ L_{min} = 1 + ceil \left(\frac{log_2(N_{cpu})}{3}  \right)
 %solveur hydro
 %partie la plus intensive en calcul
 
-Le solveur hydrodynamique est certainement la partie du code la plus complexe et c'est aussi celle sur laquelle j'ai le moins travaillé.
-Je vais tout de même en exposer les grandes lignes, mais cette partie sera moins étoffée que celles des autres solveurs numériques.
+Le moteur hydrodynamique est certainement la partie du code la plus complexe et c'est aussi celle sur laquelle j'ai le moins travaillé.
+Je vais tout de même en exposer les grandes lignes, mais cette partie sera moins étoffée que celles des autres moteurs physiques.
 
 Comme nous l'avons vu plus tôt (cf \ref{sec:nucleosynthese_primordiale}), l'Univers est constitué d'une grande quantité d'hydrogène et d'hélium sous forme gazeuse.
 Dans le cas de l'étude de l'\ac{EoR} la physique du gaz est centrale, car l'objectif est précisément de déterminer les propriétés physicochimiques de ce gaz, et leurs impacts sur la formation des galaxies.
@@ -526,7 +528,7 @@ où $U$ est le vecteur des quantité conservées, $F$ la fonction de flux, et $S
 %\end{cases}
 \subsection{Le problème de Riemann et volumes finis}
 
-L'idée de base du solveur hydrodynamique est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes (Piecewise constant approximation).
+L'idée de base du moteur hydrodynamique est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes (Piecewise constant approximation).
 L'objectif est ensuite de résoudre localement le système d'équations d'Euler à chaque interfaces de cellule pour obtenir l'évolution globale du système.
 Chaque interfaces devient donc un problème de Riemann.
 Considérant un système, régi par des équations de conservations, aillant comme état initial deux milieux homogènes de densité constante, séparé par une continuité (cf figure \ref{fig:riemann}), qu'elle sera son évolution?
@@ -677,8 +679,9 @@ avec $c_s = \sqrt{\gamma P/\rho}$ dans le cas d'un gaz parfais.
 \section{Radiation et énergie ionisante}
 \label{sec:rad_solver}
 
+
 L'objectif de cette section est de présenter les bases de la physique radiative, du transfert du rayonnement (RT) à son interaction avec les baryons.
-Ce solveur se déroule en deux temps.
+Ce moteur se déroule en deux temps.
 Premièrement, il faut calculer la propagation du rayonnement, on appelles cette étape \textit{le transport} des photons.
 Deuxièmement, il faut le couplage entre le rayonnement et le gaz, c'est a dire calculer l'impact \textit{chimie} du gaz.
 Nous nous intéresserons ici uniquement au transfert d'énergie ionisante.
@@ -708,8 +711,8 @@ Chaque source lance un certain nombre de groupe de photon, qui vont se propager 
 Plus les sources sont nombreuses, plus le nombre de groupe de photons à suivre devient important, et plus le cout numérique l'est également.
 
 \item La seconde, celle utilisée dans EMMA, repose sur le principe de considérer la lumière comme un fluide. \citep{gnedin_multi-dimensional_2001, aubert_radiative_2008}.
-Ces méthodes dites méthodes aux moments utiliseront donc les même concepts que le solveur hydrodynamique, mais avec un système initial d'équations différentes. 
-EMMA utilise une approximation du moment au premier ordre, son solveur repose sur l'\textit{approximation M1} \citep{levermore_relating_1984}.
+Ces méthodes dites méthodes aux moments utiliseront donc les même concepts que le moteur hydrodynamique, mais avec un système initial d'équations différentes. 
+EMMA utilise une approximation du moment au premier ordre, son moteur repose sur l'\textit{approximation M1} \citep{levermore_relating_1984}.
 Son principal avantage est que le coût numérique est indépendant du nombre de sources.
 \end{itemize}
 
@@ -809,7 +812,7 @@ En pratique je n'ai travaillé qu'avec un seul groupe de photons.
 \subsection{La chimie}
 \label{sec:chimie}
 
-La chimie fait le lien entre le solveur radiatif et le solveur hydrodynamique.
+La chimie fait le lien entre le moteur radiatif et le moteur hydrodynamique.
 C'est à ce moment qu'est appliquée l'énergie apportée par la radiation au gaz et que le gaz va être chauffé par la radiation.
 A l'inverse, et contrairement au transport , la chimie est non conservative, et c'est a se moment que la gestion du refroidissement du gaz à lieu.
 En effet, une partie des photon ionisant vont être intercepté par le gaz et réémis dans une autre partie du spectre.
@@ -841,10 +844,28 @@ En pratique, a chaque pas de temps radiatif, on effectuera un sous-cyclage sur l
 Après chaque pas de temps chimique, la variation d’énergie est calculée. 
 Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'étape courante est recalculée. (cf \cite{rosdahl_ramsesrt_2013}) 
 
-Étant donné que le processus chimique sont uniquement local (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du solveur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
+Étant donné que le processus chimique sont uniquement local (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
 
 \subsection{Transport sur grille de base}
 \label{sec:crta}
-%TODO 
-Le transport sur grille de base ou \ac{CRTA}
 
+Le transport sur grille de base ou \ac{CRTA} est une technique visant à restreindre la résolution du champ de radiation dans le but d'en accélérer le calcul.
+Dans le cas d'un couplage total entre les différents moteurs physiques, tous les moteur évoluent au rythme le plus contraignant.
+%il faut définir le plus petit pas de temps et faire évoluer 
+Dans notre cas, la radiation est plusieurs ordres de grandeurs plus contraignante que l'hydrodynamique ou la gravitation.
+
+Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées.
+La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant l'équivalent d'un "fond UV" local.
+
+
+Actuellement, la \ac{CRTA} n'est possible que sur le niveau de base.
+Un amélioration possible serait de pouvoir définir le niveaux de projection de la radiation pour pouvoir, en fonction des besoins, faire varier le poids de la radiation dans le calcul.
+
+
+\begin{figure}
+\includegraphics[width=.95\linewidth]{img/02/revz_crad_std.png}
+\includegraphics[width=.95\linewidth]{img/02/revz_crad.png}
+\caption[CRTA]{Gestion de l'évolution de la radiation dans le cas de la \ac{CRTA}.
+Le transport des photons n'est réalisé que sur la grille de niveau de base.
+\label{fig:CRTA}}
+\end{figure}

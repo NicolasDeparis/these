@@ -54,14 +54,23 @@ Si la grille est de résolution variable, on parlera de grille \ac{AMR}.
 Un même code peux utiliser conjointement plusieurs des concepts qui viennent d'être introduits.
 Dans le cas présent, EMMA utilise une représentation Lagrangienne pour simuler la physique non collisionnelle de la matière noire et des étoiles, et une représentation Eulérienne pour simuler le gaz et la radiation.
 
+\section{TODO}
+
+avantage inconvénient AMR vs SPH
+
+%TODO
+Comparaison a RAMSES
+
+
 \section{Gestion de la grille}
 \label{sec_gestion_grille}
 %(nécessaire d'être positionné ici car la structure en arbre conditionne plusieur choix par la suite)
 
 Un des concepts central de EMMA est sa grille adaptative.
-Tout les solveurs sont basés dessus et sa structure conditionne un certain nombre de choix par la suite.
+Tout les moteurs physiques sont basés dessus et sa structure conditionne un certain nombre de choix par la suite.
 C'est pourquoi nous allons la développer ici, avant de détailler la gestion de la physique. 
 
+\subsection{Grille régulière et AMR}
 Avant d'aborder le concept de grille adaptative faisons un léger détour par l'exemple d'une grille fixe et régulière.
 Dans le cas des simulations sur grille fixe, les données sont réparties en mémoire de façon ordonnée.
 Dans un espace en 3D, on accédera à une cellule contenant le point de coordonnées normées $(x,y,z)$ sur une grille de $N_x*N_y*N_z$ cellules, à l'aide de son identifiant Id dans le tableau en mémoire.
@@ -80,7 +89,6 @@ ou $\lfloor a \rfloor$ représente la partie entière de $a$.
 
 Nous voyons ici que l'organisation en mémoire et la recherche de voisin sont relativement simple à gérer.
 Les vecteurs sont alloués de manière statique et la recherche de voisin est basée sur un jeu d'indice relativement simple.
-%TODO devellope
 Les choses sont plus complexes dans le cas d'une grille adaptative.
 Étant amenée à évoluer, il faut introduire des mécanismes permettant de construire ou détruire certaines parties de la grille de façons dynamique.
 Ces mécanismes vont totalement changer l'organisation de la grille.
@@ -93,15 +101,14 @@ L'avantage de ce type de grille est d'économiser des ressources de calcul par r
         \includegraphics[width=.95\linewidth]{img/02/AMR.pdf} 
         \caption[Grille générée par EMMA]{Exemple de grille \ac{AMR} générée par EMMA. 
         La  résolution de la grille est augmentée arbitrairement dans les régions d'intérêts.
-}
- 		\label{fig:AMR}
+ 		\label{fig:AMR}}
 \end{figure}
 
-\subsubsection{Octree}
+\subsection{Octree}
 
 Il existe deux grands groupe de maille adaptative.
 Le premier groupe utilise une séries de grilles fixes imbriquées. %TODO ref
-Chaque région raffinée sera une grille fixe de résolution plus importante spatiallement liée a une grille de base.
+Chaque région raffinée sera une grille fixe de résolution plus importante spatialement liée a une grille de base.
 Chaque nouvelle grille aura une résolution double par rapport a la précédente.
 Il est possible d'ajouter autant de niveaux que voulu.
 
@@ -187,28 +194,25 @@ struct CELL{
 
 %TODO introduire liste chainée de particule
 
+Nous verrons dans la section \ref{sec:solverDM} qu'une partie de la physique est résolue sous forme de particule.
+Il est donc nécessaire d'ajouter un champs de particule à la grille \ac{AMR}
+Comme les OCT, les particules utilisent une représentation sous forme de liste chaînée, et chaque cellule dispose de sa propre liste chaînée de particules.
+Lors de raffinement cette liste devra être découpée et distribuée entre les nouvelles cellules crées.
+Une particule est essentiellement caractérisée par sa position, sa masse et sa vitesse.
+On ajoutera a ceci son statut, qui sera utilisé pour différentier les particules de matière noire des particules stellaires. 
+Le listing \ref{lst:part} présente la structure minimale d'une particule dans EMMA.
+
+
 \begin{lstlisting}[float=bth,language=C,frame=tb,caption={La structure PARTICULE de EMMA},label=lst:part]
-struct CELL{
-  struct PART
-{
-  REAL x;
-  REAL y;
-  REAL z;
-
-  REAL vx;
-  REAL vy;
-  REAL vz;
-
-  REAL mass;
-
-  struct PARTICULE *next;
-  struct PARTICULE *prev;
-
-  int idx;
-
-  int  isStar;
-  REAL age;
-
+struct PART{
+  REAL3 x;  // vecteur position
+  REAL3 v;  // vecteur vitesse
+  struct PARTICULE *next;  // particule suivante
+  struct PARTICULE *prev;  // particule precedente
+  int idx;  // identifiant unique
+  int  isStar;  // matiere noire ou etat de l'etoile
+  REAL t;       // instant de creation
+  REAL mass;    // masse
 };
 \end{lstlisting}
 
@@ -216,20 +220,24 @@ struct CELL{
 
 %TODO introduire la structure part
 
-\subsubsection{Gestion du raffinement}
+\subsection{Gestion du raffinement}
 \label{sec:raffinement}
 %différentes condition de raffinement.\\
 %sur la matière noire\\
 %semi Lagrangienne\\
 %sur le gradient d'ionization\\
 %sur le gradient de densité (shock)\\
-
+\subsubsection{Condition de raffinement}
 Il est possible de définir arbitrairement une condition de raffinement en fonction de la physique que l'on cherche a étudier.
 Par exemple, dans des tests unitaires de type sphère de Stömgren (cf \ref{sec:stromgren}) ou explosion de Sedov (cf \ref{sec:sedov}), on marquera les cellules qui sont soumises à un gradient d'ionisation ou de densité supérieur à un certain seuil pour suivre l'évolution du front.
 Dans le cas de simulations cosmologique, on utilisera généralement une condition en densité dite semi-Lagrangienne.
 C'est a dire qu'une cellule sera marquée comme "à raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse de matière noire (ou de gaz) moyenne d'une cellule de ce niveau.
+%le deraffinement
+On remarquera que la condition de raffinement ne prends pas en compte le fait qu'une cellule soit déjà raffinée ou non.
+Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "à raffinée" elle sera donc dé-raffinée.
 
-En pratique, le raffinement se fera en trois temps:
+\subsubsection{En pratique}
+Le raffinement se fera en trois temps:
 
 \begin{itemize}
 \item Dans un premier temps le code va passer en revue toutes les cellules d'un niveau, et les marquer comme "à raffiner" si une première condition physique est respectée.
@@ -245,9 +253,6 @@ De plus il ne sera autorisé à n'avoir qu'un seul niveau de décallage au maxim
 %En pratique le raffinement d'une cellule se fera en lui associant un OCT.
 %*child pointera alors vers le dernier OCT libre de la liste chaînée.
 
-%le deraffinement
-On remarquera que la condition de raffinement ne prends pas en compte le fait qu'une cellule soit déjà raffinée ou non.
-Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "à raffinée" elle sera donc dé-raffinée.
 
 \subsubsection{Opérateurs de changement de grilles} 
 \label{Opérateurs de changement de grilles}
@@ -263,7 +268,7 @@ Par exemple, sur une grille à deux dimensions, pour diviser la résolution par 
 \item La \emph{prolongation} consiste à augmenter la résolution d'une grille, la prolongation la plus directe consiste à injecter les valeurs de l'ancienne grille dans un certain nombre de cellules de la nouvelle grille. (fig \ref{Opérateurs de changement de grille})
 \end{itemize}
 
-\begin{figure}[htbp]
+\begin{figure}
 \begin{center}
 \subfloat[Restriction]{\includegraphics[width=.45\linewidth]{img/02/Restriction.png}}
 \subfloat[Prolongation]{\includegraphics[width=.45\linewidth]{img/02/Prolongation.png}}\\
@@ -284,6 +289,20 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 %La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. 
 %Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
 
+\subsection{Gestion du pas de temps}
+
+Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme.
+Du fait de la condition de Courant, un niveau raffinée aura un pas de temps plus court que le niveau de base.
+Comme dans notre cas, une cellule est raffinée en divisant par 2 chacune de ces dimensions, le pas de temps sera lui aussi divisé par 2.
+Il faudra donc réaliser 2 évolutions d'un pas de temps raffiné pour être synchronisé avec un niveau inférieur, et ce de manière récursive.
+L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
+
+\begin{figure}
+\includegraphics[width=.95\linewidth]{img/02/tstep.png}
+\caption[Pas de temps AMR]{Gestion du pas de temps en fonction des niveaux raffinées.
+Un niveau évolue par pas de temps deux fois plus court que celui de son niveau supérieur.
+\label{fig:timestep}}
+\end{figure}
 
 
 \subsection{Gestion de l'expansion}
@@ -294,7 +313,7 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 Nous avons vu dans l'introduction à la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
 Nous allons voir dans cette partie comme cette composante est traitée numériquement.
 Bien que nous ne sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
-Le solveur gérant l'énergie noire n'est pas a proprement parler un solveur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
+Le moteur gérant l'énergie noire n'est pas a proprement parler un moteur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
 Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
 
 L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code (cf Eq. \ref{eq:scale_t}).
@@ -320,10 +339,9 @@ r'=\tilde{r}r*
 \end{equation}
 ou $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
 
-La généralisation de ce principe a d'autre unités que la longueur est appeler système d'unités supercomobiles.
-\citep{martel_convenient_1998}
+La généralisation de ce principe a d'autre unités que la longueur est appeler système d'unités supercomobiles \citep{martel_convenient_1998}.
 
-\begin{table}[htbp]
+\begin{table}
 \begin{center}
 \begin{tabular}{r l} \hline 
 Longueur: & $\tilde{r}=\frac{r}{ar_*}$ \\ \hline 
@@ -340,7 +358,7 @@ Flux: & $\tilde{F}=a^4 r_*^2 t_* F$\\ \hline
 \caption[Système d'unité supercomobile]{Passage du système d'unités physique vers le système d'unité supercomobile} 
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}
 \begin{center}
 \begin{tabular}{r l} \hline 
 Longueur  & $r_*=L$\\ \hline 
@@ -355,7 +373,7 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 \caption[Facteurs de normalisation]{Facteurs de normalisation des différents grandeurs physique} 
 \end{table}
 
-\subsection{Gestion du pas de temps}
+\subsubsection{Gestion du pas de temps}
 L'évolution de la grille sera limité d'un pas de temps à l'autre.
 La condition condition pour effectuer le calcul du pas de temps sera:
 \begin{equation}
