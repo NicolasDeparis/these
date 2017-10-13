@@ -852,11 +852,13 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 Le transport sur grille de base ou \ac{CRTA} est une technique visant à restreindre la résolution du champ de radiation dans le but d'en accélérer le calcul.
 Dans le cas d'un couplage total entre les différents moteurs physiques, tous les moteur évoluent au rythme le plus contraignant.
 %il faut définir le plus petit pas de temps et faire évoluer 
+Ce qui fait que, pour chaque pas de temps radiatif, il faut réaliser un pas de temps avec les autres moteurs physique (cf panneau supérieur de la figure \ref{fig:CRTA}).
 Dans notre cas, la radiation est plusieurs ordres de grandeurs plus contraignante que l'hydrodynamique ou la gravitation.
+Donc le nombre de pas de temps hydrodynamique et gravitationnel nécessaire sont largement surestimés, et le coût numérique explose.
 
-Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées.
+Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées (cf panneau inférieur de la figure \ref{fig:CRTA}).
+Ce qui a pour effet d'augmenter artificiellement la taille du pas de temps radiatif, du fait de la condition de Courant.
 La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant l'équivalent d'un "fond UV" local.
-
 
 Actuellement, la \ac{CRTA} n'est possible que sur le niveau de base.
 Un amélioration possible serait de pouvoir définir le niveaux de projection de la radiation pour pouvoir, en fonction des besoins, faire varier le poids de la radiation dans le calcul.
@@ -866,6 +868,8 @@ Un amélioration possible serait de pouvoir définir le niveaux de projection de
 \includegraphics[width=.95\linewidth]{img/02/revz_crad_std.png}
 \includegraphics[width=.95\linewidth]{img/02/revz_crad.png}
 \caption[CRTA]{Gestion de l'évolution de la radiation dans le cas de la \ac{CRTA}.
+En noir les moteurs dynamiques, en rouge le transport des photons, en bleu la chimie.
 Le transport des photons n'est réalisé que sur la grille de niveau de base.
+Le nombre d'appels aux moteurs hydrodynamique et gravitationnel est significativement réduit. 
 \label{fig:CRTA}}
 \end{figure}
