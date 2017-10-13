@@ -14,7 +14,7 @@ Sans l'introduction d'énergie dans le gaz par les supernovæ, le gaz s'effondre
 Cela mène à un taux de formation stellaire trop important par rapport à ce qui est observé.
 Ce problème est connus sous le nom de "overcooling problem"
 L'objectif est de casser les structures pour diminuer les surdensités et limiter la formation stellaire.
-
+%TODO ref
 
 %\subsection{Le modèle théorique}
 %Il existe principalement deux événement pouvant mener a un explosion de supernovæ : 
@@ -28,6 +28,41 @@ L'objectif est de casser les structures pour diminuer les surdensités et limite
 %Les étoiles de plus de 8mo exploses en SN en injectant 1e51 erg dans le milieu\\
 %Cette injection limite fortement la formation stellaire dans le milieu.\\
 %modèle sous grille\\
+
+
+%\subsection{Mort}
+%\label{sec:snmort}
+
+Arrivé à un certain taux de consommation d'hydrogène, les réactions protons-protons ne sont plus suffisantes et l'étoile s'effondre sur elle même.
+%A la fin de sa vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
+L'équilibre entre la gravité et la pression est rompu, ce qui mène à une augmentation de la pression interne.
+% Géante rouge ?
+Cette augmentation de la pression amorce une nouvelle série de fusions nucléaires, qui va consommer des éléments plus lourds que l’hydrogène, tel le carbone, l'azote ou l'oxygène (cycle CNO) jusqu'au fer où le processus s'arrête.
+A ce stade, les couches externes de l'étoiles se contracte rapidement, et rebondissent sur le noyau de fer.
+L'étoile explose alors en supernovae et injecte énormément d'énergie dans le milieu, de l'ordre de $10^{51}$ erg par explosion. 
+%Une fois arrivé au Fe, il devient coûteux de continuer a fusionner des éléments car Fe est le plus stable.
+
+Il existe principalement deux types de supernovæ : 
+\begin{itemize}
+\item Les types I où l'étoile n'est pas assez massive à la base pour permettre l'explosion en supernovae.
+Ce sont généralement des étoiles binaire où une des deux étoiles accrète une partie de son compagnon, ce qui mène au passage au dessus de la masse limite et provoque l'explosion.
+\item Les types II : les étoiles de plus de 8$M_\odot$ sont assez massives pour exploser en supernovæ sans avoir besoin de masse supplémentaire.
+\end{itemize}
+
+Pendant l'explosion, l'énergie libérée est suffisamment importante pour amorcer la formation d'éléments plus lourds que le fer.
+Ces éléments, ainsi que ceux formés pendant la vie de l'étoile vont être expulsés, et vont participer à l'enrichissement du milieu.
+Ce qui va changer les propriétés physico-chimiques du gaz environnant et avoir des conséquences sur la formation des prochaines générations d'étoiles.
+
+Après l'explosion de la supernova, le cœur subsiste et en fonction de sa masse, plusieurs scénario d'évolution sont possibles.
+En fonction de la masse de l'étoiles, le résidu peux devenir une naine blanche, une étoile à neutron ou un trou noir.
+Dans tout les cas, le résidu continue à interagir gravitationnellement avec son environnement.
+
+%\begin{itemize}
+%\item Naine blanche %(maintenue par le pression de dégénérescence des électrons)
+%\item Étoile a neutron %(pression de dégénérescence des neutrons)
+%\item Trou noir %(singularité)
+%\end{itemize}
+
 
 \subsection{Les différentes phases}
 Après l'explosion d'une supernovae, il en résulte une onde de choc qui va se propager dans le milieu environnant.
@@ -48,14 +83,14 @@ Les pertes par radiation deviennent importantes et l'énergie cinétique n'est p
 \subsection{Les Superbubbles}
 %A la manière de la percolation des bulles de HII, les bulles de supernovae 
 
-Dans les endroits de formation stellaire, les étoiles ne sont pas isolées, mais apparaissent ensemble au sein d'un même nuage de gaz.
+Dans les lieux de formation stellaire, les étoiles ne sont pas isolées, mais apparaissent ensemble au sein d'un même nuage de gaz.
 L'effondrement gravitationnel du nuage mène à créer une génération d’étoiles en un cours laps de temps.
-Toutes ces étoiles vont mourir dans un court délais et les différentes supernovæ vont injecter de l’énergie dans le milieu en même temps.
+Toutes ces étoiles vont mourir dans un court délai et les différentes supernovæ vont injecter de l’énergie dans le milieu en même temps.
 Les différentes ondes de chocs vont se cumuler et la résultante va mener à la création d'une bulle de gaz chaud pouvant englober les galaxies.
-On appelle ces régions des  superbubble.
+On appelle ces régions des superbubbles.
 
 \subsection{Considérations d'échelles}
-La façon de gérer les supernovae sera donc fonction de l'échelle que l'on considère.
+La façon de gérer les supernovæ sera donc fonction de l'échelle que l'on considère.
 Dans des simulations détaillées de galaxies, il sera nécessaire de résoudre la phase adiabatique des explosions d'étoiles individuelles. %TODO ref simu de galaxie zoom
 Dans les simulations cosmologiques de la réionisation qui nous intéresses ici, l’intérêt sera plus porté sur la phase snowplow des superbubbles.
 
@@ -127,26 +162,6 @@ En pratique la densité de la cellule sera modifiée:
 \rho^{0+} = \rho^{0-} + \frac{M_{SN}}{dV}
 \end{equation}
 L’enrichissement en métaux (cf section \ref{sec:snmort}) n'est pas considéré actuellement, mais fait partie des améliorations planifiées.
-
-\subsection{Calibration}
-\label{sec:sncali}
-La quantité d'énergie et de masse injectée est calibrée en utilisant les informations en sortie de Starburst99.
-Le modèle actuel ne considère pas la possibilité d'une explosion continue, avec un retour de masse ou d'énergie s'étalant dans le temps.
-L'injection est réalisée instantanément quand la quantité d’énergie théorique donnée par Starburt99 représente 50\% de l’énergie totale.
-La comparaison entre les sorties de Starburst99 et le modèle implémenté est présenté sur la figure \ref{fig:SNloss}.
-Dans ce modèle, un particule stellaire injectera $E_{SN} = 9.7\cdot 10^{11} J.kg^{-1}$ et perdra 53\% de sa masse dans le milieu environnant, $17.6$ millions d'années après sa formation.
-On notera que le temps d'explosion des supernovae est environs quatre fois plus grand que le temps de vie radiatif.
-
-De plus on introduira le rendement énergétique des supernovae $\epsilon_{SN}$, ce paramètre libre sera appliqué à $E_{SN}$ et sera utile pour calibrer l'impact de nos modèles.
-A l'instar du paramètre de fraction d'échappement intrinsèque du rayonnement (cf section \ref{sec:etoilerad}) il contient une grande partie de la physique sous grille qui n'est pas modélisée ici.
-
-\begin{figure}
-        \includegraphics[width=.95\textwidth]{img/03/energy_loss.pdf} 
-		\includegraphics[width=.95\textwidth]{img/03/mass_loss.pdf} 
-        \caption[Calibration des supernovæ]{ Quantité d'énergie et de masse injectés par les supernovae. 
-        Comparaison entre le modèle théorique de Starburst99 et le modèle d'injection instantané implémenté dans EMMA.
- 		\label{fig:SNloss}}
-\end{figure}
 
 \subsection{Test numérique - Explosion de Sedov}
 \label{sec:sedov}
@@ -252,17 +267,35 @@ Le motif de raffinement est similaire pour les trois simulations.
  	\label{fig:sedovslice}
 \end{figure}
 
-%\subsubsection{Conclusion}
-%
-%La conclusion de ses tests est que les différentes méthodes d'injection sont équivalentes, au moins dans le contexte du test de Sedov.
-%OK\\
-%mais pas en cosmo
-%le pas de temps\\
+\subsection{Calibration}
+\label{sec:sncali}
+La quantité d'énergie et de masse injectée est calibrée en utilisant les informations en sortie de Starburst99.
+Le modèle actuel ne considère pas la possibilité d'une explosion continue, avec un retour de masse ou d'énergie s'étalant dans le temps.
+L'injection est réalisée instantanément quand la quantité d’énergie théorique donnée par Starburt99 représente 50\% de l’énergie totale.
+La comparaison entre les sorties de Starburst99 et le modèle implémenté est présenté sur la figure \ref{fig:SNloss}.
+Dans ce modèle, un particule stellaire injectera $E_{SN} = 9.7\cdot 10^{11} J.kg^{-1}$ et perdra 53\% de sa masse dans le milieu environnant, $17.6$ millions d'années après sa formation.
+On notera que le temps d'explosion des supernovae est environs quatre fois plus grand que le temps de vie radiatif.
 
-\subsection{Tests en conditions de production}
+De plus on introduira le rendement énergétique des supernovae $\epsilon_{SN}$, ce paramètre libre sera appliqué à $E_{SN}$ et sera utile pour calibrer l'impact de nos modèles.
+A l'instar du paramètre de fraction d'échappement intrinsèque du rayonnement (cf section \ref{sec:etoilerad}) il contient une grande partie de la physique sous grille qui n'est pas modélisée ici.
 
-Dans le but de tester ces différentes méthodes d'injections dans un contexte cosmologique j'ai réalisé une série de simulations.
+\begin{figure}
+        \includegraphics[width=.95\textwidth]{img/03/energy_loss.pdf} 
+		\includegraphics[width=.95\textwidth]{img/03/mass_loss.pdf} 
+        \caption[Calibration des supernovæ]{ Quantité d'énergie et de masse injectés par les supernovae. 
+        Comparaison entre le modèle théorique de Starburst99 et le modèle d'injection instantané implémenté dans EMMA.
+ 		\label{fig:SNloss}}
+\end{figure}
+
+
+\clearpage
+\section{Tests du modèle en conditions de production}
+
+L'objectif de cette section est de présenter quelques tests pour valider le modèle de formation et d'évolution stellaire développé dans les sections précédentes.
+
+%Dans le but de tester ces différentes méthodes d'injections dans un contexte cosmologique j'ai réalisé une série de simulations.
 %\subsubsection{Présentation des simulations}
+\subsection{Présentation des simulations}
 \label{sec:pres_simu}
 Toutes ces simulations sont strictement identiques à l'exception de la méthode d'injection d'énergie.
 Les paramètres communs à toutes les simulations qui vont suivre sont les suivants:
@@ -276,6 +309,48 @@ $\Omega_b=0.0490$,
 $H_0=67.11$,
 $\sigma_8=0.830$. 
 Les simulations commencent à redshift $z=150$.
+
+
+\subsection{Test de formation stellaire, la SFH cosmique}
+
+Dans le but de tester cette implémentation, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} simulée en accord avec les contraintes observationnelles.
+Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
+%le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
+Une difficulté est qu'il existe une dégénérescence entre le seuil en densité et l'efficacité de formation stellaire.
+En effet, il semble à priori possible d'obtenir des résultats similaire en utilisant, soit un seuil très permissif et une efficacité très faible, ou à l'inverse en ne formant des étoiles que dans les quelques cellules les plus denses avec une efficacité élevée.
+Dans la littérature %dédiée aux simulations comparables %TODO ref
+un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé.
+J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
+La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de (8/h cMpc)$^3$ obtenue après calibration. 
+L'efficacité de formation stellaire est fixée à $1\%$.
+Avec ces paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/SFR.pdf}
+        \caption[Histoire de formation stellaire]{Histoire de formation stellaire (SFH) d'une simulation de (8/h cMpc)$^3$.
+        Il est possible d'obtenir une SFH qui respecte les observations avec un modèle relativement simple.
+}
+ 		\label{fig:test_SFH}
+\end{figure}
+
+
+\subsection{Test radiatif}
+Avec les paramètres déterminés par Starburst99 et une fraction d'échappement intrinsèque de 40\%, j'obtiens l'histoire de reionisation présenté sur la figure \ref{fig:test_xion}.
+Cette histoire est comparée aux contraintes observationnelles déterminées par \cite{fan_constraining_2006}.
+J'ai également pu vérifier à ce stade que l'introduction du rayonnement ionisant dans la simulation n'impacte pas la \ac{SFH} cosmique.
+Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des sources.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/xion.pdf} 
+        \caption[Histoire d'ionisation]{Évolution de la fraction d'ionisation (trais plein) et de la fraction de neutre (tirets) dans la simulation présentée sur la figure \ref{fig:test_SFH}.
+        Après calibration de la fraction d’échappement intrinsèque, il est possible d'obtenir une histoire d'ionisation en accord avec les observations.
+ 		\label{fig:test_xion}}
+\end{figure}
+
+
+
+\subsection{Tests en conditions de production}
+
 
 \subsection{Influence de la méthode d'injection}
 \label{sec:snmethod}
@@ -360,3 +435,13 @@ Dans le but d'explorer cet effet, nous allons nous concentrer dans la suite sur 
         }
  		\label{fig:xion_sneff}
 \end{figure}
+
+
+
+
+%\subsubsection{Conclusion}
+%
+%La conclusion de ses tests est que les différentes méthodes d'injection sont équivalentes, au moins dans le contexte du test de Sedov.
+%OK\\
+%mais pas en cosmo
+%le pas de temps\\

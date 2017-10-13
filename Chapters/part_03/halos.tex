@@ -1,5 +1,8 @@
-\chapter{Les galaxies}
+\chapter{Influence du feedback stellaire sur les propriétés des galaxies dans les simulations de la Réionisation}
 \label{sec:galaxies}
+
+
+\section{La détection des halos}
 
 Les étoiles se forment rarement de manière isolée mais généralement en groupe, dans des régions bien définies. % que l'on nomme galaxies.
 Ces zones ont une densité de gaz particulièrement élevée qui leurs permettent d'amorcer la formation stellaire. %et disposent donc de suffisamment de matériaux pour amorcer
@@ -15,7 +18,6 @@ Nous nous intéresserons à des propriétés telle que la fraction de masse bary
 %Quand on cherche a déterminer es propriétés des galaxies, un paramètre important est leur masse.
 %Comme le gaz suit la dynamique des baryons, les galaxies sont situées dans les surdensités de matière noire.
 
-\section{La détection des halos}
 
 Avant de pouvoir analyser la composition des halos, la première étape consiste à les détecter.
 Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
@@ -98,7 +100,7 @@ La figure \ref{fig:R200_fine} présente la comparaisons entre la détection des 
 
 \subsection{Association des petits halos}
 
-Pour les petits halos, peu résolus, la taille des cellules peu être grandes par rapport au $R_{200}$.
+Pour les petits halos, peu résolus, la taille des cellules peut être grandes par rapport au $R_{200}$.
 Pour minimiser l'erreur commise, il est nécessaire d’estimer l'intersection entre le cube de la cellule et la sphère du halo.
 J'ai résolu ce problème géométrique en projetant la grille \ac{AMR} sur une grille régulière de résolution arbitraire.
 Cette méthode permettra d'associer des sous parties de cellules aux halos en approximant l'intersection avec la cellule et améliorera la precision globale de l'association (cf figure \ref{fig:intersec}).
@@ -174,7 +176,7 @@ Dans un cas l'objectif est de déterminer la \ac{SFR} moyenne d'un halo en fonct
 Le lien entre les deux, n'est autre que la \ac{HMF} présentée à la section \ref{sec:hmf}.
 Les résultats obtenus sont présentés sur la figure \ref{fig:sfr_halo}.
 On observe que pour le feedback cinétique, la \ac{SFR} moyenne est réduite pour les halos les plus lourd, ce qui n'est pas le cas pour le feedback thermique où la \ac{SFR} a tendance à être réduite pour les petites masses de halos.
-Sur les courbes de \ac{SFR} totale, on observe que les halos de masses $M\approx10^{10}M_\odot$ contribues le plus a la formation stellaire dans ces simulations.
+Sur les courbes de \ac{SFR} totale, on observe que les halos de masses $M\approx10^{10}M_\odot$ contribuent le plus a la formation stellaire dans ces simulations.
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_avg.pdf}
@@ -205,6 +207,8 @@ Comme nous avons vu (section \ref{sec:hmf}) que la \ac{HMF} n'est pas impactée 
 Les baryons sont expulsés hors des halos par le feedback.
 Cette décroissance peux être liée à celle observée sur la figure \ref{fig:sfr_halo}.
 La \ac{SFR} est réduite car les baryons sont expulsés par le feedback.
+
+%TODO parler de la résolution en masse pour les petites masses
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/baryon_frac.pdf}
@@ -312,15 +316,16 @@ Comme dans ces simulations la lumière est décrite comme une fluide (cf section
 La figure \ref{fig:R200rad} présente les résultats obtenus.
 On observe que seuls les halos avec des étoiles jeunes ont un flux de radiation sortant, que tous les halos de $M>2 \cdot 10^9 M_\odot$ ont un flux radiatif sortant et que le flux est d'autant plus important que ceux ci sont massifs.
 Il n'y a pas de différences notables, dans la façon dont la radiation s'échappe des halos, entre les différents types de feedback, 
-Cette observation est en accord avec les observations réalisées en section \ref{sec:pbfesc}, l'évolution de la fraction ionisée ne dépend pas du feedback car la quantité de photon s'échappant des halos ne dépend pas de la méthode de feedback de supernovae.
+Cette observation est en accord avec les mesures réalisées en section \ref{sec:pbfesc}, l'évolution de la fraction ionisée ne dépend pas du feedback car la quantité de photon s'échappant des halos ne dépend pas de la méthode de feedback de supernovae.
 
-Les tirets représentes la masse d'un halo ayant un $R_200$ de taille équivalente à la résolution radiative.
+Les tirets représentes la masse d'un halo ayant un $R_{200}$ de taille équivalente à la résolution radiative.
 En effet le transport des photons étant réalisé sur la grille de base (voir section \ref{sec:crta}) la résolution est plus faible que pour l'hydrodynamique.
 % car le raffinement n'agit pas sur la radiation.
 Il a déjà été observé qu'une partie des halos de moins de quelques $10^9 M_\odot$ voyaient leurs \ac{SFR} impacté par la radiation. %TODO ref
 Malheureusement, cette limite en résolution correspond aussi à la taille limite des halos présentant un flux net entrant.
 Des simulations à plus hautes résolution sont nécessaires pour déterminer si la limite en flux entrant n'est pas due à un effet de résolution.
-Le fait que tous les halos ayant des étoiles jeunes, même en dessous de cette limite, aient un flux sortant est en faveur d'une résolution suffisante.% car si ce n'était pas le cas .
+Le fait que tous les halos ayant des étoiles jeunes, même en dessous de cette limite, aient un flux sortant (points bleus foncés) est en faveur d'une résolution suffisante. 
+De plus, si ce n'était pas le cas, il est probable que l'on ne mesurerai pas une telle continuité dans la tendance.
 
 \begin{figure}
 	\centering
