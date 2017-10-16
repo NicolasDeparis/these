@@ -292,12 +292,13 @@ A l'instar du paramètre de fraction d'échappement intrinsèque du rayonnement 
 \section{Tests du modèle en conditions de production}
 
 L'objectif de cette section est de présenter quelques tests pour valider le modèle de formation et d'évolution stellaire développé dans les sections précédentes.
+Dans un premier temps, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} et un redshift de réionisation simulé en accord avec les contraintes observationnelles.
 
 %Dans le but de tester ces différentes méthodes d'injections dans un contexte cosmologique j'ai réalisé une série de simulations.
 %\subsubsection{Présentation des simulations}
 \subsection{Présentation des simulations}
 \label{sec:pres_simu}
-Toutes ces simulations sont strictement identiques à l'exception de la méthode d'injection d'énergie.
+
 Les paramètres communs à toutes les simulations qui vont suivre sont les suivants:
 Elles représentes un volume de $8h^{-1}$ cMpc cube échantillonnées par $256^3$ éléments de résolutions. % particules de matière noire.
 Ce qui mène à une résolution en masse de $3.4 \cdot 10^6 M_\odot$ et une résolution spatiale de $46$ckpc sur le niveau de base.
@@ -313,8 +314,6 @@ Les simulations commencent à redshift $z=150$.
 
 \subsection{Test de formation stellaire, la SFH cosmique}
 
-Dans le but de tester cette implémentation, j'ai réalisé une série de simulations, avec pour objectif d'obtenir une \ac{SFH} simulée en accord avec les contraintes observationnelles.
-Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
 %le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
 Une difficulté est qu'il existe une dégénérescence entre le seuil en densité et l'efficacité de formation stellaire.
 En effet, il semble à priori possible d'obtenir des résultats similaire en utilisant, soit un seuil très permissif et une efficacité très faible, ou à l'inverse en ne formant des étoiles que dans les quelques cellules les plus denses avec une efficacité élevée.
@@ -322,6 +321,7 @@ Dans la littérature %dédiée aux simulations comparables %TODO ref
 un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé.
 J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
 La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de (8/h cMpc)$^3$ obtenue après calibration. 
+Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
 L'efficacité de formation stellaire est fixée à $1\%$.
 Avec ces paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
 
@@ -356,6 +356,7 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des so
 \label{sec:snmethod}
 
 Le premier test consiste à essayer les différents modèle de feedback avec la même quantité d'énergie injectée, et à mesurer leur impact sur la \ac{SFH} cosmique.
+Toutes les simulations qui vont suivre sont strictement identiques à l'exception de la méthode d'injection d'énergie.
 La figure \ref{fig:sfr_methode} présente les résultats obtenus avec quatre simulations.
 Parmi ces simulations, il y en a :
 \begin{itemize}

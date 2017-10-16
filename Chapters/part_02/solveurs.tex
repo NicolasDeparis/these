@@ -21,18 +21,11 @@ Les trois moteurs que nous allons aborder ont pour objectif de suivre des systè
 Il va être nécessaire de discrétiser ces systèmes avant de pouvoir les traiter numériquement.
 L'objectif de cette partie est de présenter les différentes techniques et implémentations des moteurs physiques de EMMA.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Gravitation et matière noire}
-\label{sec:solverDM}
 
-La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien à la représentation Lagrangienne, et donc a une simulation sous forme de particule.
-Pour la simuler, on utilisera le principe des code N-corps., c'est à dire qu'on utilisera un champs de particules massive interagissante uniquement par gravitation.
-Il existe différentes techniques pour suivre l'évolution d'un tel système, toutes sont basées sur le même principe.
-Les particules sont placée suivant une certaine condition initiale et on cherche à connaitre la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement.
-
-\subsection{Génération des conditions initiales}
+\section{Génération des conditions initiales}
 \label{sec:IC}
 
+La première étape consiste à déterminer l'état initial du système que l'on cherche à résoudre.
 Nous avons vu (cf \ref{sec:CMB}) que le \ac{CMB} nous donne de l'information sur l'état de la distribution de matière dans l'univers très tôt dans son histoire.
 Il est possible de déterminer le spectre de puissance des fluctuations de densité de l'univers primitif à partir du \ac{CMB}.
 Le principe de la génération des condition initiales est d'utiliser ce spectre de puissance pour générer des surdensité représentant statistiquement ces fluctuations.
@@ -53,7 +46,7 @@ De l'autre coté, les petites échelles sont tronquées par la limite de résolu
 Cette perte d'information sur les hautes fréquences peux être problématique dans le cas où la résolution est adaptative.
 %Dans le cas de l'\ac{AMR} par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
 
-%En pratique j'ai principalement utilisé MUSIC et GRAPHIC %TODO ref.
+En pratique j'ai principalement utilisé MUSIC \citep{hahn_multi-scale_2011} et GRAPHIC \citep{2008ApJS..178..179P}.
 
 %méthode
 %gaussian random noise
@@ -78,6 +71,17 @@ Cette perte d'information sur les hautes fréquences peux être problématique d
 %approximation de zeldovich
 %perte de linéarité a un certain moment -> nécessité des simulation numériques
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Gravitation et matière noire}
+\label{sec:solverDM}
+
+La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien à la représentation Lagrangienne, et donc à une simulation sous forme de particules.
+Pour la simuler, on utilisera le principe des code N-corps., c'est à dire qu'on utilisera un champs de particules massives interagissantes uniquement par gravitation.
+Il existe différentes techniques pour suivre l'évolution d'un tel système, toutes sont basées sur le même principe.
+Les particules sont placées suivant une certaine condition initiale (section \ref{sec:IC}) et on cherche à connaître la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement.
+
+
 \subsection{Moteur de gravité}
 \label{sec:gravity}
 
@@ -91,7 +95,7 @@ Le but est d'obtenir la position des particules à chaque instant.
 %Pour cela, il faut leurs accélération.
 %Pour cela, il faut la force qui leur est appliquée.
 %Et dans certain cas, il faut le potentiel gravitationnel.
-Ce système d'équations est appelé le système d'équation de Vlasov-Poisson :
+Ce système d'équations est appelé le système d'équation suivant:
 
 \begin{equation}
 \begin{cases}
@@ -104,7 +108,7 @@ Ce système d'équations est appelé le système d'équation de Vlasov-Poisson :
 
 Il existe plusieurs méthodes pour résoudre ce système.
 %Historiquement la première méthode était la méthode
-\paragraph{Particule-Particule (PP) : } c'est la méthode la plus directe pour calculer l'évolution d'un system N-corps. 
+\paragraph{Particule-Particule : } c'est la méthode la plus directe pour calculer l'évolution d'un system N-corps. 
 Elle consiste, pour chaque particule, à sommer les contributions gravitationnelles de toutes les autres particules:
 \begin{equation}
 \vec{F}_i=-\sum_{j\neq i} G \frac{G m_i m_j(\vec{r}_i - \vec{r}_j) }{ |\vec{r}_i - \vec{r}_j |^3}
@@ -112,7 +116,7 @@ Elle consiste, pour chaque particule, à sommer les contributions gravitationnel
 Ce type de code dispose d'une très bonne précision mais la quantité de calculs évolue en ordre $O(N^2)$, ce qui fait que ce type de code est très coûteux.
 
 %Une évolution de cette méthode est la méthode :
-\paragraph{Tree code: } évolution de la méthode PP, elle consiste à regrouper les particules les plus lointaine de la particule courante en amas aillant une interaction gravitationnelle commune \citep{1986Natur.324..446B}.
+\paragraph{Tree code: } évolution de la méthode Particule-Particule, elle consiste à regrouper les particules les plus lointaine de la particule courante en amas aillant une interaction gravitationnelle commune \citep{1986Natur.324..446B}.
 % (Barnes & Hut 1986) 
 Cette approximation permet de limiter considérablement le nombre de calcul, ordre $O(n log n)$, pour les interactions lointaine qui sont de toute façons faibles 
 
@@ -652,6 +656,7 @@ La méthode HLL a été modifié par Toro 1992 et a donné lieu à la méthode H
 %\subsection{MUSCL et Minmod}
 Si dans le problème de Riemann, les deux parties sont considérées avoir des densités constantes, il est possible de considérer des schémas d'ordres supérieurs.
 Par exemple le schéma \ac{MUSCL} introduit par \cite{1979JCoPh..32..101V},  consiste à considérer une valeur dans la cellule, non plus constante mais interpolée linéairement (cf figure\ref{fig:MUSCL}).
+Pour éviter les cas extrêmes, la pente de cette interpolation est limitée, dans notre cas une méthode dites \textit{minmod} est utilisée.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/MUSCL_minmod.pdf} 
@@ -700,17 +705,26 @@ Le coefficient d'absorption s'exprime en fonction de la section efficace de phot
 \kappa_\nu(\vec{x},\vec{n},t) = \sigma_\nu n_H.
 \end{equation}
 
-Il existe deux grandes famille de code de transfert de rayonnement.
+Il existe trois grandes famille de code de transfert de rayonnement.
 \begin{itemize}
-\item La première famille utilise une représentation très physique de la lumière, et simule la radiation à l'aide de rayons se propageant dans l'espace.
-ce spnt des méthodes dite de lancer de rayons.
-Dans le cas ou la vitesse de ces rayon est infinie, on appelle ces méthodes de Monté Carlo.
-CRASH \citep{2003MNRAS.345..379M}, C$^2$RAY\citep{2006NewA...11..374M}.
-Ce type de code utilise une principe qui se rapproche physiquement de la vraie nature de la lumière.
-Chaque source lance un certain nombre de groupe de photon, qui vont se propager et interagir avec le milieu.
-Plus les sources sont nombreuses, plus le nombre de groupe de photons à suivre devient important, et plus le cout numérique l'est également.
 
-\item La seconde, celle utilisée dans EMMA, repose sur le principe de considérer la lumière comme un fluide. \citep{gnedin_multi-dimensional_2001, aubert_radiative_2008}.
+\item La première famille de méthodes est dite de lancé de rayons.
+Elle utilise une représentation très physique de la lumière, et simule la radiation à l'aide de rayons se propageant dans l'espace.
+Chaque source trace un certain nombre de rayon autour d'elle et l'équation de transfert du rayonnement est résolue le long de chaque lignes de visées.
+% groupe de photon, qui vont se propager et interagir avec le milieu.
+%L'équation de transfert du rayonnenment est résolue le long de la ligne de visée.
+Dans ce type de méthtode la vitesse de la lumière est considérée infinie.
+Par exemple C$^2$RAY\citep{2006NewA...11..374M} est un représentant de cette famille.
+Le principal inconvénient de cette méthode est que plus les sources sont nombreuses, plus le coût numérique augmente.
+
+\item La seconde famille est dite Monté Carlo.
+Elle utilise une également un représentation physique de la lumière mais cette fois ci ce ne sont plus des rayons, mais des paquets de photons qui se propagent dans l'espace.
+Chaque source lance un certain nombre de groupes de photons, qui vont se propager et interagir avec le milieu.
+L'avantage de cette méthode par rapport au lancé de rayon, est qu'elle autorise la diffusion.
+Le coût numérique est encore dans ce cas, fonction du nombre de sources.
+Le code CRASH \citep{2003MNRAS.345..379M} utilise cette méthode.
+
+\item La troisième, celle utilisée dans EMMA, repose sur le principe de considérer la lumière comme un fluide. \citep{gnedin_multi-dimensional_2001, aubert_radiative_2008}.
 Ces méthodes dites méthodes aux moments utiliseront donc les même concepts que le moteur hydrodynamique, mais avec un système initial d'équations différentes. 
 EMMA utilise une approximation du moment au premier ordre, son moteur repose sur l'\textit{approximation M1} \citep{levermore_relating_1984}.
 Son principal avantage est que le coût numérique est indépendant du nombre de sources.
@@ -762,10 +776,10 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 
 La lumière étant extrêmement rapide, le suivi de son évolution demande un pas de temps réduit du fait de la condition de Courant : $ c \leq \Delta x / \Delta t $.
 D'une manière générale, le pas de temps radiatif est plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
-Or, les simulation cosmologique utilise l'approximation Newtonienne: les processus entrant en jeux ont des vitesses très inférieures à celle de la lumière.
-L'idée est de diminuer la vitesse de la lumière dans le code tout en restant dans le domaine de l'approximation newtonienne.
-Cette approximation s'appelle approximation de la vitesse de la lumière réduite ou \ac{RSLA}.
-On introduite $c_{num}$ la vitesse de la lumière numérique réduite en fonction de $c$ la vitesse de la lumière physique.
+Or, dans les simulations cosmologiques, les processus entrant en jeux ont des vitesses très inférieures à celle de la lumière.
+Par exemple, parmi les processus hydrodynamiques les plus rapides à ces échelles se trouvent les vents générés par les explosions de supernovæ, leurs vitesses sont de l'ordre de $3000 \mathrm{km.s}^{-1}$ soit deux ordres de grandeurs plus faible que la vitesse de la lumière.
+L'idée de la approximation de la vitesse de la lumière réduite ou \ac{RSLA} est de diminuer la vitesse de la lumière dans le code tout en restant dans le régime ou la lumière reste plus rapide que les autre processus.
+Pour se faire, on introduit $c_{num}$ la vitesse de la lumière numérique réduite en fonction de $c$ la vitesse de la lumière physique.
 \begin{equation}
 c_{num} = \tilde{c} \cdot{c},
 \end{equation}

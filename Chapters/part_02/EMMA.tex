@@ -7,7 +7,7 @@
 %Du fait de l'avancée rapide des moyens de calculs, les simulations numérique sont des produits possédant une valeur se dépréciant rapidement et doivent être considérées comme éphémère.
 
 Nous avons vu dans la partie précédente qu'elles étaient les principales physiques à l’œuvre durant l'époque de réionisation.
-L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et quelles sont le contraintes sur leurs implémentations.
+L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et quelles sont les contraintes sur leurs implémentations.
 On se concentrera particulièrement sur le cas du code EMMA.
 
 
@@ -18,21 +18,18 @@ On se concentrera particulièrement sur le cas du code EMMA.
 Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et la radiation (et parfois le champs magnétique).
 Ces fluides sont de natures différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physiques.
 On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
-
-\paragraph{La physique non-collisionnelle} concerne les phénomènes qui n'interagissent pas par collision.
-Dans notre cas, il s'agit principalement la matière noire et les étoiles. 
-
-\paragraph{La physique collisionnelle} concerne principalement le gaz.
+La physique non-collisionnelle concerne les phénomènes qui n'interagissent pas par collision comme la matière noire, les étoiles ou la radiation. 
+La physique collisionnelle concerne qant à elle principalement l'hydrodynamique du gaz.
 
 Il existe conceptuellement deux principales façons de suivre un fluide dans l'espace.
 %Ces deux approches sont dites \emph{Eulérienne} ou \emph{Lagrangienne}.
-En lien direct avec ces deux familles de représentations physique, il existe deux principales familles de codes cosmologique% : les codes \ac{SPH} et les codes \ac{AMR}.
+%En lien direct avec ces deux familles de représentations physique, il existe deux principales familles de codes cosmologique% : les codes \ac{SPH} et les codes \ac{AMR}.
 
 \paragraph{Représentation Lagrangienne : } 
 consiste à se placer au point de vue du fluide.
 Une série d'éléments de fluide de masse fixe pouvant se déplacer et/ou se dilater dans l'espace sera considérée.
 Les codes utilisant ce type de représentation seront généralement associés avec une gestion de la physique sous forme de \emph{particules}.
-Ces codes seront dit \ac{SPH}.
+Ces codes seront dit \ac{SPH} ou \ac{PIC}.
 
 %\paragraph{\ac{SPH} : } représente le gaz sous forme de particule de masse constante mais de taille variable.
 %Notion d'arbre -> KDtree
@@ -54,12 +51,49 @@ Si la grille est de résolution variable, on parlera de grille \ac{AMR}.
 Un même code peux utiliser conjointement plusieurs des concepts qui viennent d'être introduits.
 Dans le cas présent, EMMA utilise une représentation Lagrangienne pour simuler la physique non collisionnelle de la matière noire et des étoiles, et une représentation Eulérienne pour simuler le gaz et la radiation.
 
-\section{TODO}
+\subsection{Quelques codes de simulations cosmologiques}
 
-avantage inconvénient AMR vs SPH
+Il existe une certaine variété de code de simulations cosmologiques.
+Ces codes sont classés en fonction de leur façon de gérer l'hydrodynamique du gaz et on distinguera principalement les codes \ac{SPH} et les codes \ac{AMR}.
 
-%TODO
-Comparaison a RAMSES
+Parmi les représentants des codes \ac{SPH} :
+\begin{itemize}
+\item GADGET \citep{springel_cosmological_2005}
+\item GASOLINE2 \citep{2017arXiv170703824W}
+\item PHANTOM \citep{2017arXiv170203930P}
+\end{itemize}
+
+Parmi les représentants des codes \ac{AMR}:
+\begin{itemize}
+\item ART \citep{1997ApJS..111...73K}
+\item FLASH \citep{0067-0049-131-1-273}
+\item RAMSES \citep{teyssier_cosmological_2002}
+\item ENZO \citep{bryan_enzo:_2014}
+\item EMMA \citep{aubert_emma:_2015}
+\end{itemize}
+
+Il existe un troisième type de code hybride utilisant une maille mobile et adaptative, un représentant majeur de cette technique est le code AREPO \citep{2010MNRAS.401..791S}.
+
+%\subsection{AMR et SPH}
+
+Des projets comme le projet Santa Barbara \citep{1999ApJ...525..554F} ou le projet nIFTy \citep{sembolini_nifty_2015} visent à comparer les codes de différents types entre eux.
+Certain projets \citep{2007MNRAS.380..963A, oshea_comparing_2005} se focalisent sur la comparaison des méthodes.
+Il en ressort que l'\ac{AMR} est plus apte à gérer les chocs et les instabilités de type Kelvin–Helmholtz ou Rayleigh–Taylor.
+
+%avantage inconvénient AMR vs SPH?
+
+
+\subsection{RAMSES}
+
+EMMA est largement inspiré de RAMSES \citep{teyssier_cosmological_2002}.
+Ce dernier est une référence reconnue dans le domaine  des simulations cosmologiques et utilise des principes éprouvés, et EMMA en utilise un bon nombre.
+Entre autre, la gestion de la grille le moteur hydrodynamique et le moteur radiatif sont similaires.
+Le développement d'EMMA vise à obtenir une expertise complète sur le fonctionnement de ce type de code.
+
+EMMA a cependant quelques différences fondamentale avec RAMSES.
+Il n'utilise pas le même langage: RAMSES est écrit en Fortran, EMMA en c.
+Le développement de RAMSES a débuté avant l'apparition des \ac{GPU} et a ensuite été adapté pour en utiliser les capacités de calcul.
+EMMA est développé avec cette idée dès le départ, ce qui permet l'utilisation de certaines techniques menant à une implémentation différente.
 
 
 \section{Gestion de la grille}
@@ -107,13 +141,13 @@ L'avantage de ce type de grille est d'économiser des ressources de calcul par r
 \subsection{Octree}
 
 Il existe deux grands groupe de maille adaptative.
-Le premier groupe utilise une séries de grilles fixes imbriquées. %TODO ref
+Le premier groupe utilise une séries de grilles fixes imbriquées (eg \cite{bryan_enzo:_2014}) %TODO ref
 Chaque région raffinée sera une grille fixe de résolution plus importante spatialement liée a une grille de base.
 Chaque nouvelle grille aura une résolution double par rapport a la précédente.
 Il est possible d'ajouter autant de niveaux que voulu.
 
-Le second est le groupe qu'utilise EMMA : fully threated tree description \citep{khokhlov_fully_1998-1}.
-La base de cette représentation est de considérer que chaque cellule est associée à une grille fixe de taille 2x2x2 que l'on nommera un OCT, car décomposé en 8 cellules.
+EMMA utilise un second groupe. % fully threated tree description .
+La base de cette représentation est de considérer que chaque cellule est associée à une grille fixe de taille 2x2x2 que l'on nommera un OCT, car décomposé en 8 cellules \citep{khokhlov_fully_1998-1}.
 %sous parties qui sont elles même des cellules.
 Et récursivement, chacune de ces cellules peuvent à leurs tour être divisée et associée à un OCT.
 Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:octree}.
@@ -126,11 +160,10 @@ Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:oct
 }
 \end{figure}
 
-%TODO introduire construction de la grille et grille coarse
 Pour créer une grille de départ, il faudra d'abord créer un OCT, appelé racine, et le forcer à raffiner.
 Chacune de ces nouvelles cellules vont à leurs tours être raffinée.
 Cette opération est répétée pour toutes les cellule jusqu'à obtention d'une grille régulière de la taille désirée.
-A chaque nouveau raffinement de le nombre de cellule est multiplié par 8.
+A chaque nouveau raffinement le nombre de cellule est multiplié par 8.
 Le nombre de cellules d'un niveau entièrement raffiné est donc de:
 \begin{equation}
 N_{cells} = 2^{3L}
@@ -231,10 +264,10 @@ struct PART{
 Il est possible de définir arbitrairement une condition de raffinement en fonction de la physique que l'on cherche a étudier.
 Par exemple, dans des tests unitaires de type sphère de Stömgren (cf \ref{sec:stromgren}) ou explosion de Sedov (cf \ref{sec:sedov}), on marquera les cellules qui sont soumises à un gradient d'ionisation ou de densité supérieur à un certain seuil pour suivre l'évolution du front.
 Dans le cas de simulations cosmologique, on utilisera généralement une condition en densité dite semi-Lagrangienne.
-C'est a dire qu'une cellule sera marquée comme "à raffinée" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur a huit fois la masse de matière noire (ou de gaz) moyenne d'une cellule de ce niveau.
+C'est a dire qu'une cellule sera marquée comme "à raffiner" si la masse de matière noire (ou de gaz) qu'elle contient est supérieur à huit fois la masse de matière noire (ou de gaz) moyenne d'une cellule de ce niveau.
 %le deraffinement
 On remarquera que la condition de raffinement ne prends pas en compte le fait qu'une cellule soit déjà raffinée ou non.
-Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "à raffinée" elle sera donc dé-raffinée.
+Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "à raffiner" elle sera donc dé-raffinée.
 
 \subsubsection{En pratique}
 Le raffinement se fera en trois temps:
@@ -245,7 +278,7 @@ Le raffinement se fera en trois temps:
 \item Une fois tout le niveau passé en revue, le code va ensuite faire une série de $N_{buffer}$ passages sur tout le niveau en marquant à chaque fois toues les cellules voisine des cellules précédemment marquées.
 Cette zone de $N_{buffer}$ cellules autour des zones soumises à la condition physique de raffinement sera appelée le "buffer de raffinement".
 Ce tampon a pour but d’élargir la zone de raffinement et ainsi permettre une transition douce entre les niveaux.
-De plus il ne sera autorisé à n'avoir qu'un seul niveau de décallage au maximum lors des transitions.
+De plus il ne sera autorisé à n'avoir qu'un seul niveau de décalage au maximum lors des transitions.
 
 \item Une fois les cellules respectant ces deux conditions marquées, le raffinement est effectué.
 \end{itemize}
@@ -292,9 +325,9 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 \subsection{Gestion du pas de temps}
 
 Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme.
-Du fait de la condition de Courant, un niveau raffinée aura un pas de temps plus court que le niveau de base.
-Comme dans notre cas, une cellule est raffinée en divisant par 2 chacune de ces dimensions, le pas de temps sera lui aussi divisé par 2.
-Il faudra donc réaliser 2 évolutions d'un pas de temps raffiné pour être synchronisé avec un niveau inférieur, et ce de manière récursive.
+Du fait de la condition de Courant, un niveau raffiné aura un pas de temps plus court que le niveau de base.
+Comme dans notre cas, une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2.
+Il faudra donc réaliser deux pas de temps fins (L+1) pour être synchronisé avec un niveau inférieur (L), et ce de manière récursive.
 L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
 
 \begin{figure}
@@ -310,15 +343,15 @@ Un niveau évolue par pas de temps deux fois plus court que celui de son niveau 
 
 %On parlera de simulations cosmologiques lorsque l'e volume considéré est en expansion.
 
-Nous avons vu dans l'introduction à la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
-Nous allons voir dans cette partie comme cette composante est traitée numériquement.
-Bien que nous ne sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
-Le moteur gérant l'énergie noire n'est pas a proprement parler un moteur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
-Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
+%Nous avons vu dans l'introduction à la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
+%Nous allons voir dans cette partie comme cette composante est traitée numériquement.
+%Bien que nous ne sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
+%Le moteur gérant l'énergie noire n'est pas a proprement parler un moteur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
+%Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
 
 L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code (cf Eq. \ref{eq:scale_t}).
 Il en résultera une table, conservée en mémoire pendant toute l'exécution.
-Le facteur d'expansion sera alors interpoler dans cette table en fonction de l'avancement de la simulation.% (cf partie calcul du pas de temps) %TODO ref
+Le facteur d'expansion sera alors interpolé dans cette table en fonction de l'avancement de la simulation.% (cf partie calcul du pas de temps) %TODO ref
 
 Il existe deux possibilités pour modéliser l'expansion de l'univers à l'aide d'une grille.
 La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, à y ajouter des éléments.
@@ -355,7 +388,7 @@ Densité D’éléments: & $\tilde{N}=a^3 N r_*^3$\\ \hline
 Flux: & $\tilde{F}=a^4 r_*^2 t_* F$\\ \hline 
 \end{tabular} 
 \end{center}
-\caption[Système d'unité supercomobile]{Passage du système d'unités physique vers le système d'unité supercomobile} 
+\caption[Système d'unité supercomobile]{Passage du système d'unités physique vers le système d'unités supercomobiles} 
 \end{table}
 
 \begin{table}
@@ -370,7 +403,7 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 Énergie & $\epsilon_* = \frac{p_*}{\rho_*} = v_*^2$\\ \hline 
 \end{tabular} 
 \end{center}
-\caption[Facteurs de normalisation]{Facteurs de normalisation des différents grandeurs physique} 
+\caption[Facteurs de normalisation]{Facteurs de normalisation des différents grandeurs physiques dans le système d'unités supercomobiles}
 \end{table}
 
 \subsubsection{Gestion du pas de temps}
@@ -382,14 +415,22 @@ La condition condition pour effectuer le calcul du pas de temps sera:
 
 \subsection{Recherche de voisin}
 \label{sec:voisins}
-Nous verrons par la suite que l'état d'une cellule dépend des états des cellules qui l'entoure.
+
+Les processus physiques que l'on cherche a résoudre sont régit par des systèmes d'équations différentielles. (voir section \ref{sec:solvers})
+En analyse numérique, une dérivée de $u$ suivant $x$ est localement approximée (dans le cas d'une différence finie centrée) par une équation de la forme :
+\begin{equation}
+\frac{d u}{dx} \approx \frac{u_{i+1}  + u_{i-1}}{2\Delta x}, 
+\end{equation}
+où $i$ est l'indice sur la grille de pas $\Delta x$.
+Dans ce type de systèmes, l'état d'une cellule dépend donc des états des cellules qui l'entourent.
+
 La recherche de voisins est une étape importante dans la gestion de la grille et se fera en suivant les étapes présenté sur la figure \ref{fig:voisin}.
 Dans le cas ou la voisine se trouve dans le même OCT la recherche est immédiate.
 Mais dans le cas ou la voisine n'est pas dans le même OCT, il faut trouver l'OCT voisin, vérifier que celui ci est géré par le même processus et vérifier si il est raffiné.
 Cette recherche peut être complexe et couteuse, on prendra donc garde à minimiser les appels de la fonction de recherche. 
 
-\begin{figure}[bth]
-        \includegraphics[width=.95\linewidth]{img/02/voisins.pdf} 
+\begin{figure}
+        \includegraphics[width=\linewidth]{img/02/voisins.pdf} 
         \caption[Recherche de voisin dans l'octree.]{Arbre décisionnel pour la recherche de voisin dans l'octree.
         La recherche de voisins n'est pas triviale et peu avoir un coût non négligeable.
      	\label{fig:voisin} }

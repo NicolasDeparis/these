@@ -8,21 +8,28 @@ Le défis des simulations de la réionisation est qu'elles doivent simuler un vo
 En première approximation, il nous faudrait donc échantillonner un tel volume par $\left( \frac{100Mpc}{1pc} = 10^7 \right) ^3 = 10^{21}$ éléments.
 Ce qui est totalement impossible à l'heure actuelle.
 %Nous verrons dans la prochaine partie que nous sommes encore loin de pouvoir résoudre la formation stellaire dans ce type de simulations. %TODO ref
-Nous avons vu que l'amélioration de certain algorithme (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation Ncorps directe, etc... cf chapitre \ref{ch:introduction}) a permis d'augmenter significativement la taille des simulations à puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
+Nous avons vu que l'amélioration de certain algorithme (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation N-corps directe, etc... voir chapitre \ref{ch:introduction}) a permis d'augmenter significativement la taille des simulations à puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
+
+\section{Calcul haute performance}
+
+Le \ac{HPC} est un domaine visant à utiliser au mieux les ressources de calculs disponibles.
+Ces ressources peuvent être multiples et les utiliser conjointement; de manière efficace représente un challenge en soit.
+Dans cette partie nous allons aborder une série de concepts liés au \ac{HPC} et utiles à la compréhension des simulations cosmologiques.
+
 
 \subsection{Loi de Moore et simulations}
 La loi de Moore \citep{moore1965cramming} propose un doublement du nombre de transistor par circuit intégré tout les 18 mois environs. (Fig \ref{fig:moore})
 Comme la puissance de calcul est étroitement liée a cette évolution, la taille -- le nombre d'éléments de résolution -- des simulations, suis également cette croissance exponentielle (Fig. \ref{fig:taillesimu}).
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/moorelaw.png} 
         \caption[Loi de Moore]{Nombre de transistor par processeur en fonction du temps ou loi de Moore}
  		\label{fig:moore}
 \end{figure}
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/figure_simulations_with_time.png} 
-        \caption[Évolution de la taille des simulations]{Tailles des simulations en fonction du temps.
+        \caption[Évolution de la taille des simulations]{Évolution de la taille des simulations en fonction du temps.
         Il existe un lien direct avec la loi de Moore.
         Image illustris}
  		\label{fig:taillesimu}
@@ -31,8 +38,9 @@ Comme la puissance de calcul est étroitement liée a cette évolution, la taill
 
 \subsection{Principes de parallélisation}
 
-Comme on ne peux pas créer des processeurs aussi gros que ce que l'on le souhaite, la technique utilisée pour continuer à augmenter la puissance de calcul, consiste à en utiliser plusieurs en parallèle.
-Dans le cas des simulation cosmologique, la parallélisation est effectué en découpant l'espace à simuler en un certain nombre de sous domaines chacun associé à une unité de calcul.
+A cause de limitations physiques comme la taille des atomes ou la capacité de refroidissement du silicium, on ne peut pas créer des processeurs aussi puissant que ce que l'on souhaite.
+La technique utilisée pour continuer à augmenter la puissance de calcul, consiste à en utiliser plusieurs en parallèle.
+Dans le cas des simulations cosmologiques, la parallélisation est effectuée en découpant l'espace à simuler en un certain nombre de sous domaines chacun associé à une unité de calcul.
 Comme chaque sous domaine n'est pas isolé, mais appartient au même ensemble, les domaines vont devoir communiquer entre eux sur l'état de leurs voisin.
 Nous verrons en détail comment est effectué ce découpage dans la section \ref{sec:parasoft}.
 Mais voyons d'abord un aperçut des contraintes techniques de la parallélisation.
@@ -62,9 +70,9 @@ Les principales machines que j'ai pu rencontrer utilise un modèle MIMD à mémo
 \end{itemize}
 \end{itemize}
 
-Il existe plusieurs niveau de parallélisation, au niveau matériel.
-Par exemple, un processeur actuel dispose de plusieurs cœurs, capable de géré chacun un processus (voir 2 dans le cas de l'hyperthreading).
-Il est possible d'avoir plusieurs processeur au sein d'un même ordinateur.
+Il existe plusieurs niveaux de parallélisation, au niveau matériel.
+Par exemple, un processeur actuel dispose de plusieurs cœurs, capable de gérer chacun un processus (voir 2 dans le cas de l'hyperthreading).
+Il est possible d'avoir plusieurs processeurs au sein d'un même ordinateur.
 Et il est possible d'utiliser conjointement plusieurs ordinateurs.
 Ce qui nous mène à la notion de centre de calcul.
 
@@ -98,10 +106,10 @@ Sequoia  & États Unis &1,572,864 & 20,132.7 \\
 \label{tab:top500}
 \end{table}
 
-Ce type de calculateur est composé d'un certain nombre de nœud qui communique entre eux par l'intermédiaire d'un réseau.
+Ce type de calculateur est composé d'un certain nombre de nœuds qui communiquent entre eux par l'intermédiaire d'un réseau.
 Un nœud est un élément conceptuellement proche d'un ordinateur personnel puisqu'il dispose d'une carte mère, avec un (ou plusieurs) \ac{CPU}, de la mémoire RAM, un \ac{SSD}/\ac{HDD} et parfois un \ac{GPU}.
-D'une manière générale, plus des composants sont physiquement éloignés, plus leurs communications seront lente (cf \ref{tab:debits}).
-La quantité d'information passant par une interface représente un certain coup et on cherchera à minimiser ce coup en optimisant le transfert des données à différents niveaux.
+D'une manière générale, plus des composants sont physiquement éloignés, plus leurs communications seront lentes (cf \ref{tab:debits}).
+La quantité d'information passant par une interface représente un certain coût et on cherchera à minimiser ce coût en optimisant le transfert des données à différents niveaux.
 
 \begin{table}
 \begin{tabular}{ l l }
@@ -115,7 +123,7 @@ InfiniBand & $\approx$ 5 Go/s \\
 SSD & $\approx$ 600 Mo/s \\
 HDD & $\approx$ 100 Mo/s
 \end{tabular} 
-\caption[Débits interfaces HPC]{Ordre de grandeur des débits théorique des différentes interface rencontrées lors de l'exécution d'un code HPC.
+\caption[Débits interfaces HPC]{Ordre de grandeur des débits théorique des différentes interface rencontrées lors de l'exécution d'un code \ac{HPC}.
 On cherchera à optimiser les communications utilisant les interfaces les plus lentes.}
 \label{tab:debits}
 \end{table}
@@ -152,6 +160,8 @@ C'est a dire que tout les processus au sein d'un même nœud pourront communique
 Pour les communications entre les nœuds, l'information devra passer par le réseau, ce type de communications est donc plus lent.
 Et ce d'autant plus que les nœuds sont physiquement éloignés entre eux.
 
+\section{Implémentation}
+
 \subsection{Courbe de Peano-Hilbert}
 \label{sec:parasoft}
 
@@ -162,16 +172,16 @@ Et ce d'autant plus que les nœuds sont physiquement éloignés entre eux.
 %, et plus spécifiquement celle par le réseau qui sont nombreuse et relativement lentes.
 %Warren et Salmon
 Dans le but de garder une certaine proximité spatiale, le découpage des domaines de calcul correspondants aux différents processeurs, utilise une courbe de Peano-Hilbert.
-Ce type de courbes fractale a la particularité de remplir l'espace et de passer par tout les points d'une grille.
-Ainsi si l'on applique ce pavage aux cellules de notre grille, en associant un indice reliant une cellule à sa position sur la courbe de Hilbert.
-Il suffit ensuite de découper la courbe en parties identique pour définir quelles cellules seront associées à quels processus.
-Ainsi si l'on a par exemple 32 cellules à assigner sur 4 processeurs, la courbes sera découpée en 4 parties de 8 cellules.
+Ce type de courbes fractale a la particularité de remplir l'espace en passant par tout les points d'une grille, et donc t'obtenir une représentation 1D d'un espace 3D.
+Ainsi si l'on applique ce pavage aux cellules de notre grille, en associant un indice reliant une cellule à sa position sur la courbe de Hilbert, il suffit ensuite de découper la courbe en parties identiques pour définir quelles cellules seront associées à quels processus.
+Si l'on a par exemple 32 cellules à assigner sur 4 processeurs, la courbes sera découpée en 4 parties de 8 cellules.
 Chacune de ces parties sera en suite assignée à un processeur.
 Ce type de découpage minimise les interfaces entre domaine, en s'assurant d'une proximité spatiale entre tout les points de la courbe.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/courbe_Hilbert.jpeg} 
-        \caption[Courbe de Hilbert]{Principe de la courbe de Hilbert. 
+        \caption[Courbe de Hilbert]{Principe de la courbe de Hilbert.
+        Ce type de courbe est utilisée pour gérer le découpage des domaines utilisés pour la parallélisation.
         %http://www.lifl.fr/~pmathieu/transform/fractales.html
  		\label{fig:hilbert}}
 \end{figure}
@@ -185,11 +195,30 @@ Ce type de découpage minimise les interfaces entre domaine, en s'assurant d'une
 % 		\label{fig:hilbert2}
 %\end{figure}
 
-Dans l'état actuel de EMMA, la courbe est calculée au début de la simulation, et seule la grille coarse est prise en compte.
+Dans l'état actuel de EMMA, la courbe est calculée au début de la simulation, et seule la grille de base est prise en compte.
 La répartition des domaines est statique et n'évolue pas au cours de la simulation.
 Dans le cas ou un domaine raffine plus qu'un autre, la charge de travail y est plus importante.
 Dans le futur, l'objectif serait de calculer la courbe de Hilbert sur la totalité des cellules feuilles.
-Pour ainsi pouvoir refaire le découpage et équilibrer la charge entre les processeurs, et réaliser un "load balancing".
+Pour ainsi pouvoir refaire le découpage et équilibrer la charge entre les processeurs, et réaliser un équilibrage de charge.
+
+\subsection{Courbe de Morton}
+
+Une des évolutions possible de EMMA, serait l'utilisation de courbe de Morton \citep{morton1966computer}.
+La courbe de Peano-Hilbert a le désavantage d'être relativement complexe à calculer.
+C'est a dire que l'opération nécessaire pour déterminer l'indice d'une cellule sur la courbe est coûteuse, et ce particulièrement sur \ac{GPU}.
+L'avantage la courbe de Morton (ou Z-order curve) est que la détermination de l'indice de la cellule et très simple et bien adapté aux \ac{GPU}.
+Il existe d'ores et déjà des code \ac{AMR} exécuté intégralement sur \ac{GPU} (voir eg \cite{2012ASPC..453..325B}) et présentant un facteur d'accélération important.
+Grâce à ce type de technique, la gestion de \ac{AMR} devient accessibles aux \ac{GPU}, évitant ainsi les coûteuses copies entre le \ac{CPU} et le \ac{GPU} (voir section \ref{sec:cpugpu}).
+Cette courbe perd cependant l'avantage de la compacité de la courbe de Hilbert pour le découpage des domaines (sauts spatiaux parfois importants),
+Une technique hybride Hilbert/Morton pourrait être envisagée.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/ZCurve.png} 
+        \caption[Courbe de Morton]{Principe de la courbe de Morton.
+        Ce type de courbe est mieux adaptée a l'utilisation de \ac{GPU} que la courbe de Hilbert.
+ 		\label{fig:hilbert}}
+\end{figure}
+
 
 \subsection{Les domaines}
 
@@ -199,15 +228,17 @@ Pour répondre à ce problème, EMMA utilise le "Local essential tree decomposit
 Chaque processus dispose d'une vue globale de toute la grille ( cf Fig. \ref{fig:domaine}) mais la partie de la grille qui n'appartient pas au processeur est vue a résolution dégradée.
 Ceci facilite grandement le gestion des conditions de bords.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/secteur.png} 
         \caption[Domaine associé a un processus]{Exemple de domaine de processeur généré par EMMA. 
-        Chaque domaine représente une vue d'ensemble de la grille, a résolution dégradée.
+        Chaque domaine représente une vue d'ensemble de la grille, à résolution dégradée.
 }
  		\label{fig:domaine}
 \end{figure}
 
-\subsection{GPU}
+
+
+\section{GPU}
 
 EMMA utilise un degré supplémentaire de parallélisation.
 Les calculs de chaque domaines sont accéléré en utilisant les capacités parallèle des processeurs graphiques récents.
@@ -215,11 +246,11 @@ Les cartes graphiques, ou \ac{GPU} ont été détourné de leurs utilisation pri
 
 A l'inverse des \ac{CPU} actuels qui disposent d'un nombre réduit de cœurs, les \ac{GPU} disposent d'une nombre beaucoup plus important de cœurs.
 Par exemple un AMD Opteron 6300 de TITAN dispose de 16 cœurs, contre 2880 cœurs pour une NVIDIA Tesla k40c.
-Un  \ac{CPU} peux exécuter des taches différentes sur chacun de ses cœurs (MIMD) tandis ce que les \ac{GPU} utilise un mode de parallélisation de type SIMD (Fig \ref{fig:cpugpu}).
+Un  \ac{CPU} peut exécuter des taches différentes sur chacun de ses cœurs (MIMD) tandis ce que les \ac{GPU} utilise un mode de parallélisation de type SIMD (Fig \ref{fig:cpugpu}).
 Ce mode de parallélisation en font des unités de calculs efficaces dans le traitement d'un grand nombre d'informations en parallèle.
-Elle sont donc toutes indiqués dans le cas des simulations numérique ou il s'agit d'appliquer un traitement identique à un grand nombre de cellules.
+Elle sont donc toutes indiquées dans le cas des simulations numérique ou il s'agit d'appliquer un traitement identique à un grand nombre de cellules.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/cpu_vs_gpu.png} 
         \caption[Comparaison CPU/GPU]{Comparaison CPU/GPU. Un \ac{CPU} dispose d'un nombre réduit de cœurs capables d’exécuter des opération complexe. 
         A l'inverse un \ac{GPU} dispose d'un grand nombre de cœurs pouvant exécuter un grand nombre d'opérations simples en parallèle}
@@ -271,7 +302,7 @@ Les données organisées sont envoyés sur le GPU, pour effectuer les calculs.
 Le résultat est ensuite copié sur le CPU et remises dans l'arbre par le CPU (opération de "scatter").
 Dans le cas où les calculs sont réalisés sur le CPU, cette opération est quand même réalisée, dans le but de conserver une certaine cohérence entre les versions.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/gatherscatter.jpg} 
         \caption[Passage AMR / vecteur]{Transition entre la structure en arbre de l'AMR et la structure en vecteur de calcul.
         L'arbre est sur le CPU, le vecteur est sur le GPU.
@@ -323,9 +354,9 @@ Il existe des techniques optimisé de gestion d'arbre sur GPU à base de "Z-orde
 
 %Copies asynchrones
 
-\subsection{Gestion des entrées sortie}
+\section{Gestion des entrées sortie}
 
-Durant ma thèse la simulation CODA II EMMA (voir partie \ref{sec:CODAEMMA}) a été réalisée.
+Durant ma thèse la simulation CODA I AMR (voir partie \ref{sec:CODAEMMA}) a été réalisée.
 Cette simulation fait partie des plus grosse simulation de la réionisation exécutée à l'heure actuelle avec un nombre de particules de matière noire, et donc une grille de base, de $2048^3$ éléments .
 Ces données devront être stockées et écrites sur disque dur or si l'on se réfère à la table \ref{tab:debits} on observe que les débits d'accès disques sont les plus faibles.
 
