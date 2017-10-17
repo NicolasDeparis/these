@@ -6,7 +6,10 @@ Il manque encore une composante essentielle au problème qui est la modélisatio
 L'objectif de cette section est d'exposer le modèle de sources que j'ai développé, implémenté et calibré.
 Comme nous avons vu en introduction (cf section \ref{sec:introreio}), il existe deux types de sources, les étoiles et les quasars.
 Dans la suite de cette étude, je n'ai considéré que la partie stellaire sans me préoccuper des quasars.
+Dans cette section je vais présenter le modèle de formation stellaire que j'ai implémenté dans EMMA.
+Dans ce modèle, la formation stellaire a lieu en trois temps.
 Nous allons définir les différentes phase de la vie d'une étoile, et ses différentes évolutions possible.
+Il faut d'abord localiser les régions de formation, puis calculer la quantité d'étoiles à former, et enfin former les particules.
 Nous verrons comment les contraintes imposées par les échelles cosmologique que l'on cherche à étudier vont imposer certains choix au niveau numérique.
 Une attention particulière sera mise sur la modélisation des supernovae, puisque une étude comparative entre deux modèles d'injection d'énergie suivra.
 Lors de cette comparaison, il s'est avéré que dans nos modèles, les supernovæ étaient capable de réguler le \ac{SFR}, sans changer l'histoire de la réionisation.
@@ -51,7 +54,7 @@ Malgré tout, nous verrons qu'il est possible d'obtenir un modèle statistiqueme
 
 \section{La formation stellaire}
 
-\subsection{Naissance}
+\subsection{Critère de Jeans}
 
 %lien avec la densité\\
 %Formation dans l'H moléculaire mais pas dans les simu
@@ -97,10 +100,7 @@ Ce type d'étoiles est appelées étoiles de population III ou popIII.
 
 
 
-L'objectif de cette section est de présenter le modèle de formation stellaire que j'ai implémenté dans EMMA.
-Dans ce modèle, la formation stellaire a lieu en trois temps.
-Il faut d'abord localiser les régions de formation, puis calculer la quantité d'étoile à former, et enfin former les particules.
- 
+
 \subsection{Localisation des zones de formation stellaire}
 
 Il est admis que les étoiles se forment dans les nuages d'hydrogène moléculaire (voir eg \cite{krumholz_universal_2012}).
@@ -117,6 +117,7 @@ Toutes les cellules plus dense qu'un certain seuil sont autorisées à créer de
   \end{cases}
 \end{equation} 
 
+Ce type de critère est utilisé par la grande majorité des codes de simulations cosmologique \citep{kay_including_2002}.
 Cette densité de seuil $\rho_{thresh}$ peux être définie arbitrairement, et comme toute densité, elle est dépendante de la résolution.
 De plus il en possible de définir une densité en unité physique ou en unité commobile (voir section \ref{sec:supercomobil}).
 Un seuil en densité physique sera plus représentatif de se qui se passe réellement.
@@ -189,7 +190,6 @@ La masse d'une étoile correspond à la masse moyenne de gaz dans une cellules d
 \end{equation}
 où $L$ peux varier du niveau de base à niveau plusieurs niveaux raffinés.
 
-%TODO cite RAMSES
 Le nombre de quanta à ajouter est ensuite tiré aléatoirement dans une loi de Poisson \citep{rasera_history_2006}.
 \begin{equation}
 	P(N) = \frac{\lambda^N}{N!} e^{-\lambda}
@@ -211,6 +211,8 @@ Si  $N_{star}>1$ il est possible de créer :
 
 Dans le premier cas le nombre de particules sera plus élevée et la résolution stellaire meilleure, mais en contrepartie le coût numérique sera plus important.
 Le choix de la méthode est laissé à l'utilisateur et dépend de la situation.
+Dans tout les cas la masse nouvellement convertie est retirée de la cellule.
+
 
 %En pratique la création d'une particule stellaire consistera a 
 %\begin{itemize}
@@ -228,6 +230,8 @@ Le choix de la méthode est laissé à l'utilisateur et dépend de la situation.
 
 %TODO resolution masse stellaire
 %TODO conservation de la masse
+
+\subsection{Quelques détails techniques}
 
 En pratique la création d'une particule stellaire consistera à prendre une nouvelle particule vierge dans la réserve (cf section \ref{sec:PART}), ajouter ce nouveau maillons à la liste chaînée de particule de la cellule et initialiser cette nouvelle particule.
 
@@ -253,7 +257,7 @@ Une fois les particules créées, chaque processus compte son nombre de nouvelle
 
 %Des test plus poussés seront développés plus loin.
 
-\clearpage
+%\clearpage
 \section{La vie radiative}
 \label{sec:etoilerad}
 
@@ -283,6 +287,11 @@ Du fait de leurs masses, les popIII, émettaient un fort rayonnement ionisant, e
 
 Les étoiles naissent en groupe, et toutes ne sont pas identique.
 Pour caractériser cette diversité, il existe la notion de fonction de masse initiale (\ac{IMF}), qui exprime la probabilité de former une étoile d'une certaine masse dans un population.
+
+\begin{equation}
+A_{(M)} = a_0 \cdot m^{-\alpha}
+\end{equation}
+
 Parmi les \ac{IMF} plus connues il y a :
 
 \begin{itemize}
@@ -292,12 +301,21 @@ Parmi les \ac{IMF} plus connues il y a :
 \item \cite{2003PASP..115..763C}
 \end{itemize}
 
+Chacune d'elles présentant des pentes $\alpha$ différentes, et certaine avec plusieurs intervalles.
 %TODO Quelles sont les différences
 
 %Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendance a être très massive.
 
-Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisation, il y avait formation d'une forte proportion d'étoile massive, j'ai donc utilisé par la suite une \ac{IMF} Top-Heavy.
-%TOTO description top heavy
+Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisation, il y avait formation d'une forte proportion d'étoile massive, j'ai donc utilisé par la suite une \ac{IMF} Top-Heavy avec les caractéristiques suivantes :
+
+\begin{equation}
+	\alpha = 
+  	\begin{cases}
+	1.3 & si 0.1 < m/M_\odot \leq 0.5\\
+	2.3 & si 0.5 < m/M_\odot \leq 1 \\
+	1.6 & si 1   < m/M_\odot \leq 100 \\
+	\end{cases}
+\end{equation} 
 
 %: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
 %Fonction de masse IMF Top Heavy
@@ -379,22 +397,24 @@ Ce paramètre est analogue à une fraction d'échappement intrinsèque et ne doi
 
 Il nous reste encore à caractériser le type de photons à émettre.
 La gestion des groupes de photons a été abordée dans la section \ref{sec:groupedephotons}, nous ne travaillerons par la suite qu'en émission mono-groupe.
-Les caractéristiques des photons émis dans le cas d'une \ac{IMF} Top-Heavy sont présentés sur la table \ref{tab_photon}.
+%Les caractéristiques des photons émis dans le cas d'une \ac{IMF} Top-Heavy sont présentés sur la table \ref{tab_photon}.
 
-\begin{table}
-\begin{tabular}{l l }
-	$<h\nu>$	&  $23.42$ eV \\
-	$\alpha_e$	&  $2.35.10^{-22}$ m$^2$ \\
-	$\alpha_i$	&  $1.82.10^{-22}$ m$^2$ \\
-\end{tabular}
-\caption[Propriété des photons]{Propriété des photons émis par les sources.
-Ces valeurs ont été calculées à partir des spectres obtenus avec Starburst99.
-\label{tab_photon}}
-\end{table}
+%\begin{table}
+%\begin{tabular}{l l }
+%	$<h\nu>$	&  $23.42$ eV \\
+%	$\alpha_e$	&  $2.35.10^{-22}$ m$^2$ \\
+%	$\alpha_i$	&  $1.82.10^{-22}$ m$^2$ \\
+%\end{tabular}
+%\caption[Propriété des photons]{Propriété des photons émis par les sources.
+%Ces valeurs ont été calculées à partir des spectres obtenus avec Starburst99.
+%\label{tab_photon}}
+%\end{table}
 
+
+\subsection{Quelques détails techniques}
 
 En pratique, il faudra calculer l'émissivité sur toute la grille.
-Cette opération est simplifiée par l'utilisation de la liste chaînée de particule (cf section \ref{s}).
+Cette opération est simplifiée par l'utilisation de la liste chaînée de particules (cf section \ref{s}).
 En effet, on passera en revue toutes les cellules, et pour chaque cellules on passera en revue toutes ses particules.
 On testera alors si une particules est une étoiles (la liste chaînée contient également les particules de matière noire), et si cette étoiles est dans un stade où elle émet de l'énergie lumineuse.
 Si c'est le cas, on calculera son émissivité et on injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.

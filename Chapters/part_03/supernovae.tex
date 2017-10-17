@@ -1,10 +1,6 @@
 \clearpage
 \section{Les supernovæ}
 
-Dans cette section, nous allons aborder la modélisation des supernovae dans les simulations cosmologiques.
-Je présenterai deux des modèles que j'ai implémenté, ainsi que les tests numériques qui vont permettent de les valider.
-Nous verrons que ces modèles sont équivalent dans un cas idéal mais divergent lors de l'introduction de la physique du refroidissent.
-Nous aborderons également la problématique de la calibration de ces modèles.
 
 %Il a fallut trouver un mécanisme d'introduction d'énergie dans le gaz.
 %Les supernoavae ont été proposées comme mécanisme.
@@ -12,9 +8,14 @@ Nous aborderons également la problématique de la calibration de ces modèles.
 Les supernovae ont été introduites dans les simulations cosmologiques pour réduire l'effondrement du gaz sur lui même.
 Sans l'introduction d'énergie dans le gaz par les supernovæ, le gaz s'effondre de manière importante et créer un nombre élevé d'étoiles.
 Cela mène à un taux de formation stellaire trop important par rapport à ce qui est observé.
-Ce problème est connus sous le nom de "overcooling problem"
+Ce problème est connus sous le nom de "overcooling problem" \citep{2003ApJ...599...38B, 1992A&A...264..365B}.
 L'objectif est de casser les structures pour diminuer les surdensités et limiter la formation stellaire.
-%TODO ref
+
+Dans cette section, nous allons aborder la modélisation des supernovæ dans les simulations cosmologiques.
+Je présenterai deux des modèles que j'ai implémenté, ainsi que les tests numériques qui vont permettent de les valider.
+Nous verrons que ces modèles sont équivalent dans un cas idéal mais divergent lors de l'introduction de la physique du refroidissent.
+Nous aborderons également la problématique de la calibration de ces modèles.
+
 
 %\subsection{Le modèle théorique}
 %Il existe principalement deux événement pouvant mener a un explosion de supernovæ : 
@@ -30,8 +31,8 @@ L'objectif est de casser les structures pour diminuer les surdensités et limite
 %modèle sous grille\\
 
 
-%\subsection{Mort}
-%\label{sec:snmort}
+\subsection{La mort d'une étoile}
+\label{sec:snmort}
 
 Arrivé à un certain taux de consommation d'hydrogène, les réactions protons-protons ne sont plus suffisantes et l'étoile s'effondre sur elle même.
 %A la fin de sa vie, une étoile a consommée la plus grande partie de son hydrogène disponible.
@@ -119,7 +120,7 @@ où $E_{sn}$ représente l'énergie à injecter et $\gamma$ l'indice adiabatique
 
 L'injection de l'énergie va donc résulter en une augmentation de la pression dans la cellule et le gaz sera mis en mouvement par conversion de l'énergie interne en énergie cinétique. 
 L'avantage de cette méthode est que l'injection ne nécessite la modification que d'une seule cellule.
-Cependant il est connu pour avoir de fortes pertes de d'énergie dans le cas ou le refroidissement est autorisé. %TODO ref
+Cependant il est connu pour avoir de fortes pertes de d'énergie dans le cas ou le refroidissement est autorisé \citep{navarro_simulations_1993}. 
 
 \subsubsection{Modèle cinétique}
 
@@ -260,7 +261,8 @@ Le motif de raffinement est similaire pour les trois simulations.
 
     \caption[Test de Sedov - Tranches]{Différents motif d'explosion en fonction de la méthodes d'injection.
     Chaque figure représente une tranche d'une cellule d'épaisseur contenant le site de l'explosion.
-    (a), (b) et (c) représente le log de la densité avec une colormap quantitative.
+    (a), (b) et (c) représente le champ de densité prit au même instant.
+    Dans le but d'accentuer les différence, la représentation utilise le logarithme de la densité avec une colormap quantitative.
     A cause de la grille de calcul, il existe des axes privilégiés pour les flux, il en résulte des motif en croix et ou en losange.
     La figure (d) représente les niveaux de raffinements, l'échelle est différente et le niveau 10 est aligné sur le front d'onde.
     }
@@ -312,7 +314,7 @@ $\sigma_8=0.830$.
 Les simulations commencent à redshift $z=150$.
 
 
-\subsection{Test de formation stellaire, la SFH cosmique}
+\subsection{Test de formation stellaire}
 
 %le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
 Une difficulté est qu'il existe une dégénérescence entre le seuil en densité et l'efficacité de formation stellaire.
@@ -321,7 +323,8 @@ Dans la littérature %dédiée aux simulations comparables %TODO ref
 un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé.
 J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
 La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de (8/h cMpc)$^3$ obtenue après calibration. 
-Les observations sont extraites d'un compilation réalisée par \cite{madau_cosmic_2014}.
+Les observations sont extraites de \cite{bouwens_reionization_2015}.
+%une compilation réalisée par \cite{madau_cosmic_2014}.
 L'efficacité de formation stellaire est fixée à $1\%$.
 Avec ces paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
 
@@ -349,10 +352,10 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des so
 
 
 
-\subsection{Tests en conditions de production}
+\subsection{Tests du modèle de supernovæ}
 
 
-\subsection{Influence de la méthode d'injection}
+\subsubsection{Influence de la méthode d'injection}
 \label{sec:snmethod}
 
 Le premier test consiste à essayer les différents modèle de feedback avec la même quantité d'énergie injectée, et à mesurer leur impact sur la \ac{SFH} cosmique.
@@ -386,7 +389,7 @@ Nous aurons donc tendance préférer la méthode cinétique par la suite, vu que
 
 
 
-\subsection{Influence de la quantité d'énergie injectée}
+\subsubsection{Influence de la quantité d'énergie injectée}
 \label{sec:snegy}
 
 Le deuxième test consiste à utiliser la méthode cinétique et à varier la quantité d'énergie injectée via le paramètre $\epsilon_{SN}$.
@@ -402,7 +405,7 @@ Ce qui est le comportement attendus puisque plus les supernovae sont puissantes,
  		\label{fig:sfr_egy}
 \end{figure}
 
-\subsection{Couplage entre feedback et efficacité de formation stellaire}
+\subsubsection{Couplage entre feedback et efficacité de formation stellaire}
 
 Le couplage entre feedback et formation stellaire n'est pas clair et mérite d'être exploré.
 En effet, plus on forme d'étoiles et plus le feedback devient important, mais plus il y a de feedback, moins il est facile de former de nouvelles étoiles.
@@ -422,7 +425,7 @@ A feedback donné, il n'est donc pas possible de remonter le \ac{SFR} en augment
  		\label{fig:sfr_sfe}
 \end{figure}
 
-\subsection{Impact sur la fraction d'ionisation}
+\subsubsection{Impact sur la fraction d'ionisation}
 \label{sec:pbfesc}
 Une observation importante par rapport au deuxième test est qu’indépendamment de la quantité d'énergie injectée, et que même si le \ac{SFR} est significativement impacté, l'histoire d'ionisation reste quasiment inchangée (cf figure \ref{fig:xion_sneff}).
 
