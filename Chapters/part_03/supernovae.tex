@@ -302,9 +302,9 @@ Dans un premier temps, j'ai réalisé une série de simulations, avec pour objec
 \label{sec:pres_simu}
 
 Les paramètres communs à toutes les simulations qui vont suivre sont les suivants:
-Elles représentes un volume de $8h^{-1}$ cMpc cube échantillonnées par $256^3$ éléments de résolutions. % particules de matière noire.
+Elles représentes un volume de $\left( 8\cdot h^{-1} \mathrm{cMpc} \right)^3$ échantillonnées par $256^3$ éléments de résolutions. % particules de matière noire.
 Ce qui mène à une résolution en masse de $3.4 \cdot 10^6 M_\odot$ et une résolution spatiale de $46$ckpc sur le niveau de base.
-La grille est raffinée suivant une méthode semi-lagrangienne (voir Sec. \ref{sec:raffinement}) avec une limite de résolution de 1 kpc.
+La grille est raffinée suivant une méthode semi-Lagrangienne (voir Sec. \ref{sec:raffinement}) avec une limite de résolution de 1 kpc.
 Les condition initiales ont été générées avec MUSIC \citep{hahn_multi-scale_2011} avec une cosmologie de Planck \citep{planck_collaboration_planck_2016} : 
 $\Omega_m=0.3175$, 
 $\Omega_v=0.6825$,
@@ -322,11 +322,13 @@ En effet, il semble à priori possible d'obtenir des résultats similaire en uti
 Dans la littérature %dédiée aux simulations comparables %TODO ref
 un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé.
 J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
-La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de (8/h cMpc)$^3$ obtenue après calibration. 
+La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de $\left( 8\cdot h^{-1} \mathrm{cMpc} \right)^3$ obtenue après calibration. 
 Les observations sont extraites de \cite{bouwens_reionization_2015}.
 %une compilation réalisée par \cite{madau_cosmic_2014}.
 L'efficacité de formation stellaire est fixée à $1\%$.
 Avec ces paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
+Les premières étoiles apparaissent autour du redshift $z\approx 14$, contraint par le paramètre de surdensité.
+On observe cependant un saut dans la \ac{SFH} autour de redshift $z=10$ dû à l'enclenchement du dernier niveau de raffinement.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/SFR.pdf}
@@ -336,11 +338,12 @@ Avec ces paramètres, la \ac{SFH} obtenue respecte les contraintes observationne
  		\label{fig:test_SFH}
 \end{figure}
 
+\clearpage
 
 \subsection{Test radiatif}
 Avec les paramètres déterminés par Starburst99 et une fraction d'échappement intrinsèque de 40\%, j'obtiens l'histoire de reionisation présenté sur la figure \ref{fig:test_xion}.
 Cette histoire est comparée aux contraintes observationnelles déterminées par \cite{fan_constraining_2006}.
-J'ai également pu vérifier à ce stade que l'introduction du rayonnement ionisant dans la simulation n'impacte pas la \ac{SFH} cosmique.
+J'ai également pu vérifier à ce stade que l'introduction du rayonnement ionisant dans la simulation a peu d'impact sur la \ac{SFH} cosmique.
 Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des sources.
 
 \begin{figure}
@@ -350,8 +353,39 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des so
  		\label{fig:test_xion}}
 \end{figure}
 
+\subsection{Le problème de la masse des étoiles}
+
+%le paramètre de masse des étoiles change la reionization\\
+%effet numérique\\
+%le rayonnement est piégé dans les cellules\\
+
+Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire $m_{star}$ avait une grande importance dans l'évolution de la fraction ionisée.
+Même si celui ci n'a pas d'impact sur le \ac{SFR} global, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf Fig .\ref{fig:mstar}).
+Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important.
+À l'inverse, plus la résolution stellaire est élevée, plus la boite réionise tard.
+Il s'agit ici d'un effet numérique lié à la méthode, et pour les plus petites particules stellaires le rayonnement se trouve piégé au sein de la cellule.
+
+Dans des simulations hydrodynamiques dédiées à l'étude de la formation des galaxies, ce paramètre n'a que peu d'importance.
+Il a une faible influence sur la formation stellaire globale et ne définira la limite de résolution pour les petits halos.
+Dans le cas de simulation \ac{RHD} de l'époque de réionisation, ce paramètre aura également une influence sur la propagation de la radiation.
+Il faudra trouver un compromis entre :
+
+\begin{itemize}
+\item particules stellaires massives, permettant au rayonnement de sortir facilement des cellules au détriment d'une mauvaise résolution sur la formation stellaire
+\item  et particule stellaire de faible masse, générant une formation stellaire correcte dans les petits halos mais menant à une réionisation plus difficile et une occupation mémoire plus importante.
+\end{itemize}
+
+Dans la suite de cette étude, les étoiles seront relativement massive puisque $m_star \approx 7.7 \cdot 10^4 M_\odot$.
 
 
+\begin{figure}
+        \includegraphics[width=.5\textwidth]{img/02/Mstar_SFH.png} 
+        \includegraphics[width=.5\textwidth]{img/02/Mstar_xion.png} 
+        \caption[Masse des étoiles]{En changeant le paramètre de résolution en masse des particules stellaire, la \ac{SFH} cosmique moyenne reste constante mais l'histoire d'ionisation s'en trouve impactée.
+ 		\label{fig:mstar}}
+\end{figure}
+
+\clearpage
 \subsection{Tests du modèle de supernovæ}
 
 

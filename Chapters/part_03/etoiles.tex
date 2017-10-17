@@ -25,7 +25,7 @@ Lors de cette comparaison, il s'est avéré que dans nos modèles, les supernov�
 \section{Considérations de résolution}
 %En fonction des echelles de travail, nous considererons soit les etoiles individuelles soit une population stellaire.
 
-Une des difficulté majeurs dans les simulations de la réionisation, est l'impossibilité d'obtenir des résolutions suffisante pour suivre la formation des sources de radiation individuellement, tout en simulant un volume suffisamment important.
+Une des difficultés majeurs dans les simulations de la réionisation, est l'impossibilité d'obtenir des résolutions suffisantes pour suivre la formation des sources de radiation individuellement, tout en simulant un volume suffisamment important.
 %Il existe toujours ce conflit en réionisation entre simuler des grands volume, et obtenir la meilleur résolution possible.
 Actuellement les simulations capables de suivre un volume d'Univers de l'ordre de $(100Mpc)^3$ atteignent un résolution de l'ordre du kilo-parsec.
 Or les échelles de formation stellaire sont de l'ordre de l'unité astronomique, soit un facteur $\approx 10^8$ plus petit.
@@ -137,7 +137,7 @@ $\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps
 % determination de la valeur de 55\\ 
 %TODO quells valeurs sont prisent et pourquoi?
 
-\subsection{La loi de schmidt-kennicut}
+\subsection{La loi de Schmidt-Kennicut}
 \label{sec:schmidt-kennicut}
  %conversion densité surfacique vers densité 3D\\
 %rho 1.5\\
@@ -162,14 +162,16 @@ Au final, le \ac{SFR} prend la forme:
 \end{equation}
 avec  $\epsilon_{sf}$ le paramètre d'efficacité de formation stellaire.
 Observationellement, $\epsilon_{sf}$  est de l'ordre du \%. %TODO ref
-Ce qui signifie que la formation stellaire est relativement inefficace.
+
 Il est également possible de considérer le temps caractéristique de formation stellaire:
 \begin{equation}
 t_{sf} =  \frac{t_{ff}}{ \epsilon_{sf} },
 \end{equation}
 qui est de l'ordre de quelques milliards d'années.
 
-
+%Ce qui signifie que la formation stellaire est relativement inefficace.
+La formation stellaire est relativement inefficace car des phénomènes complexes comme la turbulence ou les champs magnétiques ont une importance prépondérante aux échelles de l'unité astronomique
+(voir par exemple \cite{2015MNRAS.450.4035F}).
 
 \subsection{Implémentation}
 
@@ -287,11 +289,11 @@ Du fait de leurs masses, les popIII, émettaient un fort rayonnement ionisant, e
 
 Les étoiles naissent en groupe, et toutes ne sont pas identique.
 Pour caractériser cette diversité, il existe la notion de fonction de masse initiale (\ac{IMF}), qui exprime la probabilité de former une étoile d'une certaine masse dans un population.
-
+Une \ac{IMF} prend généralement la forme d'une loi de puissance :
 \begin{equation}
-A_{(M)} = a_0 \cdot m^{-\alpha}
+A_{(M)} = a_0 \cdot m^{-\alpha},
 \end{equation}
-
+pouvant être caractérisée par des valeurs de $\alpha$ différentes, parfois avec plusieurs intervalles.
 Parmi les \ac{IMF} plus connues il y a :
 
 \begin{itemize}
@@ -301,8 +303,6 @@ Parmi les \ac{IMF} plus connues il y a :
 \item \cite{2003PASP..115..763C}
 \end{itemize}
 
-Chacune d'elles présentant des pentes $\alpha$ différentes, et certaine avec plusieurs intervalles.
-%TODO Quelles sont les différences
 
 %Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendance a être très massive.
 
@@ -320,20 +320,16 @@ Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisati
 %: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
 %Fonction de masse IMF Top Heavy
 
-\subsection{Starburst99}
+\subsection{Modèle de population stellaire}
 \label{sec:staburst}
 %Pour modeliser 
 %paramètre d'entrée
 %sorties
 
 Une fois les étoiles formées, il est nécessaire de les faire rayonner.
-Pour ce faire il faut, à partir de leurs masses et de leurs ages, calculer leurs émissivité.
-Pour déterminer quel est le lien entre age, masse et luminosité d'une particule stellaire on utilisera un modèle de population stellaire.
-
-
 Les étoiles d'une population ayant des masses et des évolutions différentes, l'émission résultante sera la somme des contributions individuelles.
-La modélisation de population stellaire est complexe, et il existe différent modèles dédiés à cette tache.
-On peut citer entre autres :
+Pour déterminer quel est le lien entre age, masse et luminosité d'une particule stellaire on utilisera un modèle de population stellaire.
+Il existe différent modèles dédiés à cette tache, on peut citer entre autres :
 
 \begin{itemize}
 \item Starburst99 \cite{leitherer_starburst99:_1999} 
@@ -347,7 +343,7 @@ Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retou
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/03/spectre_starburst.jpg} 
         \caption[Spectres Starburst99]{Spectre d'émission d'une population stellaire généré par Starburst99.
-        Ici avec les paramètres sont $M_{pop}=10^6 M_\odot$, \ac{IMF} de Salpeter ($\alpha=2.35$ et intégration de 1 à 100 M$_\odot$ 
+        Ici avec les paramètres : $M_{pop}=10^6 M_\odot$, \ac{IMF} de Salpeter ($\alpha=2.35$ et intégration de 1 à 100 M$_\odot$ 
  		\label{fig:spectre_starburst}}
 \end{figure}
 
@@ -358,7 +354,7 @@ Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retou
 %La majorité des simulations que j'ai réalisées ensuite utilisent une \ac{IMF} Top-Heavy.
 
 
-A partir des spectres obtenus avec Starburst99 (cf section \ref{sec:staburst}), nous n'allons garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus courte que 912$\AA$) :
+A partir des spectres obtenus avec Starburst99 (cf section \ref{sec:staburst}), nous allons ne garder que la partie capable de ioniser l'hydrogène (toutes les longueurs d'onde plus courte que 912$\AA$) :
 
 \begin{equation}
 E_{ion (t)} = \int_{13.6eV}^{+\inf} h \nu_{(t)} d\nu
@@ -414,7 +410,7 @@ La gestion des groupes de photons a été abordée dans la section \ref{sec:grou
 \subsection{Quelques détails techniques}
 
 En pratique, il faudra calculer l'émissivité sur toute la grille.
-Cette opération est simplifiée par l'utilisation de la liste chaînée de particules (cf section \ref{s}).
+Cette opération est simplifiée par l'utilisation de la liste chaînée de particules (cf section \ref{sec:PART}).
 En effet, on passera en revue toutes les cellules, et pour chaque cellules on passera en revue toutes ses particules.
 On testera alors si une particules est une étoiles (la liste chaînée contient également les particules de matière noire), et si cette étoiles est dans un stade où elle émet de l'énergie lumineuse.
 Si c'est le cas, on calculera son émissivité et on injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.
@@ -437,26 +433,3 @@ Le calcul de $\dot{N}_\nu^*$ sera effectué dans toutes les cellules.
 %
 %Multigroupe frequence\\
 %multigroup temporel\\
-
-
-
-%\section{Le problème de la masse des étoiles}
-%
-%%le paramètre de masse des étoiles change la reionization\\
-%%effet numérique\\
-%%le rayonnement est piégé dans les cellules\\
-%
-%Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire avait une grande importance dans l'évolution de la fraction ionisée.
-%Même si celui ci n'a pas d'impact sur la SFR globale, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf Fig .\ref{fig:mstar}).
-%Plus la résolution stellaire est élevée, plus la boite réionise tard.
-%Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important.
-%
-%\begin{figure}[bth]
-%        \includegraphics[width=.45\linewidth]{img/02/Mstar_SFH.png} 
-%        \includegraphics[width=.45\linewidth]{img/02/Mstar_xion.png} 
-%        \caption{
-%        En changeant le parametre de résolution en masse des particules stellaire, la SFH moyenne reste constante mais l'histoire d'ionisation s'en trouve impacté.
-%}
-% 		\label{fig:mstar}
-%\end{figure}
-

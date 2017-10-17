@@ -1,25 +1,39 @@
 \chapter{Introduction aux cartes de redshift de réionisation}
 \label{sec:intre:zreio}
-Nous avons abordé dans la partie précédente une étude centrée sur les halos.
-Cependant les contraintes observationnelles sur la réionisation ne sont pas basées sur les halos mais sur l'\ac{IGM}, (voir \ref{sec_contraintes_obs}) et donc sur les régions sous-dense loin des halos.
-Nous nous intéressons dans cette section à un aspect complémentaire de ceux abordés dans les parties précédentes, l'histoire de l'état d'ionisation de l'\ac{IGM}.
-Cette histoire est contenue dans un outils essentiel de l'étude de la réionisation dans son ensemble, les cartes de redshift d'ionisation.
-Ces cartes sont constituées en chaque point de l'espace, du redshift auquel chaque cellule est passée au dessus d'un certain niveau d'ionisation moyen.
+
+Nous avons abordé dans la partie précédente une étude centrée sur les halos, représentatifs des régions sur-denses, contenant la plus grande partie de la masse.
+Nous nous intéressons dans cette section à un aspect complémentaire à ceux abordés dans les parties précédentes, l'état d'ionisation de l'\ac{IGM}, qui lui est représentatif des les régions sous-dense, contenant la plus grande partie du volume.
+Une des variables que l'on cherche a reproduire dans les simulations de l'\ac{EoR} est l'état d'ionisation de l'\ac{IGM}, à la fin de la réionisation.
+La raison principale est qu'il existe des contraintes observationnelles sur cet état (voir section \ref{sec_contraintes_obs}).
+Un des objectifs des simulations numérique de l'\ac{EoR} est, à partir de ces contraintes observationnelles, d'estimer toute l'histoire d'ionisation de l'Univers.
+
+Les cartes de redshift de réionisation contiennent pour chaque point de l'espace, le redshift auquel il a été ionisée.
+Ce type de carte, contient énormément d'information sur l'histoire d'ionisation du volume simulé.
+
+Nous allons voir dans ce chapitre comment j'ai implémenté le calcul des cartes de réionisation à la volé dans EMMA.
+Je présenterai ensuite une méthode pour déterminer la vitesse des fronts d’ionisations à l'aide de ces cartes.
+Nous verrons finalement grâce à ces carte que la réionisation est un processus qui s'effectue en deux temps, le second étant un emballement qui va "flasher" le volume.
+
+
+%Cette histoire est contenue dans un outils essentiel de l'étude de la réionisation dans son ensemble, les cartes de redshift d'ionisation.
+%Ces cartes sont constituées en chaque point de l'espace, du redshift auquel chaque cellule est passée au dessus d'un certain niveau d'ionisation moyen.
 %Les cartes de redshift de réionisation sont de outils important pour l'étude de la réionisation dans son ensemble.
 
-Nous allons voir dans ce chapitre comment j'ai implémenté le calcul des cartes de réionisation dans EMMA.
-Je présenterai ensuite une méthode pour déterminer la vitesse des front d’ionisation.
-
+% et donc 
+%Cependant ne sont pas basées sur les halos mais sur l'\ac{IGM}, (voir \ref{sec_contraintes_obs}) et donc sur les régions sous-dense loin des halos.
 
 \section{Méthode de calcul des cartes}
 \label{sec:zmapcompute}
 
-Les cartes de redshift contiennent pour chaque cellules le redshift auquel elles a été ionisée.
-Il est possible de calculer ces cartes à partir des sorties mais dans le but d'obtenir la meilleur résolution temporelle possible, j'ai implémenté dans EMMA le calcul des cartes de réionisation à la volée, pendant l'exécution d'une simulation.
-L'instant à conserver sera définis par le passage de la fraction d'ionisation de la cellule par un seuil.
-Ce seuil sera définis à  50\% par la suite.
+En première approximation, il est possible de considérer l'état d'ionisation comme binaire.
+La fraction ionisée évoluant très rapidement en présence de rayonnement, l'\ac{IGM} est soit presque exclusivement neutre soit presque exclusivement ionisé.
+En gardant l'information du passage entre ces deux états dans les simulations, il est possible de créer une carte contenant l’information de toute l'histoire d'ionisation de l'\ac{IGM}.
+L'instant à conserver sera définis comme le passage de la fraction d'ionisation de la cellule par un seuil.
+Le passage d'un état à l'autre est très rapide, et la valeur de ce seuil a un impact réduit.
+Ce seuil sera définis à 50\% par la suite.
+
 Comme certaines cellules peuvent recombiner, il existe deux façons de définir un redshift de reionisation: il est possible de considérer soit la première, soit la dernière ionisation.
-L'implémentation est présenté sur le listing \ref{lst:majz}.
+
 
 \begin{itemize}
 \item Dans le cas de la première ionisation, la valeur ne devra être mise a jour qu'une seule fois au moment du passage du seuil.
@@ -31,16 +45,19 @@ Ainsi la valeur ne sera pas remise à jour à chaque pas de temps où la cellule
 Ainsi, si un cellule recombine, le valeur de son redshift associé sera de nouveau mise à jour, et la mise à jour stoppera à chaque passage au dessus du seuil.
 \end{itemize}
 
+Il est possible de calculer ces cartes à partir des sorties disques de EMMA mais dans le but d'obtenir la meilleur résolution temporelle possible, j'ai implémenté dans EMMA le calcul des cartes de réionisation à la volée, pendant l'exécution d'une simulation.
+L'implémentation est présenté sur le listing \ref{lst:majz}.
+
 \begin{lstlisting}[float=bth,language=c,frame=tb,caption={Mise a jour du redshift de reionisation},label=lst:majz]
-  #define THRESH_MAP (0.5)
+  #define THRESH_MAP (0.5) // definition du seuil
 
-  if(cell.xion<THRESH_MAP)
-    cell.t_last_xion=current_t;
+  if(cell.xion<THRESH_MAP) // test de l'ionisation de la cellule
+    cell.t_last_xion=current_t; // association du temps d'ionisation 
 
-  if( (xion>=THRESH_MAP) && (cell.t_first_xion==-1) )
-    cell.t_first_xion=current_t;
+  if( (xion>=THRESH_MAP) && (cell.t_first_xion==-1) ) // test de l'ionisation de la cellule et de premiere ionisation
+    cell.t_first_xion=current_t; // association du temps d'ionisation 
+    
 \end{lstlisting}
-
 
 Dans le cas d'une grille \ac{AMR}, l'organisation de la grille est amenée à évoluer.
 La question du raffinement/deraffinement se pose alors.

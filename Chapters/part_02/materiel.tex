@@ -10,7 +10,7 @@ Ce qui est totalement impossible à l'heure actuelle.
 %Nous verrons dans la prochaine partie que nous sommes encore loin de pouvoir résoudre la formation stellaire dans ce type de simulations. %TODO ref
 Nous avons vu que l'amélioration de certain algorithme (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation N-corps directe, etc... voir chapitre \ref{ch:introduction}) a permis d'augmenter significativement la taille des simulations à puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
 
-\section{Calcul haute performance}
+\section{Calcul hautes performances}
 
 Le \ac{HPC} est un domaine visant à utiliser au mieux les ressources de calculs disponibles.
 Ces ressources peuvent être multiples et les utiliser conjointement; de manière efficace représente un challenge en soit.
@@ -215,7 +215,7 @@ Une technique hybride Hilbert/Morton pourrait être envisagée.
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/ZCurve.png} 
         \caption[Courbe de Morton]{Principe de la courbe de Morton.
-        Ce type de courbe est mieux adaptée a l'utilisation de \ac{GPU} que la courbe de Hilbert.
+        Ce type de courbe est mieux adaptée à l'utilisation de \ac{GPU} que la courbe de Hilbert.
  		\label{fig:hilbert}}
 \end{figure}
 
@@ -230,7 +230,7 @@ Ceci facilite grandement le gestion des conditions de bords.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/secteur.png} 
-        \caption[Domaine associé a un processus]{Exemple de domaine de processeur généré par EMMA. 
+        \caption[Domaine associé à un processus]{Exemple de domaine de processeur généré par EMMA. 
         Chaque domaine représente une vue d'ensemble de la grille, à résolution dégradée.
 }
  		\label{fig:domaine}
@@ -393,9 +393,9 @@ De plus, ces données sont généralement calculé sur des machines distante et 
 %grosse quantité de données\\
 
 Dans l'ancien modèle de données d'EMMA, l'intégralité de l'octree était écrit (cf figure \ref{fig:data}).
-Les octs étaient écrit les uns à la suite des autres avec toute l'information qu'ils contenaient.
+Les OCTs étaient écrit les uns à la suite des autres avec toute l'information qu'ils contenaient.
 L'information étaient exacte et complète, mais le volume de données était considérable.
-De plus chaque processeur écrivait un fichier indépendant, ce qui pouvait rapidement faire exploser le nombre de fichiers et être problématique selon file-système des calculateurs car il est possible d'avoir un nombre limité de fichier par utilisateur.
+De plus chaque processeur écrivait un fichier indépendant, ce qui pouvait rapidement faire exploser le nombre de fichiers et être problématique selon le système de fichiers des calculateurs car il est possible d'avoir une limite sur le nombre de fichiers par utilisateur.
 
 Dans la même optique que ce qui a été abordé dans la section \ref{sec:cpugpu}, j'ai mis en place un modèle visant a manipuler les données avant leurs transferts.
 L'objectif est de sortir les données de l'arbre en se basant sur une notion de tableau de champs pour faciliter leurs traitement.
@@ -413,6 +413,7 @@ Par contre un gain appréciable est réalisé au moment de l'analyse des donnée
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/data.pdf} 
         \caption[Gestion des IO]{Différence entre ancienne gestion des données à gauche et nouvelle version à droite.
+        Une meilleur hiérarchisation facilite l'accès aux données .
  		\label{fig:data}
  		}
 \end{figure}

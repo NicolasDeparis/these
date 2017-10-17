@@ -140,40 +140,40 @@ En répondant à certaines de ces questions, les simulations numériques permett
 
 
 \section{Mes travaux}
-%TODO 
 
 Dans l'objectif de répondre à certaine de ces questions, il est nécessaire de développer des outils.
-EMMA à été mon principal outil durant cette thèse, et j'y ai apporté différentes contributions, allant de la simple résolution de conflits jusqu'à l'ajout de nouvelles fonctionnalités, en passant par l'optimisation de certaine parties.
-Une de mes principales contribution a été implémentation d'un modèle de formation et d'évolution stellaire.
-Ce modèle disposant de plusieurs paramètres libres, une étape importante a été sa calibration.
-La valeur de des paramètres étant directement fonction de la résolution, il a naturellement été choisi d'utiliser la résolution des plus grosse simulations à l'heure actuelle.
-Cette calibration a été une étape préliminaire à la réalisation de la simulation CODA I-AMR, une simulation représentant un volume de $(100 cMpc)^3$ échantillonné par 2048$^3$ éléments de résolutions et une résolution adaptative allant jusqu'à 500pc.
-Les ressources de calculs étant limitées, il est nécessaire de faire certaines concessions.
-Le choix doit être fait entre volume physique et résolution.
-N'étant pas possible de réaliser plusieurs de ces simulations, j'ai exécuté un grand nombre de simulations de taille réduite 12cMpc3 avec une résolution de 1kpc. 
-Ce qui m'a permis d'explorer une partie de l'espace de paramètres du modèle de formation stellaire.
-L'objectif est de comprendre, sur des échantillons, quel est l'influence des paramètres libre du modèle sur les résultats obtenus, et leurs interprétation.
+EMMA à été mon principal outil durant cette thèse, j'y ai apporté différentes contributions, allant de l'ajout de nouvelles fonctionnalités jusqu'à la simple résolution de conflits, en passant par l'optimisation de certaine parties.
 
-Comment la retro action stellaire impacte la formation des galaxies dans les simulations?
+\textit{Comment la retro action stellaire impacte la formation des galaxies dans les simulations?}
+
+Une de mes principales contributions a été l'implémentation d'un modèle de formation et d'évolution stellaire et une étape importante de cette thèse a été sa calibration..
+Ce modèle dispose de plusieurs paramètres libres, et leurs valeurs étant directement fonction de la résolution, il a naturellement été choisi d'utiliser la résolution des plus grosse simulations à l'heure actuelle.
+Cette calibration a été une étape préliminaire à la réalisation de la simulation CODA I-AMR, une simulation représentant un volume de $(100 cMpc)^3$ échantillonné par $2048^3$ éléments de résolutions et une résolution adaptative allant jusqu'à 500pc.
+%Les ressources de calculs étant limitées, il est nécessaire de faire certaines concessions, le choix doit être fait entre volume physique et résolution.
+Les ressources de calculs étant limitées, il n'est pas possible de réaliser plusieurs de ces simulations, j'ai exécuté un grand nombre de simulations de taille réduite à $(12 cMpc)^3$ avec une résolution similaire. 
+L'objectif est d'explorer une partie de l'espace de paramètres du modèle, et de comprendre, sur des échantillons, quel est l'influence des paramètres libres sur les résultats obtenus, et leur interprétation dans des simulations plus grandes.
+
+
 
 Pour analyser les nombreuse simulations obtenues dans de bonnes conditions, j'ai développé une librairie pour d'analyse et la gestion des données.
-Cette librairie rassemble une grandes part des outils d'annalyse que j'ai dévellopé et est en accès libre, pour facilité l'accès a EMMA aux nouveaux uilisateurs
+Cette librairie rassemble une grandes part des outils d’analyse que j'ai développé et est en accès libre, pour faciliter l'accès d'EMMA à ses nouveaux utilisateurs.
 %visu
 
-%Comment améliorer un code cosmo pour faire des simulation plus grosses
+\textit{Comment améliorer un code de simulation cosmologique pour faire des simulations plus grosses et mieux résolues ?}
 
-Dans l'objectif de diminuer les concessions a réaliser sur la taille et la résoution des simulation
-il existe différentes pistes, soit augmenter l'accès aux ressources de calculs, soit optimiser les codes de simulations.
-Un des mes objectif est de mieux cerner l'ensemble d'un tel code pour être en mesure de cibler les points a améliorer.
+Dans l'objectif de diminuer les concessions à réaliser sur la taille et la résolution des simulations, il existe différentes pistes : soit augmenter l'accès aux ressources de calculs, soit optimiser les codes de simulations.
+Un des mes objectif est de mieux cerner l'ensemble d'un tel code pour être en mesure de cibler les points à améliorer.
 
 Il existe par exemple une technique consistant a diminuer numériquement  la vitesse de la lumière pour réduire la charge de calcul
 Je me suis poser la question du domaine de validité de cette approximation.
 Quel gain maximum peut on espérer grâce a cette technique, tout en restant dans un domaine d'approximation raisonnable?
 
+\textit{Quels sont les facteurs qui limitent la performance globale de EMMA et comment les améliorer?}
+
 Une autre piste n'est pas algorithmique mais matérielle.
-L'utilisation de processeurs graphique permet dans certain cas des accélération considérable (jusqu'a deux ordre de grandeurs).
-Cependant l'utilisation de ce matériel impose certaines précaution et si une grande partie d'EMMA l'utilise deja, le potentiel d'accélération reste grand.
-Quels sont les facteurs qui limitent la performance globale de EMMA et comment les améliorer?
+L'utilisation de processeurs graphique permet dans certain cas des accélération considérable (jusqu’à deux ordre de grandeurs).
+Cependant l'utilisation de ce matériel impose certaines précaution et si une grande partie d'EMMA l'utilise déjà, le potentiel d'accélération reste grand.
+
 
 
 
@@ -214,8 +214,8 @@ Pour cela j'ai développé un méthode pour calculer la vitesse des fronts d'ion
 Nous verrons ensuite un court chapitre \ref{sec:CODAEMMA} dédié à la présentation de la simulation "CODA II EMMA", une des plus grosse simulation de la réionisation à l'heure actuelle.
 J'y présenterai les premiers résultats obtenus à propos du liens entre la masse des halos contenus dans la simulation aujourd'hui et leurs histoires au moment de la réionisation.
 
-Le chapitre \ref{sec:visu} sera consacré à la présentation de travaux liés à la visualisation des simulations cosmologique.
-J'y aborderai différentes méthodes de visualisations ainsi que quelques détails technique liés a leurs implémentations.
+Le chapitre \ref{sec:visu} sera consacré à la présentation de travaux liés à la visualisation des simulations cosmologiques.
+J'y aborderai différentes méthodes de visualisations ainsi que quelques détails technique liés à leurs implémentations.
 
 
 %Ce modèle constitue une de mes principale contributions à \emma.

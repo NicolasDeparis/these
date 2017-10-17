@@ -2,7 +2,7 @@
 \label{sec:galaxies}
 
 
-\section{La détection des halos}
+%\section{La détection des halos}
 
 Les étoiles se forment rarement de manière isolée mais généralement en groupe, dans des régions bien définies. % que l'on nomme galaxies.
 Ces zones ont une densité de gaz particulièrement élevée qui leurs permettent d'amorcer la formation stellaire. %et disposent donc de suffisamment de matériaux pour amorcer
@@ -28,8 +28,12 @@ Il existe différents techniques, mais j'ai principalement utilisé l’algorith
 Il retourne ensuite une liste de groupes de particules et une liste de positions déterminées par le centre de masse des particules de chaque halos.
 %FOF retourne une liste de position de halo, une liste permettant de lier les particules détecté aux halos.
 %Il existe plusieurs possibilités pour ensuite déterminer l'étendue spatiale des halos.
+J'ai utilisé un paramètre de taille caractéristique de valeur standard $0,2$.
 
-\subsection{Le rayon de Viriel}
+\section{Association halos - galaxies}
+
+\subsection{Association dans le R$_{200}$}
+
 La façon la plus directe pour déterminer l'étendue spatiale d'un halo consiste à utiliser l'approximation du $R_{200}$ \citep{1997ApJ...490..493N}.
 Elle consiste à considérer, autour du centre de masse, une sphère aillant une densité moyenne de $200$ fois la densité moyenne de l'univers $\bar{\rho}$.
 Le $R_{200}$ est défini comme : 
@@ -37,8 +41,6 @@ Le $R_{200}$ est défini comme :
 R_{200}= \left( \frac{3}{4\pi} \frac{M_{FoF} }{200 \bar{\rho}}  \right)^{1/3}
 \end{equation}
 
-
-\subsection{Association dans le R$_{200}$}
 
 %Il faut ensuite y associer les autres champs physique contenus par la grille 
 %La première méthode consiste a utiliser l'approximation du R200.
@@ -58,10 +60,10 @@ Nous avons à ce stade une position et une étendue pour chaque halo.
 On cherchera ensuite à y associer les baryons formant les galaxies.
 Pour se faire j'ai utilisé un KD-tree, un arbre permettant d'effectuer des recherches spatiales de manière optimisées.
 A l'aide d'un arbre généré sur les étoiles, j'ai associé à chaque halo toutes les étoiles à une distance inférieur à son $R_{200}$ autour de son centre de masse.
-Comme il est également intéressant d'obtenir des informations sur les champs physique contenus pas la grille AMR, il sera possible d'utiliser un KD-tree pour déterminer quelles sont les cellules qui se trouvent dans le $R_{200}$ du halo.
+Comme il est également intéressant d'obtenir des informations sur les champs physique contenus dans la grille \ac{AMR}, il sera possible d'utiliser un KD-tree sur la grille pour déterminer quelles sont les cellules qui se trouvent dans le $R_{200}$ du halo.
 Il suffit pour cela de générer un arbre sur les centres des cellules à la place de la position des étoiles.
 %Comme les particules de matière noire  données par FoF ne represente pas le meme volume, dans un soucis de cohérence, on appliquera cette méthodes a la matière noire également.
-À ce stade nous avons donc la possibilité, pour chaque halo, de connaître n'importe qu'elle grandeurs comprissent dans son $R_{200}$.
+À ce stade nous avons donc la possibilité, pour chaque halo, de connaître toutes les grandeurs physiques comprissent dans son $R_{200}$.
 
 \subsection{Le problème de la forme des halos}
 
@@ -86,14 +88,17 @@ Du fait de l'effondrement hiérarchique de la matière noire, changer la longueu
 
 \subsection{Association "fine"}
 
-Dans le but d'améliorer ces problèmes d'identification dans les halos fortement asphérique, j'ai développé une méthode pour associer plus précisément la grille aux halos.
+Dans le but d'améliorer ces problèmes d'association avec la grille dans les halos les plus massifs pouvant être fortement asphériques, j'ai développé une méthode consistant a calculer l'intersection entre la grille et les particules du halos.
+%pour associer plus précisément la grille aux halos.
 Cette méthode consiste à rechercher pour chaque particule de matière noire, sa plus proche cellule.
-Malgré la recherche effectué à l'aide d'un KD-tree, cette méthode est évidemment bien plus longue qu'une simple recherche dans la sphere.
+
 La figure \ref{fig:R200_fine} présente la comparaisons entre la détection des cellules par $R_{200}$ et la méthode fine, pour le halo de la figure \ref{fig:part_halo}.
+La méthode fine associe la grille de manière bien plus précise que la méthode $R_{200}$.
+Malgré la recherche effectué à l'aide d'un KD-tree, cette méthode est évidemment bien plus longue qu'une simple recherche dans la sphere.
 
 \begin{figure}
-	\subfloat[$R_{200}$]{\includegraphics[width=.45\linewidth]{img/03/part_cells.pdf} }
-	\subfloat[\textit{fine}]{\includegraphics[width=.45\linewidth]{img/03/part_cells_fine.pdf} }
+	\subfloat[$R_{200}$]{\includegraphics[width=.5\linewidth]{img/03/part_cells.pdf} }
+	\subfloat[\textit{fine}]{\includegraphics[width=.5\linewidth]{img/03/part_cells_fine.pdf} }
     \caption[Méthodes d'association matière noire - grille]{Cellules associées au halo présenté sur la figure \ref{fig:part_halo} dans le cas de l'estimation du $R_{200}$ à gauche et dans le cas de la méthode "fine" à droite.       
  	\label{fig:R200_fine}}
 \end{figure}
@@ -210,9 +215,13 @@ La \ac{SFR} est réduite car les baryons sont expulsés par le feedback.
 
 %TODO parler de la résolution en masse pour les petites masses
 
+
+%La résolution des halos les moins massifs est limitée, en masse,  en espace, en formation stellaire et en radiation.
+%Les petits halo c'est de la MERDE!
+
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/baryon_frac.pdf}
-        \caption[Fraction baryonique]{Fraction baryonique en fonction de la masse du halo et des feedback.
+        \caption[Fraction baryonique]{Fraction baryonique en fonction de la masse du halo et des différentes méthodes de feedback.
  		\label{fig:bfrac}}
 \end{figure}
 
@@ -411,11 +420,16 @@ Or, cette diminution de la quantité de baryon, permet à la radiation de s'éch
 Aux résolutions considérées dans cette étude, c'est a dire la résolution des plus grosses simulations de la réionisation de type CODA,  %TODO ref.
 la compétition entre la diminution du taux de production de photon et l'augmentation de la fraction d'échappement semble neutre.
 De plus, plus les supernovae sont puissantes, plus le pas de temps est réduit, et plus le coût global de la simulation augmente.
-Ce qui fait que, si une telle simulation est exécutée dans le but d'étudier l'\ac{IGM}, l'introduction des supernovae n'est pas fondamentale.
-A l'inverse, si l’intérêt est plus porté sur la morphologie des galaxies pendant la réionisation, il n'est plus possible de se passer de l'introduction du feedback.
+
+Si une telle simulation est exécutée dans le but d'étudier l'état d'ionisation de l'\ac{IGM}, l'introduction des supernovae n'est pas fondamentale puisqu'elle n'a que peu d'influence sur ce facteur.
+A l'inverse, si l’intérêt est plus porté sur la morphologie des galaxies pendant la réionisation, il n'est plus possible de se passer de l'introduction du feedback, car la distribution des baryons au sein des halos peut être grandement influencée.
 
 %De plus nous observons que le budget de photons est principalement gouverné par les halos de masses intermédiaire autour de $10^{10} M_\odot$.
 
+Un changement de comportement dans la formation stellaire est attendu autour de $M \approx 10^9M_\odot$ (voir eg \cite{2001PhR...349..125B}).
+La résolution des simulations actuelles n'est pas suffisante et il me semble nécessaire d'augmenter la résolution en masse ainsi que la résolution radiative de un voir deux ordres de grandeurs, pour résoudre la physique des halos jusqu'à des masses de l'ordre de $M \approx 10^8M_\odot$ et ainsi étudier ce changement de régime de manière plus assuré, tout en gardant un volume simulé suffisamment grand.
+Quelques années seront encore nécessaire pour réunir ces conditions.
+%à la fois une résolution radiative suffisante et .
 
 
 
