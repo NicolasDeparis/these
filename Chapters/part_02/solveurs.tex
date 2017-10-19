@@ -22,31 +22,31 @@ Il va être nécessaire de discrétiser ces systèmes avant de pouvoir les trait
 L'objectif de cette partie est de présenter les différentes techniques et implémentations des moteurs physiques de EMMA.
 
 
-\section{Génération des conditions initiales}
-\label{sec:IC}
-
-La première étape consiste à déterminer l'état initial du système que l'on cherche à résoudre.
-Nous avons vu (cf \ref{sec:CMB}) que le \ac{CMB} nous donne de l'information sur l'état de la distribution de matière dans l'univers très tôt dans son histoire.
-Il est possible de déterminer le spectre de puissance des fluctuations de densité de l'univers primitif à partir du \ac{CMB}.
-Le principe de la génération des condition initiales est d'utiliser ce spectre de puissance pour générer des surdensité représentant statistiquement ces fluctuations.
-Pour se faire on va générer une grille régulière sur laquelle on placera une particule au centre de chaque cellule, dans ce cas la densité est homogène.
-On va alors perturber la position des particules de manière à respecter les fluctuations statistique observées dans le \ac{CMB}.
-Pour ce faire, on va générer un bruit aléatoire Gaussien que l'on 
-%Tout les générateurs de condition initiales que j'ai pu rencontrer utilise une SEED aléatoire, dans le but de générer ce bruit aléatoire.
-convoluera ensuite avec le spectre de puissance que l'on cherche a reproduire.
-On déplacera finalement les particules en accord en leurs appliquant les perturbations obtenues. 
-Cette approximation est l’approximation de Zeldovitch (voir eg \cite{2014MNRAS.439.3630W}) et n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire.
-%L’approximation de Zeldovitch est capable de prédire analytiquement la distribution de la matière à très grandes échelles.
-%Mais plus l'on cherche à étudier des petites échelles, plus on sort vite du domaine de précision acceptable.
-En dehors de cette approximation, il est nécessaire d'avoir recourt aux simulations numériques.
-
-Nous voyons ici que le spectre est limité des deux cotés.
-D'un coté l'information des grandes échelles est tronquée par la taille de la boite considéré et il n'est pas possible d'avoir de l’information sur des longueurs d'onde du spectre plus grande que cette taille limite.
-De l'autre coté, les petites échelles sont tronquées par la limite de résolution et le spectre est troqué au niveau de la longueur d'onde correspondant à la résolution de la grille.
-Cette perte d'information sur les hautes fréquences peux être problématique dans le cas où la résolution est adaptative.
-%Dans le cas de l'\ac{AMR} par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
-
-En pratique j'ai principalement utilisé MUSIC \citep{hahn_multi-scale_2011} et GRAPHIC \citep{2008ApJS..178..179P}.
+%\section{Génération des conditions initiales}
+%\label{sec:IC}
+%
+%La première étape consiste à déterminer l'état initial du système que l'on cherche à résoudre.
+%Nous avons vu (cf \ref{sec:CMB}) que le \ac{CMB} nous donne de l'information sur l'état de la distribution de matière dans l'univers très tôt dans son histoire.
+%Il est possible de déterminer le spectre de puissance des fluctuations de densité de l'univers primitif à partir du \ac{CMB}.
+%Le principe de la génération des condition initiales est d'utiliser ce spectre de puissance pour générer des surdensité représentant statistiquement ces fluctuations.
+%Pour se faire on va générer une grille régulière sur laquelle on placera une particule au centre de chaque cellule, dans ce cas la densité est homogène.
+%On va alors perturber la position des particules de manière à respecter les fluctuations statistique observées dans le \ac{CMB}.
+%Pour ce faire, on va générer un bruit aléatoire Gaussien que l'on 
+%%Tout les générateurs de condition initiales que j'ai pu rencontrer utilise une SEED aléatoire, dans le but de générer ce bruit aléatoire.
+%convoluera ensuite avec le spectre de puissance que l'on cherche a reproduire.
+%On déplacera finalement les particules en accord en leurs appliquant les perturbations obtenues. 
+%Cette approximation est l’approximation de Zeldovitch (voir eg \cite{2014MNRAS.439.3630W}) et n'est valable que dans le cas des petites perturbations, tant que l'on reste dans le régime linéaire.
+%%L’approximation de Zeldovitch est capable de prédire analytiquement la distribution de la matière à très grandes échelles.
+%%Mais plus l'on cherche à étudier des petites échelles, plus on sort vite du domaine de précision acceptable.
+%En dehors de cette approximation, il est nécessaire d'avoir recourt aux simulations numériques.
+%
+%Nous voyons ici que le spectre est limité des deux cotés.
+%D'un coté l'information des grandes échelles est tronquée par la taille de la boite considéré et il n'est pas possible d'avoir de l’information sur des longueurs d'onde du spectre plus grande que cette taille limite.
+%De l'autre coté, les petites échelles sont tronquées par la limite de résolution et le spectre est troqué au niveau de la longueur d'onde correspondant à la résolution de la grille.
+%Cette perte d'information sur les hautes fréquences peux être problématique dans le cas où la résolution est adaptative.
+%%Dans le cas de l'\ac{AMR} par exemple il peux paraître difficile d'autoriser un nombre élevé de niveau de raffinement puisque les niveaux nouvellement créer ne disposerons pas de l'information des conditions initiales.
+%
+%En pratique j'ai principalement utilisé MUSIC \citep{hahn_multi-scale_2011} et GRAPHIC \citep{2008ApJS..178..179P}.
 
 %méthode
 %gaussian random noise
@@ -82,20 +82,20 @@ Il existe différentes techniques pour suivre l'évolution d'un tel système, to
 Les particules sont placées suivant une certaine condition initiale (section \ref{sec:IC}) et on cherche à connaître la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement.
 
 
-\subsection{Moteur de gravité}
-\label{sec:gravity}
+%\subsection{Moteur de gravité}
+%\label{sec:gravity}
 
 %Je vais plus détailler le solveur de gravité que les autres puisque c'est celui sur lequel j'ai le plus travaillé.
 %Le sloveur que je connais le mieux.
 %Fluide non collisionnel -> particule\\
 
-A partir des conditions initiales générées, on cherche ensuite à suivre dynamiquement l'évolution des particules.
-Le but est d'obtenir la position des particules à chaque instant.
+%On cherche à suivre dynamiquement l'évolution de particules a partir d'une conditions initiales.
+%Le but est d'obtenir la position des particules à chaque instant.
 %Pour cela, il faut leurs vitesses.
 %Pour cela, il faut leurs accélération.
 %Pour cela, il faut la force qui leur est appliquée.
 %Et dans certain cas, il faut le potentiel gravitationnel.
-Ce système d'équations est appelé le système d'équation suivant:
+Pour ce faire on utilise le système d'équation suivant:
 
 \begin{equation}
 \begin{cases}
@@ -159,7 +159,7 @@ Dans le cas où l’étendue de la particule intersecte des cellules de différe
 \paragraph{}
 Une fois la grille de densité générée, nous pouvons calculer le potentiel en résolvant l'équation de Poisson.
 
-\subsubsection{L'équation de Poisson}
+\subsection{résolution de l'équation de Poisson}
 
 Connaissant la distribution de densité à un instant donné, il est possible de calculer le potentiel gravitationnel en résolvant l'équation de Poisson:
 
@@ -186,28 +186,31 @@ En intégrant deux fois la distribution de densité on obtient le potentiel grav
 \Delta \phi = S \longrightarrow \phi = \iint \Delta \phi = \iint S_{(\rho)}
 \end{equation}
 
-Pour cela, il existe principalement deux types de méthodes. 
-La première est basée sur les transformées de Fourier. 
-Cette méthode, très rapide, utilise le fait que dans l'espace de Fourier, une intégrale se résume à une division par un nombre d'onde. 
-Déterminer le champ de potentiel revient à : 
-\begin{itemize}
-\item Effectuer la transformée de Fourier de la densité
-\item Diviser par $k^2$
-\item Effectuer la transformée de Fourier inverse
-\end{itemize}
 
-\begin{equation}
-S_{(\vec{x})} \overset{FFT}{\longrightarrow}  S_{(\vec{k})} \times \frac{1}{k^2}  \overset{RFFT}{\longrightarrow}  \phi_{(\vec{x})}
-\end{equation}
+%Pour cela, il existe principalement deux types de méthodes. 
+%La première est basée sur les transformées de Fourier. 
+%Cette méthode, très rapide, utilise le fait que dans l'espace de Fourier, une intégrale se résume à une division par un nombre d'onde. 
+%Déterminer le champ de potentiel revient à : 
+%\begin{itemize}
+%\item Effectuer la transformée de Fourier de la densité
+%\item Diviser par $k^2$
+%\item Effectuer la transformée de Fourier inverse
+%\end{itemize}
+%
+%\begin{equation}
+%S_{(\vec{x})} \overset{FFT}{\longrightarrow}  S_{(\vec{k})} \times \frac{1}{k^2}  \overset{RFFT}{\longrightarrow}  \phi_{(\vec{x})}
+%\end{equation}
+%
+%De par la nature des transformées de Fourier, le champ de densité doit être périodique pour que l'implémentation de cette technique ne se révèle pas trop complexe. 
+%Ce qui n'est pas un problème en simulation cosmologique, où les conditions de bords sont toujours périodiques mais est plus problématique lors de la simulation de structures isolées, telles les galaxies ou les amas de galaxies. 
+%De plus, les \ac{FFT} nécessitent un échantillonnage régulier, ce qui implique que cette méthode est incompatible avec les méthodes \ac{AMR}. 
+%%Et dernièrement, le passage dans l'espace des fréquences nécessite des conditions de types plans parallèles lors parallélisation, conditions incompatible avec la gestion de grille utilisé par les code AMR dont EMMA} fait partie. \\
 
-De par la nature des transformées de Fourier, le champ de densité doit être périodique pour que l'implémentation de cette technique ne se révèle pas trop complexe. 
-Ce qui n'est pas un problème en simulation cosmologique, où les conditions de bords sont toujours périodiques mais est plus problématique lors de la simulation de structures isolées, telles les galaxies ou les amas de galaxies. 
-De plus, les \ac{FFT} nécessitent un échantillonnage régulier, ce qui implique que cette méthode est incompatible avec les méthodes \ac{AMR}. 
-%Et dernièrement, le passage dans l'espace des fréquences nécessite des conditions de types plans parallèles lors parallélisation, conditions incompatible avec la gestion de grille utilisé par les code AMR dont EMMA} fait partie. \\
+\subsection{Méthodes itératives}
 
-Le second type de méthodes est dit itératif. 
-Il consiste à faire converger le potentiel à partir d'une condition initiale arbitraire. 
-Ces méthodes sont plus lente que la méthode par \ac{FFT} mais permet d'utiliser tout type de conditions de bords, d'être facilement parallélisable et d'être compatible avec les méthodes basées sur des grilles adaptatives.
+
+Il existe plusieurs méthodes pour résoudre ce problème, EMMA utilise une méthode itérative qui consiste à faire converger le potentiel à partir d'une condition initiale arbitraire. 
+Ces méthodes permettent d'utiliser tout type de conditions de bords, sont facilement parallélisable et compatible avec les méthodes basées sur des grilles adaptatives.
 %Par la suite, c'est donc une méthode itérative et plus précisément une méthode \emph{Multigrille} qui à été développée.
 %Le potentiel est alors dérivé pour obtenir la force ressentie dans chaque cellule. 
 %Il est ensuite aisé de calculer l'accélération subie par les particules de chaque cellule, et par intégration temporelle, leurs nouvelles positions et vitesses.
@@ -220,139 +223,152 @@ L'équation à résoudre est donc:
 \dfrac{\partial \phi}{\partial t} = \Delta \Phi -S_{(\rho)}
 \end{equation}
 
-
-
-\subsubsection{Méthode jacobi}
-
 La méthode de Jacobi est la façon la plus simple de relaxer ce type d'équation, elle consiste à utiliser directement la forme discrète de l'équation de Poisson modifiée. 
 L'équation à intégrer est:
 
-\[ \dfrac{\phi^{t+1}_i - \phi^{t}_i}{\Delta t}  =  \Delta \phi_i^t - S_i^t \]
+\begin{equation}
+\\dfrac{\phi^{t+1}_i - \phi^{t}_i}{\Delta t}  =  \Delta \phi_i^t - S_i^t
+\end{equation}
 
-où, à 3 dimensions, le Laplacien s'exprime :
+où, à 1 dimensions, le Laplacien s'exprime :
 
-\[ \Delta \phi_i^t = \dfrac{\phi_{x+1,y,z}^t  + \phi_{x-1,y,z}^t + \phi_{x,y+1,z}^t  + \phi_{x,y-1,z}^t + \phi_{x,y,z+1}^t + \phi_{x,y,z-1}^t	- 6\phi_{x,y,z}^t}{\Delta x ^2} \]
+\begin{equation}
+\Delta \phi_i^t = \dfrac{\phi_{x+1}^t  + \phi_{x-1}^t- 2\phi_{x}^t}{\Delta x ^2}
+\end{equation}
 		
-Le principal avantage de cette méthode est qu'elle ne nécessite de connaître l'état du système qu'au temps $t$.
+%Le principal avantage de cette méthode est qu'elle ne nécessite de connaître l'état du système qu'au temps $t$.
+
 %Ainsi, chaque fils d'exécution parallèle (thread) est indépendant et n'a pas d'information à communiquer aux autres.
 
-\subsubsection{Gauss Seidel}
-Gauss-Seidel est une amélioration de Jacobi et permet d'augmenter la vitesse de convergence.% En utilisant toujours la valeur estimée,
-Au lieu d'utiliser, à chaque pas de temps, les valeurs de la grille au niveau précédent, cette méthode consiste à toujours utiliser la valeur la plus à jour disponible. 
-Une fois $\phi^{t+1}_0$ calculé à l'aide de $\phi^{t}_i$, la valeur de $\phi^{t+1}_1$ n'est pas calculée à l'aide de $\phi^{t}_0$ mais avec $\phi^{t+1}_0$. 
+Il est possible d'augmenter la vitesse de convergence en utilisant la méthode de Gauss-Seidel.
+Elle consiste à toujours utiliser la valeur la plus à jour disponible:
+%Au lieu d'utiliser, à chaque pas de temps, les valeurs de la grille au niveau précédent, cette méthode consiste à toujours utiliser la valeur la plus à jour disponible. 
+%Une fois $\phi^{t+1}_0$ calculé à l'aide de $\phi^{t}_i$, la valeur de $\phi^{t+1}_1$ n'est pas calculée à l'aide de $\phi^{t}_0$ mais avec $\phi^{t+1}_0$. 
 %En utilisant toujours la valeur la mieux estimée, cette méthode accélère la convergence. 
-L'intégration temporelle ne change pas, mais l'intégration spatiale devient: 
+%L'intégration temporelle ne change pas, mais l'intégration spatiale devient: 
+\begin{equation}
+\Delta \phi_i^t = \dfrac{\phi_{x+1}^t  + \phi_{x-1}^\mathbf{t+1}- 6\phi_{x}^t}{\Delta x ^2}
+\end{equation}
 
-\[ \Delta \phi_i^t = \dfrac{\phi_{x+1,y,z}^t  + \phi_{x-1,y,z}^\mathbf{t+1} + \phi_{x,y+1,z}^t  + \phi_{x,y-1,z}^\mathbf{t+1} + \phi_{x,y,z+1}^t + \phi_{x,y,z-1}^\mathbf{t+1}	- 6\phi_{x,y,z}^t}{\Delta x ^2} \]
-
-La parallélisation de cette méthode est plus compliquée que dans le cas de Jacobi. 
-La détermination de la valeur de chaque cellule nécessite de connaître l'état le plus à jour de ses voisins et donc de faire passer de l'information entre les processus.
-Cependant, une méthode nommée Gauss-Seidel Rouge-Noir facilite la parallélisation en séparant l'espace en un damier de couleurs. 
-%Chaque processeur ne calcule alors qu'une seule couleur. 
-Le premier processeur calcul par exemple les cases blanches de l'échiquier à partir de $\phi_i^t$, puis le second calcul le cases noires à partir des cases blanches déterminé par le premier.
+Cette méthode est itérée jusqu'à ce que soit le potentiel ait convergé, soit un nombre maximal d'itération soit atteins.
 
 
-\subsubsection{Sur-relaxation successive (SOR)}
-La méthode de sur-relaxation successive consiste à appliquer un coefficient pour sur-estimer l'évolution de la convergence et ainsi l'accélérer. 
-L'équation à intégrer devient:
-\[ \phi^{t+1}_i = \phi^{t}_i + \omega  \Delta t \left (\Delta \phi_i^t -S^t_i \right )  \]
-où $\omega \in \left] 0,2 \right [$ est le paramètre de sur-relaxation.
-\begin{itemize}
-\item lorsque $\omega <1$ La méthode est dite de sous relaxation.
-\item lorsque $\omega =1$ La méthode devient celle de Gauss-Seidel.
-\item lorsque $\omega >1$ La méthode est dite de sur relaxation.
-\end{itemize}
-Il existe des moyens analytiques pour déterminer la valeur optimale de $\omega$ mais très souvent cette valeur est déterminée empiriquement à partir d'une série de tests. 
-$\omega = 1,2$ est très souvent utilisé.
-%L'expression de cette méthode apparait généralement dans la litterature sous la forme:
+%La parallélisation de cette méthode est plus compliquée que dans le cas de Jacobi. 
+%La détermination de la valeur de chaque cellule nécessite de connaître l'état le plus à jour de ses voisins et donc de faire passer de l'information entre les processus.
+%Cependant, une méthode nommée Gauss-Seidel Rouge-Noir facilite la parallélisation en séparant l'espace en un damier de couleurs. 
+%%Chaque processeur ne calcule alors qu'une seule couleur. 
+%Le premier processeur calcul par exemple les cases blanches de l'échiquier à partir de $\phi_i^t$, puis le second calcul le cases noires à partir des cases blanches déterminé par le premier.
+%
+%
+%\subsubsection{Sur-relaxation successive (SOR)}
+%La méthode de sur-relaxation successive consiste à appliquer un coefficient pour sur-estimer l'évolution de la convergence et ainsi l'accélérer. 
+%L'équation à intégrer devient:
+%\[ \phi^{t+1}_i = \phi^{t}_i + \omega  \Delta t \left (\Delta \phi_i^t -S^t_i \right )  \]
+%où $\omega \in \left] 0,2 \right [$ est le paramètre de sur-relaxation.
+%\begin{itemize}
+%\item lorsque $\omega <1$ La méthode est dite de sous relaxation.
+%\item lorsque $\omega =1$ La méthode devient celle de Gauss-Seidel.
+%\item lorsque $\omega >1$ La méthode est dite de sur relaxation.
+%\end{itemize}
+%Il existe des moyens analytiques pour déterminer la valeur optimale de $\omega$ mais très souvent cette valeur est déterminée empiriquement à partir d'une série de tests. 
+%$\omega = 1,2$ est très souvent utilisé.
+%%L'expression de cette méthode apparait généralement dans la litterature sous la forme:
 
-\subsubsection{Condition d'arrêt}
-Ces méthodes sont itérées jusqu'à ce qu'un certain critère convergence soit respecté. 
-Le critère le plus couramment utilisé consiste à mesurer l'évolution de la convergence en comparant sa valeur au temps $t$ à celle au temps $t+1$.
-\[ \phi^{t+1}_i - \phi^{t}_i < \epsilon \]
-ou, de manière équivalente:
-\[ \Delta \phi_i^t - S_i^t< \epsilon \]
 
-Pour prendre en compte la possibilité que le potentiel ait convergé sur une partie du domaine seulement, et pour ne pas stopper le processus trop tôt, c'est le module de cette expression qui est considéré. 
-De plus il est d'usage de normaliser ce module par la source que l'on considère.
+%\subsubsection{Condition d'arrêt}
+%Ces méthodes sont itérées jusqu'à ce qu'un certain critère convergence soit respecté. 
+%Le critère le plus couramment utilisé consiste à mesurer l'évolution de la convergence en comparant sa valeur au temps $t$ à celle au temps $t+1$.
+%\[ \phi^{t+1}_i - \phi^{t}_i < \epsilon \]
+%ou, de manière équivalente:
+%\[ \Delta \phi_i^t - S_i^t< \epsilon \]
+%
+%Pour prendre en compte la possibilité que le potentiel ait convergé sur une partie du domaine seulement, et pour ne pas stopper le processus trop tôt, c'est le module de cette expression qui est considéré. 
+%De plus il est d'usage de normaliser ce module par la source que l'on considère.
+%
+%\[\dfrac{ \sqrt{  \sum_i \left (  \Delta \phi_i^t \right )^2 - \left (S^t_i  \right )^2 } }{\sqrt{  \sum_i  \left (S^t_i  \right )^2 } } < \epsilon \]
+%
+%A cette condition est ajouté un nombre d'itérations maximum fixe pour éviter les problèmes de boucles infinies lorsque le potentiel n'arrive pas à converger (oscillation autour d'une valeur d'équilibre par exemple).
 
-\[\dfrac{ \sqrt{  \sum_i \left (  \Delta \phi_i^t \right )^2 - \left (S^t_i  \right )^2 } }{\sqrt{  \sum_i  \left (S^t_i  \right )^2 } } < \epsilon \]
-
-A cette condition est ajouté un nombre d'itérations maximum fixe pour éviter les problèmes de boucles infinies lorsque le potentiel n'arrive pas à converger (oscillation autour d'une valeur d'équilibre par exemple).
-
-\subsubsection{Multigrille}
+\subsection{Multigrille}
 
 La technique du multigrille a été développé pour améliorer la vitesse de convergence des méthodes itératives.
-Elle consiste à utiliser le fait que les méthodes itératives converge rapidement les hautes fréquences spatiales en utilisant une série de grilles à différentes résolutions.
+Elle consiste à utiliser le fait que les méthodes itératives convergent rapidement les hautes fréquences spatiales.% en utilisant une série de grilles à différentes résolutions.
 De plus elles considère non plus la grandeur elle même, mais l'erreur effectuée dans l'estimation de cette grandeur.
-L'équation à résoudre est alors modifiée en considérant que l'inconnue n'est plus le potentiel mais l'erreur commise sur son estimation. Le terme source n'est plus la densité mais la densité moins son estimation grossière.
 
-Si l'équation à résoudre est de la forme : 
-\[ \mathcal{L} u = f \]
-Sa forme discrète est :
-\[ \mathcal{L}_h u_h = f_h \]
-si $\tilde{u_h}$ correspond à une estimation de la solution et $u_h$ à la solution exacte, l'erreur est alors la différence entre les deux : 
-\[ v_h = u_h - \tilde{u_h}. \]
-Le résidu est défini comme:
-\[ d_h = \mathcal{L}_h \tilde{u_h} - f_h \]
+%L'équation à résoudre est alors modifiée en considérant que l'inconnue n'est plus le potentiel mais l'erreur commise sur son estimation. 
+%Le terme source n'est plus la densité mais la densité moins son estimation grossière.
+%
+%Si l'équation à résoudre est de la forme : 
+%\[ \mathcal{L} u = f \]
+%Sa forme discrète est :
+%\[ \mathcal{L}_h u_h = f_h \]
+%si $\tilde{u_h}$ correspond à une estimation de la solution et $u_h$ à la solution exacte, l'erreur est alors la différence entre les deux : 
+%\[ v_h = u_h - \tilde{u_h}. \]
+%Le résidu est défini comme:
+%\[ d_h = \mathcal{L}_h \tilde{u_h} - f_h \]
+%
+%Et en utilisant la linéarité de l'opérateur Laplacien:
+%%comme $\mathcal{L}_h$ est linéaire:
+%\[ \mathcal{L}_h u_h = \mathcal{L}_h (v_h + \tilde{u_h} ) = \mathcal{L}_h v_h +\mathcal{L}_h \tilde{u_h} \]
+%\[ f_h   = \mathcal{L}_h \tilde{u_h} - d_h\]
+%et finalement :
+%\[ \mathcal{L}_h v_h = -d_h \]
 
-Et en utilisant la linéarité de l'opérateur Laplacien:
-%comme $\mathcal{L}_h$ est linéaire:
-\[ \mathcal{L}_h u_h = \mathcal{L}_h (v_h + \tilde{u_h} ) = \mathcal{L}_h v_h +\mathcal{L}_h \tilde{u_h} \]
-\[ f_h   = \mathcal{L}_h \tilde{u_h} - d_h\]
-et finalement :
-\[ \mathcal{L}_h v_h = -d_h \]
-
-Le cycle consiste à lisser (relaxer quelques fois) le potentiel à pleine résolution, les petites échelles vont alors rapidement converger, puis à calculer l'erreur commise à ce stade. 
-L'erreur est dégradée à plus basse résolution, elle ne contient alors que de l'information sur les basses fréquences de la grille de départ, les hautes fréquences de la grille à pleine résolution ont été supprimées par la dégradation. 
-Cette perte d'information sur les hautes fréquences n'est pas problématique car les hautes fréquences ont déjà convergé l'erreur est donc petite (voir nulle) aux hautes fréquence et est maximale aux basses. 
-Les hautes fréquences de cette nouvelle grille correspondent alors à des fréquences plus basses et donc plus difficiles à faire converger sur le grille globale. 
-La solution exacte de l'équation de l'erreur est calculée par itération (relaxée jusqu'à convergence) à partir des résidus sur cette petite grille. 
-Le potentiel précédemment estimé est alors corrigé de l'erreur exacte interpolée à pleine résolution en utilisant:
-\[ \tilde{u}_h^{new} = \tilde{u_h} + v_h \]
-Le potentiel corrigé est alors lissé par quelques dernières itérations.
-Ce cycle peut être résumé ainsi:
-
-\begin{tabular}{ll}
-Lisser 		& 	$ \mathcal{L} u_h = f_h $\\
-Calculer	&	$ d_h = \mathcal{L}_h \tilde{u_h} - f_h $\\
-Restreindre	&	$ d_H = Rd_h$\\
-Résoudre	&	$ \mathcal{L} v_H = -d_H $\\
-Interpoler	&	$ v_h = Pv_H$\\
-Corriger	&	$ \tilde{u}_h^{new} = \tilde{u_h} + v_h$\\
-Lisser		&	$ \mathcal{L} u_h = f_h $
-\end{tabular} 
-
-A partir de la méthode deux grilles, rien n'empêche d'estimer l'erreur sur l'erreur par la même méthode, ce processus peut être utilisé récursivement pour générer tout un ensemble de sous grilles et ainsi accélérer encore la convergence.
-L'algorithme devient alors:
-
-MG(level, $u_h$, $f_h$)
-\begin{itemize}	
-\item 	si level = level min:
-\item[]	\begin{tabular}{ll}
-		Résoudre & $\mathcal{L} u_h = f_h $
-		\end{tabular}
-\item 	sinon:
-\item[]	\begin{tabular}{ll}
-		Lisser 		& 	$ \mathcal{L} u_h = f_h $\\
-		Calculer	&	$ d_h = \mathcal{L}_h \tilde{u_h} - f_h $\\
-		Restreindre	&	$ d_H = Rd_h$\\
-		Appeler 	&	MG(level-1, $v_H$, $-d_H$) \\
-		Interpoler	&	$ v_h = Pv_H$\\
-		Corriger	&	$ \tilde{u}_h^{new} = \tilde{u_h} + v_h$\\
-		Lisser		&	$ \mathcal{L} u_h = f_h $
-		\end{tabular} 
-\end{itemize}
-
-Où "level" est le niveau de la grille. $h$ est le pas de la grille au niveau $L$ et $H = 2h$. 
-Les opérateurs $P$ et $R$ sont les opérateurs de prolongation et de restriction explicité section \ref{Opérateurs de changement de grilles}.
+Le cycle consiste à lisser (relaxer quelques fois) le potentiel à pleine résolution, les petites échelles vont alors rapidement converger.
+Il faut ensuite calculer une estimation de l'erreur commise à ce stade et la dégrader à plus basse résolution (cf section \ref{Opérateurs de changement de grilles}).
+%elle ne contient alors que de l'information sur les basses fréquences de la grille de départ, les hautes fréquences de la grille à pleine résolution ont été supprimées par la dégradation. 
+%Cette perte d'information sur les hautes fréquences n'est pas problématique car les hautes fréquences ont déjà convergé l'erreur est donc petite (voir nulle) aux hautes fréquence et est maximale aux basses.
+Les hautes fréquences de cette nouvelle grille correspondent alors à des fréquences plus basses et donc plus difficiles à faire converger sur le grille haute résolution. 
+La solution exacte est calculée (relaxée jusqu'à convergence) sur cette petite grille.
+Le potentiel précédemment estimé est alors corrigé de l'erreur exacte projetée à pleine résolution, puis lissé par quelques dernières itérations.
+Ce processus peut être utilisé récursivement pour générer tout un ensemble de sous grilles et ainsi accélérer encore la convergence (cf figure \ref{fig:mgrid}).
 En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. 
 Un seul appel génère un cycle nommé cycle en V, deux un cycle en W, etc... 
-Cet algorithme est représenté graphiquement sur la figure \ref{fig:mgrid}.
+% en utilisant:
+%\[ \tilde{u}_h^{new} = \tilde{u_h} + v_h \]
+
+%Ce cycle peut être résumé ainsi:
+%
+%\begin{tabular}{ll}
+%Lisser 		& 	$ \mathcal{L} u_h = f_h $\\
+%Calculer	&	$ d_h = \mathcal{L}_h \tilde{u_h} - f_h $\\
+%Restreindre	&	$ d_H = Rd_h$\\
+%Résoudre	&	$ \mathcal{L} v_H = -d_H $\\
+%Interpoler	&	$ v_h = Pv_H$\\
+%Corriger	&	$ \tilde{u}_h^{new} = \tilde{u_h} + v_h$\\
+%Lisser		&	$ \mathcal{L} u_h = f_h $
+%\end{tabular} 
+%A partir de la méthode deux grilles, rien n'empêche d'estimer l'erreur sur l'erreur par la même méthode, 
+
+
+
+%L'algorithme devient alors:
+%
+%MG(level, $u_h$, $f_h$)
+%\begin{itemize}	
+%\item 	si level = level min:
+%\item[]	\begin{tabular}{ll}
+%		Résoudre & $\mathcal{L} u_h = f_h $
+%		\end{tabular}
+%\item 	sinon:
+%\item[]	\begin{tabular}{ll}
+%		Lisser 		& 	$ \mathcal{L} u_h = f_h $\\
+%		Calculer	&	$ d_h = \mathcal{L}_h \tilde{u_h} - f_h $\\
+%		Restreindre	&	$ d_H = Rd_h$\\
+%		Appeler 	&	MG(level-1, $v_H$, $-d_H$) \\
+%		Interpoler	&	$ v_h = Pv_H$\\
+%		Corriger	&	$ \tilde{u}_h^{new} = \tilde{u_h} + v_h$\\
+%		Lisser		&	$ \mathcal{L} u_h = f_h $
+%		\end{tabular} 
+%\end{itemize}
+%
+%Où "level" est le niveau de la grille. $h$ est le pas de la grille au niveau $L$ et $H = 2h$. 
+%Les opérateurs $P$ et $R$ sont les opérateurs de prolongation et de restriction explicité section \ref{Opérateurs de changement de grilles}.
+
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.35]{img/02/multigrid.png}
+\includegraphics[width=0.75\textwidth]{img/02/multigrid.png}
 \caption[Multigrille]{Vue des différents niveaux de grilles et du V-cycle.
  Image extraite de \href{http://MGNet.org}{MGNet.org} }
 \label{fig:mgrid}
@@ -368,8 +384,9 @@ Cet algorithme est représenté graphiquement sur la figure \ref{fig:mgrid}.
 %\end{figure}		
 
 \subsection{Implémentation dans EMMA}
+
 Dans EMMA, la potentiel est calculé par multigrille sur la grille coarse et utilise l'arbre \ac{AMR} pour gérer les sous-niveaux.
-Sur les niveaux raffinés la relaxation est effectuée par Gauss Siedel rouge/noir.
+Sur les niveaux raffinés la relaxation est effectuée par Gauss Siedel rouge/noir, une amélioration de la méthode Jacobi classique.
 La solution déterminée sur les niveaux grossiers est projetée sur les niveaux raffinés, la solution anticipée est déjà proche de sa vraie valeur. 
 Il en résulte une convergence rapide.
 
@@ -565,8 +582,8 @@ La propagation d'une onde a la vitesse $a$ pourra être discrétisée en utilisa
 \end{equation}
 
 En fonction du signe de $a$, on parlera de méthode UPWIND ou DOWNWIND.
-Il est possible de montrer à l'aide d'une analyse de von-Neumann (cf \cite{toro1999riemann} que la méthode UPWIND est stable sous certaine condition, et que la méthode DOWNWIND est inconditionnelement instable.
-Or il n'est pas possible de connaitre à l'avance le signe de $a$, la discrétisation par différence finies ne s'applique donc pas à ce problème. 
+Il est possible de montrer à l'aide d'une analyse de von-Neumann (cf \cite{toro1999riemann}) que la méthode UPWIND est stable sous certaine condition, et que la méthode DOWNWIND est inconditionnelement instable.
+Or il n'est pas possible de connaître à l'avance le signe de $a$, la discrétisation par différence finies ne s'applique donc pas à ce problème. 
 Le principe de cette méthode est de ne plus calculer directement l'évolution des grandeurs au sein des cellules mais de passer par l'intermédiaire du calcul des flux entre elles.
 On parlera de discrétisation par volumes finis.
 
@@ -805,7 +822,7 @@ L’énergie moyenne d'un photon dans un groupe d'énergie comprissent entre $\n
 \end{equation}
 et la section efficace d'interaction:
 \begin{equation}
-\sigma_E = \frac{1}{N<E>} \int_{\nu_1}^{\nu_2} N_\nu h \nu d\nu
+\sigma_E = \frac{1}{N<E>} \int_{\nu_1}^{\nu_2} \sigma_\nu N_\nu h \nu d\nu
 \end{equation}
 
 On prendra généralement la première borne au niveau de l'énergie d'ionisation de l'hydrogène : $\nu_1=13.6eV$.
@@ -820,8 +837,11 @@ Dans ce cas l'énergie moyenne d'un groupe devient :
 \end{equation}
 Une opération identique est réalisée pour la section efficace.
 
-Après de rapides tests, le ratio cout de calcul sur amélioration des prédictions n'est pas en faveur de l'augmentation du nombre de groupes, du moins dans le cas des résolutions considérées pendant ma thèse.
-En pratique je n'ai travaillé qu'avec un seul groupe de photons.
+Après de rapides tests, il s'avère que l'augmentation du nombre de groupes ne change pas la position ou la taille des bulles ionisée dans l'ensemble, mais apporte plus de nuances sur la définition des fronts par exemple.
+Vu que le coût global de la radiation augmente rapidement avec le nombre de groupe et dans le cas des résolutions considérées pendant ma thèse, l'augmentation du nombre de groupes ne s'est pas révélée pertinente.
+% le ratio coût de calcul sur amélioration des prédictions ne s'est pas monté en faveur de l'augmentation du nombre de groupes
+%De pluset vu les contraintes 
+En pratique, je n'ai travaillé qu'avec un seul groupe de photons.
 
 \subsection{La chimie}
 \label{sec:chimie}
@@ -860,6 +880,29 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 
 Étant donné que le processus chimique sont uniquement local (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
 
+
+\section{Gestion du pas de temps}
+
+Le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre.
+
+
+%TODO 
+TODO\\
+
+Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme.
+Du fait de la condition de Courant, un niveau raffiné aura un pas de temps plus court que le niveau de base.
+Comme dans notre cas, une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2.
+Il faudra donc réaliser deux pas de temps fins (L+1) pour être synchronisé avec un niveau inférieur (L), et ce de manière récursive.
+L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
+
+\begin{figure}
+\includegraphics[width=.95\linewidth]{img/02/tstep.png}
+\caption[Pas de temps AMR]{Gestion du pas de temps en fonction des niveaux raffinées.
+Un niveau évolue par pas de temps deux fois plus court que celui de son niveau supérieur.
+\label{fig:timestep}}
+\end{figure}
+
+
 \subsection{Transport sur grille de base}
 \label{sec:crta}
 
@@ -871,11 +914,13 @@ Dans notre cas, la radiation est plusieurs ordres de grandeurs plus contraignant
 Donc le nombre de pas de temps hydrodynamique et gravitationnel nécessaire sont largement surestimés, et le coût numérique explose.
 
 Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées (cf panneau inférieur de la figure \ref{fig:CRTA}).
-Ce qui a pour effet d'augmenter artificiellement la taille du pas de temps radiatif, du fait de la condition de Courant.
+Ce qui a pour effet d'augmenter la taille du pas de temps radiatif, du fait de la condition de Courant.
 La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant l'équivalent d'un "fond UV" local.
 
 Actuellement, la \ac{CRTA} n'est possible que sur le niveau de base.
 Un amélioration possible serait de pouvoir définir le niveaux de projection de la radiation pour pouvoir, en fonction des besoins, faire varier le poids de la radiation dans le calcul.
+
+%TODO plus expliquer et renvoyer au papier
 
 
 \begin{figure}

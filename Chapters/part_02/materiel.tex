@@ -79,8 +79,8 @@ Ce qui nous mène à la notion de centre de calcul.
 \subsection{Les calculateurs}
 \label{sec:titan}
 La production de simulation cosmologique à haute valeur scientifique se fait sur des centres de calcul.
-A la manière d'un télescope pour les observateurs, les supercalculateur sont les outils principaux des simulateurs.
-Et a la manière des plus gros télescopes, ces calculateurs sont gigantesques.
+%A la manière d'un télescope pour les observateurs, les supercalculateur sont les outils principaux des simulateurs.
+%Et a la manière des plus gros télescopes, ces calculateurs sont gigantesques.
 La figure \ref{fig:titan} présente le calculateur TITAN du Oak Ridge Leadership Computing Facility sur lequel ont été exécutées les simulations CODA \citep{ocvirk_cosmic_2015}.
 En novembre 2015, TITAN a été classé deuxième plus puissant calculateur au monde selon le cite top500.org (cf \ref{tab:top500}), il est aujourd'hui quatrième.
 
@@ -262,9 +262,10 @@ Premièrement leurs meilleurs ratio puissance de calcul sur coup (flop/€).
 Et également un meilleur ratio puissance de calcul sur puissance électrique (flop/W) ce qui réduit les besoins de refroidissement et permet des économies supplémentaires.
 
 Cependant \ac{CPU} et \ac{GPU} sont indissociables est doivent être utilisé conjointement pour tirer le meilleurs parti des capacités de calcul offerte par une machine hybride.
-La programmation sur carte graphique utilise une approche proche du concept de mémoire distribuée, c'est à dire que leurs espaces mémoire ne sont pas commun.
 Une code hybride est découpé en deux parties, une partie séquentielle exécutée sur le \ac{CPU} et une partie parallèle exécutée sur le \ac{GPU}.
-Le passage de \ac{CPU} à \ac{GPU} va donc nécessiter des communications.
+La programmation sur carte graphique impose de gérer les différents espaces mémoire le passage de \ac{CPU} à \ac{GPU} va nécessiter des communications.
+% utilise une approche proche du concept de mémoire distribuée, c'est à dire que leurs espaces mémoire ne sont pas commun.
+
 
 %On tirera le maximum des capacités d'accélération d'un \ac{GPU} avec un code qui est hautement parallélisable.
 

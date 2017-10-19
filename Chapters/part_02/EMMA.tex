@@ -17,10 +17,9 @@ On se concentrera particulièrement sur le cas du code EMMA.
 
 Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et la radiation (et parfois le champs magnétique).
 Ces fluides sont de natures différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physiques.
-On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
-La physique non-collisionnelle concerne les phénomènes qui n'interagissent pas par collision comme la matière noire, les étoiles ou la radiation. 
-La physique collisionnelle concerne qant à elle principalement l'hydrodynamique du gaz.
-
+%On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
+%La physique non-collisionnelle concerne les phénomènes qui n'interagissent pas par collision comme la matière noire, les étoiles ou la radiation. 
+%La physique collisionnelle concerne qant à elle principalement l'hydrodynamique du gaz.
 Il existe conceptuellement deux principales façons de suivre un fluide dans l'espace.
 %Ces deux approches sont dites \emph{Eulérienne} ou \emph{Lagrangienne}.
 %En lien direct avec ces deux familles de représentations physique, il existe deux principales familles de codes cosmologique% : les codes \ac{SPH} et les codes \ac{AMR}.
@@ -29,7 +28,7 @@ Il existe conceptuellement deux principales façons de suivre un fluide dans l'e
 consiste à se placer au point de vue du fluide.
 Une série d'éléments de fluide de masse fixe pouvant se déplacer et/ou se dilater dans l'espace sera considérée.
 Les codes utilisant ce type de représentation seront généralement associés avec une gestion de la physique sous forme de \emph{particules}.
-Ces codes seront dit \ac{SPH} ou \ac{PIC}.
+Les codes dit \ac{SPH} ou \ac{PIC} sont des représentant de cette catégorie.
 
 %\paragraph{\ac{SPH} : } représente le gaz sous forme de particule de masse constante mais de taille variable.
 %Notion d'arbre -> KDtree
@@ -321,21 +320,6 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 %L'inverse n'est pas nécessairement vrai: après une restriction, de l'information est perdue et aucune prolongation ne pourra la recomposer.
 %La seconde condition concerne la precision des opérateurs, il est nécessaire que la somme des ordres des opérations soit supérieure à l'ordre de l'équation à résoudre. 
 %Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
-
-\subsection{Gestion du pas de temps}
-
-Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme.
-Du fait de la condition de Courant, un niveau raffiné aura un pas de temps plus court que le niveau de base.
-Comme dans notre cas, une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2.
-Il faudra donc réaliser deux pas de temps fins (L+1) pour être synchronisé avec un niveau inférieur (L), et ce de manière récursive.
-L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
-
-\begin{figure}
-\includegraphics[width=.95\linewidth]{img/02/tstep.png}
-\caption[Pas de temps AMR]{Gestion du pas de temps en fonction des niveaux raffinées.
-Un niveau évolue par pas de temps deux fois plus court que celui de son niveau supérieur.
-\label{fig:timestep}}
-\end{figure}
 
 
 \subsection{Gestion de l'expansion}
