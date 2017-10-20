@@ -883,16 +883,17 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 
 \section{Gestion du pas de temps}
 
-Le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre.
+D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre.
 
+\subsection{Influence de l'AMR}
 
-%TODO 
-TODO\\
-
-Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme.
-Du fait de la condition de Courant, un niveau raffiné aura un pas de temps plus court que le niveau de base.
-Comme dans notre cas, une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2.
+Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme et dépend du niveau considéré, un niveau raffiné aura un pas de temps plus court que le niveau de base.
+En première approximation, comme une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2, du fait de la condition de Courant.
 Il faudra donc réaliser deux pas de temps fins (L+1) pour être synchronisé avec un niveau inférieur (L), et ce de manière récursive.
+Ceci n'est vrai qu'à la condition que la physique résolue n'évolue pas.
+En pratique, l'augmentation de résolution mène, entre autre, à une augmentation de densité résolue, et généralement à un pas de temps hydrodynamique plus contraignant.
+Ceci à pour effet de réduire le pas de temps d'un facteur supérieur à 2, et le pas de temps du niveau L+1 sera au final plus court que la moitié de celui du niveau L.
+Il sera nécessaire de communiquer cette information sur les niveaux supérieurs pour effectuer la synchronisation.
 L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
 
 \begin{figure}
@@ -915,12 +916,11 @@ Donc le nombre de pas de temps hydrodynamique et gravitationnel nécessaire sont
 
 Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées (cf panneau inférieur de la figure \ref{fig:CRTA}).
 Ce qui a pour effet d'augmenter la taille du pas de temps radiatif, du fait de la condition de Courant.
-La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant l'équivalent d'un "fond UV" local.
+La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant localement un champ uniforme de radiation.
+Les concepts précis de la \ac{CRTA} étant assez technique, j'invite le lecteur à se référé à \cite{aubert_emma:_2015} pour une explication plus détaillée.
 
 Actuellement, la \ac{CRTA} n'est possible que sur le niveau de base.
 Un amélioration possible serait de pouvoir définir le niveaux de projection de la radiation pour pouvoir, en fonction des besoins, faire varier le poids de la radiation dans le calcul.
-
-%TODO plus expliquer et renvoyer au papier
 
 
 \begin{figure}

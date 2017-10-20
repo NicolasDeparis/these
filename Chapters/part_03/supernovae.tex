@@ -13,7 +13,7 @@ L'objectif est de casser les structures pour diminuer les surdensités et limite
 
 Dans cette section, nous allons aborder la modélisation des supernovæ dans les simulations cosmologiques.
 Je présenterai deux des modèles que j'ai implémenté, ainsi que les tests numériques qui vont permettent de les valider.
-Nous verrons que ces modèles sont équivalent dans un cas idéal mais divergent lors de l'introduction de la physique du refroidissent.
+Nous verrons que ces modèles sont équivalent dans un cas idéal mais divergent lors de l'introduction de la physique du refroidissement.
 Nous aborderons également la problématique de la calibration de ces modèles.
 
 
@@ -319,8 +319,8 @@ Les simulations commencent à redshift $z=150$.
 %le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
 Une difficulté est qu'il existe une dégénérescence entre le seuil en densité et l'efficacité de formation stellaire.
 En effet, il semble à priori possible d'obtenir des résultats similaire en utilisant, soit un seuil très permissif et une efficacité très faible, ou à l'inverse en ne formant des étoiles que dans les quelques cellules les plus denses avec une efficacité élevée.
-Dans la littérature %dédiée aux simulations comparables %TODO ref
-un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé.
+Dans la littérature un seuil en surdensité de $\delta_{in}=50\bar{\rho}$ est régulièrement utilisé dans des simulations avec des résolution comparable a celle ci \citep{ocvirk_cosmic_2015,stinson_star_2006}.
+L'objectif étant simplement de bloquer la formation stellaire à très haut redshift où le contraste de densité était faible.
 J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
 La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de $\left( 8\cdot h^{-1} \mathrm{cMpc} \right)^3$ obtenue après calibration. 
 Les observations sont extraites de \cite{bouwens_reionization_2015}.
@@ -360,22 +360,22 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des so
 %le rayonnement est piégé dans les cellules\\
 
 Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire $m_{star}$ avait une grande importance dans l'évolution de la fraction ionisée.
-Même si celui ci n'a pas d'impact sur le \ac{SFR} global, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf Fig .\ref{fig:mstar}).
-Les "grosse" particules stéllaire mènent a un taux d'ionisation plus important.
+Dans des simulations hydrodynamiques dédiées à l'étude de la formation des galaxies, ce paramètre n'a que peu d'importance.
+Il a une faible influence sur la formation stellaire globale (cf panneau de gauche de la figure \ref{fig:mstar}) et ne définira la limite de résolution pour les petits halos.
+Dans le cas de simulation \ac{RHD} de l'époque de réionisation, ce paramètre aura également une influence sur la propagation de la radiation.
+Même si celui ci n'a pas d'impact sur le \ac{SFR} global, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf panneau de droite de la figure \ref{fig:mstar}).
+Les "grosses" particules stellaire mènent à un taux d'ionisation plus important.
 À l'inverse, plus la résolution stellaire est élevée, plus la boite réionise tard.
 Il s'agit ici d'un effet numérique lié à la méthode, et pour les plus petites particules stellaires le rayonnement se trouve piégé au sein de la cellule.
-
-Dans des simulations hydrodynamiques dédiées à l'étude de la formation des galaxies, ce paramètre n'a que peu d'importance.
-Il a une faible influence sur la formation stellaire globale et ne définira la limite de résolution pour les petits halos.
-Dans le cas de simulation \ac{RHD} de l'époque de réionisation, ce paramètre aura également une influence sur la propagation de la radiation.
-Il faudra trouver un compromis entre :
+Pour les petites particules, le rayonnement est dilué à la fois dans l'espace et dans le temps, alors que dans le cas d'une grosse particule, une grosse quantité de rayonnement est injecté à un instant donné, la cellule est flashée et le rayonnement peut s'échapper.
+La difficulté sera de trouver un compromis entre :
 
 \begin{itemize}
 \item particules stellaires massives, permettant au rayonnement de sortir facilement des cellules au détriment d'une mauvaise résolution sur la formation stellaire
-\item  et particule stellaire de faible masse, générant une formation stellaire correcte dans les petits halos mais menant à une réionisation plus difficile et une occupation mémoire plus importante.
+\item  et particule stellaire de faible masse, générant une formation stellaire résolue même dans les petits halos mais menant à une réionisation plus difficile et une occupation mémoire plus importante.
 \end{itemize}
 
-Dans la suite de cette étude, les étoiles seront relativement massive puisque $m_star \approx 7.7 \cdot 10^4 M_\odot$.
+Dans la suite de cette étude, les étoiles seront relativement massive puisque $m_* \approx 7.7 \cdot 10^4 M_\odot$.
 
 
 \begin{figure}

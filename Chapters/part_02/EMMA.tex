@@ -15,7 +15,7 @@ On se concentrera particulièrement sur le cas du code EMMA.
 
 \section{Aperçu des différents modèles numériques}
 
-Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et la radiation (et parfois le champs magnétique).
+Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et la radiation ou encore le champs magnétique.
 Ces fluides sont de natures différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physiques.
 %On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
 %La physique non-collisionnelle concerne les phénomènes qui n'interagissent pas par collision comme la matière noire, les étoiles ou la radiation. 
@@ -47,12 +47,14 @@ Si la grille est de résolution variable, on parlera de grille \ac{AMR}.
 %avantage inconvénient AMR vs SPH
 %introduction de la grille et de la méthode AMR
 
-Un même code peux utiliser conjointement plusieurs des concepts qui viennent d'être introduits.
-Dans le cas présent, EMMA utilise une représentation Lagrangienne pour simuler la physique non collisionnelle de la matière noire et des étoiles, et une représentation Eulérienne pour simuler le gaz et la radiation.
+\paragraph{}
+
+Un même code peux utiliser conjointement plusieurs de ces représentations.
+Dans le cas présent, EMMA utilise une représentation Lagrangienne pour simuler la physique de la matière noire et des étoiles, et une représentation Eulérienne pour simuler le gaz et la radiation.
 
 \subsection{Quelques codes de simulations cosmologiques}
 
-Il existe une certaine variété de code de simulations cosmologiques.
+EMMA s'inscrit dans une certaine variété de code de simulations cosmologiques existants, en voici un bref aperçu.
 Ces codes sont classés en fonction de leur façon de gérer l'hydrodynamique du gaz et on distinguera principalement les codes \ac{SPH} et les codes \ac{AMR}.
 
 Parmi les représentants des codes \ac{SPH} :
@@ -72,28 +74,30 @@ Parmi les représentants des codes \ac{AMR}:
 \end{itemize}
 
 Il existe un troisième type de code hybride utilisant une maille mobile et adaptative, un représentant majeur de cette technique est le code AREPO \citep{2010MNRAS.401..791S}.
-
-%\subsection{AMR et SPH}
+Il en existe évidemment d'autre, et la majorité d'entre eux dispose de plusieurs déclinaison en fonction de ce pour quoi ils sont utilisé.
 
 Des projets comme le projet Santa Barbara \citep{1999ApJ...525..554F} ou le projet nIFTy \citep{sembolini_nifty_2015} visent à comparer les codes de différents types entre eux.
 Certain projets \citep{2007MNRAS.380..963A, oshea_comparing_2005} se focalisent sur la comparaison des méthodes.
-Il en ressort que l'\ac{AMR} est plus apte à gérer les chocs et les instabilités de type Kelvin–Helmholtz ou Rayleigh–Taylor.
+D'une manière générale, les codes \ac{SPH} auront une meilleur conservation de la masse, alors que l'\ac{AMR} pour souffrir de problèmes de diffusion, a l'inverse un code \ac{AMR} offre une meilleur conservation de l’énergie.
+Les code \ac{SPH} seront auront plus de facilités a représenter de larges contraste de densité, la où l'\ac{AMR} nécessitera un nombre important de niveaux, mais souffrira de bruit dans les régions sous-dense
+Également, l'\ac{AMR} est plus apte à gérer les chocs et les instabilités.
 
-%avantage inconvénient AMR vs SPH?
+EMMA utilise des concepts déjà existant, entre autre une gestion de la grille adaptative similaire à ART ou RAMSES (voir section \ref{sec_gestion_grille}).
+Les moteurs physiques (vois section \ref{sec:solvers}) ont également fait leurs preuves, par exemple le solveur moteur hydrodynamique est similaire à celui de RAMSES et le moteur radiatif est une réécriture de ATON \citep{aubert_radiative_2008}.
+EMMA a été développé dans l'idée d'utiliser \ac{GPU} pour en utiliser au maximum leurs capacités de calculs.
+L'avantage par rapport aux codes plus anciens, est que cet objectif a été définis dès le départ, alors que les autres codes se sont adapté à cette évolution de matériel.
+Il en résulte l'utilisation de certaines techniques menant à une implémentation différente (voir section \ref{sec:gpu}).
 
 
-\subsection{RAMSES}
-
-EMMA est largement inspiré de RAMSES \citep{teyssier_cosmological_2002}.
-Ce dernier est une référence reconnue dans le domaine  des simulations cosmologiques et utilise des principes éprouvés, et EMMA en utilise un bon nombre.
-Entre autre, la gestion de la grille le moteur hydrodynamique et le moteur radiatif sont similaires.
-Le développement d'EMMA vise à obtenir une expertise complète sur le fonctionnement de ce type de code.
-
-EMMA a cependant quelques différences fondamentale avec RAMSES.
-Il n'utilise pas le même langage: RAMSES est écrit en Fortran, EMMA en c.
-Le développement de RAMSES a débuté avant l'apparition des \ac{GPU} et a ensuite été adapté pour en utiliser les capacités de calcul.
-EMMA est développé avec cette idée dès le départ, ce qui permet l'utilisation de certaines techniques menant à une implémentation différente.
-
+%EMMA est largement inspiré de RAMSES \citep{teyssier_cosmological_2002}.
+%Ce dernier est une référence reconnue dans le domaine  des simulations cosmologiques et utilise des principes éprouvés, et EMMA en utilise un bon nombre.
+%Entre autre, la gestion de la grille le moteur hydrodynamique et le moteur radiatif sont similaires.
+%Le développement d'EMMA vise à obtenir une expertise complète sur le fonctionnement de ce type de code.
+%
+%EMMA a cependant quelques différences fondamentale avec RAMSES.
+%Il n'utilise pas le même langage: RAMSES est écrit en Fortran, EMMA en c.
+%Le développement de RAMSES a débuté avant l'apparition des \ac{GPU} et a ensuite été adapté pour en utiliser les capacités de calcul.
+%EMMA est développé avec cette idée dès le départ, ce qui permet l'utilisation de certaines techniques menant à une implémentation différente.
 
 \section{Gestion de la grille}
 \label{sec_gestion_grille}
@@ -121,7 +125,7 @@ k=\lfloor z \rfloor \cdot N_z \\
 ou $\lfloor a \rfloor$ représente la partie entière de $a$.
 
 Nous voyons ici que l'organisation en mémoire et la recherche de voisin sont relativement simple à gérer.
-Les vecteurs sont alloués de manière statique et la recherche de voisin est basée sur un jeu d'indice relativement simple.
+Les vecteurs sont alloués de manière statique et la recherche de voisin est basée sur un jeu d'indice assez simple.
 Les choses sont plus complexes dans le cas d'une grille adaptative.
 Étant amenée à évoluer, il faut introduire des mécanismes permettant de construire ou détruire certaines parties de la grille de façons dynamique.
 Ces mécanismes vont totalement changer l'organisation de la grille.
@@ -130,28 +134,27 @@ Un exemple de grille \ac{AMR} générée par EMMA est présenté sur la figure \
 Un fonction de critères prédéfinis par l'utilisateur la résolution de la grille peut être arbitrairement augmentée localement.
 L'avantage de ce type de grille est d'économiser des ressources de calcul par rapport au cas d'une grille fixe, ou il faudrait beaucoup plus de cellules pour obtenir une résolution équivalente.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/AMR.pdf} 
         \caption[Grille générée par EMMA]{Exemple de grille \ac{AMR} générée par EMMA. 
         La  résolution de la grille est augmentée arbitrairement dans les régions d'intérêts.
  		\label{fig:AMR}}
 \end{figure}
 
-\subsection{Octree}
+\subsection{Maille adaptative}
 
 Il existe deux grands groupe de maille adaptative.
-Le premier groupe utilise une séries de grilles fixes imbriquées (eg \cite{bryan_enzo:_2014}) %TODO ref
+Le premier groupe utilise une séries de grilles fixes imbriquées (eg ENZO \cite{bryan_enzo:_2014}).
 Chaque région raffinée sera une grille fixe de résolution plus importante spatialement liée a une grille de base.
-Chaque nouvelle grille aura une résolution double par rapport a la précédente.
-Il est possible d'ajouter autant de niveaux que voulu.
+Chaque nouvelle grille aura une résolution doublée par rapport à la précédente, et il est possible d'ajouter autant de niveaux que voulu.
 
-EMMA utilise un second groupe. % fully threated tree description .
-La base de cette représentation est de considérer que chaque cellule est associée à une grille fixe de taille 2x2x2 que l'on nommera un OCT, car décomposé en 8 cellules \citep{khokhlov_fully_1998-1}.
+EMMA utilise un second groupe à base d'arbre de cellules. % fully threated tree description .
+La base de cette représentation est de considérer que chaque cellule est associée à une grille fixe de taille $2 \times 2 \times 2$ que l'on nommera un oct, car décomposé en 8 cellules \citep{khokhlov_fully_1998-1}.
 %sous parties qui sont elles même des cellules.
-Et récursivement, chacune de ces cellules peuvent à leurs tour être divisée et associée à un OCT.
+Et récursivement, chacune de ces cellules peuvent à leurs tour être divisée et associée à un oct.
 Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:octree}.
 
-\begin{figure}[bth]
+\begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/octree.jpg} 
         \caption[Grille AMR et son octree]{Représentation d'une grille AMR a gauche, et de son octree associé a droite. 
         Image extraite de \cite{SU201659}
@@ -159,7 +162,7 @@ Il en résultera un arbre nommé Octree, représenté sur la figure \ref{fig:oct
 }
 \end{figure}
 
-Pour créer une grille de départ, il faudra d'abord créer un OCT, appelé racine, et le forcer à raffiner.
+Pour créer une grille de départ, il faudra d'abord créer une première cellule, appelé racine, et le forcer à raffiner.
 Chacune de ces nouvelles cellules vont à leurs tours être raffinée.
 Cette opération est répétée pour toutes les cellule jusqu'à obtention d'une grille régulière de la taille désirée.
 A chaque nouveau raffinement le nombre de cellule est multiplié par 8.
@@ -170,27 +173,45 @@ N_{cells} = 2^{3L}
 où $L$ est le niveau de raffinement.
 
 Il en résultera une grille régulière qui ne pourra pas être dé-raffinée par la suite.
-Le niveau de cette grille de base sera appelé niveau \textit{coarse}.
+Le niveau de cette grille sera appelé niveau de base ou niveau \textit{coarse}.
+
+\subsubsection{Les listes chaînées}
+
+%il n'existe plus de lien direct entre la représentation de la grille en mémoire et la représentation de l'espace physique.
+Comme la grille est amenée à évoluer, il n'y a plus il n'existe plus de lien direct entre une position en mémoire et une position dans l'espace mémoire.
+De plus le nombre d'éléments peut changer au cours du temps.
+%Il faut donc conserver à la fois l'information de la position dans l'espace physique et dans l'espace mémoire.
+En principe, on allouera une certaine quantité d'éléments en mémoire au début de la simulation, ce qui constituera une réserve, puis on viendra piocher dans cette réserve pour ajouter des éléments à la grille au fur et à mesure.
+Comme un élément peut être ajouté n'importe où dans la grille, chaque élément devra conserver l'information de sa position en mémoire.
+Ceci sera réalisé en les organisant sous forme de liste, et en stockant pour chaque élément, la position de l'élément précédent et celle de l'élément suivant dans cette liste.
+En connaissant la position du premier élément de la liste, il est possible d'avoir accès à toutes la grille.
+On appelle ce type de liste, des liste doublement chaînée.
+
+%TODO schema
+
+\subsubsection*{}
+
+L'octree est séparé en deux types de structures, une contenant l'information l'arbre à proprement parlé, les OCTs, et les CELLs contenant l'information physique.
+Le lien entre ces deux structures est schématisé sur la figure \ref{fig:octcell}.
+On remarquera que les CELLs ne se voient pas entre elles et qu'il est nécessaire d'utiliser les OCTs pour determiner leur voisinages.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/octcell.pdf} 
+        \caption[OCT et CELL]{Représentation des lien entre OCT et CELL à 1 dimension.
+        Les flèches représentent les pointeurs entre les structures.
+        Le domaine 1D équivalent à cet arbre est représenté au bas de la figure.
+     	\label{fig:octcell}
+}
+\end{figure}
 
 \subsubsection{La structure OCT}
-%et liste chainée
-
-Il existe une bimodalité entre la représentation de la grille en mémoire et la représentation de l'espace physique.
-Comme la grille est amenée à évoluer, il n'y a plus une position unique en mémoire associée à une position dans l'espace.
-De plus, le nombre d'éléments de la grille change au cours du temps.
-Il faut donc conserver à la fois l'information de la position dans l'espace physique et dans l'espace mémoire.
-
-En principe, on allouera une certaine quantité d'OCT en mémoire qui constituerons une réserve.
-On viendra ensuite piocher dans cette réserve pour ajouter des éléments à la grille.
-Les OCT de la grille seront organisés sous forme de liste chainées, il est donc nécessaire d'avoir l'information de la position de l'OCT précédent et de l'OCT suivant en mémoire.
-
-Pour créer un lien entre elle, il est nécessaire de stocker l'information de voisinage.
-L'information spatiale est aussi contenue dans les OCT, ceux ci disposent de six pointeurs vers les cellules voisine.
-Un OCT est également composé d'un tableau de huit cellules filles, ainsi que d'un pointeur vers sa cellule mère.
+%Pour créer un lien entre elle, il est nécessaire de stocker l'information de voisinage.
+Les OCTs  sont les structures permettant le raffinement de la grille, chacun d'eux contient un tableau de huit cellules filles (des CELLs présentés dans la prochaine section).
+Ils contiennent l'information relatives à la structure de la grille et disposent de six pointeurs vers les cellules voisine, ainsi que d'un pointeur vers sa cellule mère.
 Un OCT qui n'a pas de cellule mère est appelé OCT racine, en pratique il n'y en a qu'un seul, de niveau 0, et il représente l'ensemble de l'espace de la grille..
-La génération de conditions périodique (généralement utilisées en cosmologies) se fait de manière naturelle en faisant pointer tout les voisins de l'OCT racine vers lui même.
+La génération de conditions périodique (généralement utilisées en cosmologies) se fait de manière naturelle en faisant pointer tous les voisins de l'OCT racine vers lui même.
 La structure minimal d'un OCT de EMMA est présenté sur le listing \ref{lst:oct}.
-
+%L'information spatiale est aussi contenue dans les OCT, 
 \begin{lstlisting}[float=bth,language=C,frame=tb,caption={La structure OCT de EMMA},label=lst:oct]
 struct OCT{
   struct CELL cell[8]; // les 8 cellules de l'oct
@@ -224,8 +245,6 @@ struct CELL{
 \subsubsection{La structure PARTICULE}
 \label{sec:PART}
 
-%TODO introduire liste chainée de particule
-
 Nous verrons dans la section \ref{sec:solverDM} qu'une partie de la physique est résolue sous forme de particule.
 Il est donc nécessaire d'ajouter un champs de particule à la grille \ac{AMR}
 Comme les OCT, les particules utilisent une représentation sous forme de liste chaînée, et chaque cellule dispose de sa propre liste chaînée de particules.
@@ -249,8 +268,6 @@ struct PART{
 \end{lstlisting}
 
 
-
-%TODO introduire la structure part
 
 \subsection{Gestion du raffinement}
 \label{sec:raffinement}
@@ -322,81 +339,6 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 %Ici, la restriction est d'ordre trois, la prolongation d'ordre un et le Laplacien d'ordre deux, cette condition est vérifiée.
 
 
-\subsection{Gestion de l'expansion}
-\label{sec:supercomobil}
-
-%On parlera de simulations cosmologiques lorsque l'e volume considéré est en expansion.
-
-%Nous avons vu dans l'introduction à la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
-%Nous allons voir dans cette partie comme cette composante est traitée numériquement.
-%Bien que nous ne sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
-%Le moteur gérant l'énergie noire n'est pas a proprement parler un moteur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
-%Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
-
-L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code (cf Eq. \ref{eq:scale_t}).
-Il en résultera une table, conservée en mémoire pendant toute l'exécution.
-Le facteur d'expansion sera alors interpolé dans cette table en fonction de l'avancement de la simulation.% (cf partie calcul du pas de temps) %TODO ref
-
-Il existe deux possibilités pour modéliser l'expansion de l'univers à l'aide d'une grille.
-La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, à y ajouter des éléments.
-Le problème et que le coût numérique de la simulation croit, entre autre, avec le nombre d'éléments que l'on considère.
-La seconde possibilité est de faire varier la taille des éléments de calcul avec le facteur d'expansion.
-On appellera les longueurs ainsi exprimées des longueurs comobile.
-
-\begin{equation}
-r=a r'
-\end{equation}
-
-ou $r$ représente une longueur en unités physique et $r'$ en unités comobile.
-Ainsi un cube de 10 Mpc physique de coté, pris aujourd'hui, aura une taille de 10 Mpc comobile (cMpc) aujourd'hui, mais aussi a redshift z=9 ou sa taille physique ne sera plus que de de 1Mpc physique.
-De plus, il est généralement pratique de normaliser les grandeurs que l'on considère. 
-
-\begin{equation}
-r'=\tilde{r}r*
-\end{equation}
-ou $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
-
-La généralisation de ce principe a d'autre unités que la longueur est appeler système d'unités supercomobiles \citep{martel_convenient_1998}.
-
-\begin{table}
-\begin{center}
-\begin{tabular}{r l} \hline 
-Longueur: & $\tilde{r}=\frac{r}{ar_*}$ \\ \hline 
-Densité de matière: & $\tilde{\rho}=\frac{\rho a^3}{\rho_*}$ \\ \hline 
-Vitesse: & $ \tilde{v}=\frac{av}{v_*}$ \\ \hline 
-Pas de temps: & $\tilde{dt}=\frac{dt}{a^2t_*}$\\ \hline 
-Densité d’énergie potentielle: & $\tilde{\Phi}=\frac{a^2 \Phi}{\Phi_*}$\\ \hline 
-Pression: & $\tilde{p}=\frac{a^5 p}{p_*}$\\ \hline 
-Densité d’énergie cinétique: & $\tilde{\epsilon}=\frac{a^2 \epsilon}{\epsilon_*}$\\ \hline 
-Densité D’éléments: & $\tilde{N}=a^3 N r_*^3$\\ \hline 
-Flux: & $\tilde{F}=a^4 r_*^2 t_* F$\\ \hline 
-\end{tabular} 
-\end{center}
-\caption[Système d'unité supercomobile]{Passage du système d'unités physique vers le système d'unités supercomobiles} 
-\end{table}
-
-\begin{table}
-\begin{center}
-\begin{tabular}{r l} \hline 
-Longueur  & $r_*=L$\\ \hline 
-Densité & $\rho_* = \bar{\rho} = \frac{3H_0^2 \Omega_m}{8\pi G}$\\ \hline 
-Temps & $t_* = \frac{2}{H_0 \sqrt{\Omega_m}}$\\ \hline 
-Vitesse & $v_* = \frac{r_*}{t_*}$\\ \hline 
-Potentiel & $\Phi_* = \frac{r_*^2}{t_*^2} = v_*^2$\\ \hline 
-Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline 
-Énergie & $\epsilon_* = \frac{p_*}{\rho_*} = v_*^2$\\ \hline 
-\end{tabular} 
-\end{center}
-\caption[Facteurs de normalisation]{Facteurs de normalisation des différents grandeurs physiques dans le système d'unités supercomobiles}
-\end{table}
-
-\subsubsection{Gestion du pas de temps}
-L'évolution de la grille sera limité d'un pas de temps à l'autre.
-La condition condition pour effectuer le calcul du pas de temps sera:
-\begin{equation}
-\frac{\delta a (\Delta t) } {a} < \epsilon
-\end{equation}
-
 \subsection{Recherche de voisin}
 \label{sec:voisins}
 
@@ -408,7 +350,9 @@ En analyse numérique, une dérivée de $u$ suivant $x$ est localement approxim�
 où $i$ est l'indice sur la grille de pas $\Delta x$.
 Dans ce type de systèmes, l'état d'une cellule dépend donc des états des cellules qui l'entourent.
 
-La recherche de voisins est une étape importante dans la gestion de la grille et se fera en suivant les étapes présenté sur la figure \ref{fig:voisin}.
+
+La recherche de voisins est une étape importante dans la gestion de la grille qui a une organisation complexe (voir figure \ref{fig:octcell}).
+Elle se fera en suivant les étapes présentées sur la figure \ref{fig:voisin}.
 Dans le cas ou la voisine se trouve dans le même OCT la recherche est immédiate.
 Mais dans le cas ou la voisine n'est pas dans le même OCT, il faut trouver l'OCT voisin, vérifier que celui ci est géré par le même processus et vérifier si il est raffiné.
 Cette recherche peut être complexe et couteuse, on prendra donc garde à minimiser les appels de la fonction de recherche. 
@@ -430,3 +374,83 @@ Cette recherche peut être complexe et couteuse, on prendra donc garde à minimi
 %\end{itemize}
 %
 %\end{itemize}
+
+\subsection{Gestion de l'expansion}
+\label{sec:supercomobil}
+
+%On parlera de simulations cosmologiques lorsque l'e volume considéré est en expansion.
+
+%Nous avons vu dans l'introduction à la physique de la reionisation que l'énergie noire représente la majore partie du contenu de l'univers (cf \ref{sec:dark_egy}) .
+%Nous allons voir dans cette partie comme cette composante est traitée numériquement.
+%Bien que nous ne sachions absolument pas ce que peux être physiquement l'énergie noire, nous en observons les effets : l'Univers est en expansion accélérée.
+%Le moteur gérant l'énergie noire n'est pas a proprement parler un moteur numérique, mais plutôt d'un système d'unité. % servant a normaliser la physique.
+%Il consiste a normaliser les grandeurs par une variable fonction du facteur d'expansion.
+
+L'intégration de la cosmologie, régissant le lien en le temps et le facteur d'expansion sera réalisé une fois au moment de l'initialisation du code (cf Eq. \ref{eq:scale_t}).
+Il en résultera une table, conservée en mémoire pendant toute l'exécution.
+Le facteur d'expansion sera alors interpolé dans cette table en fonction de l'avancement de la simulation.% (cf partie calcul du pas de temps) %TODO ref
+
+%Il existe deux possibilités pour modéliser l'expansion de l'univers à l'aide d'une grille.
+%La première consiste a considérer un élément de volume $dx$ de taille fixe, et au fur et a mesure que l'univers grandis, à y ajouter des éléments.
+%Le problème et que le coût numérique de la simulation croit, entre autre, avec le nombre d'éléments que l'on considère.
+
+L'expansion de l'univers et modélisée ici en faisant varier la taille des éléments de calcul avec le facteur d'expansion.
+On appellera les longueurs ainsi exprimées des longueurs comobile.
+
+\begin{equation}
+r=a r'
+\end{equation}
+
+ou $r$ représente une longueur en unités physique et $r'$ en unités comobile.
+Ainsi un segment de 10 Mpc physique de coté, pris aujourd'hui, aura une taille de 10 Mpc comobile (cMpc), mais aussi à redshift z=9 où sa taille physique ne sera plus que de 1 Mpc physique (pMpc ou juste Mpc).
+De plus, il est généralement pratique de normaliser les grandeurs que l'on considère:
+
+\begin{equation}
+r'=\tilde{r}r*
+\end{equation}
+ou $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
+On remarquera que pour réaliser une simulation non cosmologique, où l'expansion n'est pas considérée, il suffit de fixer $a=1$.
+
+La généralisation de ce principe à d'autre unités que la longueur est appeler système d'unités supercomobiles \citep{martel_convenient_1998}, les conversions utilisées sont présentées sur les tables \ref{tab:comobil} et \ref{tab:comobilfact}.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{r l} \hline 
+Longueur: & $\tilde{r}=\frac{r}{ar_*}$ \\ \hline 
+Densité de matière: & $\tilde{\rho}=\frac{\rho a^3}{\rho_*}$ \\ \hline 
+Vitesse: & $ \tilde{v}=\frac{av}{v_*}$ \\ \hline 
+Pas de temps: & $\tilde{dt}=\frac{dt}{a^2t_*}$\\ \hline 
+Densité d’énergie potentielle: & $\tilde{\Phi}=\frac{a^2 \Phi}{\Phi_*}$\\ \hline 
+Pression: & $\tilde{p}=\frac{a^5 p}{p_*}$\\ \hline 
+Densité d’énergie cinétique: & $\tilde{\epsilon}=\frac{a^2 \epsilon}{\epsilon_*}$\\ \hline 
+Densité D’éléments: & $\tilde{N}=a^3 N r_*^3$\\ \hline 
+Flux: & $\tilde{F}=a^4 r_*^2 t_* F$\\ \hline 
+\end{tabular} 
+\end{center}
+\caption[Système d'unité supercomobile]{Passage du système d'unités physique vers le système d'unités supercomobiles.
+\label{tab:comobil}
+} 
+\end{table}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{r l} \hline 
+Longueur  & $r_*=L$\\ \hline 
+Densité & $\rho_* = \bar{\rho} = \frac{3H_0^2 \Omega_m}{8\pi G}$\\ \hline 
+Temps & $t_* = \frac{2}{H_0 \sqrt{\Omega_m}}$\\ \hline 
+Vitesse & $v_* = \frac{r_*}{t_*}$\\ \hline 
+Potentiel & $\Phi_* = \frac{r_*^2}{t_*^2} = v_*^2$\\ \hline 
+Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline 
+Énergie & $\epsilon_* = \frac{p_*}{\rho_*} = v_*^2$\\ \hline 
+\end{tabular} 
+\end{center}
+\caption[Facteurs de normalisation]{Facteurs de normalisation des différents grandeurs physiques dans le système d'unités supercomobiles.
+\label{tab:comobilfact}}
+\end{table}
+
+\subsubsection{Gestion du pas de temps}
+L'évolution de la grille sera limité d'un pas de temps à l'autre.
+La condition condition pour effectuer le calcul du pas de temps sera:
+\begin{equation}
+\frac{\delta a (\Delta t) } {a} < \epsilon
+\end{equation}

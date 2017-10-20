@@ -148,16 +148,16 @@ De plus on observe dans la densité des coquilles dues aux vents générés, aut
 \subsection{Les fonctions de masse}
 \label{sec:hmf}
 
-Sur la figure \ref{fig:ghmf} sont présentées les fonctions de masses des halos (\ac{HMF}) et des galaxies (\ac{GMF}), représentées ici en cumulative (n>M) et comparées à des modèles analytiques (voir \cite{1999MNRAS.308..119S} pour la \ac{HMF} et \cite{song_evolution_2015} pour la \ac{GMF}).
-Le calcul de la \ac{GMF} ne considère que la masse des étoiles et non la totalité de la masse baryonique.
+Sur la figure \ref{fig:ghmf} sont présentées les \ac{HMF}, représentées ici en cumulative (n>M) et comparées à un modèle analytique \citep{1999MNRAS.308..119S}.
+%Le calcul de la \ac{GMF} ne considère que la masse des étoiles et non la totalité de la masse baryonique.
 On observe un léger décrochage de la \ac{HMF} pour les plus petits halos ( $M< \mathrm{qq} 10^8 M_\odot$), mais celle ci n'est pas impactée par le feedback de supernovae dans nos modèles.
-A l'inverse, la \ac{GMF} est significativement réduite avec le feedback.
-On observe encore ici que le modèle de feedback cinétique a plus d'influence que le modèle thermique.
+%A l'inverse, la \ac{GMF} est significativement réduite avec le feedback.
+%On observe encore ici que le modèle de feedback cinétique a plus d'influence que le modèle thermique.
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/ghmf.pdf}
-        \caption[Fonctions de masses G/HMF]{Fonction de masse des galaxies (\ac{GMF}) et des halos (\ac{HMF}) pour différents type de feedback de supernovae.
-        Le feedback n'a pas d'influence directe sur la function de masse des halos, mais a un impact mesurable sur la formation stellaire.
+        \caption[Fonctions de masses des halos]{Fonction de masse des halos (\ac{HMF}) pour différents type de feedback de supernovae.
+        Le feedback n'a pas d'influence directe sur la function de masse des halos
  		\label{fig:ghmf}}
 \end{figure}
 
@@ -181,7 +181,10 @@ Dans un cas l'objectif est de déterminer la \ac{SFR} moyenne d'un halo en fonct
 Le lien entre les deux, n'est autre que la \ac{HMF} présentée à la section \ref{sec:hmf}.
 Les résultats obtenus sont présentés sur la figure \ref{fig:sfr_halo}.
 On observe que pour le feedback cinétique, la \ac{SFR} moyenne est réduite pour les halos les plus lourd, ce qui n'est pas le cas pour le feedback thermique où la \ac{SFR} a tendance à être réduite pour les petites masses de halos.
-Sur les courbes de \ac{SFR} totale, on observe que les halos de masses $M\approx10^{10}M_\odot$ contribuent le plus a la formation stellaire dans ces simulations.
+Sur les courbes de \ac{SFR} totale, on observe que les halos de masses $M\approx10^{10}M_\odot$ contribuent le plus à la formation stellaire dans ces simulations.
+On remarquera également que la chute de \ac{SFR} n'est pas franche, et est en faveur d'un problème de non convergence dans la taille des simulations.
+Si la \ac{HMF} était suffisamment échantillonnée au hautes masses, elle chuterait assez rapidement pour couper la \ac{SFR} cumulée des halos les plus massifs.
+Ces simulations présentent donc une manque au niveau des sources de photons les plus intenses.
 
 \begin{figure}
 		\includegraphics[width=.95\linewidth]{img/03/SFR_halo_avg.pdf}
@@ -234,7 +237,7 @@ Nous cherchons ici à quantifier les flux entrants et sortant des halos en fonct
 Je présenterai la méthodologie utilisée pour la détection des flux, ainsi que les résultats obtenus pour les flux hydrodynamiques.
 Dans le but de comprendre pourquoi l'histoire d'ionisation n'est pas impactée par le feedback (voir section \ref{sec:pbfesc}), une étude similaire sera réalisée sur les flux radiatifs.
 %Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
-Nous avons vu que le rayonnement interagis les baryons, et nous verrons qu'il existe un liens entre la fraction baryonique déterminée plus haut (sec. \ref{sec:baryon_frac}) et les flux radiatif.
+Nous avons vu que le rayonnement interagit avec les baryons, et nous verrons qu'il existe un liens entre la fraction baryonique déterminée plus haut (sec. \ref{sec:baryon_frac}) et les flux radiatif.
 
 \subsubsection{Healpix}
 \label{sec:healpix}
@@ -310,6 +313,7 @@ La vitesse d'expulsion moyenne est significativement plus faible que la vitesse 
 Ces flux sortants observés peuvent expliquer la coupure de formation stellaire par le radiation pour les halos de moins $10^9 M_\odot$, observée dans des précédents travaux (eg \cite{ocvirk_cosmic_2015}).
 
 De plus dans la partie accrétante du diagramme on observe que la vitesse limite est globalement plus faible (la population s'est légèrement écartée de la ligne limite).
+Le photo-chauffage va limiter l'accrétion par effet thermique, le gaz au centre se dilatant, il oppose plus de résistance à l'effondrement des couches externes.
 Également, la dispersion des valeurs moyennes est plus grande, signifiant que la radiation agit sur une large gamme de halos.
 
 Avec l'introduction des supernovae (figure \ref{fig:R200speed2}), il y a apparition d'une nouvelle population dans la partie haute du diagramme.
@@ -317,6 +321,10 @@ Cette population possède des étoiles aillant déjà explosées en supernovae, 
 On observe que les halos possédant des vitesses positives peuvent avoir des masses plus élevées que dans le cas du simple feedback radiatif.
 De plus, le feedback cinétique permet de générer des flux sortant sur des halos plus massifs que dans le cas du feedback thermique.
 Les vitesses moyennes sont proches de la vitesse d'échappement.
+Cependant elles restent quasi toutes, sous la limite de la vitesse de libération.
+Dans ces modèles de feedback le gaz est expulsé des halos, mais toujours gravitationnellement lié à eux.
+
+%Dans la littérature, la notion d'\textit{outflows}
 
 \subsection{Le flux radiatif au $R_{200}$}
 \label{sec:radflow}
@@ -356,6 +364,10 @@ L'objectif est de déterminer quels sont les halos qui contribuent le plus à io
 La figure \ref{fig:budget} présente les résultats obtenus en faisant la somme des flux sortant de tous les halos d'une certaine classe de masse.
 Seuls les flux sortants sont considérés, la calcul est réalisé sur les 3072 points Healpix de tous les halos et non sur les moyennes globales calculées en \ref{sec:radflow}).
 Dans ces simulations, ce sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
+Il est intéressant de remarquer que cette gamme de masses de halos et représentative des galaxies de type Voie Lactée.
+Comme il a été mentionné dans la section \ref{sec:sfr_halo}, cette partie de la \ac{HMF} est à la limite de la convergence, et la taille de ces simulations joue peut être un rôle dans ces conclusion.
+Il est possible que dans des simulations plus grandes, disposant de halos plus massifs, le maximum du budget de photon soit décalé vers des masses plus importantes.
+
 
 \begin{figure}
 	\centering

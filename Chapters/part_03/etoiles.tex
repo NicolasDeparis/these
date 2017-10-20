@@ -144,13 +144,23 @@ $\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps
 %temps de free fall\\
 
 Maintenant que nous avons définis où former des étoiles, il nous faut calculer la quantité à former.
-La loi de Schmidt \citep{1959ApJ...129..243S}  est une loi observationnelle qui lie la densité surfacique de gaz dans les galaxies au taux de formation stellaire (\ac{SFR}) dans cette galaxie.
-\cite{1998ApJ...498..541K} a utilisé un modèle de galaxie pour dé-projeter la densité surfacique observée et ainsi déterminer une loi qui lie le \ac{SFR} à la densité volumique de gaz.
-Cette loi a la forme:
+\cite{1959ApJ...129..243S} propose que le \ac{SFR} d'une galaxie évolue comme une fonction de la densité de gaz dans cette galaxie, et plus précisément comme une loi de puissance.
+\cite{1998ApJ...498..541K} mesure cette loi pour les galaxies extérieures en fonction de leurs densité surfacique observée.
+
+Cette relation, nommée loi de Schmidt-Kennicut a la forme :
 \begin{equation}
-SFR \propto \rho ^{\alpha},
+\Sigma_{SFR} = (2.5 \pm 0.7) \times 10^{-4} \left( \frac{\Sigma_{gas}}{1 M_\odot pc^{-2}} \right)^{1.4 \pm 0.15}
 \end{equation}
-avec $\alpha \approx 1.4 \pm 0.15$
+
+Il est toutefois nécessaire de mentionner que ce modèle n'est valable qu'aux échelles de l'ordre du kiloparsec. % et que l'utilisation de résolution plus fine nécessitera l'introduction de physique supplémentaire. 
+
+%Il propose ensuite 
+%
+%a utilisé un modèle de galaxie pour dé-projeter la densité surfacique observée et ainsi déterminer une loi qui lie le \ac{SFR} à la densité volumique de gaz.
+%
+%\begin{equation}
+%SFR \propto \rho ^{\alpha},
+%\end{equation}
 
 Le taux de formation stellaire s'exprime généralement en $M_\odot \cdot cMpc^{-3} \cdot yr^{-1}$  
 Ce qui est homogène à une densité divisé par un temps.
@@ -237,8 +247,8 @@ Dans tout les cas la masse nouvellement convertie est retirée de la cellule.
 
 En pratique la création d'une particule stellaire consistera à prendre une nouvelle particule vierge dans la réserve (cf section \ref{sec:PART}), ajouter ce nouveau maillons à la liste chaînée de particule de la cellule et initialiser cette nouvelle particule.
 
-On associera un instant de création à la particule stellaire et non un age, ceci permet de ne pas avoir à remettre à jour cette valeur à chaque pas de temps.
-Pendant les analyses post-simulations, on prendra garde à définir l'age des étoiles comme étant l'instant associé au snapshot courant moins l'instant de création de la particule.
+On associera un instant de création à la particule stellaire et non un age, pour ne pas avoir à remettre à jour cette valeur à chaque pas de temps.
+%Pendant les analyses post-simulations, on prendra garde à définir l'age des étoiles comme étant l'instant associé au snapshot courant moins l'instant de création de la particule.
 
 Les étoiles créées auront une vitesse correspondant à la vitesse du gaz au moment de leurs création.
 Pour éviter les effets de "collier", à cette vitesse sera ajoutée une composante aléatoire, aillant une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule \citep{rasera_history_2006}.
@@ -285,40 +295,6 @@ Du fait de leurs masses, les popIII, émettaient un fort rayonnement ionisant, e
 %plasma donc hydrogène ionisé 
 
 
-\subsection{Fonction de masse Initiale}
-
-Les étoiles naissent en groupe, et toutes ne sont pas identique.
-Pour caractériser cette diversité, il existe la notion de fonction de masse initiale (\ac{IMF}), qui exprime la probabilité de former une étoile d'une certaine masse dans un population.
-Une \ac{IMF} prend généralement la forme d'une loi de puissance :
-\begin{equation}
-A_{(M)} = a_0 \cdot m^{-\alpha},
-\end{equation}
-pouvant être caractérisée par des valeurs de $\alpha$ différentes, parfois avec plusieurs intervalles.
-Parmi les \ac{IMF} plus connues il y a :
-
-\begin{itemize}
-\item \cite{1955ApJ...121..161S}
-\item \cite{1979ApJS...41..513M}
-\item \cite{2001MNRAS.322..231K}
-\item \cite{2003PASP..115..763C}
-\end{itemize}
-
-
-%Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendance a être très massive.
-
-Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisation, il y avait formation d'une forte proportion d'étoile massive, j'ai donc utilisé par la suite une \ac{IMF} Top-Heavy avec les caractéristiques suivantes :
-
-\begin{equation}
-	\alpha = 
-  	\begin{cases}
-	1.3 & si 0.1 < m/M_\odot \leq 0.5\\
-	2.3 & si 0.5 < m/M_\odot \leq 1 \\
-	1.6 & si 1   < m/M_\odot \leq 100 \\
-	\end{cases}
-\end{equation} 
-
-%: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
-%Fonction de masse IMF Top Heavy
 
 \subsection{Modèle de population stellaire}
 \label{sec:staburst}
@@ -327,6 +303,7 @@ Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisati
 %sorties
 
 Une fois les étoiles formées, il est nécessaire de les faire rayonner.
+Dans notre modèle, une particule stellaire ne corrspondra pas à une étoile unique mais sera représentatif d'une population.
 Les étoiles d'une population ayant des masses et des évolutions différentes, l'émission résultante sera la somme des contributions individuelles.
 Pour déterminer quel est le lien entre age, masse et luminosité d'une particule stellaire on utilisera un modèle de population stellaire.
 Il existe différent modèles dédiés à cette tache, on peut citer entre autres :
@@ -337,7 +314,7 @@ Il existe différent modèles dédiés à cette tache, on peut citer entre autre
 \item FSPS \cite{2009ApJ...699..486C}
 \end{itemize}
 
-A partir d'informations caractéristiques d'une population stellaire, comme sa masse, son \ac{IMF} ou sa métallicité, ces modèles retournent un spectre d'émission et son évolution en fonction du temps (cf Fig \ref{fig:spectre_starburst}).
+A partir d'informations caractéristiques d'une population stellaire, comme sa masse, son \ac{IMF} (voir cection \ref{sec:imf}) ou sa métallicité, ces modèles retournent un spectre d'émission et son évolution en fonction du temps (cf Fig \ref{fig:spectre_starburst}).
 Le choix a été fait d'utiliser Starburst99, car en plus des spectres, il retourne plusieurs informations utiles au modèle comme l'énergie et la masse injectées par les supernovae (section \ref{sec:sncali}).
 
 \begin{figure}
@@ -391,8 +368,8 @@ Ce paramètre libre reflète l'impact d'une grande partie de la physique sous gr
 En effet, nous ne résolvons pas certains processus, comme par exemple l'absorption par la poussière, qui va empêcher la radiation de sortir de l’environnement de la population.
 Ce paramètre est analogue à une fraction d'échappement intrinsèque et ne doit pas être confondu avec la fraction d'échappement des galaxies que nous aborderons par la suite (voir section \ref{sec:fesc}).
 
-Il nous reste encore à caractériser le type de photons à émettre.
-La gestion des groupes de photons a été abordée dans la section \ref{sec:groupedephotons}, nous ne travaillerons par la suite qu'en émission mono-groupe.
+%Il nous reste encore à caractériser le type de photons à émettre.
+%La gestion des groupes de photons a été abordée dans la section \ref{sec:groupedephotons}, nous ne travaillerons par la suite qu'en émission mono-groupe.
 %Les caractéristiques des photons émis dans le cas d'une \ac{IMF} Top-Heavy sont présentés sur la table \ref{tab_photon}.
 
 %\begin{table}
@@ -406,6 +383,43 @@ La gestion des groupes de photons a été abordée dans la section \ref{sec:grou
 %\label{tab_photon}}
 %\end{table}
 
+\subsection{Fonction de masse Initiale}
+\label{sec:imf}
+
+Un paramètre central dans le modèle de population stellaire est l'\ac{IMF} qui exprime la probabilité $A$ de former une étoile d'une certaine masse $M$ dans un population.
+%Les étoiles naissent en groupe, et toutes ne sont pas identique.
+%L'\ac{IMF} caractérise cette diversité, et 
+Elle prend généralement la forme d'une loi de puissance :
+\begin{equation}
+A_{(M)} = a_0 \cdot m^{-\alpha},
+\end{equation}
+pouvant être caractérisée par des valeurs de $\alpha$ différentes, parfois avec plusieurs intervalles.
+Parmi les \ac{IMF} plus connues il y a :
+
+\begin{itemize}
+\item \cite{1955ApJ...121..161S}
+\item \cite{1979ApJS...41..513M}
+\item \cite{2001MNRAS.322..231K}
+\item \cite{2003PASP..115..763C}
+\end{itemize}
+
+
+%Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendance a être très massive.
+
+Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisation, il y avait formation d'une forte proportion d'étoile massive, j'ai donc utilisé par la suite une \ac{IMF} Top-Heavy avec les caractéristiques suivantes :
+
+\begin{equation}
+	\alpha = 
+  	\begin{cases}
+	1.3 & si 0.1 < m/M_\odot \leq 0.5\\
+	2.3 & si 0.5 < m/M_\odot \leq 1 \\
+	1.6 & si 1   < m/M_\odot \leq 100 \\
+	\end{cases}
+\end{equation} 
+
+%: difficulté a reioniser avec Salpeter -> passage a top heavy -> justification 
+%Fonction de masse IMF Top Heavy
+
 
 \subsection{Quelques détails techniques}
 
@@ -415,6 +429,8 @@ En effet, on passera en revue toutes les cellules, et pour chaque cellules on pa
 On testera alors si une particules est une étoiles (la liste chaînée contient également les particules de matière noire), et si cette étoiles est dans un stade où elle émet de l'énergie lumineuse.
 Si c'est le cas, on calculera son émissivité et on injectera cette énergie sous forme de source dans l'équation \ref{eq:densite_energie}.
 Le calcul de $\dot{N}_\nu^*$ sera effectué dans toutes les cellules.
+
+
 
 
 %TODO intégration de l'énergie et de la section efficace

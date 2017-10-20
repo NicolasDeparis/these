@@ -239,6 +239,7 @@ Ceci facilite grandement le gestion des conditions de bords.
 
 
 \section{GPU}
+\label{sec:gpu}
 
 EMMA utilise un degré supplémentaire de parallélisation.
 Les calculs de chaque domaines sont accéléré en utilisant les capacités parallèle des processeurs graphiques récents.
@@ -357,8 +358,8 @@ Il existe des techniques optimisé de gestion d'arbre sur GPU à base de "Z-orde
 
 \section{Gestion des entrées sortie}
 
-Durant ma thèse la simulation CODA I AMR (voir partie \ref{sec:CODAEMMA}) a été réalisée.
-Cette simulation fait partie des plus grosse simulation de la réionisation exécutée à l'heure actuelle avec un nombre de particules de matière noire, et donc une grille de base, de $2048^3$ éléments .
+Durant ma thèse la simulation CODA I AMR (voir partie \ref{sec:CODAEMMA}) a été réalisée avec EMMA.
+Cette simulation fait partie des plus grosse simulation de la réionisation exécutée à l'heure actuelle avec un nombre de particules de matière noire, et donc une grille de base, de $2048^3$ éléments.
 Ces données devront être stockées et écrites sur disque dur or si l'on se réfère à la table \ref{tab:debits} on observe que les débits d'accès disques sont les plus faibles.
 
 Pour se faire une idée de la quantité de données en jeu faisons une estimation : 
