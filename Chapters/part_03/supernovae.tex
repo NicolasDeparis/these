@@ -174,7 +174,7 @@ Dans le but de tester l'implémentation des différents modèles d'injection d'�
 Ce test est utilisé pour tester le cas d'une explosion parfaite et a l'avantage de posséder une solution analytique.
 Il consiste à relâcher instantanément une quantité d'énergie $E_0$ dans un milieu homogène d'indice adiabatique $\gamma$, de densité $\rho_0$ et de pression $P_0$ (ou de température $T_0$).
 Ce brusque changement dans l'état du système créer une discontinuité que le solveur va devoir gérer.
-\cite{sedov_similarity_1959} a exprimé le rayon de l'explosion en fonction du temps  : 
+\cite{sedov_similarity_1959} a exprimé $r_{(t)}$ le rayon de l'explosion en fonction du temps  : 
 
 \begin{equation}
 r_{(t)}=\left( \frac{E_0}{\alpha \rho_0 }\right)^{1/5} t^{2/5}
@@ -381,13 +381,13 @@ Dans la suite de cette étude, les étoiles seront relativement massive puisque 
 \begin{figure}
         \includegraphics[width=.5\textwidth]{img/02/Mstar_SFH.png} 
         \includegraphics[width=.5\textwidth]{img/02/Mstar_xion.png} 
-        \caption[Masse des étoiles]{En changeant le paramètre de résolution en masse des particules stellaire, la \ac{SFH} cosmique moyenne reste constante mais l'histoire d'ionisation s'en trouve impactée.
+        \caption[Masses des étoiles]{En changeant le paramètre de résolution en masse des particules stellaire, la \ac{SFH} cosmique moyenne reste constante mais l'histoire d'ionisation s'en trouve impactée.
  		\label{fig:mstar}}
 \end{figure}
 
 \clearpage
 \subsection{Tests du modèle de supernovæ}
-
+\label{sec:testsncosmo}
 
 \subsubsection{Influence de la méthode d'injection}
 \label{sec:snmethod}
@@ -459,20 +459,6 @@ A feedback donné, il n'est donc pas possible de remonter le \ac{SFR} en augment
  		\label{fig:sfr_sfe}
 \end{figure}
 
-\subsubsection{Impact sur la fraction d'ionisation}
-\label{sec:pbfesc}
-Une observation importante par rapport au deuxième test est qu’indépendamment de la quantité d'énergie injectée, et que même si le \ac{SFR} est significativement impacté, l'histoire d'ionisation reste quasiment inchangée (cf figure \ref{fig:xion_sneff}).
-
-Cet effet est inattendu car si la quantité d'étoiles diminue, la quantité de radiation diminue d'autant, et donc la fonction d'ionisation globale devrait être impactée.
-Or ce n'est pas ce qui est observé ici.
-Dans le but d'explorer cet effet, nous allons nous concentrer dans la suite sur une étude galaxies par galaxies.
-
-\begin{figure}
-        \includegraphics[width=.95\textwidth]{img/03/sneff_xion.pdf} 
-        \caption[Fonction d'ionisation en fonction de la quantité d'énergie injectée]{Malgré une SFH différente (voir figure \ref{fig:sfr_egy}), l'histoire d'ionisation est conservée en changeant la quantité d'énergie injectée.
-        }
- 		\label{fig:xion_sneff}
-\end{figure}
 
 
 

@@ -801,9 +801,16 @@ Pour se faire, on introduit $c_{num}$ la vitesse de la lumière numérique rédu
 c_{num} = \tilde{c} \cdot{c},
 \end{equation}
 avec $\tilde{c}$ le facteur de proportionnalité. 
-Par exemple utiliser $\tilde{c}=0.1$ permet de réaliser 10 fois moins de pas de temps, et donc 10 fois moins de calcul.
+Par exemple, utiliser $\tilde{c}=0.1$ permet de réaliser 10 fois moins de pas de temps, et donc 10 fois moins de calcul.
+
+Il n'est pas encore clairement établi si la \ac{RSLA} doit s’appliquer à la chimie ou non et cette question mériterait une étude dédiée.
+Actuellement, par soucis de cohérence et d'uniformité, la vitesse de la lumière est réduite pour le transport des photons, et dans la gestion de la chimie.
+L'idée est que si les photons sont plus rapides, ils disposent de moins de temps pour interagir avec le gaz.
+Réduire la vitesse de la lumière dans le module de chimie permet de diminuer le taux de photo-ionisation et en théorie conserver la quantité total d'atomes ionisés.
+
 J'ai mené une étude dans le but de quantifier l'influence de la vitesse de la lumière réduite sur la propagation des fronts d'ionisation.
 Cette étude sera présenté en détails dans la section \ref{sec:lightspeed}.
+
 
 \subsection{Groupes de photons}
 \label{sec:groupedephotons}
@@ -878,7 +885,7 @@ En pratique, a chaque pas de temps radiatif, on effectuera un sous-cyclage sur l
 Après chaque pas de temps chimique, la variation d’énergie est calculée. 
 Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'étape courante est recalculée. (cf \cite{rosdahl_ramsesrt_2013}) 
 
-Étant donné que le processus chimique sont uniquement local (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
+Étant donné que les processus chimique sont gérés de manière locale (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
 
 
 \section{Gestion du pas de temps}
@@ -917,7 +924,7 @@ Donc le nombre de pas de temps hydrodynamique et gravitationnel nécessaire sont
 Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées (cf panneau inférieur de la figure \ref{fig:CRTA}).
 Ce qui a pour effet d'augmenter la taille du pas de temps radiatif, du fait de la condition de Courant.
 La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant localement un champ uniforme de radiation.
-Les concepts précis de la \ac{CRTA} étant assez technique, j'invite le lecteur à se référé à \cite{aubert_emma:_2015} pour une explication plus détaillée.
+Les concepts précis de la \ac{CRTA} étant assez technique, j'invite le lecteur à se référer à \cite{aubert_emma:_2015} pour une explication plus détaillée.
 
 Actuellement, la \ac{CRTA} n'est possible que sur le niveau de base.
 Un amélioration possible serait de pouvoir définir le niveaux de projection de la radiation pour pouvoir, en fonction des besoins, faire varier le poids de la radiation dans le calcul.

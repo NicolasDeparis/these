@@ -1,17 +1,31 @@
 \chapter{Influence du feedback stellaire sur les propriétés des galaxies dans les simulations de la Réionisation}
 \label{sec:galaxies}
 
+%\subsubsection{Impact sur la fraction d'ionisation}
+%\label{sec:pbfesc}
+
+Une observation importante par rapport aux tests de la section \ref{sec:testsncosmo} est qu’indépendamment de la quantité d'énergie injectée l'histoire d'ionisation reste quasiment inchangée (cf figure \ref{fig:xion_sneff}), alors que le \ac{SFR} est significativement impacté.
+Cet effet est inattendu car si la quantité d'étoiles diminue, la quantité de radiation diminue d'autant, et donc la fonction d'ionisation globale devrait être impactée.
+%Or ce n'est pas ce qui est observé ici.
+Dans le but d'explorer cet effet, nous allons nous concentrer dans cette section sur une étude galaxies par galaxies.
+
+\begin{figure}
+        \includegraphics[width=.95\textwidth]{img/03/sneff_xion.pdf} 
+        \caption[Fonction d'ionisation en fonction de la quantité d'énergie injectée]{Malgré une SFH différente (voir figure \ref{fig:sfr_egy}), l'histoire d'ionisation est conservée en changeant la quantité d'énergie injectée.
+        }
+ 		\label{fig:xion_sneff}
+\end{figure}
 
 %\section{La détection des halos}
 
-Les étoiles se forment rarement de manière isolée mais généralement en groupe, dans des régions bien définies. % que l'on nomme galaxies.
-Ces zones ont une densité de gaz particulièrement élevée qui leurs permettent d'amorcer la formation stellaire. %et disposent donc de suffisamment de matériaux pour amorcer
-Comme la densité de gaz suit la distribution de matière noire, c'est grâce à cette dernière que l'on détecte les galaxies.
-L'idée est d'utiliser un "détecteur de halo" (ou "halo finder") pour détecter les surdensités de matière noire, auquel on cherchera ensuite à associer la composante baryonique qui compose les galaxies.
+%Les étoiles se forment rarement de manière isolée mais généralement en groupe, dans des régions bien définies. % que l'on nomme galaxies.
+%Ces zones ont une densité de gaz particulièrement élevée qui leurs permettent d'amorcer la formation stellaire. %et disposent donc de suffisamment de matériaux pour amorcer
+%Comme la densité de gaz suit la distribution de matière noire, c'est grâce à cette dernière que l'on détecte les galaxies.
+%L'idée est d'utiliser un "détecteur de halo" (ou "halo finder") pour détecter les surdensités de matière noire, auquel on cherchera ensuite à associer la composante baryonique qui compose les galaxies.
+
 
 Cette partie a pour objectif de présenter les méthodes de détection des galaxies, pour pouvoir ensuite mener une série d'études statistiques.
-Nous analyserons différentes propriétés des galaxies en fonction de la masse de leur halo hôte.
-Nous nous intéresserons à des propriétés telle que la fraction de masse baryonique, le taux de formation stellaire, le taux d'éjection de matière en fonction des supernovæ, ou encore la fraction d'échappement du rayonnement.
+Nous analyserons différentes propriétés des galaxies en fonction de la masse de leur halo hôte et nous nous intéresserons à des propriétés telle que la fraction de masse baryonique, le taux de formation stellaire, le taux d'éjection de matière en fonction des supernovæ, ou encore la fraction d'échappement du rayonnement.
 %La comparaison de ces grandeurs en fonction du modèle de supernovae permettra de mettre en évidence
 
 %L'étude des simulation se fait souvent halos par halos.
@@ -19,18 +33,24 @@ Nous nous intéresserons à des propriétés telle que la fraction de masse bary
 %Comme le gaz suit la dynamique des baryons, les galaxies sont situées dans les surdensités de matière noire.
 
 
-Avant de pouvoir analyser la composition des halos, la première étape consiste à les détecter.
-Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
-L'objectif d'un halo finder est de détecter les surdensités dans ce champs de particule.
 
-Il existe différents techniques, mais j'ai principalement utilisé l’algorithme \ac{FOF} et plus particulièrement \textit{pFOF} une de ses implémentations parallèle \citep{2014A&A...564A..13R}.
+\section{Association halos - galaxies}
+
+
+
+%Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
+%L'objectif d'un halo finder est de détecter les surdensités dans ce champs de particule.
+
+Avant de pouvoir analyser les galaxies,il faut les détecter.
+Les galaxies étant situées au sein de halos de matière noire, on détectera les halos dans une premier temps, puis on y associera la partie baryonique représentant les galaxies.
+
+Pour la détection des halos, j'ai principalement utilisé l’algorithme \ac{FOF} et plus particulièrement \textit{pFOF} une de ses implémentations parallèle. % \citep{2014A&A...564A..13R}.
 \textit{pFOF} lie les particules regroupées en surdensité, en cherchant de proche en proche les particules à une distance inférieure à une taille de lien caractéristique.
 Il retourne ensuite une liste de groupes de particules et une liste de positions déterminées par le centre de masse des particules de chaque halos.
 %FOF retourne une liste de position de halo, une liste permettant de lier les particules détecté aux halos.
 %Il existe plusieurs possibilités pour ensuite déterminer l'étendue spatiale des halos.
 J'ai utilisé un paramètre de taille caractéristique de valeur standard $0,2$.
 
-\section{Association halos - galaxies}
 
 \subsection{Association dans le R$_{200}$}
 
@@ -74,12 +94,12 @@ L'approximation du $R_{200}$ est valide et a fait ses preuves dans le cas de hal
 Cependant, à haut redshift (z>5) les halos sont encore en formation et peuvent na pas être virialisé.
 Il devient alors difficile pour \ac{FOF} de séparer les différentes sous-parties d'une même sur-densité.
 La figure \ref{fig:part_halo} illustre particulièrement bien ce problème de détection.
-Dans ce cas, la sur-densité détectées par \ac{FOF} est loin d'être sphérique, et l'approximation du $R_{200}$ n'est pas valide dans ce cas.
+Dans ce cas, la sur-densité détectées par \ac{FOF} est loin d'être sphérique, et l'approximation du $R_{200}$ n'est pas valide.
 Du fait de l'effondrement hiérarchique de la matière noire, changer la longueur de lissage ne changera pas le problème et ne ferait que le reporter à d'autres échelles.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.75\textwidth]{img/03/part_halo_R200.pdf} 
+	\includegraphics[width=.65\textwidth]{img/03/part_halo_R200.pdf} 
     \caption[Détection des halos]{La détection des halos par \ac{FOF} peux être difficile à haut redshift car les structure peuvent ne pas être virialisée.
     Les points bleus représentent les particules de matière noire et le cercle le $R_{200}$.
  	\label{fig:part_halo}}
@@ -99,7 +119,9 @@ Malgré la recherche effectué à l'aide d'un KD-tree, cette méthode est évide
 \begin{figure}
 	\subfloat[$R_{200}$]{\includegraphics[width=.5\linewidth]{img/03/part_cells.pdf} }
 	\subfloat[\textit{fine}]{\includegraphics[width=.5\linewidth]{img/03/part_cells_fine.pdf} }
-    \caption[Méthodes d'association matière noire - grille]{Cellules associées au halo présenté sur la figure \ref{fig:part_halo} dans le cas de l'estimation du $R_{200}$ à gauche et dans le cas de la méthode "fine" à droite.       
+    \caption[Méthodes d'association matière noire - grille]{Cellules associées au halo présenté sur la figure \ref{fig:part_halo} dans le cas de l'estimation du $R_{200}$ à gauche et dans le cas de la méthode "fine" à droite.
+    Ce halo étant fortement asphérique, l'approximation du $R_{200}$ est peu représentative.
+    La méthode "fine" respecte mieux les contours et améliore significativement l'association halos-grille.
  	\label{fig:R200_fine}}
 \end{figure}
 
@@ -113,7 +135,7 @@ Cette méthode permettra d'associer des sous parties de cellules aux halos en ap
 \begin{figure}
 	\centering
 	%TODO refaire cette image
-	\includegraphics[width=.45\linewidth]{img/03/intersec.png}
+	\includegraphics[width=.4\linewidth]{img/03/intersec.png}
     \caption[Projection des petits halo]{Les plus petits halos peuvent avoir des tailles comparable aux cellules.
     Il est nécessaire d’estimer l'intersection cube/sphère.
  	\label{fig:intersec}}
@@ -362,12 +384,12 @@ La balance entre les quelques halos massifs émettant beaucoup de photons et les
 Connaissant les flux radiatifs des halos, il est possible de déterminer la répartition du budget de photon en fonction de la masse des halos.
 L'objectif est de déterminer quels sont les halos qui contribuent le plus à ioniser effectivement l'\ac{IGM} dans les simulations.
 La figure \ref{fig:budget} présente les résultats obtenus en faisant la somme des flux sortant de tous les halos d'une certaine classe de masse.
-Seuls les flux sortants sont considérés, la calcul est réalisé sur les 3072 points Healpix de tous les halos et non sur les moyennes globales calculées en \ref{sec:radflow}).
-Dans ces simulations, ce sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
+Seuls les flux sortants sont considérés, la calcul est réalisé sur les 3072 points Healpix de tous les halos et non sur les moyennes globales calculées en section \ref{sec:radflow}).
+Nous faisons ici la même constatation que précédemment, le budget de photon n'est globalement pas impacté par les supernovae dans nos modèles.
+Dans ces simulations, se sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
 Il est intéressant de remarquer que cette gamme de masses de halos et représentative des galaxies de type Voie Lactée.
 Comme il a été mentionné dans la section \ref{sec:sfr_halo}, cette partie de la \ac{HMF} est à la limite de la convergence, et la taille de ces simulations joue peut être un rôle dans ces conclusion.
 Il est possible que dans des simulations plus grandes, disposant de halos plus massifs, le maximum du budget de photon soit décalé vers des masses plus importantes.
-
 
 \begin{figure}
 	\centering
@@ -381,23 +403,22 @@ Il est possible que dans des simulations plus grandes, disposant de halos plus m
 \subsection{Fraction d'échappement}
 \label{sec:fesc}
 
-En comparant la quantité de photons produite au sein du halo au flux de radiation sortant, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échappement des photons $f_esc$.
+En comparant la quantité de photons produite au sein du halo au flux de radiation sortant, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échappement des photons $f_{esc}$.
 La fraction d'échappement fait le lien entre ce qu'il est possible d'observer et la physique interne au halo.
 %Le rapport de la quantité de photon produite sur la quantité de photon sortante, est la fraction d'échappement .
 Nous avons vu que le taux de formation stellaire et donc le taux de production de photon, dépend du modèle de supernovae (vois section \ref{sec:sfr_halo}).
 Mais nous avons vu que le flux de radiation sortant, lui ne dépend pas du modèle de supernovae.
 La fraction d'échappement doit donc varier pour expliquer ce phénomène.
-Les $f_esc$ obtenues sont présentées sur la figure \ref{fig:fesc}.
-Pour compenser le décalage entre le moment d'émmission des photons et le moment de leurs passage au $R_{200}$.
+Les $f_{esc}$ obtenues sont présentées sur la figure \ref{fig:fesc}.
+Pour compenser le décalage entre le moment d’émission des photons et le moment de leurs passage au $R_{200}$.
 Les émissivités sont corrigées du temps nécessaire au parcours des photons entre le centre du halo et son $R_{200}$ \citep{kimm_feedback-regulated_2017}.
 \begin{equation}
 f_{esc} = \frac{ F_{200}} {\sum \dot{N}_{\left( t-\frac{R_{200}}{\tilde{c} } \right) } }.
 \end{equation}
-Pour les halos en dessous de la limite en résolution radiative (cf section \ref{sec:radflow}) l'interprétation est difficile, mais il semble que la $f_esc$ ne dépende pas du modèle de supernovae.
-Par contre, on y observe une nette augmentation de la fraction d'échappement pour les halos massifs, lors de l'introduction de supernovae cinétique.
+Pour les halos en dessous de la limite en résolution radiative (cf section \ref{sec:radflow}) l'interprétation est difficile, mais il semble que la $f_{esc}$ ne dépende pas du modèle de supernovae.
 
-
-
+On mesure une nette augmentation de la fraction d'échappement pour les halos massifs, lors de l'introduction de supernovae cinétique.
+En effet, comme le flux radiatif sortant des halos ne semble pas impacté par le feedback (cf section \ref{sec:radflow}) mais que la production interne est significativement réduite (cf section\ref{sec:sfr_halo}), le fraction d'échappement ne peut qu'augmenter.
 
 \begin{figure}
 	\centering

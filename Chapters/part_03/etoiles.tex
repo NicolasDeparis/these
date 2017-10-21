@@ -250,8 +250,12 @@ En pratique la création d'une particule stellaire consistera à prendre une nou
 On associera un instant de création à la particule stellaire et non un age, pour ne pas avoir à remettre à jour cette valeur à chaque pas de temps.
 %Pendant les analyses post-simulations, on prendra garde à définir l'age des étoiles comme étant l'instant associé au snapshot courant moins l'instant de création de la particule.
 
-Les étoiles créées auront une vitesse correspondant à la vitesse du gaz au moment de leurs création.
-Pour éviter les effets de "collier", à cette vitesse sera ajoutée une composante aléatoire, aillant une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule \citep{rasera_history_2006}.
+Les étoiles créées auront une vitesse correspondant à la vitesse du gaz au moment de leurs création a laquelle on ajoutera composant avec une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule \citep{rasera_history_2006}.
+Ceci évitera à une cellule donnée de former, sur plusieurs pas de temps d'affilé, plusieurs particules aillant toute la même direction et la même vitesse, formant un alors un effet de "collier".
+%Dans cette configuration, il est possible qu'une zone dense forme des étoiles pendant plusieurs pas de temps d'affilés.
+%Or au moment de leurs création les étoiles passe d'une physique collisionnelle (celle du gaz), à une physique non collisionnelle
+%%Pour éviter les effets de "collier", à cette vitesse sera ajoutée 
+%Pour minimiser cette effet on ajoutera à la vitesse initiale une composante, aillant u
 
 Il est utile d'associer un identifiant unique aux nouvelles particules pour pouvoir suivre leurs évolutions et les retrouver entre les différentes sorties.
 La technique la plus simple est d'associer la valeur d'un entier que l'on incrémente à chaque création d'une nouvelle particule.
@@ -386,12 +390,12 @@ Ce paramètre est analogue à une fraction d'échappement intrinsèque et ne doi
 \subsection{Fonction de masse Initiale}
 \label{sec:imf}
 
-Un paramètre central dans le modèle de population stellaire est l'\ac{IMF} qui exprime la probabilité $A$ de former une étoile d'une certaine masse $M$ dans un population.
+Un paramètre central dans les modèles de populations stellaires est l'\ac{IMF}, qui exprime la probabilité $A$ de former une étoile d'une certaine masse $m$ dans une population.
 %Les étoiles naissent en groupe, et toutes ne sont pas identique.
 %L'\ac{IMF} caractérise cette diversité, et 
 Elle prend généralement la forme d'une loi de puissance :
 \begin{equation}
-A_{(M)} = a_0 \cdot m^{-\alpha},
+A_{(m)} = a_0 \cdot m^{-\alpha},
 \end{equation}
 pouvant être caractérisée par des valeurs de $\alpha$ différentes, parfois avec plusieurs intervalles.
 Parmi les \ac{IMF} plus connues il y a :
@@ -406,7 +410,7 @@ Parmi les \ac{IMF} plus connues il y a :
 
 %Comme nous l'avons abordé plus haut, les étoiles de population III avaient tendance a être très massive.
 
-Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisation, il y avait formation d'une forte proportion d'étoile massive, j'ai donc utilisé par la suite une \ac{IMF} Top-Heavy avec les caractéristiques suivantes :
+Des travaux comme \cite{2003MNRAS.344L...7C} suggère que lors de la réionisation, la proportion d'étoile massive était importante, j'ai donc utilisé par la suite une \ac{IMF} Top-Heavy avec les caractéristiques suivantes :
 
 \begin{equation}
 	\alpha = 
