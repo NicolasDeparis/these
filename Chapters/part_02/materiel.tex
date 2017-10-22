@@ -8,12 +8,12 @@ Le défis des simulations de la réionisation est qu'elles doivent simuler un vo
 En première approximation, il nous faudrait donc échantillonner un tel volume par $\left( \frac{100Mpc}{1pc} = 10^7 \right) ^3 = 10^{21}$ éléments.
 Ce qui est totalement impossible à l'heure actuelle.
 %Nous verrons dans la prochaine partie que nous sommes encore loin de pouvoir résoudre la formation stellaire dans ce type de simulations. %TODO ref
-Nous avons vu que l'amélioration de certain algorithme (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation N-corps directe, etc... voir chapitre \ref{ch:introduction}) a permis d'augmenter significativement la taille des simulations à puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
+Nous avons vu que l'amélioration de certains algorithmes (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation N-corps directe, etc... voir chapitre \ref{ch:introduction}) a permis d'augmenter significativement la taille des simulations à puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
 
 \section{Calcul hautes performances}
 
 Le \ac{HPC} est un domaine visant à utiliser au mieux les ressources de calculs disponibles.
-Ces ressources peuvent être multiples et les utiliser conjointement; de manière efficace représente un challenge en soit.
+Ces ressources peuvent être multiples et les utiliser conjointement de manière efficace représente un challenge en soit.
 Dans cette partie nous allons aborder une série de concepts liés au \ac{HPC} et utiles à la compréhension des simulations cosmologiques.
 
 
@@ -38,7 +38,7 @@ Comme la puissance de calcul est étroitement liée a cette évolution, la taill
 
 \subsection{Principes de parallélisation}
 
-A cause de limitations physiques comme la taille des atomes ou la capacité de refroidissement du silicium, on ne peut pas créer des processeurs aussi puissant que ce que l'on souhaite.
+A cause de limitations physiques comme la taille des atomes ou la capacité de refroidissement du silicium, on ne peut pas créer des processeurs aussi puissants que ce que l'on souhaite.
 La technique utilisée pour continuer à augmenter la puissance de calcul, consiste à en utiliser plusieurs en parallèle.
 Dans le cas des simulations cosmologiques, la parallélisation est effectuée en découpant l'espace à simuler en un certain nombre de sous domaines chacun associé à une unité de calcul.
 Comme chaque sous domaine n'est pas isolé, mais appartient au même ensemble, les domaines vont devoir communiquer entre eux sur l'état de leurs voisin.
@@ -67,6 +67,7 @@ Le type MIMD est lui même découpé en deux sous ensembles :
 Les principales machines que j'ai pu rencontrer utilise un modèle MIMD à mémoire distribuée.
 
 \item On dit que la mémoire est \textit{partagée} quand plusieurs processus ont accès au mème espace mémoire.
+Ce type de gestion mémoire est généralement associée à des systèmes plus petits que le modèle de mémoire distribuée.
 \end{itemize}
 \end{itemize}
 
@@ -81,7 +82,7 @@ Ce qui nous mène à la notion de centre de calcul.
 La production de simulation cosmologique à haute valeur scientifique se fait sur des centres de calcul.
 %A la manière d'un télescope pour les observateurs, les supercalculateur sont les outils principaux des simulateurs.
 %Et a la manière des plus gros télescopes, ces calculateurs sont gigantesques.
-La figure \ref{fig:titan} présente le calculateur TITAN du Oak Ridge Leadership Computing Facility sur lequel ont été exécutées les simulations CODA \citep{ocvirk_cosmic_2015}.
+La figure \ref{fig:titan} présente le calculateur TITAN du Oak Ridge Leadership Computing Facility sur lequel ont été exécutées les simulations CoDa \citep{ocvirk_cosmic_2015} et CoDa I AMR (voir section \ref{sec:CODAEMMA}).
 En novembre 2015, TITAN a été classé deuxième plus puissant calculateur au monde selon le cite top500.org (cf \ref{tab:top500}), il est aujourd'hui quatrième.
 
 \begin{figure}[bth]
@@ -156,8 +157,8 @@ On cherchera à optimiser les communications utilisant les interfaces les plus l
 %Ces machines se composent d'un certain nombre de nœuds.
 
 Généralement, la mémoire est partagée au sein d'un nœud, et distribuée sur le réseau.
-C'est a dire que tout les processus au sein d'un même nœud pourront communiquer par l'intermédiaire de la RAM, ce type de communications est rapide.
-Pour les communications entre les nœuds, l'information devra passer par le réseau, ce type de communications est donc plus lent.
+C'est à dire que tout les processus au sein d'un même nœud pourront communiquer par l'intermédiaire de la RAM, ce type de communications est donc rapide.
+Pour les communications entre les nœuds, l'information devra passer par le réseau et ce type de communications est donc plus lent.
 Et ce d'autant plus que les nœuds sont physiquement éloignés entre eux.
 
 \section{Implémentation}
@@ -167,12 +168,12 @@ Et ce d'autant plus que les nœuds sont physiquement éloignés entre eux.
 
 %https://books.google.fr/books?id=sbQqBgAAQBAJ&pg=PA26&lpg=PA26&dq=peano+hilbert+mpi&source=bl&ots=HgSw0Jpf7d&sig=vXTb2JkDixd1gcDGANoARIYHAG0&hl=fr&sa=X&ved=0ahUKEwilofzKoerSAhUF6RQKHXzQDC4Q6AEIGjAA#v=onepage&q=peano%20hilbert%20mpi&f=false
 
-
+Dans EMMA la distribution des domaines utilisés pour la parallélisation est réalisée à l'aide d'une courbe de Peano-Hilbert.
 %Durant le développement d'un code HPC, on cherchera a minimiser les communications
 %, et plus spécifiquement celle par le réseau qui sont nombreuse et relativement lentes.
 %Warren et Salmon
 Dans le but de garder une certaine proximité spatiale, le découpage des domaines de calcul correspondants aux différents processeurs, utilise une courbe de Peano-Hilbert.
-Ce type de courbes fractale a la particularité de remplir l'espace en passant par tout les points d'une grille, et donc t'obtenir une représentation 1D d'un espace 3D.
+Ce type de courbes fractale a la particularité de remplir l'espace en passant par tout les points d'une grille, et donc d'obtenir une représentation 1D d'un espace 3D.
 Ainsi si l'on applique ce pavage aux cellules de notre grille, en associant un indice reliant une cellule à sa position sur la courbe de Hilbert, il suffit ensuite de découper la courbe en parties identiques pour définir quelles cellules seront associées à quels processus.
 Si l'on a par exemple 32 cellules à assigner sur 4 processeurs, la courbes sera découpée en 4 parties de 8 cellules.
 Chacune de ces parties sera en suite assignée à un processeur.
@@ -198,8 +199,7 @@ Ce type de découpage minimise les interfaces entre domaine, en s'assurant d'une
 Dans l'état actuel de EMMA, la courbe est calculée au début de la simulation, et seule la grille de base est prise en compte.
 La répartition des domaines est statique et n'évolue pas au cours de la simulation.
 Dans le cas ou un domaine raffine plus qu'un autre, la charge de travail y est plus importante.
-Dans le futur, l'objectif serait de calculer la courbe de Hilbert sur la totalité des cellules feuilles.
-Pour ainsi pouvoir refaire le découpage et équilibrer la charge entre les processeurs, et réaliser un équilibrage de charge.
+Dans le futur, l'objectif serait de calculer la courbe de Hilbert sur la totalité des cellules feuilles, pour ainsi pouvoir refaire le découpage et équilibrer la charge entre les processeurs, et réaliser un équilibrage de charge.
 
 \subsection{Courbe de Morton}
 
@@ -248,7 +248,7 @@ Les cartes graphiques, ou \ac{GPU} ont été détourné de leurs utilisation pri
 A l'inverse des \ac{CPU} actuels qui disposent d'un nombre réduit de cœurs, les \ac{GPU} disposent d'une nombre beaucoup plus important de cœurs.
 Par exemple un AMD Opteron 6300 de TITAN dispose de 16 cœurs, contre 2880 cœurs pour une NVIDIA Tesla k40c.
 Un  \ac{CPU} peut exécuter des taches différentes sur chacun de ses cœurs (MIMD) tandis ce que les \ac{GPU} utilise un mode de parallélisation de type SIMD (Fig \ref{fig:cpugpu}).
-Ce mode de parallélisation en font des unités de calculs efficaces dans le traitement d'un grand nombre d'informations en parallèle.
+Ce mode de parallélisation en font des unités de calculs efficaces dans l'application d'un traitement identique sur un grand nombre d'informations en parallèle.
 Elle sont donc toutes indiquées dans le cas des simulations numérique ou il s'agit d'appliquer un traitement identique à un grand nombre de cellules.
 
 \begin{figure}
@@ -295,14 +295,14 @@ C'est à dire que les calculs sur ac{GPU} seront plus performants si les donnée
 %Pour calculer le nouvel état d'une cellule, il est nécessaire de connaitre sont état actuel, et celui de sa voisine.
 %L'accès mémoire sera plus rapide si l'information est situer sur un espace mémoire adjacent.
 %Ce choix est motivé par le fait qu'une structure mémoire bien organisée peux amener a des gains conséquents.
-Par exemple dans CUDATON \citep{aubert_radiative_2008} un code de transfert radiatif sur grille fixe, le gain de la parallélisation GPU est de l'ordre de 80 car la structure mémoire est optimisée.
+Par exemple dans CUDATON \citep{aubert_radiative_2008} un code de transfert radiatif sur grille fixe, le gain de la parallélisation \ac{GPU} est de l'ordre de $80$ car la structure mémoire est optimisée.
 
-La difficulté est que l'arbre \ac{AMR} ne respecte pas cette organisation, et la mémoire peut être extrêmement fragmentée à cause de la liste chainée.
-Pour limiter l'impact de la fragmentation, le choix a été fait d'organiser les données sur le CPU, avant de les envoyer dans l'espace mémoire du GPU.
+La difficulté est que l'arbre \ac{AMR} ne respecte pas cette organisation, et la mémoire peut être extrêmement fragmentée à cause de la liste chaînée.
+Pour limiter l'impact de la fragmentation, le choix a été fait d'organiser les données sur le CPU, avant de les envoyer dans l'espace mémoire du \ac{GPU}.
 Cette opération sera appelée "gather" (cf Fig. \ref{fig:gatherscatter}).
-Les données organisées sont envoyés sur le GPU, pour effectuer les calculs.
-Le résultat est ensuite copié sur le CPU et remises dans l'arbre par le CPU (opération de "scatter").
-Dans le cas où les calculs sont réalisés sur le CPU, cette opération est quand même réalisée, dans le but de conserver une certaine cohérence entre les versions.
+Les données organisées sont envoyés sur le \ac{GPU}, pour effectuer les calculs.
+Le résultat est ensuite copié sur le \ac{CPU} et remises dans l'arbre par le \ac{CPU} (opération de "scatter").
+Dans le cas où les calculs sont réalisés sur le \ac{CPU}, cette opération est quand même réalisée, dans le but de conserver une certaine cohérence entre les versions.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/gatherscatter.jpg} 
@@ -312,7 +312,7 @@ Dans le cas où les calculs sont réalisés sur le CPU, cette opération est qua
  		}
 \end{figure}
 
-Le pari est ici que la perte de temps générée par les opérations de gather/scatter sera compensé par l'accélération du GPU.
+Le pari est ici que la perte de temps générée par les opérations de gather/scatter sera compensé par l'accélération du \ac{GPU} .
 
 En pratique l'opération de gather consiste a rassembler toutes les informations nécessaire au calcul de l'état d'une cellule.
 Par exemple pour le calcul du potentiel (cf sec. \ref{sec:gravity}) les données nécessaires seront: la densité locale, le potentiel local, le potentiel des 6 cellules voisines suivant les axes principaux.
@@ -320,10 +320,22 @@ Ces données sont rassemblées dans une structure, puis une série de structure 
 Cette opération sera réalisée par paquet de $N$ cellules pour chaque cellule de la grille.
 
 On peut observer ici que les copies ont beaucoup de redondance.
-la copie est composé d'une cellule centrale et des 6 cellules voisine le ratio information utile sur information nécessaire est de $1/6$..
-En passant à la cellule suivante, la cellule précédente sera de nouveau copiée et au final le potentiel d'une cellule sera donc copié sept fois sur le GPU.
-Ces multiples copies diminue grandement les performances et en font l'une des principales limitations à l'accélération globale du code.
-Toute fois, même dans cet état, l'exécution s'en trouve accélérée d'un facteur $\approx 3$ par rapport à la version CPU.
+La copie est composée d'une cellule centrale et des 6 cellules voisines, le ratio information utile sur information nécessaire est de $1/6$.
+En passant à la cellule suivante, la cellule précédente sera de nouveau copiée et au final le potentiel d'une cellule sera donc copié sept fois sur le \ac{GPU}.
+Ces multiples copies diminuent grandement les performances et en font l'une des principales limitations à l'accélération globale du code.
+Toute fois, même dans cet état, l'exécution s'en trouve accélérée d'un facteur $\approx 3$ par rapport à la version \ac{CPU}.
+En pratique, l'exécution sur \ac{GPU} permet de significativement réduire la part du calcul dans le cout globale de la simulation.
+La principale limitation ne provenant plus de la quantité de calculs mais des opérations tierces comme le gather, le scatter (voir figure \ref{fig:fracgatherscatter}).
+
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/gsCPUGPU.pdf} 
+        \caption[Comparatif coût CPU et GPU]{Comparatif des coûts relatif des opération de gather et scatter en fonction de l'exécution sur CPU ou GPU.
+        L'exécution sur GPU permet de réduire fortement le cout du calcul, cependant le coût des opérations tierces est peu impacté, ces dernière deviennent alors les principales limitations de l'accélération globale.
+ 		\label{fig:fracgatherscatter}
+ 		}
+\end{figure}
+
 
 Dans le but de réduire le nombre de copies et accélérer l'exécution du code, j'ai modifié les opérations de gather/scatter pour diminuer la redondance des copies.
 Au lieu de traiter les cellules unes par unes, l'idée est de traiter les octs.
@@ -333,19 +345,19 @@ Le ratio utile/nécessaire passe donc à $8/24 = 1/3$.
 La quantité de copies redondante a donc été divisé par 2 par rapport au cas précédent.
 
 Vu que la surface d'un cube augmente avec le carré de son coté, alors que son volume augmente avec son cube, plus grand sera la nombre de cellule d'intérêt, meilleur sera la ratio.
-En étendant ce principe, j'ai développé une méthode qui permet de manière récursive d'envoyer une portion d'AMR contenue dans un OCT de niveau arbitraire.
+En étendant ce principe, j'ai développé une méthode qui permet de manière récursive d'envoyer une portion d'\ac{AMR} contenue dans un OCT de niveau arbitraire.
 Cependant les résultats ne sont pas a la hauteur des espérances, et l'accélération n'est pas proportionnelle au ratio de données utiles.
 
 IL existe cependant des pistes pour améliorer ce goulot d'étranglement.
 Une possibilité est de séparer la gestion de l'arbre de la physique.
 En l'état actuel, les données physique sont stockées en mémoire avec la même structure que l'arbre.
 L'idée serait de stocker dans l'arbre, des indices de cellules permettant de retrouver l'information physique dans des vecteurs plat (cf Fig. \ref{fig:gatherscatter}).
-Ainsi les vecteurs pourraient être en permanence sur le GPU, et seul l'information sur leurs position dans l'AMR devrait être transmise.
+Ainsi les vecteurs pourraient être en permanence sur le \ac{GPU}, et seul l'information sur leurs position dans l'AMR devrait être transmise.
 Un grand nombre de copies seraient alors évitées. 
 
-Une autre possibilité serait de placer l'intégralité de l'arbre sur le GPU.
-Dans ce cas, toutes les copies seraient supprimées mais c'est le GPU qui devra gérer l'évolution de l'arbre. 
-Il existe des techniques optimisé de gestion d'arbre sur GPU à base de "Z-order curves", mais son implémentation nécessite une refonte en profondeur du code.
+Une autre possibilité serait de placer l'intégralité de l'arbre sur le \ac{GPU}.
+Dans ce cas, toutes les copies seraient supprimées mais c'est le \ac{GPU} qui devra gérer l'évolution de l'arbre. 
+Il existe des techniques optimisé de gestion d'arbre sur \ac{GPU} à base de "Z-order curves", mais son implémentation nécessite une refonte en profondeur du code.
 
 %optimisation matérielle -> les prochaines générations de GPU
 
@@ -358,7 +370,7 @@ Il existe des techniques optimisé de gestion d'arbre sur GPU à base de "Z-orde
 
 \section{Gestion des entrées sortie}
 
-Durant ma thèse la simulation CODA I AMR (voir partie \ref{sec:CODAEMMA}) a été réalisée avec EMMA.
+Durant ma thèse la simulation CoDa I AMR (voir partie \ref{sec:CODAEMMA}) a été réalisée avec EMMA.
 Cette simulation fait partie des plus grosse simulation de la réionisation exécutée à l'heure actuelle avec un nombre de particules de matière noire, et donc une grille de base, de $2048^3$ éléments.
 Ces données devront être stockées et écrites sur disque dur or si l'on se réfère à la table \ref{tab:debits} on observe que les débits d'accès disques sont les plus faibles.
 
