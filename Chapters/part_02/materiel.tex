@@ -85,14 +85,14 @@ La production de simulation cosmologique à haute valeur scientifique se fait su
 La figure \ref{fig:titan} présente le calculateur TITAN du Oak Ridge Leadership Computing Facility sur lequel ont été exécutées les simulations CoDa \citep{ocvirk_cosmic_2015} et CoDa I AMR (voir section \ref{sec:CODAEMMA}).
 En novembre 2015, TITAN a été classé deuxième plus puissant calculateur au monde selon le cite top500.org (cf \ref{tab:top500}), il est aujourd'hui quatrième.
 
-\begin{figure}[bth]
+\begin{figure}[
         \includegraphics[width=.95\linewidth]{img/02/titan.jpg} 
         \caption[Titan]{Supercalculateur Titan OLCF.
         La calculateur sur lequel ont été exécutés les simulations CODA}
  		\label{fig:titan}
 \end{figure}
 
-\begin{table}[bth]
+\begin{table}
 \begin{tabular}{ l l l l }
 \hline 
 Système & Pays & nb de cœurs & TFlop/s (peak) \\
@@ -369,6 +369,7 @@ Il existe des techniques optimisé de gestion d'arbre sur \ac{GPU} à base de "Z
 %Copies asynchrones
 
 \section{Gestion des entrées sortie}
+\label{sec:io}
 
 Durant ma thèse la simulation CoDa I AMR (voir partie \ref{sec:CODAEMMA}) a été réalisée avec EMMA.
 Cette simulation fait partie des plus grosse simulation de la réionisation exécutée à l'heure actuelle avec un nombre de particules de matière noire, et donc une grille de base, de $2048^3$ éléments.

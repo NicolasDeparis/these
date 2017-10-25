@@ -698,13 +698,17 @@ Pour éviter les cas extrêmes, la pente de cette interpolation est limitée, da
 \subsection{Le pas de temps}
 \label{sec:dthydro}
 
-Le pas de temps respecte la condition de \ac{CFL} qui s'exprime ici sous la forme.:
+Le pas de temps respecte la condition de \ac{CFL}, sont expression est issue de \cite{teyssier_cosmological_2002} et s'exprime ici sous la forme :
 
 \begin{equation}
-\frac{dx * CFL }{3*(max(v) + c_s)}
+\Delta t = \frac{dx * CFL }{3*(max(v) + c_s)}
 \end{equation}
 
 avec $c_s = \sqrt{\gamma P/\rho}$ dans le cas d'un gaz parfais.
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -818,11 +822,6 @@ c_{num} = \tilde{c} \cdot{c},
 avec $\tilde{c}$ le facteur de proportionnalité. 
 Par exemple, utiliser $\tilde{c}=0.1$ permet de réaliser 10 fois moins de pas de temps, et donc 10 fois moins de calcul.
 
-Il n'est pas encore clairement établi si la \ac{RSLA} doit s’appliquer à la chimie ou non et cette question mériterait une étude dédiée.
-Actuellement, par soucis de cohérence et d'uniformité, la vitesse de la lumière est réduite pour le transport des photons, et dans la gestion de la chimie.
-L'idée est que si les photons sont plus rapides, ils disposent de moins de temps pour interagir avec le gaz.
-Réduire la vitesse de la lumière dans le module de chimie permet de diminuer le taux de photo-ionisation et en théorie conserver la quantité total d'atomes ionisés.
-
 J'ai mené une étude dans le but de quantifier l'influence de la vitesse de la lumière réduite sur la propagation des fronts d'ionisation.
 Cette étude sera présenté en détails dans la section \ref{sec:lightspeed}.
 
@@ -906,7 +905,7 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 
 \section{Gestion du pas de temps}
 
-D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre et sera donc definie comme le minimum entre :
+D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre et sera donc définie comme le minimum entre :
 
 \begin{itemize}
 \item le pas de temps cosmologique (cf section \ref{sec:dtcosmo}),
@@ -993,7 +992,15 @@ Le nombre d'appels aux moteurs hydrodynamique et gravitationnel est significativ
 %
 %ou $r$ représente une longueur en unités physique et $r'$ en unités comobile.
 %Ainsi un segment de 10 Mpc physique de coté, pris aujourd'hui, aura une taille de 10 Mpc comobile (cMpc), mais aussi à redshift z=9 où sa taille physique ne sera plus que de 1 Mpc physique (pMpc ou juste Mpc).
-%De plus, il est généralement pratique de normaliser les grandeurs que l'on considère:
+
+L'expansion de l'univers et modélisée ici en faisant varier la taille des éléments de calcul avec le facteur d'expansion.
+On appellera les longueurs ainsi exprimées des longueurs comobile.
+
+\begin{equation}
+r=a r'
+\end{equation}
+
+De plus, il est généralement pratique de normaliser les grandeurs que l'on considère:
 
 \begin{equation}
 r'=\tilde{r}r*

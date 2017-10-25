@@ -9,9 +9,9 @@ Les supernovae ont été introduites dans les simulations cosmologiques pour ré
 Sans l'introduction d'énergie dans le gaz par les supernovæ, le gaz s'effondre de manière importante et créer un nombre élevé d'étoiles.
 Cela mène à un taux de formation stellaire trop important par rapport à ce qui est observé.
 Ce problème est connus sous le nom de "overcooling problem" \citep{2003ApJ...599...38B, 1992A&A...264..365B}.
-L'objectif est de casser les structures pour diminuer les surdensités et limiter la formation stellaire.
+L'objectif est de "casser" les structures pour diminuer les surdensités et limiter la formation stellaire.
 
-Dans cette section, nous allons aborder la modélisation des supernovæ dans les simulations cosmologiques.
+Dans cette section faisant également référence à la publication présentée en annexe \ref{pap:feedback}, nous allons aborder la modélisation des supernovæ dans les simulations cosmologiques.
 Je présenterai deux des modèles que j'ai implémenté, ainsi que les tests numériques qui vont permettent de les valider.
 Nous verrons que ces modèles sont équivalent dans un cas idéal mais divergent lors de l'introduction de la physique du refroidissement.
 Nous aborderons également la problématique de la calibration de ces modèles.
@@ -40,23 +40,25 @@ L'équilibre entre la gravité et la pression est rompu, ce qui mène à une aug
 % Géante rouge ?
 Cette augmentation de la pression amorce une nouvelle série de fusions nucléaires, qui va consommer des éléments plus lourds que l’hydrogène, tel le carbone, l'azote ou l'oxygène (cycle CNO) jusqu'au fer où le processus s'arrête.
 A ce stade, les couches externes de l'étoiles se contracte rapidement, et rebondissent sur le noyau de fer.
-L'étoile explose alors en supernovae et injecte énormément d'énergie dans le milieu, de l'ordre de $10^{51}$ erg par explosion. 
+L'étoile explose alors en supernovae et injecte énormément d'énergie dans le milieu, de l'ordre de $10^{51}$ erg par explosion d'étoile de plus de $8 M_\odot$. 
 %Une fois arrivé au Fe, il devient coûteux de continuer a fusionner des éléments car Fe est le plus stable.
 
 Il existe principalement deux types de supernovæ : 
 \begin{itemize}
 \item Les types I où l'étoile n'est pas assez massive à la base pour permettre l'explosion en supernovae.
 Ce sont généralement des étoiles binaire où une des deux étoiles accrète une partie de son compagnon, ce qui mène au passage au dessus de la masse limite et provoque l'explosion.
-\item Les types II : les étoiles de plus de 8$M_\odot$ sont assez massives pour exploser en supernovæ sans avoir besoin de masse supplémentaire.
+\item Les types II : les étoiles de plus de $8 M_\odot$ sont assez massives pour exploser en supernovæ sans avoir besoin de masse supplémentaire.
 \end{itemize}
 
 Pendant l'explosion, l'énergie libérée est suffisamment importante pour amorcer la formation d'éléments plus lourds que le fer.
 Ces éléments, ainsi que ceux formés pendant la vie de l'étoile vont être expulsés, et vont participer à l'enrichissement du milieu.
 Ce qui va changer les propriétés physico-chimiques du gaz environnant et avoir des conséquences sur la formation des prochaines générations d'étoiles.
+Après l'explosion, le cœur subsiste et continue à interagir gravitationnellement avec son environnement.
 
-Après l'explosion de la supernova, le cœur subsiste et en fonction de sa masse, plusieurs scénario d'évolution sont possibles.
-En fonction de la masse de l'étoiles, le résidu peux devenir une naine blanche, une étoile à neutron ou un trou noir.
-Dans tout les cas, le résidu continue à interagir gravitationnellement avec son environnement.
+%Après l'explosion de la supernova, le cœur subsiste et en fonction de sa masse, plusieurs scénario d'évolution sont possibles.
+%En fonction de la masse de l'étoiles, le résidu peux devenir une naine blanche, une étoile à neutron ou un trou noir.
+%Dans tout les cas, 
+
 
 %\begin{itemize}
 %\item Naine blanche %(maintenue par le pression de dégénérescence des électrons)
@@ -124,12 +126,11 @@ Cependant il est connu pour avoir de fortes pertes de d'énergie dans le cas ou 
 
 \subsubsection{Modèle cinétique}
 
-Le modèle cinétique a pour objectif d'éviter le conversion entre énergie interne et énergie cinétique en modifiant directement cette dernière.
-Le modèle cinétique consiste à modifier directement la vitesse du gaz autour de l'explosion dans le but de shunter la conversion de l'énergie interne en mouvement.
+Le modèle cinétique a pour objectif de court-circuiter le conversion entre énergie interne et énergie cinétique en modifiant directement cette dernière.
+Le modèle cinétique consiste à modifier directement la vitesse du gaz autour de l'explosion.% dans le but de shunter la conversion de l'énergie interne en mouvement.
 %Ce type de model a été utilisé pour 
-Il n'est plus possible ici de ne modifier qu'une seule cellule.
-Plus le nombre de cellules dont la vitesse sera modifiée autour de l'explosion sera important, meilleure en sera la sphéricité de l'onde choc.
-Le choix a été fait de limiter le nombre de cellules utilisées à 8 correspondant à 1 oct de la structure \ac{AMR} d'\emma .
+Il n'est plus possible ici de ne modifier qu'une seule cellule, et plus le nombre de cellules dont la vitesse sera modifiée autour de l'explosion sera important, meilleure en sera la sphéricité de l'onde choc.
+Le choix a été fait de limiter le nombre de cellules utilisées à 8 correspondant à 1 oct de la structure \ac{AMR} d'\emma\ (voir figure \ref{fig:kin}).
 Ceci à deux conséquences.
 Premièrement la recherche de voisin est réduite à l'exploration de l'OCT parent de la cellule ou a lieu l'explosion, le coût numérique est donc réduit à son strict minimum (voir section \ref{sec:voisins}).
 Deuxièmement, un OCT ne peut pas être divisé entre les processus, ce qui assure que l'explosion a lieu au sein d'un processus unique et permet d'éviter les communications.
@@ -271,15 +272,16 @@ Le motif de raffinement est similaire pour les trois simulations.
 
 \subsection{Calibration}
 \label{sec:sncali}
+
 La quantité d'énergie et de masse injectée est calibrée en utilisant les informations en sortie de Starburst99.
-Le modèle actuel ne considère pas la possibilité d'une explosion continue, avec un retour de masse ou d'énergie s'étalant dans le temps.
+Dans EMMA le modèle actuel ne considère pas la possibilité d'une explosion continue, avec un retour de masse ou d'énergie s'étalant dans le temps.
 L'injection est réalisée instantanément quand la quantité d’énergie théorique donnée par Starburt99 représente 50\% de l’énergie totale.
 La comparaison entre les sorties de Starburst99 et le modèle implémenté est présenté sur la figure \ref{fig:SNloss}.
 Dans ce modèle, un particule stellaire injectera $E_{SN} = 9.7\cdot 10^{11} J.kg^{-1}$ et perdra 53\% de sa masse dans le milieu environnant, $17.6$ millions d'années après sa formation.
-On notera que le temps d'explosion des supernovae est environs quatre fois plus grand que le temps de vie radiatif.
+On notera que le temps d'explosion des supernovae est environ quatre fois plus grand que le temps de vie radiatif.
 
 De plus on introduira le rendement énergétique des supernovae $\epsilon_{SN}$, ce paramètre libre sera appliqué à $E_{SN}$ et sera utile pour calibrer l'impact de nos modèles.
-A l'instar du paramètre de fraction d'échappement intrinsèque du rayonnement (cf section \ref{sec:etoilerad}) il contient une grande partie de la physique sous grille qui n'est pas modélisée ici.
+A l'instar du paramètre de fraction d'échappement intrinsèque du rayonnement (cf section \ref{sec:etoilerad}) il contient une grande partie de la physique sous grille qui n'est pas modélisée ici, comme la turbulence ou les champs magnétiques par exemple.
 
 \begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/energy_loss.pdf} 
@@ -301,6 +303,9 @@ Dans un premier temps, j'ai réalisé une série de simulations, avec pour objec
 \subsection{Présentation des simulations}
 \label{sec:pres_simu}
 
+L'idée est d'étudier une série de simulations de taille relativement restreinte, servant d'échantillons, dans le but de mieux cerner l'impact du modèle stellaire dans les plus grandes simulations de la réionisation de type CoDa.
+Ces échantillons ont la même résolution spatiale et massique que la simulation CoDa I - AMR (voir section \ref{sec:CODAEMMA}), et présentent l'avantage de pouvoir être exécutées en grand nombre et d'être bien plus manipulable.
+
 Les paramètres communs à toutes les simulations qui vont suivre sont les suivants:
 Elles représentes un volume de $\left( 8\cdot h^{-1} \mathrm{cMpc} \right)^3$ échantillonnées par $256^3$ éléments de résolutions. % particules de matière noire.
 Ce qui mène à une résolution en masse de $3.4 \cdot 10^6 M_\odot$ et une résolution spatiale de $46$ckpc sur le niveau de base.
@@ -313,7 +318,6 @@ $H_0=67.11$,
 $\sigma_8=0.830$. 
 Les simulations commencent à redshift $z=150$.
 
-
 \subsection{Test de formation stellaire}
 
 %le premier test réalisé consiste à comparer le \ac{SFR} cosmique de l'ensemble de la boite, aux observations.
@@ -325,7 +329,7 @@ J'ai donc fixé ce seuil et ajusté l'efficacité en conséquence.
 La figure \ref{fig:test_SFH} présente l'histoire de formation stellaire dans un volume de $\left( 8\cdot h^{-1} \mathrm{cMpc} \right)^3$ obtenue après calibration. 
 Les observations sont extraites de \cite{bouwens_reionization_2015}.
 %une compilation réalisée par \cite{madau_cosmic_2014}.
-L'efficacité de formation stellaire est fixée à $1\%$.
+L'efficacité de formation stellaire est fixée à $1\%$, et les supernovæ ne sont pas considérées ici pour minimiser les effets de couplage.
 Avec ces paramètres, la \ac{SFH} obtenue respecte les contraintes observationnelles.
 Les premières étoiles apparaissent autour du redshift $z\approx 14$, contraint par le paramètre de surdensité.
 On observe cependant un saut dans la \ac{SFH} autour de redshift $z=10$ dû à l'enclenchement du dernier niveau de raffinement.
@@ -342,7 +346,7 @@ On observe cependant un saut dans la \ac{SFH} autour de redshift $z=10$ dû à l
 
 \subsection{Test radiatif}
 Avec les paramètres déterminés par Starburst99 et une fraction d'échappement intrinsèque de 40\%, j'obtiens l'histoire de reionisation présenté sur la figure \ref{fig:test_xion}.
-Cette histoire est comparée aux contraintes observationnelles déterminées par \cite{fan_constraining_2006}.
+Cette histoire est comparable aux contraintes observationnelles déterminées par \cite{fan_constraining_2006}.
 J'ai également pu vérifier à ce stade que l'introduction du rayonnement ionisant dans la simulation a peu d'impact sur la \ac{SFH} cosmique.
 Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des sources.
 
@@ -353,7 +357,7 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des so
  		\label{fig:test_xion}}
 \end{figure}
 
-\subsection{Le problème de la masse des étoiles}
+\subsection{Le problème de la masse des particules stellaires}
 
 %le paramètre de masse des étoiles change la reionization\\
 %effet numérique\\
@@ -361,18 +365,21 @@ Ce qui permet de calibrer d'abord la \ac{SFH} puis ensuite l'émissivité des so
 
 Durant mes calibrations, il s'est avéré que le paramètre de résolution de la masse des particules stellaire $m_{star}$ avait une grande importance dans l'évolution de la fraction ionisée.
 Dans des simulations hydrodynamiques dédiées à l'étude de la formation des galaxies, ce paramètre n'a que peu d'importance.
-Il a une faible influence sur la formation stellaire globale (cf panneau de gauche de la figure \ref{fig:mstar}) et ne définira la limite de résolution pour les petits halos.
+Il a une faible influence sur la formation stellaire globale (cf panneau de gauche de la figure \ref{fig:mstar}).
+Cependant une masse importante  définira la limite sur la résolution de la formation stellaire dans les petits halos.
 Dans le cas de simulation \ac{RHD} de l'époque de réionisation, ce paramètre aura également une influence sur la propagation de la radiation.
-Même si celui ci n'a pas d'impact sur le \ac{SFR} global, le taux d'ionisation moyen est fortement dépendant de ce paramètre (cf panneau de droite de la figure \ref{fig:mstar}).
+Même si ce paramètre n'a pas d'impact sur le \ac{SFR} global, le taux d'ionisation moyen en est fortement dépendant (cf panneau de droite de la figure \ref{fig:mstar}).
 Les "grosses" particules stellaire mènent à un taux d'ionisation plus important.
 À l'inverse, plus la résolution stellaire est élevée, plus la boite réionise tard.
-Il s'agit ici d'un effet numérique lié à la méthode, et pour les plus petites particules stellaires le rayonnement se trouve piégé au sein de la cellule.
+Il s'agit ici d'un effet numérique: pour les plus petites particules stellaires le rayonnement se trouve piégé au sein de la cellule.
 Pour les petites particules, le rayonnement est dilué à la fois dans l'espace et dans le temps, alors que dans le cas d'une grosse particule, une grosse quantité de rayonnement est injecté à un instant donné, la cellule est flashée et le rayonnement peut s'échapper.
 La difficulté sera de trouver un compromis entre :
 
 \begin{itemize}
 \item particules stellaires massives, permettant au rayonnement de sortir facilement des cellules au détriment d'une mauvaise résolution sur la formation stellaire
 \item  et particule stellaire de faible masse, générant une formation stellaire résolue même dans les petits halos mais menant à une réionisation plus difficile et une occupation mémoire plus importante.
+De plus, si la masse devient trop faible, les particules ne sont plus statistiquement représentative d'une population.
+Dans les cas extrêmes, il pourrait devenir nécessaire de former des étoiles individuellement, avec l'aide d'un \ac{IMF}.
 \end{itemize}
 
 Dans la suite de cette étude, les étoiles seront relativement massive puisque $m_* \approx 7.7 \cdot 10^4 M_\odot$.
@@ -404,6 +411,7 @@ Parmi ces simulations, il y en a :
 \end{itemize}
 
 Alors que les deux méthodes présentent des résultats similaires dans le cas idéal, la méthode d'injection cinétique a plus d'impact en conditions cosmologiques.
+À redchift $z=6$, la méthode d'injection thermique diminue le \ac{SFR} de moins d'un facteur 2, alors que la méthode cinétique le diminue d'un facteur environ 3.
 Ceci est du à l'introduction de la physique du refroidissement.
 La méthode thermique repose sur le principe de conversion de l'énergie interne en énergie cinétique, et le refroidissement limite cette conversion en permettant d'importantes pertes par radiation.
 La méthode thermique est connue %TODO ref
@@ -448,7 +456,7 @@ Le troisième test consiste à injecter une quantité donnée d'énergie par sup
 L'idée est de tester si la diminution du SFR observé lors de l'injection d'énergie peut être compensée par l'augmentation de l'efficacité de formation stellaire.
 La figure \ref{fig:sfr_sfe} présente ce test pour trois efficacité de formation stellaire différentes, avec un modèle de feedback cinétique et un rendement énergétique de supernovae de $\epsilon_{SN}=100$ \%.
 On observe un fort couplage entre feedback et formation stellaire, à tel point que pour une efficacité de formation stellaire de 10\% le feedback mène à une \ac{SFH} décroissante.
-A feedback donné, il n'est donc pas possible de remonter le \ac{SFR} en augmentant l'efficacité de formation stellaire, ce qui limite la dégénérescence entre ces deux paramètres.
+A feedback donné, il n'est donc pas possible de remonter arbitrairement le \ac{SFR} en augmentant l'efficacité de formation stellaire, ce qui limite la dégénérescence entre ces deux paramètres.
 
 \begin{figure}
         \includegraphics[width=.95\textwidth]{img/03/sedov/SFR_sfeff.pdf} 

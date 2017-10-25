@@ -10,9 +10,9 @@ Nous avons vu dans la partie précédente qu'elles étaient les principales phys
 L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et quelles sont les contraintes sur leurs implémentations.
 On se concentrera particulièrement sur le cas du code EMMA.
 
-EMMA est une code à grille adaptétive \ac{AMR} capable de simuler l'évolution de la matière noire, du gaz et de la radiation de manière auto cohérente et dans un contexte cosmologique.
+EMMA est une code à grille adaptative \ac{AMR} capable de simuler l'évolution de la matière noire, du gaz et de la radiation de manière auto-cohérente et dans un contexte cosmologique.
 Son principal objectif est de simuler l'\ac{EoR} et sa description complète pourra être trouvée dans \cite{aubert_emma:_2015} en annexe \ref{pap:EMMA}.
-J'ai été amené à interagir avec toutes les parties du code, et à en modifier quelques unes.
+J'ai été amené à interagir avec toutes les parties d'EMMA, et à en modifier quelques unes.
 Une de mes premières tâches à été l'introduction d'un modèle de formation et d'évolution stellaire (cf section \ref{sec:etoiles}).
 Ce modèle de formation stellaire se trouve au carrefour entre toute les physiques gérées par EMMA.
 La première partie de ce chapitre sera consacrée à une rapide présentation générale du contexte dans lequel le développement d'EMMA est réalisé, puis à la présentation de la grille adaptative, qui va contraindre un certain nombre de choix par la suite.
@@ -23,7 +23,7 @@ Dans la troisième partie je présenterai quelques contraintes matérielles dans
 %Comment modéliser la reionization?
 
 \section{Aperçu des différents modèles numériques}
-
+\label{sec:gridpart}
 Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et la radiation ou encore le champs magnétique.
 Ces fluides sont de natures différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physiques.
 %On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
@@ -88,7 +88,7 @@ Il en existe évidemment d'autre, et la majorité d'entre eux dispose de plusieu
 Des projets comme le projet Santa Barbara \citep{1999ApJ...525..554F} ou le projet nIFTy \citep{sembolini_nifty_2015} visent à comparer les codes de différents types entre eux.
 Certain projets \citep{2007MNRAS.380..963A, oshea_comparing_2005} se focalisent sur la comparaison des méthodes.
 % les codes \ac{SPH} auront une meilleur conservation de la masse,
-D'une manière générale, un code \ac{AMR} offre une meilleur conservation de l’énergie mais pourra souffrir de problèmes de diffusion.
+D'une manière générale, un code \ac{AMR} offre une meilleur conservation de l’énergie mais pourra souffrir de problèmes de diffusion numérique.
 Les codes \ac{SPH} auront plus de facilités à représenter de larges contrastes de densité, la où l'\ac{AMR} nécessitera un nombre important de niveaux, mais souffrira de bruit dans les régions sous-dense.
 Également, l'\ac{AMR} est plus apte à gérer les chocs et les instabilités mais sera plus diffusif.
 
@@ -319,7 +319,7 @@ Si une cellule est raffinée, mais qu'elle n'est pas marquée comme "à raffiner
 
 
 \subsubsection{Opérateurs de changement de grilles} 
-\label{Opérateurs de changement de grilles}
+\label{sec_gridchange}
 
 Les opérations de raffinement/dé-raffinement font intervenir des opérateurs de changement de grille.
 Le changement de résolution peut avoir lieu dans les deux sens :

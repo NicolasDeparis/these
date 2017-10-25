@@ -1,5 +1,7 @@
+
 \chapter{La réionisation} 
 \label{sec:introreio}
+
 %réionisation et non rayonnisation!
 %\section{Observation -> la reionization}
 %%\section{Théorie -> La reionization}
@@ -16,6 +18,15 @@
 %%le manque d'observations
 %%la difficulté des observations
 
+\begin{figure}
+\centering
+        \includegraphics[width=\textwidth]{img/01/frise_legend.pdf} 
+        \caption[Présentation de l'EoR]{Présentation de l'Époque de Réionisation. 
+        L'apparition des premières étoiles introduit un rayonnement UV qui va petit à petit réioniser l'Univers}
+ 		\label{fig:frise}
+\end{figure}
+
+
 Nous avons vu dans le chapitre précédent que lors de la recombinaison, l'Univers est passé d'un état globalement ionisé à un état globalement neutre.
 %De cette transition, qui a eu lieu a environ 380000 ans après le Bigbang, en a résulté L’émission du CMB.
 Suite a cette étape, l'Univers était alors très homogène et ne disposait pas de source lumineuse, c'était les "ages sombres".
@@ -23,7 +34,10 @@ Sa dynamique était régie essentiellement par la lutte entre l'expansion et la 
 Il faudra alors attendre plusieurs centaines de million d'années pour voir apparaître des surdensité de gaz suffisamment compactes pour former les première étoiles.
 Ces premières sources lumineuses ont émis un puissant rayonnement ionisant qui a à nouveau séparé les protons et les électron formé lors de la recombinaison.
 Il a fallut encore plusieurs centaine de million d'années pour que les première sources de rayonnement soient suffisamment nombreuses pour que leurs photons remplissent l'univers, et le fasse passer d'un état majoritairement neutre, à un état à nouveau majoritairement ionisé. 
-Cette transition s'appelle l’époque de la réionisation.
+Cette transition s'appelle l’époque de la réionisation (voir figure \ref{fig:frise}).
+
+L'objectif de cette section est de présenter les grandes lignes des principes physique qui ont eu lieu durant cette période.
+Je présenterai également quelques unes des preuve observationnelles qui confirme que la réionisation a bien eu lieu.
 
 %à l'apparition des premières des premières étoiles.
 %L'Univers va alors subir un changement d'état majeur, puisque le rayonnement énergétique des premières étoiles va de nouveau ioniser le gaz.
@@ -34,20 +48,61 @@ Cette transition s'appelle l’époque de la réionisation.
 %L'Univers est alors composé de gaz froid soumis principalement à deux forces : la gravité et l'expansion de l'Univers.
 %Ces étoiles ont émis du rayonnement suffisamment énergétique pour arracher les électrons du gaz environnant.
 
-
-
-L'objectif de cette section est de présenter les grandes lignes des principes physique qui ont eu lieu durant cette période.
-Je présenterai également quelques unes des preuve observationnelles qui confirme que la réionisation a bien eu lieu.
 %Dans cette section, je vais présenter quelques unes des preuve observationnelles de la réionisation. 
 
-%Une des difficultés de l’étude de la période de réionisation est que celle si a eu lieu tôt dans l'histoire de l'univers lors de son premier milliard d'années.
-%Cette distance temporelle impose de regarder loin spatialement et donc de disposer de moyen observationnels important.
-%Nous somme au balbutiement des observation de la réionisation.
 
+\section{Influence de la réionisation sur la formation des galaxies}
+
+Nous avons vu dans la partie dédiée au fond diffus cosmologique que lors de l'émission du \ac{CMB} l'univers n'était pas parfaitement homogène.
+La croissance de ces perturbations primordiales va mener, sous l'effet de la lutte entre l'expansion et la gravitation, à un effondrement de la matière sur elle même à différents endroits.
+C'est dans ces surdensités locales que vont se former les premières galaxies.
+
+Pour qu'une surdensité s'effondre, il faut que sa masse soit supérieure à la masse de Jeans et cette masse évolue en fonction du redshift \citep{2016PhR...645....1B} : 
+
+\begin{equation}
+M_j \approx 6 \cdot 10 ^3 \left( \frac{1+z}{10} \right)^{3/2} M_\odot
+\end{equation}
+
+Lors de son effondrement, le gaz est soumis à une compression : sa température et sa pression augmente en s'opposant à la contraction.
+L'effondrement des structures est alors limité et le refroidissement doit être efficace pour pouvoir continuer à effondrer le gaz (voir eg \cite{2004ARA&A..42...79B}).
+Pour être en mesure de former des étoiles, un nuage de gaz doit avoir un temps dynamique :
+\begin{equation}
+t_{dyn} =\sqrt{\frac{3 \pi}{32 G \rho}},
+\end{equation}
+plus important que son temps caractéristique de refroidissement :
+\begin{equation}
+t_{cool} = \frac{3 nkT}{2 \Lambda(n,T)}.
+\end{equation}
+
+Dans notre cas, le taux de refroidissement $\Lambda(n,T)$ est gouverné par l'émission de rayonnement d l'hydrogène atomique ou de l'hydrogène moléculaire (voir figure \ref{fig:refroidissement}).
+Ces rayonnements permettent de dissiper suffisamment d'énergie pour que l'effondrement puisse se poursuivre \citep{2001PhR...349..125B}.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/01/fonction_refroidissement.pdf} 
+        \caption[Fonction de refroidissement]{Taux de refroidissement de l'hydrogène et de l'hélium atomique en rouge et moléculaire en bleu. 
+        Figure extraite de \cite{2016PhR...645....1B}.
+ 		\label{fig:refroidissement}}
+\end{figure}
+
+Le type de processus de refroidissement majoritaire va conditionner le type du halo \citep{2002Sci...295...93A}) : on distinguera les halos à refroidissement atomiques, des halos à refroidissement moléculaire.
+
+Les halos à refroidissement moléculaire seront appelé "mini halo" du fait de leur faible masse $M < 10^8 M_\odot$.
+La formation stellaire dans ces halos est gouverné par la formation de $H_2$, or cette molécule est très sensible au rayonnement émis par les première générations d'étoiles.
+
+Les halos à refroidissement atomique aurons une masse plus importante $M > 10^8 M_\odot$.
+On distinguera cependant deux sous catégories : les halos massifs $M > 10^9 M_\odot$ et les halos de faible masse $M< 10^9 M_\odot$.
+Ces dernier sont sensibles au photo-chauffage induit par le rayonnement UV \citep{1998ApJ...497...21M}.
+Ces halos, voyant leur température augmenté vont également subir une augmentation de leur masse de Jeans.
+L'effondrement ne sera alors plus possible et la formation stellaire stoppée.
+
+
+
+
+\clearpage
 \section{Principe général}
 
 Lorsqu'une étoile se forme dans un environnement d'hydrogène neutre, son rayonnement va être capable d'ioniser l'hydrogène autour d'elle dans une zone définie.
-Ces zones forment des bulles, et quand plusieurs bulles apparaissent proches les unes des autre, elles percollent pour en former un plus grande.
+Ces zones forment des bulles, et quand plusieurs bulles apparaissent proches les unes des autre, elles percolent pour en former une plus grande.
 Ces région sont nommées régions HII et une grande partie de l'étude de l'époque de réionisation consiste à étudier leurs croissance.
 Dans le but d’appréhender les principes de base à l’œuvre pendant la réionisation, nous allons commencer par nous placer dans un cas simple et idéal.
 
@@ -88,31 +143,58 @@ r_s = \left( \frac{3 \dot{N_\gamma} }{4 \pi \alpha_B(T) n_H^2} \right)
 Nous voyons ici que connaissant l'émissivité de la source et la densité et température du milieu environnant, il est possible d'estimer la taille de sa région HII.
 
 \subsection{Le cas non idéal}
-Nous venons de voir un modèle théorique sensé représenter la croissance des régions HII.
-En réalité : 
+Nous venons de voir un modèle théorique sensé représenter la croissance des régions HII de manière individuelles, en réalité : 
 \begin{itemize}
-\item les sources ne sont pas d'intensité constante. %Les étoiles évoluent et meurent, si il n'y a 
-\item la densité n'est pas homogène,% (motif en papillon autour des filament)
+%\item la densité n'est pas homogène,% (motif en papillon autour des filament)
 \item les sources ne sont pas isolées,
+\item l'intensité des sources n'est pas constante. %Les étoiles évoluent et meurent, si il n'y a 
 \end{itemize}
 
-%C'est ce dernier point qui va permettre a 
-%l'Univers de réionise en entier car les sources sont nombreuses et c'est la percolation des régions HII des régions successives d'étoiles 
-
-Se sont les générations successives d'étoiles et l'augmentation du taux de formation stellaire qui permet a l'Univers de reioniser en entier.
-Les régions HII croissent de manière asymétrique en fonction de la géométrie du milieu, et forment des motifs en "papillons" autour des amas et des filaments.
-La percolation de ces régions augmente petit a petit le taux d'ionisation de l'univers, jusqu'a ce qu'il ne reste plus que une fraction de neutre de l'ordre de $10^{-4}$.
-Il est possible d'estimer l'évolution de la fraction d'hydrogène ionisé globale en utilisant :
+Pour estimer l'évolution de la fraction d'hydrogène ionisée dans l'Univers, il est nécessaire de calculer la balance entre le taux d'ionisation et le recombinaison \citep{0004-637X-514-2-648, RevModPhys.81.1405} en utilisant :
 \begin{equation}
 \frac{dQ_{HII}}{dt} = \frac{\dot{N}_{ion}}{ <n_H>} - \frac{Q_{HII}}{t_{rec}},
 \end{equation}
-%TODO develloper les termes
 
-où, $\dot{N}_{ion}$  est le taux d'émission de photon ionisant et dépend du taux de formation stellaire et du profile d'emmisivité des sources.
-%TODO develloper les termes
+où, le taux d'émission de photon ionisant $\dot{N}_{ion}= dot{n}_{ion} f_{esc}$, dépend de $dot{n}_{ion}$ le nombre de photon ionisant produit et de $f_{esc}$ la fraction d'échappement des photons. elle caractérise le lien entre les photon ionisant produit par les sources et les photons qui vont être effectivement utiles à ioniser l'\ac{IGM}.
+Il est possible de mettre des contraintes sur le taux de photo-ionisation (voir figure \ref{fig:photoionisationrate}).
+
+%$ <n_H>$ est la densité moyenne d'Hydrogène dans l'Univers, comme il dépend de $a$, ce terme contient l'information de l'expansion de l'Univers.
+%Le second terme est le terme de recombinaison, $t_{rec}$
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/01/photon_obs.pdf} 
+        \caption[Taux de photo-ionisation ]{Taux de photo-ionisation de l'\ac{IGM}. 
+        Figure extraite de \cite{2013MNRAS.436.1023B}.
+ 		\label{fig:photoionisationrate}}
+\end{figure}
+
+
 
 %taux d'effondrement des structures.
 
+%l'Univers de réionise en entier car les sources sont nombreuses et c'est la percolation des régions HII des régions successives d'étoiles 
+
+%Les régions HII croissent de manière asymétrique en fonction de la géométrie du milieu, et forment des motifs en "papillons" autour des amas et des filaments.
+%La percolation de ces régions augmente petit à petit la fraction ionisée de l'Univers, jusqu'à ce qu'il ne reste plus que une fraction de neutre de l'ordre de $1-Q_{HII}=10^{-4}$.
+
+Le taux de production des photons est fonction du taux de formation stellaire.
+La figure \ref{fig:obs} présente les fonctions de luminosités des galaxies à haut redshift ainsi que les contraintes déterminées à partir de celles ci sur le taux de formation stellaire
+Se sont les générations successives d'étoiles et l'augmentation du taux de formation stellaire qui permet a l'Univers de réioniser en entier.
+
+\begin{figure}
+		\includegraphics[width=.95\linewidth]{img/01/UV_lum_obs.pdf} 
+        \includegraphics[width=.95\linewidth]{img/01/SFR_obs.pdf} 
+        \caption[Contrainte SFH]{Haut: fonction de luminosité à haut redshift. 
+        Bas : contraintes observationnelle sur l'histoire de formation stellaire à haut redshift dérivé des fonctions de luminosités. 
+        Figures extraites de \cite{bouwens_reionization_2015}.
+ 		\label{fig:obs}}
+\end{figure}
+
+Le taux de production des photons est aussi fonction du profile d'émissivité des sources.
+Ce profil d'emmissivité sera dépendant entre autre de la fonction de masse initiale
+
+
+\clearpage
 \section{Preuves observationnelles}
 \label{sec_contraintes_obs}
 
@@ -127,15 +209,16 @@ Avant de poursuivre, il est nécessaire  de revenir sur le spectre d’émission
 
 \subsubsection*{Raie Lyman alpha}
 
-\begin{figure}
-\centering
-        \includegraphics[width=.9\textwidth]{img/01/lyman.jpg} 
-        \caption[Raies de l'hydrogène]{Changement de niveau d'énergie de l'atome d'hydrogène}
- 		\label{fig:lyman}
-\end{figure}
+%\begin{figure}
+%\centering
+%        \includegraphics[width=.9\textwidth]{img/01/lyman.jpg} 
+%        \caption[Raies de l'hydrogène]{Changement de niveau d'énergie de l'atome d'hydrogène}
+% 		\label{fig:lyman}
+%\end{figure}
+%(cf Fig. \ref{fig:lyman}) 
 
 La série de Lyman correspond a la transition atomique menant au fondamental de l'atome d'hydrogène.
-Il existe plusieurs série de transition autre que celle de Lyman (cf Fig. \ref{fig:lyman}) mais cette dernière est la plus énergétique et la plus fréquente, et donc la plus facile à détecter.
+Il existe plusieurs série de transition autre que celle de Lyman mais cette dernière est la plus énergétique et la plus fréquente, et donc la plus facile à détecter.
 Il y a émission d'un photon Lyman-alpha pendant la transition de l'électron du premier état excité vers l’état fondamental (n2 -> n1).
 L'énergie de cette transition est de 1216 $\AA$,  ce qui place l’émission dans l'Ultra Violet.
 Réciproquement, la transition n1 vers n2 mène a l'absorption d'un photon Lyman-alpha.
@@ -226,11 +309,23 @@ En utilisant un modèle de réionisation instantané, \cite{planck_collaboration
  		\label{fig:epaisseur_optique_thomson} }
 \end{figure}
 
-%\subsection{ligne 21 cm}
+\subsection{Ligne 21 cm et observations}
+
+
+Une raie a 21 cm est émisse par les nuages d'hydrogène neutre.
+Lorsque que le spin de l'électron et du proton sont opposée, le niveau d'énergie de l'atome est légèrement supérieur au cas ou les spins sont alignés.
+Ces deux niveaux ont des énergies très proches et la transition est dite hyperfine.
+
+
+Une des difficultés de l’étude de la période de réionisation est que celle si a eu lieu tôt dans l'histoire de l'univers lors de son premier milliard d'années.
+Cette distance temporelle impose de regarder loin spatialement et donc de disposer de moyen observationnels important.
+Nous somme au balbutiement des observation de la réionisation et une série de missions dédiées a l'observation de la raie 21cm vont venir livrer leurs résultats et compléter notre compréhension de la réionisation dans les années à venir :
+\begin{itemize}
+\item SKA (Square-Kilometer Array) \href{https://skatelescope.org/}{site}
+\item LOFAR (Low Frequency Array) \href{http://www.lofar.org/}{site}
+\item HERA (Hydrogen Epoch of Reionization Array) \href{http://reionization.org/}{site}
+\end{itemize}
 %
-%Une raie a 21 cm est émisse par les nuages d'hydrogène neutre.
-%Lorsque que le spin de l'électron et du proton sont opposée, le niveau d'énergie de l'atome est légèrement supérieur au cas ou les spins sont alignés.
-%Ces deux niveaux ont des énergies très proches et la transition est dite hyperfine.
 
 
 %Lors du changement de spin d'un électron 
@@ -242,6 +337,7 @@ En utilisant un modèle de réionisation instantané, \cite{planck_collaboration
 %\section{Les futures observations}
 %\subsection{SKA}
 %\subsection{LOFAR}
+
 
 \section{Quelques questions en suspens}
 
@@ -257,6 +353,7 @@ La balance entre les nombreuses galaxies peu lumineuses, et les rare galaxies ex
 
 De plus, les quasars, objets extrêmement lumineux, situé dans les galaxies les plus massives, augmente encore le budget de photon.
 Les quasars ont contribué à réioniser l'Univers mais dans quelles proportion?
+La figure \ref{fig:gal_AGN} présente le budget de photon plausible pour les galaxies ou les quasars selon \cite{trac_computer_2011}.
 Il faut un certain temps pour mettre en place les conditions propices à l'apparition d'un quasar, est ce que ce temps a été suffisant avant z=6, pour en former suffisamment ?
 Certain travaux soutiennent que c'est le cas (eg \cite{chardin_large-scale_2017}) cependant seul le rayonnement provenant des galaxies a été considérer lors de cette thèse.
 
@@ -265,12 +362,15 @@ La fraction d'échappement ($f_{esc}$) permet de faire le lien entre les observa
 Elles dépend de nombreux paramètres comme la formation stellaire ou les propriétés du milieu.
 Comment évolue t-elle en fonction de la masse des galaxies? 
 
-%La figure \ref{fig:gal_AGN} présente le budget de photon plausible pour les galaxies ou les quasars.
-%\begin{figure}
-%        \includegraphics[width=.9\linewidth]{img/01/gal_AGN.pdf} 
-%        \caption{Budget de photons provenant des galaxies et des quasars durant la reionization selon \cite{trac_computer_2011}.
-% 		\label{fig:gal_AGN} }
-%\end{figure}
+\begin{figure}
+        \includegraphics[width=.9\linewidth]{img/01/gal_AGN.pdf} 
+        \caption{Budget de photons provenant des galaxies et des quasars durant la reionization selon \cite{trac_computer_2011}.
+ 		\label{fig:gal_AGN} }
+\end{figure}
 
 %outlier dans l'épaisseur optique des quasars
 %Le groupe local ?
+%Le développement d’expériences destinées entre
+%autres le signal à 21 cm de la réionisation comme 
+
+
