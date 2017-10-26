@@ -368,12 +368,13 @@ Un seul appel génère un cycle nommé cycle en V, deux un cycle en W, etc...
 
 
 \begin{figure}
-\begin{center}
-\includegraphics[width=0.75\textwidth]{img/02/multigrid.png}
-\caption[Multigrille]{Vue des différents niveaux de grilles et du V-cycle.
- Image extraite de \href{http://MGNet.org}{MGNet.org} }
-\label{fig:mgrid}
-\end{center}
+	\begin{center}
+	\includegraphics[width=0.95\textwidth]{img/02/Vcycle2.png}
+	\caption[Multigrille]{Vue du V-cycle et des différents niveaux de grilles.
+	 S=lissage, R=restriction, A=calcul exact et P=prolongation.
+	 Image extraite de \cite{multigrid}
+	 \label{fig:mgrid}}
+	\end{center}
 \end{figure}	
 
 %\begin{figure}[htbp]
@@ -506,7 +507,9 @@ En analyse numérique ce système sera réécrit sous la forme:
 U_t+F_x(U) = S(U),
 \label{eq:conservation}
 \end{equation}
-où les sous-scripts représentent les dérivées temporelles et spatiales et avec:
+où les sous-scripts représentent les dérivées temporelles et spatiales.
+
+Le vecteur des quantité conservées $U$, la fonction de flux $F(U)$, et le terme source $S(U)$ seront alors exprimés sous la forme :
 
 \begin{equation}
 \begin{array}{c}
@@ -546,7 +549,6 @@ S(U) =
 \end{array} 
 \end{equation}
 
-où $U$ est le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source.
 
 %,
 %F(U)=
@@ -585,7 +587,7 @@ Par exemple, une différence finie centrée peut être décomposée en deux diff
 \end{equation}
 
 %Dans le premier cas, la discrétisation pourra s'écrire : 
-La propagation d'une onde a la vitesse $a$ pourra être discrétisée en utilisant.
+La propagation d'une onde à la vitesse $a$ pourra être discrétisée en utilisant.
 
 \begin{equation}
 \frac{u_i^{t+1} - u_i^t }{\Delta t}   +a \frac{u_{i+1}^t  - u_i^t}{\Delta x} = 0
@@ -706,9 +708,7 @@ Le pas de temps respecte la condition de \ac{CFL}, sont expression est issue de 
 
 avec $c_s = \sqrt{\gamma P/\rho}$ dans le cas d'un gaz parfais.
 
-
-
-
+L'idée est que la vitesse de l'onde la plus rapide de la simulation ne doit pas parcourir plus d'une fraction de cellule, sans quoi la stabilité du modèle serait perdue.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -902,7 +902,7 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 
 Étant donné que les processus chimique sont gérés de manière locale (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
 
-
+\clearpage
 \section{Gestion du pas de temps}
 
 D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre et sera donc définie comme le minimum entre :

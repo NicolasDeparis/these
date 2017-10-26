@@ -23,11 +23,11 @@ D'un autre coté, plus d'une décennie plus tard les observations de Hubble ont 
 Entre 1923 et 1929 Hubble observe deux phénomènes qui vont mener à une redéfinition de notre notion de cosmologie.
 Il bénéficie à l'époque de l'accès au plus puissant télescope du monde (le télescope Hooker du mont Wilson).
 Cet instrument lui a permis, dans une publication de 1926, d'observer que des nébuleuses situées hors de notre galaxie présente des caractéristiques identiques à des système d'étoile \citep{1926ApJ....63..236H}.
-Il en déduit qu'il existe d'autres galaxies que notre Voie Lactée.
+Il en déduit qu'il existe d'autres galaxies que notre Voie Lactée (voir figure \ref{fig:hubbl_deep_field}).
 
-Avec les moyens observationnels dont nous disposons aujourd'hui l’existence d'un grand nombre de galaxies en dehors de notre voie lactée est bien établie.
-Le "Hubble Ultra Deep Field"  (voir figure \ref{fig:hubbl_deep_field}) une image prise en 2004 et publiée en 2006 \citep{1538-3881-132-5-1729} montre un grand nombre de galaxies dans une portion réduite du ciel.
-On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$ dans l'Univers observable.
+%Avec les moyens observationnels dont nous disposons aujourd'hui l’existence d'un grand nombre de galaxies en dehors de notre voie lactée est bien établie.
+%Le "Hubble Ultra Deep Field"  (voir figure \ref{fig:hubbl_deep_field}) une image prise en 2004 et publiée en 2006 \citep{1538-3881-132-5-1729} montre un grand nombre de galaxies dans une portion réduite du ciel.
+%On estime aujourd'hui le nombre de galaxies à $\approx 2 \cdot 10^{11}$ dans l'Univers observable.
 
 \begin{figure}
         \includegraphics[width=.9\linewidth]{img/01/hudf.jpeg} 
@@ -64,9 +64,8 @@ V = H_0 D,
 \end{equation}
 où la constante de Hubble est aujourd'hui estimée à $H_0 = 67 \mathrm{ \left[ km.s^{-1}.Mpc^{-1} \right ] }$ \citep{planck_collaboration_planck_2016}.
 
-
-Conventionnellement, le sous script $0$ désigne le fait que la valeur de la variable qui lui est associé est celle prise aujourd'hui.
-Cette distinction est nécessaire car malgré son nom, la valeur de la constante de Hubble n'est pas constante dans le temps.
+%Conventionnellement, le sous script $0$ désigne le fait que la valeur de la variable qui lui est associé est celle prise aujourd'hui.
+%Cette distinction est nécessaire car malgré son nom, la valeur de la constante de Hubble n'est pas constante dans le temps.
 D'une manière plus générale la constante de Hubble représente la vitesse de variation relative de la distance entre deux points et s'exprime sous la forme:
 \begin{equation}
 H=\frac{1}{a} \frac{da}{dt} = \frac{\dot{a}}{a},
@@ -81,7 +80,8 @@ Le redshift, s'exprime en fonction du facteur d'expansion de la manière suivant
 z= \frac{1}{a}-1
 \end{equation}
 
-\subsection{Équation d'Einstein}
+\subsection{Équations de Friedmann}
+\label{sec:friedman}
 
 Les observations de Hubble ont permises de confirmer ce qui avait été pressentis par Einstein plus d'une décennie plus tôt, lorsqu'il introduisit théoriquement le concept d'expansion de l'Univers. 
 La théorie de la relativité générale \citep{1916AnP...354..769E} introduit la célèbre equation de champ décrivant le lien entre densité d'énergie et déformation de l'espace-temps:
@@ -93,11 +93,10 @@ R_{\mu\nu} - \frac{1}{2} g_{\mu\nu}R + \Lambda g_{\mu\nu}  = \kappa T_{\mu\nu}.
 \label{eq:einstein}
 \end{equation} 
 
-Dans cette équation apparaît le terme $\Lambda$ (de $\Lambda$CDM), appelée \textit{constante cosmologique}.
-Cette constante représente mathématiquement le fait que l'espace-temps peut être en expansion ou en contraction.
+Dans cette équation apparaît le terme $\Lambda$ (de $\Lambda$CDM), appelée \textit{constante cosmologique}, et également :
+%Cette constante représente mathématiquement le fait que l'espace-temps peut être en expansion ou en contraction.
+$R_{\mu \nu}$ le tenseur de Ricci, $R$ la courbure scalaire, $g_{\mu \nu}$ le tenseur métrique, $T_{\mu \nu }$ le tenseur énergie-impulsion et $\kappa$ la constante d'Einstein.
 
-\subsection{Équations de Friedmann}
-\label{sec:friedman}
 %Metrique de Friedmann-Lemaître-Robertson-Walker (FLRW)
 
 Quelques années plus tard, Alexandre Friedmann entreprend de trouver des solutions exactes à l'équation d'Einstein en l'appliquant a un Univers homogène et isotrope \citep{1922ZPhy...10..377F}.
@@ -164,12 +163,6 @@ en fonction de la densité critique de l'Univers:
 Cette valeur est déterminée avec l'équation \ref{eq:friedman1}, en considérant un Univers statique ($\Lambda=0$) et plat ($\rho_{K,0}=0$).
 Nous verrons dans la partie dédiée à la détermination des paramètres cosmologiques (cf Sec \ref{cosmoparam}) que les mesures actuelles sont en faveur d'un Univers plat (sans courbure).
 Ce qui s'exprime par $\Omega_{K,0} = 0$ et $\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1$.
-
-\paragraph{$\Omega_{M,0}$} est la densité d'énergie associée à la matière. % (matière noire que nous introduiront dans la suite et la matière baryonique)
-Par simple effet de dilution, cette densité décroît avec le cube du facteur d'expansion.
-Un Univers constitué exclusivement de cette énergie serait nommé "Univers poussière"
-%C'est le cas actuellement.
-
 
 \paragraph{$\Omega_{M,0}$} est la densité d'énergie associée à la matière. % (matière noire que nous introduiront dans la suite et la matière baryonique)
 Par simple effet de dilution, cette densité décroît avec le cube du facteur d'expansion.
@@ -269,9 +262,9 @@ Cette singularité à été baptisé Big-bang et donne son nom au modèle cosmol
 %Dans le modèle du Big Bang, le début de l'Univers est suivis par une phase d'expansion rapide appelé inflation.
 Après le Big-bang, l'Univers est tellement chaud qu'il est composé d'un ensemble de particules élémentaires (quark, gluon, électron) qui vont former en se refroidissant les premiers protons, neutrons.
 Les protons et les neutrons vont à leur tour s'assembler pour former les premiers noyaux atomiques.
-La théorique de la nucléosynthèse primordiale a été présenté dans un article surnommé $\alpha \beta \gamma$ en référence aux initiales des noms de ses auteurs \citep{PhysRev.73.803}.
+La théorie de la nucléosynthèse primordiale a été présentée dans un article surnommé $\alpha \beta \gamma$ en référence aux initiales des noms de ses auteurs \citep{PhysRev.73.803}.
 Cette théorie permet d'expliquer avec precision l'abondance observée des différents atomes présent dans l'Univers.
-Il est aujourd'hui admis que l'Univers est originellement constitué de : 
+Il est aujourd'hui admis que la masse de l'Univers est originellement constitué de : 
 
 \begin{itemize}
 \item 73,9\% d’hydrogène,
@@ -280,15 +273,15 @@ Il est aujourd'hui admis que l'Univers est originellement constitué de :
 \end{itemize}
 
 
-\section{Le fond diffus cosmologique}
+\subsection{Le fond diffus cosmologique}
 \label{sec:CMB}
 
-À cette période, les noyaux atomiques sont découplés des électrons et l'Univers est dans un état ionisé correspondant à un plasma proche de celui que l'on peut trouver dans une étoile.
+Tôt dans l'histoire de l'Univers, es noyaux atomiques sont découplés des électrons et l'Univers est dans un état ionisé correspondant à un plasma proche de celui que l'on peut trouver dans une étoile.
 Il faudra attendre $\approx 380 000$ ans pour que la température baisse suffisamment pour permettre l'apparition des premiers atomes neutres.
-Cette période est appelée "époque de recombinaison" (voir \cite{2009AN....330..657S} pour plus d'informations sur le sujet) et a donné lieu à l'émission du fond diffus cosmologique que nous développerons plus en détails dans la section \ref{sec:CMB}.
+Cette période est appelée "époque de recombinaison" (voir \cite{2009AN....330..657S} pour plus d'informations sur le sujet) et a donné lieu à l'émission du fond diffus cosmologique.
 Durant cette transition, l'Univers a connu un changement d'état majeur puisque celui ci est passé d'un état globalement ionisé à un état globalement neutre.
 %Comme nous venons de le voir, l’émission du \ac{CMB} marque la transition entre deux états distincts de l'Univers.
-Robert Herman et Ralph Alpher ont été les premiers à proposer l’existence du fond diffus cosmologique avant même sa découverte.
+Robert Herman et Ralph Alpher ont été les premiers à proposer l’existence du fond diffus cosmologique en 1948 avant même sa découverte.
 Le \ac{CMB} étant la plus ancienne lumière que nous pouvons observer, il contient actuellement l'information que nous pouvons obtenir sur l'état de l'Univers lorsqu'il était le plus jeune possible.
 %
 %\subsection{Surface de dernière diffusion}
@@ -297,19 +290,18 @@ Le \ac{CMB} étant la plus ancienne lumière que nous pouvons observer, il conti
 %À la manière de la surface d'une étoile, où nous ne voyons que les photons qui ont pu s’échapper de celle ci et non ceux qui ont été émis en son centre, nous ne pouvons pas observer de lumière émise avant le \ac{CMB}.
 %Le \ac{CMB} étant la plus ancienne lumière que nous pouvons observer, il contient actuellement l'information que nous pouvons obtenir sur l'état de l'Univers lorsqu'il était le plus jeune possible.
 
-\subsection{Observations}
-
-La quête de l'état de l'Univers à ses début a commencé de manière fortuite en 1964 quand Penzias et Willson ont observé, lors de travaux sur un nouveau type d’antenne radio, un signal radio inexpliqué.
-Ce signal était constant et extrêmement homogène. 
+%La quête de l'état de l'Univers à ses début a commencé de manière fortuite en 1964 quand Penzias et Willson ont observé, lors de travaux sur un nouveau type d’antenne radio, un signal radio inexpliqué.
+%Ce signal était constant et extrêmement homogène. 
 %(l'anisotropie du CMB est remis en cause recement 
 %http://www.ca-se-passe-la-haut.fr/2013/09/lanisotropie-du-fond-diffus-cosmologique.html)
-Ils obtiennent le prix Nobel en 1978 pour la \cite{PenziasWilsonNobel}.
-L'observation de Penzias et Wilson constitue un argument de poids en faveur de la théorie du Big Bang et a été suivie d'une série de mission spatiale dans le but d'améliorer les mesures faites sur le \ac{CMB}.
+Penzias et Willson ont observé le \ac{CMB} en 1964 et obtiennent le prix Nobel en 1978 pour la \cite{PenziasWilsonNobel}.
+Cette observation constitue un argument de poids en faveur de la théorie du Big-bang et une série de mission spatiale lui ont été consacrées.
+%dans le but d'améliorer les mesures faites sur le \ac{CMB}.
 
 \begin{itemize}
 \item 1989 - le satellite COsmic Background Explorer COBE 
 \item 2001 - le satellite Wilkinson Microwave Anisotropy Probe WMAP
-\item 2009 - le satellite Plank
+\item 2009 - le satellite Planck
 \end{itemize}
 
 %\subsection{Température}
@@ -327,9 +319,6 @@ L'observation de Penzias et Wilson constitue un argument de poids en faveur de l
 % 		\label{fig:cmb_thermal_spectrum}}
 %\end{figure}
 
-\subsection{Spectre de puissance}
-\label{sec:cmb_power_spectrum}
-
 John C. Mather et George F. Smoot ont conjointement obtenus le prix Nobel de physique en 2006 pour la \cite{CMBanisotropiesNobel} grâce aux observations réalisées par le satellite  COBE.
 Ce léger défaut d'uniformité (de l'ordre de $10^{-5}$ en relatif) nous renseigne sur l’état de l'univers au moment de son émission.
 Par la suite, les satellites WMAP et Planck ont grandement amélioré la précision des mesures des anisotropies du fond diffus (Fig. \ref{fig:cmb}).
@@ -343,8 +332,8 @@ Par la suite, les satellites WMAP et Planck ont grandement amélioré la précis
  		\label{fig:cmb}
 \end{figure}
 
-Les anisotropies du \ac{CMB} sont étudiées en décomposant les fluctuations relatives de température en harmoniques sphériques.
-Un spectre de puissance, correspondant à la transformée de Fourrier de sa fonction de corrélation a deux points, caractéristique est obtenu (cf figure \ref{fig:cmb_power_spectrum}).
+%Les anisotropies du \ac{CMB} sont étudiées en décomposant les fluctuations relatives de température en harmoniques sphériques.
+%Un spectre de puissance, correspondant à la transformée de Fourrier de sa fonction de corrélation a deux points, caractéristique est obtenu (cf figure \ref{fig:cmb_power_spectrum}).
 
 %%decomposition en multipoles
 %%https://www.physicsforums.com/threads/can-someone-explain-angular-power-spectrum.309483/
@@ -389,10 +378,10 @@ Un spectre de puissance, correspondant à la transformée de Fourrier de sa fonc
 
 %Fig. \ref{fig:cmb_power_spectrum}
 
-Ce spectre de puissance contient de l'information sur la distribution de la matière au moment de l'émission du \ac{CMB}, et ces fluctuations de température sont essentielles pour expliquer la formation des grandes structures observées aujourd'hui.
+Le spectre de puissance du \ac{CMB} contient de l'information sur la distribution de la matière au moment de l'émission du \ac{CMB}, et ces fluctuations de température sont essentielles pour expliquer la formation des grandes structures observées aujourd'hui.
 En effet, comme il existe un lien direct entre la température et la densité, il est possible de déterminer la distribution de matière à l'époque de l'émission de \ac{CMB}.
 %les régions aillant une température légèrement plus élevées correspondent aux régions légèrement plus denses, et réciproquement. 
-Nous verrons plus tard (cf section \ref{sec:IC}) que cette distribution de matière à très haut redshift permet la génération des conditions initiales nécessaire pour effectuer des simulations.
+%Nous verrons plus tard (cf section \ref{sec:IC}) que cette distribution de matière à très haut redshift permet la génération des conditions initiales nécessaire pour effectuer des simulations.
 La distribution des fluctuations de densité n'est pas la seule information contenue dans le \ac{CMB}, nous verrons dans la prochaine section que se spectre contient également de l'information sur l'abondance des différents constituants de l'Univers.
 
 \section{Le contenu de l'univers}
@@ -411,7 +400,8 @@ Par exemple, il est possible de créer un modèle théorique du plasma primordia
 Il est possible, en comparant le spectre de puissance théorique obtenu à celui du \ac{CMB} observé, de déterminer les paramètres libres du modèle par ajustement.
 La figure \ref{fig:cmb_power_spectrum} représente la comparaison entre le meilleur ajustement actuel et les observations, 
 Les supernovæ considérées comme chandelle standard, suffisamment lointaines permettent d'obtenir de l'information sur l'accélération de l'expansion de l'Univers (un gamme de valeurs pour $\Omega_\Lambda$) (voir par exemple \cite{1999ApJ...517..565P} pour plus d'informations sur le sujet).
-Ou encore la distribution actuelles des galaxies, en partie reliquat des oscillations acoustiques dans le plasma primordial, permet de contraindre les paramètres cosmologique.
+%Ou encore la distribution actuelles des galaxies, en partie reliquat des oscillations acoustiques dans le plasma primordial, permet de contraindre les paramètres cosmologique.
+Ou encore l'abondance observée des amas de galaxies.
 
 %A partir de différents observables,
 %En recoupant les données obtenues a partir d'observations comme , 
@@ -419,8 +409,8 @@ Ou encore la distribution actuelles des galaxies, en partie reliquat des oscilla
 %Le spectre de puissance du fond diffus cosmologique permet de déterminer les quantité respectives des différents constituants de l'univers.
 %En recoupant ces données a d'autre observables, comme la distribution des amas de galaxies ou les supernovae lointaines, il est possible de contraindre les paramètres cosmologiques (Fig. \ref{fig:cosmoparam}).
 
-Une représentation de ces différentes contraintes sur le ratio densité d'énergie noire / densité de matière est visible sur la figure \ref{fig:cosmoparam},
-Les abondances des différents constituants ne sont pas les seuls libres du modèle standard et une compilation de ces paramètres sont présentés sur la figure \ref{fig:planck_parameters}.
+Une représentation de ces différentes contraintes sur l'abondance des densité d'énergie noire et de matière est visible sur la figure \ref{fig:cosmoparam},
+Ces paramètres de densités ne sont pas les seuls libres du modèle standard et une compilation de ces paramètres sont présentés sur la figure \ref{fig:planck_parameters}.
 Ces paramètres sont les plus récent et ont été obtenus par \cite{planck_collaboration_planck_2016}.
 
 %A partir du spectre de puissance, on peut déterminer les différentes composantes de l'univers (paramètres cosmologique).
@@ -521,5 +511,38 @@ Ces paramètres sont les plus récent et ont été obtenus par \cite{planck_coll
 %%https://ned.ipac.caltech.edu/level5/Sept11/Norman/Norman2.html
 
 
+\section{Formation des structures}
+\label{sec:formationgalaxie}
+
+Nous avons vu dans la partie dédiée au fond diffus cosmologique que lors de l'émission du \ac{CMB} l'univers n'était pas parfaitement homogène.
+La croissance de ces perturbations primordiales va mener, sous l'effet de la lutte entre l'expansion et la gravitation, à un effondrement de la matière sur elle même \citep{1968ApJ...151..459S}.
+%C'est dans ces surdensités locales que vont se former les premières galaxies.
+La première étape à la formation d'une galaxie est donc l'effondrement d'une surdensité et cet effondrement est largement dominé par la matière noire \citep{1985ApJ...292..371D}.
 
 
+Pour qu'une surdensité s'effondre, il faut que sa masse soit supérieure à la masse de Jeans, après le découplage matière/rayonnement cette masse juste brutalement \citep{2010gfe..book.....M}, autorisant les structures de $M \approx 10^6 M_\odot$ à s’effondrer.
+Cette masse évolue en fonction du redshift \citep{2016PhR...645....1B} : 
+\begin{equation}
+M_j \approx 6 \cdot 10 ^3 \left( \frac{1+z}{10} \right)^{3/2} M_\odot
+\end{equation}
+
+Pour étudier la croissance des perturbation on utilisera la théorie des perturbations linéaires.
+On remplacera la densité par la densité perturbée $\rho(x) = <\rho> + \delta(x)$ où $\delta$ sera appelé le contraste de densité :
+
+\begin{equation}
+\delta(x) = \frac{\rho(x)}{<\rho>} -1,
+\end{equation}
+
+Puis on cherchera une solution des équations régissant le fluide primordial, en utilisant l'approximation au premier ordre \citep{1999coph.book.....P}.
+Pour rester dans le domaine linéaire, cette quantité doit rester faible et représenter l'homogénéité de l'Univers aux grandes échelles.
+
+A partir de cette solution perturbée, \cite{1970A&A.....5...84Z} propose une approche dynamique (voir \cite{2014MNRAS.439.3630W} pour une revue récente) permettant la génération des conditions initiales utilisées dans les simulations numériques.
+En effet, arrivé à la fin du régime linéaire, cette approximation n'est plus valable, et il devient nécessaire d'utiliser des simulations numériques.
+Les simulations de croissances des structures réalisées avec les considérations exposées dans cette section donnent une excellente similarité avec les observations (voir figure \ref{fig:sdss}).
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/sdss_millenium.jpeg} 
+        \caption{Comparaison entre les structures à grandes échelles observées par le SDSS (en bleu) et celles reproduite dans la simulation millénium \citep{2005Natur.435..629S} (en rouge).
+%http://wwwmpa.mpa-garching.mpg.de/millennium/
+ 		\label{fig:sdss}}
+\end{figure}
