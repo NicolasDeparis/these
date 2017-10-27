@@ -559,7 +559,7 @@ S(U) =
 %{ \rho uw}\\
 %{ u(E+p)}
 %\end{cases}
-\subsection{Le problème de Riemann et volumes finis}
+\subsection{Problème de Riemann et volumes finis}
 
 L'idée de base du moteur hydrodynamique est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes (Piecewise constant approximation).
 L'objectif est ensuite de résoudre localement le système d'équations d'Euler à chaque interfaces de cellule pour obtenir l'évolution globale du système.
@@ -697,7 +697,7 @@ Pour éviter les cas extrêmes, la pente de cette interpolation est limitée, da
 
 
 
-\subsection{Le pas de temps}
+\subsection{Gestion du pas de temps}
 \label{sec:dthydro}
 
 Le pas de temps respecte la condition de \ac{CFL}, sont expression est issue de \cite{teyssier_cosmological_2002} et s'exprime ici sous la forme :
@@ -807,7 +807,7 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 \end{equation}
 
 
-\subsection{Vitesse de la lumière réduite}
+\subsection{Gestion du pas de temps et vitesse de la lumière réduite}
 \label{sec:RSLA}
 
 La lumière étant extrêmement rapide, le suivi de son évolution demande un pas de temps réduit du fait de la condition de \ac{CFL} : $ c \leq \Delta x / \Delta t $.
@@ -903,68 +903,7 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 Étant donné que les processus chimique sont gérés de manière locale (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
 
 \clearpage
-\section{Gestion du pas de temps}
-
-D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre et sera donc définie comme le minimum entre :
-
-\begin{itemize}
-\item le pas de temps cosmologique (cf section \ref{sec:dtcosmo}),
-\item le pas de temps gravitationnel (cf section \ref{sec:dtgrav}),
-\item le pas de temps hydrodynamique (cf section \ref{sec:dthydro}),
-\item le pas de temps radiatif (cf section \ref{sec:RSLA}).
-\end{itemize}
-
-\subsection{Influence de l'AMR}
-
-Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme et dépend du niveau considéré, un niveau raffiné aura un pas de temps plus court que le niveau de base.
-En première approximation, comme une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2, du fait de la condition de Courant.
-Il faudra donc réaliser deux pas de temps fins (L+1) pour être synchronisé avec un niveau inférieur (L), et ce de manière récursive.
-Ceci n'est vrai qu'à la condition que la physique résolue n'évolue pas.
-En pratique, l'augmentation de résolution mène, entre autre, à une augmentation de densité résolue, et généralement à un pas de temps hydrodynamique plus contraignant.
-Ceci à pour effet de réduire le pas de temps d'un facteur supérieur à 2, et le pas de temps du niveau L+1 sera au final plus court que la moitié de celui du niveau L.
-Il sera nécessaire de communiquer cette information sur les niveaux supérieurs pour effectuer la synchronisation.
-L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
-
-\begin{figure}
-\includegraphics[width=.95\linewidth]{img/02/tstep.png}
-\caption[Pas de temps AMR]{Gestion du pas de temps en fonction des niveaux raffinées.
-Les chiffres indiquent l'ordre d’exécution des calculs.
-Un niveau évolue par pas de temps deux fois plus court que celui de son niveau supérieur.
-\label{fig:timestep}}
-\end{figure}
-
-
-\subsection{Transport sur grille de base}
-\label{sec:crta}
-
-Le transport sur grille de base ou \ac{CRTA} est une technique visant à restreindre la résolution du champ de radiation dans le but d'en accélérer le calcul.
-Dans le cas d'un couplage total entre les différents moteurs physiques, tous les moteur évoluent au rythme le plus contraignant.
-%il faut définir le plus petit pas de temps et faire évoluer 
-Ce qui fait que, pour chaque pas de temps radiatif, il faut réaliser un pas de temps avec les autres moteurs physique (cf panneau supérieur de la figure \ref{fig:CRTA}).
-Dans notre cas, la radiation est plusieurs ordres de grandeurs plus contraignante que l'hydrodynamique ou la gravitation.
-Donc le nombre de pas de temps hydrodynamique et gravitationnel nécessaire sont largement surestimés, et le coût numérique explose.
-
-Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées (cf panneau inférieur de la figure \ref{fig:CRTA}), sur lesquels l'hydrodynamique est considérée comme "gelée" lors du calcul.
-Ce qui a pour effet d'augmenter la taille du pas de temps radiatif, du fait de la condition de Courant.
-La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant localement un champ uniforme de radiation.
-Les concepts précis de la \ac{CRTA} étant assez technique, j'invite le lecteur à se référer à \cite{aubert_emma:_2015} pour une explication plus détaillée.
-
-Actuellement, la \ac{CRTA} n'est possible que sur le niveau de base.
-Un amélioration possible serait de pouvoir définir le niveaux de projection de la radiation pour pouvoir, en fonction des besoins, faire varier le poids de la radiation dans le calcul.
-
-
-\begin{figure}
-\includegraphics[width=.95\linewidth]{img/02/revz_crad_std.png}
-\includegraphics[width=.95\linewidth]{img/02/revz_crad.png}
-\caption[CRTA]{Gestion de l'évolution de la radiation dans le cas de la \ac{CRTA}.
-En noir les moteurs dynamiques, en rouge le transport des photons, en bleu la chimie.
-Le transport des photons n'est réalisé que sur la grille de niveau de base.
-Le nombre d'appels aux moteurs hydrodynamique et gravitationnel est significativement réduit. 
-\label{fig:CRTA}}
-\end{figure}
-
-
-\subsection{Gestion de la cosmologie}
+\section{Gestion de la cosmologie}
 \label{sec:supercomobil}
 
 %On parlera de simulations cosmologiques lorsque l'e volume considéré est en expansion.
@@ -1052,3 +991,65 @@ La condition condition pour effectuer le calcul du pas de temps sera:
 \begin{equation}
 \frac{\delta a (\Delta t) } {a} < \epsilon
 \end{equation}
+
+
+\section{Gestion du pas de temps}
+
+D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre et sera donc définie comme le minimum entre :
+
+\begin{itemize}
+\item le pas de temps cosmologique (cf section \ref{sec:dtcosmo}),
+\item le pas de temps gravitationnel (cf section \ref{sec:dtgrav}),
+\item le pas de temps hydrodynamique (cf section \ref{sec:dthydro}),
+\item le pas de temps radiatif (cf section \ref{sec:RSLA}).
+\end{itemize}
+
+\subsection{Influence de l'AMR}
+
+Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme et dépend du niveau considéré, un niveau raffiné aura un pas de temps plus court que le niveau de base.
+En première approximation, comme une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2, du fait de la condition de Courant.
+Il faudra donc réaliser deux pas de temps fins (L+1) pour être synchronisé avec un niveau inférieur (L), et ce de manière récursive.
+Ceci n'est vrai qu'à la condition que la physique résolue n'évolue pas.
+En pratique, l'augmentation de résolution mène, entre autre, à une augmentation de densité résolue, et généralement à un pas de temps hydrodynamique plus contraignant.
+Ceci à pour effet de réduire le pas de temps d'un facteur supérieur à 2, et le pas de temps du niveau L+1 sera au final plus court que la moitié de celui du niveau L.
+Il sera nécessaire de communiquer cette information sur les niveaux supérieurs pour effectuer la synchronisation.
+L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
+
+\begin{figure}
+\includegraphics[width=.8\linewidth]{img/02/tstep.png}
+\caption[Pas de temps AMR]{Gestion du pas de temps en fonction des niveaux raffinées.
+Les chiffres indiquent l'ordre d’exécution des calculs.
+Un niveau évolue par pas de temps deux fois plus court que celui de son niveau supérieur.
+\label{fig:timestep}}
+\end{figure}
+
+
+\subsection{Transport radiatif sur grille de base}
+\label{sec:crta}
+
+Le transport radiatif sur grille de base ou \ac{CRTA} est une technique visant à restreindre la résolution du champ de radiation dans le but d'en accélérer le calcul.
+Dans le cas d'un couplage total entre les différents moteurs physiques, tous les moteur évoluent au rythme le plus contraignant.
+%il faut définir le plus petit pas de temps et faire évoluer 
+Ce qui fait que, pour chaque pas de temps radiatif, il faut réaliser un pas de temps avec les autres moteurs physique (cf panneau supérieur de la figure \ref{fig:CRTA}).
+Dans notre cas, la radiation est plusieurs ordres de grandeurs plus contraignante que l'hydrodynamique ou la gravitation.
+Donc le nombre de pas de temps hydrodynamique et gravitationnel nécessaire sont largement surestimés, et le coût numérique explose.
+
+Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées (cf panneau inférieur de la figure \ref{fig:CRTA}), sur lesquels l'hydrodynamique est considérée comme "gelée" lors du calcul.
+Ce qui a pour effet d'augmenter la taille du pas de temps radiatif, du fait de la condition de Courant.
+La densité de photon calculée sur la grille de base est ensuite projeté sur les niveaux raffinés, ces derniers ressentant localement un champ uniforme de radiation.
+Les concepts précis de la \ac{CRTA} étant assez technique, j'invite le lecteur à se référer à \cite{aubert_emma:_2015} pour une explication plus détaillée.
+
+Actuellement, la \ac{CRTA} n'est possible que sur le niveau de base.
+Un amélioration possible serait de pouvoir définir le niveaux de projection de la radiation pour pouvoir, en fonction des besoins, faire varier le poids de la radiation dans le calcul.
+
+
+\begin{figure}
+\includegraphics[width=.95\linewidth]{img/02/revz_crad_std.png}
+\includegraphics[width=.95\linewidth]{img/02/revz_crad.png}
+\caption[CRTA]{Gestion de l'évolution de la radiation dans le cas de la \ac{CRTA}.
+En noir les moteurs dynamiques, en rouge le transport des photons, en bleu la chimie.
+Le transport des photons n'est réalisé que sur la grille de niveau de base.
+Le nombre d'appels aux moteurs hydrodynamique et gravitationnel est significativement réduit. 
+\label{fig:CRTA}}
+\end{figure}
+
