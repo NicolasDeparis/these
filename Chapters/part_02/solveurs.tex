@@ -3,23 +3,20 @@
 
 %Nous allons voir dans cette partie que plus une physique représente une part importante du contenu de l'Univers plus elle est simple et rapide a simuler.
 
-Lors d'une simulation la grande majorité des ressources de calculs sont utilisées pour résoudre la physique.
-Comme il a été abordé dans la section \ref{cosmoparam}, l'Univers est constitué de différents fluides.
-Chacun étant associé à un moteur physique particulier, nous nous intéresserons dans ce chapitre à trois moteurs distincts:
+L'Univers est modélisé par différents "fluides" (cf section \ref{cosmoparam}) et l'objectif des simulations numériques est d'estimer au mieux leurs évolutions, en fonctions des règle auxquels ils sont soumis et de leurs états à un instant donné.
+La résolution de chacun de ces systèmes sera confiée à différents "moteur", ayant pour tâche de résoudre les systèmes d'équations différentielles gouvernant les différentes physiques.
+Lors de la réalisation d'une simulation, la grande majorité des ressources de calculs sera utilisée par ces moteurs.
+%Les trois moteurs que nous allons aborder ont pour objectif de suivre des système dont l'évolution est régie par un système d'équations différentielles.
+
+L'objectif de cette partie est de présenter les différentes techniques et implémentations des moteurs physiques de EMMA.
+Nous allons détailler ses trois principaux moteurs  :
 \begin{itemize}
-\item gravitation,
-\item hydrodynamique,
-\item radiatif.
+\item le moteur gravitationnel,
+\item le moteur hydrodynamique,
+\item et le moteur radiatif.
 \end{itemize}
 
-%Et ce, dans un ordre décroissant d'importance, relativement a la quantité d'énergie totale.
-
-%Plus une physique est 
-
-Un moteur numérique consiste à estimer l'évolution de l'état d'un système, soumis a un certain nombre de règles, connaissant son état à un instant donné.
-Les trois moteurs que nous allons aborder ont pour objectif de suivre des système dont l'évolution est régie par un système d'équations différentielles.
-Il va être nécessaire de discrétiser ces systèmes avant de pouvoir les traiter numériquement.
-L'objectif de cette partie est de présenter les différentes techniques et implémentations des moteurs physiques de EMMA.
+%Il va être nécessaire de discrétiser ces systèmes avant de pouvoir les traiter numériquement 
 
 
 %\section{Génération des conditions initiales}
@@ -79,7 +76,7 @@ L'objectif de cette partie est de présenter les différentes techniques et impl
 La matière noire, dispose de propriétés de fluide non collisionelle, et se prête particulièrement bien à la représentation Lagrangienne, et donc à une simulation sous forme de particules.
 Pour la simuler, on utilisera le principe des code N-corps., c'est à dire qu'on utilisera un champs de particules massives interagissantes uniquement par gravitation.
 Il existe différentes techniques pour suivre l'évolution d'un tel système, toutes sont basées sur le même principe.
-Les particules sont placées suivant une certaine condition initiale (section \ref{sec:IC}) et on cherche à connaître la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement.
+Les particules sont placées suivant une certaine condition initiale et on cherche à connaître la force gravitationnelle à laquelle chaque particule est soumise, dans le but de calculer son déplacement.
 
 
 %\subsection{Moteur de gravité}
@@ -99,12 +96,13 @@ Pour ce faire on utilise le système d'équation suivant:
 
 \begin{equation}
 \begin{cases}
-\frac{d{x}_p}{dt} = { v}_p, \\
-\frac{d{ v}_p}{dt} = -\nabla \phi , \\
-\Delta \phi= 4\pi G \rho.
+\frac{d\vec{x}_p}{dt} = \vec{v}_p, \\
+\frac{d\vec{v}_p}{dt} = -\nabla \phi , \\
+\Delta \phi= 4\pi G \rho,
 \end{cases}
 \label{eq:Ncorps}
 \end{equation}
+où ${x}_p$ représente la position de la particule, $\vec{x}$ sa vitesse et et $\phi$ le potentiel gravitationnel, fonction de la densité $\rho$.
 
 Il existe plusieurs méthodes pour résoudre ce système.
 %Historiquement la première méthode était la méthode
@@ -113,14 +111,12 @@ Elle consiste, pour chaque particule, à sommer les contributions gravitationnel
 \begin{equation}
 \vec{F}_i=-\sum_{j\neq i} G \frac{G m_i m_j(\vec{r}_i - \vec{r}_j) }{ |\vec{r}_i - \vec{r}_j |^3}
 \end{equation}
-Ce type de code dispose d'une très bonne précision mais la quantité de calculs évolue en ordre $O(N^2)$, ce qui fait que ce type de code est très coûteux.
+Ce type de code dispose d'une très bonne précision mais la quantité de calculs évolue en ordre $O(N^2)$, ce qui les rends très coûteux.
 
 %Une évolution de cette méthode est la méthode :
 \paragraph{Tree code: } évolution de la méthode Particule-Particule, elle consiste à regrouper les particules les plus lointaine de la particule courante en amas aillant une interaction gravitationnelle commune \citep{1986Natur.324..446B}.
 % (Barnes & Hut 1986) 
-Cette approximation permet de limiter considérablement le nombre de calcul, ordre $O(n log n)$, pour les interactions lointaine qui sont de toute façons faibles 
-
-
+Cette approximation permet de limiter le nombre de calcul à l'ordre $O(n log n)$. %, pour les interactions lointaine qui sont de toute façons faibles 
 
 %On peux obtenir cette force soit par calcul direct, soit par dérivation du potentiel.
 %
@@ -130,17 +126,14 @@ Cette approximation permet de limiter considérablement le nombre de calcul, ord
 
 
 \paragraph{Particule-Mesh (PM) : } La méthode qui nous intéresse ici.
-Elle consiste à ne plus calculer directement la force, mais à la dériver à partir du potentiel.
-Le potentiel sera calculé sur une grille.
-En projetant les particules sur une grille on obtient une grille de densité utilisée ensuite obtenir le potentiel en résolvant l'équation de Poisson.
-%ENZO %code, Bryan & Norman 1998
-%RAMSES
+Elle consiste à ne plus calculer directement la force, mais à la dériver à partir du potentiel, lui même calculé sur une grille.
+En projetant les particules sur une grille, on obtient une grille de densité utilisée pour obtenir le potentiel en résolvant l'équation de Poisson.
 
 \paragraph{}
 La méthode de projection des particules sur la grille n'est pas unique.
 A l'ordre $0$, il est possible de se contenter d'ajouter la masse de la particule dans la cellule a laquelle elle appartient.
 On utilisera en pratique une méthode d'ordre supérieur appelée \ac{CIC}, qui consiste à considérer une étendue spatiale cubique aux particules et à pondérer la masse appliquée aux cellules par l'intersection de son volume et de celui de la cellule (voir Fig\,\ref{fig:CIC}).
-On associe généralement une taille à la particule similaire a celle des cellule sur laquelle on la projette.
+On associe généralement une taille à la particule similaire à celle des cellule sur laquelle on la projette.
 Dans le cas où l’étendue de la particule intersecte des cellules de différents niveaux on lui associera la taille de la plus grande cellule dans le but de lisser la transition entre les niveaux.
 %TODO schéma ?
 %Il existe des méthodes d'ordre supérieur avec des kernel plus complexe que le top-hat du \ac{CIC} comme par exemple des kernel en triangle ou en gaussienne.
@@ -207,8 +200,9 @@ Connaissant la distribution de densité à un instant donné, il est possible de
 \subsection{Méthodes itératives}
 
 
-Il existe plusieurs méthodes pour résoudre ce problème et EMMA utilise une méthode itérative qui consiste à faire converger le potentiel à partir d'un état initial arbitraire. 
-Ces méthodes permettent d'utiliser tout type de conditions de bords, sont facilement parallélisable et compatible avec les méthodes basées sur des grilles adaptatives.
+Il existe plusieurs méthodes dédiées à la résolution ce problème.
+EMMA utilise une méthode itérative consistant à faire converger le potentiel gravitationnel à partir d'une grille de densité initiale arbitraire. 
+Ces méthodes permettent d'utiliser tout type de conditions de bords, sont facilement parallélisable et sont compatible avec les méthodes basées sur des grilles adaptatives.
 %Par la suite, c'est donc une méthode itérative et plus précisément une méthode \emph{Multigrille} qui à été développée.
 %Le potentiel est alors dérivé pour obtenir la force ressentie dans chaque cellule. 
 %Il est ensuite aisé de calculer l'accélération subie par les particules de chaque cellule, et par intégration temporelle, leurs nouvelles positions et vitesses.
@@ -221,14 +215,14 @@ L'équation à résoudre est donc:
 \dfrac{\partial \phi}{\partial t} = \Delta \Phi -S_{(\rho)}
 \end{equation}
 
-La méthode de Jacobi est la façon la plus simple de relaxer ce type d'équation, elle consiste à utiliser directement la forme discrète de l'équation de Poisson modifiée. 
+La méthode de Jacobi est la façon la plus simple de relaxer ce type d'équation, elle consiste à utiliser la forme discrète de l'équation de Poisson modifiée. 
 L'équation à intégrer est:
 
 \begin{equation}
 \dfrac{\phi^{t+1}_i - \phi^{t}_i}{\Delta t}  =  \Delta \phi_i^t - S_i^t
 \end{equation}
 
-où, à 1 dimensions, le Laplacien s'exprime :
+où, à 1 dimensions, le Laplacien sera discrétisé de la manière suivante :
 
 \begin{equation}
 \Delta \phi_i^t = \dfrac{\phi_{x+1}^t  + \phi_{x-1}^t- 2\phi_{x}^t}{\Delta x ^2}
@@ -246,11 +240,12 @@ Elle consiste à toujours utiliser la valeur la plus à jour disponible:
 %En utilisant toujours la valeur la mieux estimée, cette méthode accélère la convergence. 
 %L'intégration temporelle ne change pas, mais l'intégration spatiale devient: 
 \begin{equation}
-\Delta \phi_i^t = \dfrac{\phi_{x+1}^t  + \phi_{x-1}^\mathbf{t+1}- 6\phi_{x}^t}{\Delta x ^2}
+\Delta \phi_i^t = \dfrac{\phi_{x+1}^t  + \phi_{x-1}^\mathbf{t+1}- 2\phi_{x}^t}{\Delta x ^2}
 \end{equation}
 
-En pratique on utilisera la méthode dite Gauss-Seidel rouge-noir séparant la grille en damier, une première itération sera réalisé seulement sur la partie rouge, puis une seconde prenant en compte le nouvel état, sur la partie noire.
-L'avantage par rapport à la technique Gauss-Seidel classique est que chaque demi domaine peut être calculé a l'aide de technique parallèle.
+En pratique on utilisera la méthode dite Gauss-Seidel rouge-noir.
+Elle consiste à séparer la grille en un damier de deux couleurs, une première itération sera réalisé seulement sur la partie rouge, puis une seconde itération sera réalisée sur la partie noire en prenant en compte le nouvel état de la partie rouge. 
+L'avantage du Gauss-Seidel rouge-noir est que le calcul de chaque demi-domaine peut parallélisé, ce qui n'est pas le cas avec la technique Gauss-Seidel classique.
 
 %La parallélisation de cette méthode est plus compliquée que dans le cas de Jacobi. 
 %La détermination de la valeur de chaque cellule nécessite de connaître l'état le plus à jour de ses voisins et donc de faire passer de l'information entre les processus.
@@ -290,8 +285,8 @@ L'avantage par rapport à la technique Gauss-Seidel classique est que chaque dem
 
 \subsection{Multigrille}
 
-La technique du multigrille a été développé pour améliorer la vitesse de convergence des méthodes itératives.
-Elle consiste à utiliser le fait que les méthodes itératives convergent rapidement sur les hautes fréquences spatiales et plus lentement les basses fréquences.% en utilisant une série de grilles à différentes résolutions.
+La technique du multigrille a été développée pour améliorer la vitesse de convergence des méthodes itératives.
+Elle consiste à utiliser le fait que ces dernières convergent rapidement sur les hautes fréquences spatiales et plus lentement les basses fréquences.% en utilisant une série de grilles à différentes résolutions.
 %De plus elles considère non plus la grandeur elle même, mais l'erreur effectuée dans l'estimation de cette grandeur.
 
 %L'équation à résoudre est alors modifiée en considérant que l'inconnue n'est plus le potentiel mais l'erreur commise sur son estimation. 
@@ -313,14 +308,19 @@ Elle consiste à utiliser le fait que les méthodes itératives convergent rapid
 %et finalement :
 %\[ \mathcal{L}_h v_h = -d_h \]
 
-Le cycle consiste à lisser (relaxer quelques fois) le potentiel à pleine résolution, les petites échelles vont alors rapidement converger.
-Il faut ensuite calculer une estimation de l'erreur commise à ce stade et la dégrader à plus basse résolution (cf section \ref{Opérateurs de changement de grilles}).
+Le cycle consiste à lisser (ie réaliser quelques itérations d'une méthode de résolution classique) le potentiel à pleine résolution, les hautes fréquences vont alors rapidement converger.
+On va ensuite conserver cette information, et dégrader la grille à plus basse résolution (cf section \ref{sec_gridchange}).
+%Il faut ensuite calculer une estimation de l'erreur commise à ce stade et la dégrader à plus basse résolution (cf section \ref{Opérateurs de changement de grilles}).
 %elle ne contient alors que de l'information sur les basses fréquences de la grille de départ, les hautes fréquences de la grille à pleine résolution ont été supprimées par la dégradation. 
 %Cette perte d'information sur les hautes fréquences n'est pas problématique car les hautes fréquences ont déjà convergé l'erreur est donc petite (voir nulle) aux hautes fréquence et est maximale aux basses.
-Les hautes fréquences de cette nouvelle grille correspondent alors à des fréquences plus basses et donc plus difficiles à faire converger sur le grille haute résolution. 
-La solution exacte est calculée (relaxée jusqu'à convergence) sur cette petite grille.
-Le potentiel précédemment estimé est alors corrigé de l'erreur exacte projetée à pleine résolution, puis lissé par quelques dernières itérations.
-Ce processus peut être utilisé récursivement pour générer tout un ensemble de sous grilles et ainsi accélérer encore la convergence (cf figure \ref{fig:mgrid}).
+%Les hautes fréquences de cette nouvelle grille correspondent alors à des échelles spatiales plus grandes que sur la grille précédente, et ces échelles sont donc maintenant plus faciles à faire converger. 
+%et donc plus difficiles à faire converger sur le grille haute résolution. 
+La solution exacte est alors calculée (relaxée jusqu'à convergence) sur cette seconde grille, cette dernière étant significativement plus petite que la grille départ, la résolution du potentiel est beaucoup plus rapide.
+Cette solution à basse résolution est alors projetée à la résolution de la grille de départ, puis corrigée de l'information sur les hautes fréquence précédemment stockée.
+Le cycle sera alors terminé par un lissage de quelques itérations.
+
+%Le potentiel précédemment estimé est alors corrigé de l'erreur exacte projetée à pleine résolution, puis lissé par quelques dernières itérations.
+Ce processus peut être utilisé récursivement pour générer tout un ensemble de sous-grilles et ainsi accélérer encore la convergence (cf figure \ref{fig:mgrid}).
 En jouant sur le nombre d'appels récursifs de la fonction, il est possible de créer différentes géométries de cycles. 
 Un seul appel génère un cycle nommé cycle en V, deux un cycle en W, etc... 
 % en utilisant:
@@ -385,15 +385,14 @@ Un seul appel génère un cycle nommé cycle en V, deux un cycle en W, etc...
 %\end{center}
 %\end{figure}		
 
-\subsection{Implémentation sur grille AMR}
+\subsection{Implémentation sur grille adaptative}
 
-Dans EMMA, la potentiel est calculé par multigrille sur la grille de base et utilise l'arbre \ac{AMR} pour gérer les sous-niveaux.
-Sur les niveaux raffinés la relaxation est effectuée par Gauss Siedel rouge/noir, une amélioration de la méthode Jacobi classique.
-La solution déterminée sur les niveaux grossiers est projetée sur les niveaux raffinés, la solution anticipée est déjà proche de sa vraie valeur. 
-Il en résulte une convergence rapide.
+Dans EMMA, la potentiel est calculé par multigrille sur la grille de base. % et utilise l'arbre \ac{AMR} pour gérer les sous-niveaux.
+Par contre sur les niveaux raffinés la relaxation est effectuée par Gauss Siedel rouge/noir. %, une amélioration de la méthode Jacobi classique.
+La solution déterminée sur les niveaux grossiers est projetée sur les niveaux raffinés, la solution anticipée est donc déjà proche de sa vraie valeur et il en résulte une convergence rapide.
 
-Pour des raisons techniques, on prendra garde lors de calcul en parallèle, à utiliser un niveau minimum de telle sorte que chaque processeur dispose au minimum d'un oct lors du calcul sur la grille grossière du multigrille.
-Le niveau minimum du V-cycle est : 
+Pour des raisons techniques, on prendra garde lors de calculs en parallèles, à utiliser un niveau minimum de telle sorte que chaque processeur dispose au minimum d'un OCT lors du calcul sur la grille la plus grossière du multigrille.
+Le niveau minimum du V-cycle sera exprimé par : 
 
 \begin{equation}
 L_{min} = 1 + ceil \left(\frac{log_2(N_{cpu})}{3}  \right) 
@@ -421,7 +420,8 @@ L_{min} = 1 + ceil \left(\frac{log_2(N_{cpu})}{3}  \right)
 
 \subsection{Gestion du pas de temps}
 \label{sec:dtgrav}
-Il ne doit pas être possible pour une particule de se déplacer de plus d'une fraction $\epsilon$ de la taille d'une cellule $\Delta x$ par pas de temps.
+
+Pour assurer une résolution stable, il ne doit pas être possible pour une particule de se déplacer de plus d'une fraction $\epsilon$ de la taille d'une cellule $\Delta x$ par pas de temps.
 Pour se faire, pas de temps sera définis comme:
 \begin{equation}
 \Delta t_{grav} = \epsilon \frac{\Delta x}{|v_{max}|},
@@ -440,10 +440,11 @@ où $|v_{max}|$ représente la vitesse de la particule la plus rapide.
 %Je vais tout de même en exposer les grandes lignes, mais cette partie sera moins étoffée que celles des autres moteurs physiques.
 %
 %Comme nous l'avons vu plus tôt (cf \ref{sec:nucleosynthese_primordiale}), l'Univers est constitué d'une grande quantité d'hydrogène et d'hélium sous forme gazeuse.
-%Dans le cas de l'étude de l'\ac{EoR} la physique du gaz est centrale, car l'objectif est précisément de déterminer les propriétés physicochimiques de ce gaz, et leurs impacts sur la formation des galaxies.
 
-La physique du gaz est régie par les equations d'Euler auto-gravitantes car le gaz est principalement soumis à deux forces : sa pression interne et la gravité.
-Le système d'équations à résoudre est:
+Dans le cas de l'étude de l'\ac{EoR} la physique du gaz est centrale, car l'objectif est précisément de déterminer les propriétés physico-chimiques de ce gaz, et leurs impacts sur la formation des galaxies.
+La physique du gaz, contrairement à celle de la matière noire, est collisionnelle et sera ici modélisé avec une approche Eulérienne (cf section \ref{ch:introduction}).
+En première approximation, dans l'Univers le gaz est principalement soumis à deux effets : sa pression interne et la gravité.
+Sa physique est régie par les équations d'Euler auto-gravitantes et le système à résoudre est :
 
 \begin{equation}
 \begin{cases}
@@ -464,9 +465,10 @@ avec ;
 la densité $\rho = \rho(\vec{x},t)$,
 la vitesse $ \vec{v} = (u,v,w)^T$,
 $P$ la pression, $E$ l’énergie totale, et $\Phi$ le potentiel gravitationnel.
+Ce système exprime la conservation de la masse, de l'impulsion et de l'énergie.
 
-Ce système exprime la conservation de la masse, de l'impulsion et de l'énergie et pour être résolu, il nécessite l'introduction d'une equation de fermeture, ou équation d'état.
-Nous considérerons ici le cas d'un gaz parfait monoatomique, son équation d'état sera donc:
+Il nécessaire d'introduire une équation d'état pour fermer ce système.
+Nous considérerons ici le cas d'un gaz parfait monoatomique, l'équation de fermeture sera donc:
 
 %\begin{equation}
 %P=(\gamma - 1) \rho \epsilon, 
@@ -500,7 +502,6 @@ avec l'indice adiabatique $\gamma = 5/3$.
 %avec $U$ le vecteur des quantité conservées, $F$ la fonction de flux, et $S$ le terme source. Pour la résolution du transport des photons (sans terme source), on retrouve :
 
 
-
 En analyse numérique ce système sera réécrit sous la forme:
 
 \begin{equation}
@@ -529,9 +530,9 @@ F(U)=
 \left(
 \begin{array}{ccc}
 \rho u & \rho v & \rho w \\ 
-\rho u^2 +P & \rho uv & rho uw \\ 
-\rho uv & \rho v^2 +P & rho vw \\ 
-\rho uw & rho vw &\rho w^2 +P \\ 
+\rho u^2 +P & \rho uv & \rho uw \\ 
+\rho uv & \rho v^2 +P & \rho vw \\ 
+\rho uw & \rho vw &\rho w^2 +P \\ 
 (\rho \epsilon + P)u & (\rho \epsilon + P)v & (\rho \epsilon + P)w
 \end{array} 
 \right)
@@ -549,6 +550,7 @@ S(U) =
 \end{array} 
 \end{equation}
 
+où: $\Lambda = \Lambda_{(E,\rho)}$ est la fonction de refroidissement (cf section \ref{sec:refroidissement} et \ref{sec:chimie}).
 
 %,
 %F(U)=
@@ -563,8 +565,8 @@ S(U) =
 
 L'idée de base du moteur hydrodynamique est de décomposer le domaine en cellules dans lesquelles les grandeurs seront localement constantes (Piecewise constant approximation).
 L'objectif est ensuite de résoudre localement le système d'équations d'Euler à chaque interfaces de cellule pour obtenir l'évolution globale du système.
-Chaque interfaces devient donc un problème de Riemann.
-Considérant un système, régi par des équations de conservations, ayant comme état initial deux milieux homogènes de densité constante, séparé par une continuité (cf figure \ref{fig:riemann}), qu'elle sera son évolution?
+Chaque interfaces devient donc un problème de Riemann (cf figure \ref{fig:riemann}).
+Considérant un système, régi par des équations de conservations, ayant comme état initial deux milieux homogènes de densité constante, séparé par une continuité, qu'elle sera son évolution?
 
 %Nous aurons donc accès aux flux de matière et d'énergie entre les cellules pour pouvoir calculer l'état suivant  
 %Connaissant l'état d'un système régit par des équation de conservation hyperbolique de type Euler a un instant donné.
@@ -590,16 +592,19 @@ Par exemple, une différence finie centrée peut être décomposée en deux diff
 La propagation d'une onde à la vitesse $a$ pourra être discrétisée en utilisant.
 
 \begin{equation}
-\frac{u_i^{t+1} - u_i^t }{\Delta t}   +a \frac{u_{i+1}^t  - u_i^t}{\Delta x} = 0
+\frac{u_i^{t+1} - u_i^t }{\Delta t} - a \frac{u_{i+1}^t  - u_i^t}{\Delta x} = 0
 \end{equation}
 
+Ce type d'approche est dite explicite, car la solution du système au temps $t+1=t+\Delta t$ est obtenue à partir de l'état du système au temps $t$.
+On parlera de schéma explicite en opposition au schéma implicite, qui lui utilisera en plus de l'état au temps $t$, l'état au temps $t+1$ pour déterminer l'évolution du système.
+Ce dernier étant inconditionnellement stable mais largement plus complexe à implémenter dans notre cas.
+
+On utilisera donc une approche explicite, mais celle-ci peux présenter des problèmes d'instabilités.
 En fonction du signe de $a$, on parlera de méthode UPWIND ou DOWNWIND.
 Il est possible de montrer à l'aide d'une analyse de von-Neumann (cf \cite{toro1999riemann}) que la méthode UPWIND est stable sous certaine condition, et que la méthode DOWNWIND est inconditionnellement instable.
-Or il n'est pas possible de connaître à l'avance le signe de $a$, la discrétisation par différence finies ne s'applique donc pas à ce problème. 
-Le principe de cette méthode est de ne plus calculer directement l'évolution des grandeurs au sein des cellules mais de passer par l'intermédiaire du calcul des flux entre elles.
-On parlera de discrétisation par volumes finis.
-
-
+Comme il n'est pas possible de connaître à l'avance le signe de $a$, dans les cas complexe que nous cherchons à traiter, la discrétisation par différences finies ne s'applique pas ici. 
+On utilisera à la place une discrétisation par volumes finis.
+Le principe est de ne plus calculer directement l'évolution des grandeurs au sein des cellules mais de passer par l'intermédiaire du calcul des flux entre elles.
 
 %\subsection{Discrétisation du problème.}
 %
@@ -660,32 +665,30 @@ On parlera de discrétisation par volumes finis.
 %
 %
 %introduction aux volumes finis
-%consiste a estimer le flux aux interfaces des cellules.
+%consiste 
 %
 
 %\subsection{discretisation}
-Godunov \cite{MR0119433} a été le premier à introduire une méthode pour la résolution exacte de ce système.
+\cite{MR0119433} a été le premier à introduire une méthode pour la résolution exacte de ce système.
 %répondu à ce problème et introduit une méthode conservative.
-Son approche consistait à discrétiser l'équation \ref{eq:conservation} de la manière suivante : 
+Son approche consistait à estimer le flux aux interfaces des cellules et à discrétiser l'équation \ref{eq:conservation} de la manière suivante : 
 
 \begin{equation}
-\frac{ u^{t+1}_i - u^t_i }{\Delta t} + \frac{ F^t_{i+1/2} - F^t_{i-1/2} }{\Delta x} =0,
+\frac{ u^{t+1}_i - u^t_i }{\Delta t} - \frac{ F^t_{i+1/2} - F^t_{i-1/2} }{\Delta x} =0,
 \label{eq:rad_solver}
 \end{equation}
 
 ou $F^t_{i+1/2}$ et $F^t_{i-1/2}$ sont les flux numérique inter-cellules, ou flux de Godunov, une estimations des flux physiques.
-Tout le problème réside dans le calcul de ces flux aux interfaces. % : $F^t_{i+1/2}$
+Tout la difficulté réside dans le calcul de ces flux aux interfaces. % : $F^t_{i+1/2}$
+%TODO pb godunov
 Différentes méthodes ont été développées, et celle retenue dans EMMA est la méthode HLL/HLLC.
-%\subsection{Méhtode HLL et HLLC }
-La méthode de \ac{HLL} est une méthode pour approximer les flux de Godunov dans le cas de la résolution en 3D des équations d'Euler.
-La méthode \ac{HLL} a été modifié par Toro 1992 et a donné lieu à la méthode HLLC, plus robuste.
+La méthode de \ac{HLL} est une méthode au second ordre pour approximer les flux de Godunov dans le cas de la résolution en 3D des équations d'Euler.
+La méthode \ac{HLL} a été modifiée par Toro 1992 et a donné lieu à la méthode HLLC, plus robuste.
 
-%recalculation des flux entre les cellules
-
-%\subsection{MUSCL et Minmod}
-Si dans le problème de Riemann, les deux parties sont considérées avoir des densités constantes, il est possible de considérer des schémas d'ordres supérieurs.
-Par exemple le schéma \ac{MUSCL} introduit par \cite{1979JCoPh..32..101V},  consiste à considérer une valeur dans la cellule, non plus constante mais interpolée linéairement (cf figure\ref{fig:MUSCL}).
-Pour éviter les cas extrêmes, la pente de cette interpolation est limitée, dans notre cas une méthode dites \textit{minmod} est utilisée.
+Dans le problème de Riemann, les deux domaines ont des densités constantes, mais il est possible de considérer des schémas d'ordres supérieurs.
+Par exemple le schéma \ac{MUSCL} introduit par \cite{1979JCoPh..32..101V},  considère une valeur évoluant linéairement dans la cellule. (cf figure\ref{fig:MUSCL}).
+Pour éviter les cas menant à des pentes extrêmes, et dans le but de garder une solution monotone, dans EMMA la pente de cette interpolation est limitée par une méthode \textit{minmod}.
+%TODO develeop
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/MUSCL_minmod.pdf} 
@@ -700,31 +703,29 @@ Pour éviter les cas extrêmes, la pente de cette interpolation est limitée, da
 \subsection{Gestion du pas de temps}
 \label{sec:dthydro}
 
-Le pas de temps respecte la condition de \ac{CFL}, sont expression est issue de \cite{teyssier_cosmological_2002} et s'exprime ici sous la forme :
+Le pas de temps respecte la condition de \ac{CFL}, et s'exprime ici sous la forme :
 
 \begin{equation}
-\Delta t = \frac{dx * CFL }{3*(max(v) + c_s)}
+\Delta t_{hydro} = C \frac{dx}{3V}
 \end{equation}
 
-avec $c_s = \sqrt{\gamma P/\rho}$ dans le cas d'un gaz parfais.
-
-L'idée est que la vitesse de l'onde la plus rapide de la simulation ne doit pas parcourir plus d'une fraction de cellule, sans quoi la stabilité du modèle serait perdue.
+où $C \in [0,1] $ est le nombre de Courant et $V = max(v) + c_s$ avec les vitesses du gaz $v$ et la vitesse du son $c_s = \sqrt{\gamma P/\rho}$ dans le cas d'un gaz parfais, une estimation de la vitesse de l'onde la plus rapide présente dans la simulation \citep{toro1999riemann}.
+L'idée est que la vitesse de l'onde la plus rapide de la simulation ne doit pas parcourir plus d'une fraction de cellule par pas de temps, sans quoi la stabilité du modèle serait compromise.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\clearpage
 \section{Rayonnement et énergie ionisante}
 \label{sec:rad_solver}
 
-
 L'objectif de cette section est de présenter les bases de la physique radiative, du transfert du rayonnement (RT) à son interaction avec les baryons.
-Ce moteur se déroule en deux temps.
-Premièrement, il faut calculer la propagation du rayonnement, on appelle cette étape le transport des photons.
-Deuxièmement, il faut le couplage entre le rayonnement et le gaz, c'est a dire calculer l'impact "chimique" du gaz.
-Nous nous intéresserons ici uniquement au transfert d'énergie ionisante.
-Nous verrons dans un premier temps le système d'équation a résoudre, puis dans un second temps, les méthodes de discrétisation.
+Nous nous intéresserons ici uniquement au rayonnement capable de ioniser l'hydrogène.
+Ce moteur physique se déroule en deux temps.
+La première étape s'appelle le transport des photons et consiste à calculer la propagation du rayonnement.
+La seconde étape sera le calcul de la "chimie", c'est à dire le calcul du couplage entre le rayonnement et le gaz.
 
 \subsection{L'équation du transfert du rayonnement}
+
+Dans cette section, nous verrons dans un premier temps le système d'équations à résoudre, puis dans un second temps, les méthodes de discrétisation.
 
 L'équation du transfert du rayonnement lie l'évolution de l'intensité spécifique $I_\nu(\vec{x},\vec{n},t)$, au champ de sources $\eta_\nu(\vec{x},\vec{n},t)$, en fonction du coefficient d'absorption $\kappa_\nu(\vec{x},\vec{n},t)$ :
 \begin{equation}
@@ -737,26 +738,27 @@ Le coefficient d'absorption s'exprime en fonction de la section efficace de phot
 \kappa_\nu(\vec{x},\vec{n},t) = \sigma_\nu n_H.
 \end{equation}
 
-Il existe trois grandes famille de code de transfert de rayonnement.
+Il existe trois grandes familles de codes de transfert de rayonnement.
 \begin{itemize}
 
 \item La première famille de méthodes est dite de lancé de rayons.
 Elle utilise une représentation proche de la physique de la lumière, et simule la radiation à l'aide de rayons se propageant dans l'espace.
-Chaque source trace un certain nombre de rayon autour d'elle et l'équation de transfert du rayonnement est résolue le long de chaque lignes de visées.
+Chaque source trace un certain nombre de rayons autour d'elle et l'équation de transfert du rayonnement est résolue le long de chaque lignes de visées.
 % groupe de photon, qui vont se propager et interagir avec le milieu.
 %L'équation de transfert du rayonnenment est résolue le long de la ligne de visée.
-Dans ce type de méthtode la vitesse de la lumière est considérée infinie.
-Par exemple C$^2$RAY\citep{2006NewA...11..374M} est un représentant de cette famille.
+Dans ce type de méthode la vitesse de la lumière est considérée infinie.
+Par exemple C$^2$RAY \citep{2006NewA...11..374M} est un représentant de cette famille.
 Le principal inconvénient de cette méthode est que plus les sources sont nombreuses, plus le coût numérique augmente.
 
-\item La seconde famille est dite Monté Carlo.
-Elle utilise une également un représentation physique de la lumière mais cette fois ci ce ne sont plus des rayons, mais des paquets de photons qui se propagent dans l'espace.
+\item La seconde famille est dite de Monté Carlo.
+Elle utilise également une représentation physique de la lumière mais cette fois ci ce ne sont plus des rayons, mais des paquets de photons qui se propagent dans l'espace.
 Chaque source lance un certain nombre de groupes de photons, qui vont se propager et interagir avec le milieu.
-L'avantage de cette méthode par rapport au lancé de rayon, est qu'elle autorise naturellement la diffusion.
+L'avantage de cette méthode par rapport au lancé de rayons, est qu'elle autorise naturellement la diffusion.
 Le coût numérique est encore dans ce cas, fonction du nombre de sources et sans un nombre important de paquets de photons, le bruit est important.
 Les code LICORICE \citep{semelin_lyman-alpha_2007} ou CRASH \citep{2003MNRAS.345..379M} utilisent cette méthode.
 
-\item La troisième, celle utilisée dans EMMA, revient à considérer la lumière comme un fluide. \citep{gnedin_multi-dimensional_2001, aubert_radiative_2008}.
+\item La troisième famille est celle utilisée dans EMMA.
+Elle revient à considérer la lumière comme un fluide. \citep{gnedin_multi-dimensional_2001, aubert_radiative_2008}.
 Ces méthodes dites méthodes aux moments utiliseront donc les même concepts que le moteur hydrodynamique, mais avec un système d'équations différentes. 
 EMMA utilise une approximation du moment au premier ordre, son moteur repose sur l'\textit{approximation M1} \citep{levermore_relating_1984}.
 Son principal avantage est que le coût numérique est indépendant du nombre de sources.
@@ -810,11 +812,11 @@ D = \frac{ 3\chi -1 }{2} \mathbb{1} + \frac{ 1 - \chi }{2} \vec{n} \otimes \vec{
 \subsection{Gestion du pas de temps et vitesse de la lumière réduite}
 \label{sec:RSLA}
 
-La lumière étant extrêmement rapide, le suivi de son évolution demande un pas de temps réduit du fait de la condition de \ac{CFL} : $ c \leq \Delta x / \Delta t $.
+La lumière étant extrêmement rapide, le suivi de son évolution demande un pas de temps réduit du fait de la condition de \ac{CFL} : $\Delta t_{rad} = C  \Delta x /c$.
 D'une manière générale, le pas de temps radiatif est plusieurs ordres de grandeur plus petit que celui de l'hydrodynamique.
 Or, dans les simulations cosmologiques, les processus entrant en jeu ont des vitesses très inférieures à celle de la lumière.
-Par exemple, parmi les processus hydrodynamiques les plus rapides à ces échelles se trouvent les vents générés par les explosions de supernovæ, leurs vitesses sont de l'ordre de $3000 \mathrm{km.s}^{-1}$ soit deux ordres de grandeurs plus faible que la vitesse de la lumière.
-L'idée de la approximation de la vitesse de la lumière réduite ou \ac{RSLA} est de diminuer la vitesse de la lumière dans le code tout en restant dans le régime ou la lumière reste plus rapide que les autre processus.
+Par exemple, parmi les processus hydrodynamiques les plus rapides aux échelles considérées se trouvent les vents générés par les explosions de supernovæ, leurs vitesses sont de l'ordre de $3000 \mathrm{km.s}^{-1}$ soit deux ordres de grandeurs plus faibles que la vitesse de la lumière.
+L'idée de l'approximation de la vitesse de la lumière réduite ou \ac{RSLA} est de diminuer la vitesse de la lumière dans le code tout en restant dans le régime ou la lumière reste plus rapide que les autre processus.
 Pour se faire, on introduit $c_{num}$ la vitesse de la lumière numérique réduite en fonction de $c$ la vitesse de la lumière physique.
 \begin{equation}
 c_{num} = \tilde{c} \cdot{c},
@@ -823,15 +825,15 @@ avec $\tilde{c}$ le facteur de proportionnalité.
 Par exemple, utiliser $\tilde{c}=0.1$ permet de réaliser 10 fois moins de pas de temps, et donc 10 fois moins de calcul.
 
 J'ai mené une étude dans le but de quantifier l'influence de la vitesse de la lumière réduite sur la propagation des fronts d'ionisation.
-Cette étude sera présenté en détails dans la section \ref{sec:lightspeed}.
+Cette étude sera présentée en détails dans le chapitre \ref{sec:intre:zreio}.
 
 
 \subsection{Groupes de photons}
 \label{sec:groupedephotons}
 
-Il n'est pas possible avec la méthode au moment de considérer directement un spectre d'émission.
-Le spectre doit être discrétisé, c'est a dire qu'il devra être découpé en un certain nombre de groupe, et chaque groupe disposera des caractéristique moyenne de sa portion du spectre.
-Le problème est que chaque groupe de photon devient un fluide a simuler a part entière et le coût numérique augmente rapidement avec le nombre de groupes. 
+Il n'est pas possible avec la méthode aux moments de considérer directement un spectre d'émission.
+Le spectre doit être discrétisé, c'est-à-dire qu'il devra être découpé en un certain nombre de groupes, et chaque groupe disposera des caractéristiques moyennes de sa portion du spectre.
+Le problème est que chaque groupe de photons devient un fluide à simuler a part entière et le coût numérique augmente rapidement avec le nombre de groupes. 
 %Il est possible de choisir un nombre arbitraire de groupes, mais il faut prendre en compte que chaque groupe devient l'équivalent d'un fluide dont on veut suivre l'évolution.
 %l'augmentation du nombre de groupe devient vite coûteux en terme de temps de calculs.
 %Ce profil d’émission ionisante peut être découper en différents "groupe de photons" (cf section \ref{sec:groupedephotons}).
@@ -848,7 +850,7 @@ et la section efficace d'interaction:
 
 On prendra généralement la première borne au niveau de l'énergie d'ionisation de l'hydrogène : $\nu_1=13.6eV$.
 Dans le cas où on ne considère qu'un seul groupe, les intégrations sont réalisées jusqu'à l'infini : $\nu_2= + \inf$.
-J'ai également pu tester le cas de trois groupes, dans ce cas les bornes sont arbitrairement prisent aux niveaux des énergie d'ionisation de l'hélium : 
+J'ai également pu tester le cas de trois groupes, dans ce cas les bornes sont arbitrairement prisent aux niveaux des énergies d'ionisation de l'hélium : 
 $\nu_2= 24.6 eV$, $\nu_3= 54.4 eV $, $\nu_4= + \inf$.
 
 J'ai implémenté la possibilité de découper les groupes, non seulement en énergies, mais aussi en temps, car il est possible de considérer une évolution temporelle du spectre d'émission.
@@ -864,14 +866,14 @@ Vu que le coût global de la radiation augmente rapidement avec le nombre de gro
 %De pluset vu les contraintes 
 En pratique, je n'ai travaillé qu'avec un seul groupe de photons, considérant l'intégralité du spectre ionisant avec des énergies allant de 13.6 eV à $+\infty$.
 
-\subsection{La chimie}
+\subsection{Couplage matière-rayonnement}
 \label{sec:chimie}
 
-La chimie fait le lien entre le moteur radiatif et le moteur hydrodynamique.
+La "chimie" fait le lien entre le moteur radiatif et le moteur hydrodynamique.
 C'est à ce moment qu'est appliquée l'énergie apportée par le rayonnement au gaz et que le gaz va être chauffé par le rayonnement.
 Le rayonnement aura différents impacts en fonction de la nature du gaz avec lequel il interagit, nous ne considérerons ici que la chimie de l'hydrogène.
-Contrairement au transport , la chimie est non conservative, et c'est à se moment que la gestion du refroidissement du gaz à lieu.
-Une partie des photons ionisants vont être absorbés par le gaz et réémis dans une autre partie du spectre.
+C'est à se moment que la gestion du refroidissement du gaz à lieu et contrairement au transport, cette étape est non conservative.
+Une partie des photons ionisants vont être absorbés par le gaz et réémis dans une partie du spectre non traitée ici.
 Cette réémission va numériquement diminuer le bilan global d'énergie ionisante et être interprétée comme une perte.
 
 Le système d'équations à résoudre lie la densité de photons, le flux de photons, l'état d'ionisation et l'énergie interne : 
@@ -896,11 +898,11 @@ Il est possible de considérer que toute l'émission de recombinaison est locale
 Ceci est connu sous le nom de \ac{OTSA}.
 
 Les processus chimiques agissant sur des échelles de temps courtes par rapport au transport des photons, le pas de temps sera plusieurs ordres de grandeurs plus faible.
-En pratique, a chaque pas de temps radiatif, on effectuera un sous-cyclage sur le pas de temps chimique.
+En pratique, à chaque pas de temps radiatif, on effectuera un sous-cyclage sur le pas de temps chimique.
 Après chaque pas de temps chimique, la variation d’énergie est calculée. 
-Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'étape courante est recalculée. (cf \cite{rosdahl_ramsesrt_2013}) 
+Si celle ci est supérieure à 10\% ($\Delta E/E>0.1$), le pas de temps est divisée par 2 et l'étape courante est recalculée. (cf \cite{rosdahl_ramsesrt_2013}) 
 
-Étant donné que les processus chimique sont gérés de manière locale (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
+Étant donné que les processus chimiques sont gérés de manière locale (ie ils ne dépendent pas de l'état des cellules voisines) et que la quantité de calcul est relativement importante, le portage du moteur chimique sur \ac{GPU} est très intéressant du point de vue accélération.
 
 \clearpage
 \section{Gestion de la cosmologie}
@@ -932,22 +934,23 @@ Si celle ci est supérieure a 10\%, le pas de temps est divisée par 2 et l'éta
 %ou $r$ représente une longueur en unités physique et $r'$ en unités comobile.
 %Ainsi un segment de 10 Mpc physique de coté, pris aujourd'hui, aura une taille de 10 Mpc comobile (cMpc), mais aussi à redshift z=9 où sa taille physique ne sera plus que de 1 Mpc physique (pMpc ou juste Mpc).
 
-L'expansion de l'univers et modélisée ici en faisant varier la taille des éléments de calcul avec le facteur d'expansion.
+Les moteurs présentés jusqu'ici ne sont valables que dans le cas d'un Univers statique.
+L'expansion de l'Univers est modélisée ici en faisant varier la taille des éléments de calcul avec le facteur d'expansion.
 On appellera les longueurs ainsi exprimées des longueurs comobile.
-
 \begin{equation}
-r=a r'
+r=a \times r',
 \end{equation}
-
-De plus, il est généralement pratique de normaliser les grandeurs que l'on considère:
-
-\begin{equation}
-r'=\tilde{r}r*
-\end{equation}
-ou $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
+où $r$ est une longueur physique, $r'$ une longueur comobile et $a$ la facteur d'expansion.
 On remarquera que pour réaliser une simulation non cosmologique, où l'expansion n'est pas considérée, il suffit de fixer $a=1$.
+De plus, on normalisera généralement les grandeurs que l'on considère:
 
-La généralisation de ce principe à d'autre unités que la longueur est appeler système d'unités supercomobiles \citep{martel_convenient_1998}, les conversions utilisées sont présentées sur les tables \ref{tab:comobil} et \ref{tab:comobilfact}.
+\begin{equation}
+r'=\tilde{r} \times r*,
+\end{equation}
+où $\tilde{r}$ est la longueur normalisée et $r*$ le facteur de normalisation.
+
+La généralisation de ce principe à d'autre unités que la longueur est appelée système d'unités supercomobiles \citep{martel_convenient_1998}.
+Les conversions utilisées sont présentées sur les tables \ref{tab:comobil} et \ref{tab:comobilfact}.
 
 \begin{table}
 \begin{center}
@@ -986,10 +989,10 @@ Pression & $p_* = \frac{\rho_* r_*^2}{t_*^2} = \rho_* v_*^2$\\ \hline
 
 \subsubsection{Gestion du pas de temps}
 \label{sec:dtcosmo}
-L'évolution de la grille sera limité d'un pas de temps à l'autre.
-La condition condition pour effectuer le calcul du pas de temps sera:
+L'évolution de la grille sera limitée d'un pas de temps à l'autre.
+La condition pour effectuer le calcul du pas de temps sera:
 \begin{equation}
-\frac{\delta a (\Delta t) } {a} < \epsilon
+\frac{\delta a (\Delta t_{cosmo}) } {a} < \epsilon
 \end{equation}
 
 
@@ -998,22 +1001,22 @@ La condition condition pour effectuer le calcul du pas de temps sera:
 D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physique que l'on cherche à suivre et sera donc définie comme le minimum entre :
 
 \begin{itemize}
-\item le pas de temps cosmologique (cf section \ref{sec:dtcosmo}),
-\item le pas de temps gravitationnel (cf section \ref{sec:dtgrav}),
-\item le pas de temps hydrodynamique (cf section \ref{sec:dthydro}),
-\item le pas de temps radiatif (cf section \ref{sec:RSLA}).
+\item le pas de temps cosmologique ($\Delta t_{cosmo}$ cf section \ref{sec:dtcosmo}),
+\item le pas de temps gravitationnel ($\Delta t_{pic}$ cf section \ref{sec:dtgrav}),
+\item le pas de temps hydrodynamique ($\Delta t_{hydro}$ cf section \ref{sec:dthydro}),
+\item le pas de temps radiatif ($\Delta t_{rad}$ cf section \ref{sec:RSLA}).
 \end{itemize}
 
 \subsection{Influence de l'AMR}
 
 Sur une grille \ac{AMR}, le pas de temps n'est pas uniforme et dépend du niveau considéré, un niveau raffiné aura un pas de temps plus court que le niveau de base.
+L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
 En première approximation, comme une cellule est raffinée en divisant par 2 chacune de ses dimensions, le pas de temps sera lui aussi divisé par 2, du fait de la condition de Courant.
 Il faudra donc réaliser deux pas de temps fins (L+1) pour être synchronisé avec un niveau inférieur (L), et ce de manière récursive.
-Ceci n'est vrai qu'à la condition que la physique résolue n'évolue pas.
+Ceci n'est vrai qu'à la condition que la physique résolue n'évolue pas avec la résolution spatiale.
 En pratique, l'augmentation de résolution mène, entre autre, à une augmentation de densité résolue, et généralement à un pas de temps hydrodynamique plus contraignant.
-Ceci à pour effet de réduire le pas de temps d'un facteur supérieur à 2, et le pas de temps du niveau L+1 sera au final plus court que la moitié de celui du niveau L.
-Il sera nécessaire de communiquer cette information sur les niveaux supérieurs pour effectuer la synchronisation.
-L'évolution entre les niveaux se fera en suivant le schéma présenté sur la figure \ref{fig:timestep}.
+Ceci a pour effet de réduire le pas de temps d'un facteur supérieur à 2, et le pas de temps du niveau L+1 sera au final plus court que la moitié de celui du niveau L.
+Il sera alors nécessaire de communiquer cette information sur les niveaux supérieurs pour effectuer la synchronisation.
 
 \begin{figure}
 \includegraphics[width=.8\linewidth]{img/02/tstep.png}
@@ -1028,11 +1031,11 @@ Un niveau évolue par pas de temps deux fois plus court que celui de son niveau 
 \label{sec:crta}
 
 Le transport radiatif sur grille de base ou \ac{CRTA} est une technique visant à restreindre la résolution du champ de radiation dans le but d'en accélérer le calcul.
-Dans le cas d'un couplage total entre les différents moteurs physiques, tous les moteur évoluent au rythme le plus contraignant.
+Dans le cas d'un couplage total entre les différents moteurs physiques, tous les moteurs évoluent au rythme le plus contraignant.
 %il faut définir le plus petit pas de temps et faire évoluer 
-Ce qui fait que, pour chaque pas de temps radiatif, il faut réaliser un pas de temps avec les autres moteurs physique (cf panneau supérieur de la figure \ref{fig:CRTA}).
+Ce qui fait que, pour chaque pas de temps radiatif, il faut réaliser un pas de temps avec les autres moteurs physiques (cf panneau supérieur de la figure \ref{fig:CRTA}).
 Dans notre cas, la radiation est plusieurs ordres de grandeurs plus contraignante que l'hydrodynamique ou la gravitation.
-Donc le nombre de pas de temps hydrodynamique et gravitationnel nécessaire sont largement surestimés, et le coût numérique explose.
+Donc le nombre de pas de temps hydrodynamiques et gravitationnels nécessaires sont largement surestimés, et le coût numérique explose.
 
 Dans le cas de la \ac{CRTA}, le transport des photons n'est réalisé que sur la grille de base, et non sur les niveaux raffinées (cf panneau inférieur de la figure \ref{fig:CRTA}), sur lesquels l'hydrodynamique est considérée comme "gelée" lors du calcul.
 Ce qui a pour effet d'augmenter la taille du pas de temps radiatif, du fait de la condition de Courant.

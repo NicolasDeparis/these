@@ -6,7 +6,7 @@
 %Nous avons abordé en guise d'introduction un principe de base de la méthode scientifique: le cycle \textit{Observation -> Théorie -> Expérience}.
 %La visualisation représente l'étape de bouclage de ce cycle  puisque qu'elle consiste à observer le résultat de l'expérience de simulation.
 La visualisation de simulations numériques est importante car elle permet d'obtenir énormément d'informations facilement et rapidement.
-Le cerveaux humain est efficace pour identifier les motifs qui se détache visuellement de leur environnement.
+Le cerveaux humain est efficace pour identifier les motifs qui se détachent visuellement de leur environnement.
 Elle permet une première approche qualitative qui va ensuite permettre de cibler une seconde approche plus quantitative.
 
 %Par exemple, on peux utiliser une visualisation de la distribution de gaz autour de certaine galaxie pour identifier leur environnement, et ensuite l'étudier un fonction de la masse du halo hôte.
@@ -18,7 +18,7 @@ Elle permet une première approche qualitative qui va ensuite permettre de cible
 
 
 %pour qui?
-En fonction du publique auquel s'adresse la visualisation, l'information utile sera différente et l'accent sera mis sur différents aspect.
+En fonction du publique auquel s'adresse la visualisation, l'information utile sera différente et l'accent sera mis sur différents aspects.
 %Il existe tout un panel de visualisations possible, et avant même de définir un but il faut définir une cible, car les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent.
 On distinguera principalement trois catégories :
 
@@ -36,7 +36,7 @@ Elle doivent contenir une certaine dose d'information supplémentaire par rappor
 \item Les professionnels.
 
 Enfin, les outils de visualisation pour les professionnels disposent généralement de tous les outils nécessaires à la quantification de l'information.
-On pourra par exemple analyser différents champs physique, sous différents angles, changer les échelles de couleurs, etc.
+On pourra par exemple analyser différents champs physiques, sous différents angles, changer les échelles de couleurs, etc.
 \end{itemize}
 
 
@@ -53,12 +53,12 @@ On pourra par exemple analyser différents champs physique, sous différents ang
 %Cette cible aura besoin d'outils pointu aillant pour principal objectif la quantification.
 
 Le principal défi de la visualisation des simulations cosmologiques est la quantité de données qu'elles représentent.
-Si il est possible de faire des rendus pré-calculés d'images, il est encore impossible d'avoir une représentation en temps réel de simulation de taille moyenne.
+Si il est possible de faire des rendus pré-calculés d'images, il est encore impossible d'avoir une représentation en temps réel d'une simulation de taille moyenne.
 Pourtant il existe des techniques (dans le monde des jeux vidéo par exemple) permettant d'afficher dynamiquement des univers en 3 dimensions gigantesque de manière fluide sur des machines grand public.
 Je pense qu'il y a de quoi s'inspirer de ce coté la.
 
 Nous avons vu dans la section \ref{sec:gridpart} qu'il existe deux types de représentations de la physique dans la simulation : la grille et les particules.
-Ces deux représentations utilisent chacune des techniques de visualisation particulières.
+Ces deux représentations utilisent chacune des techniques de visualisations particulières.
 Dans la suite de cette partie nous allons aborder séparément ces types de représentations et survoler les contraintes et les techniques associées à chacune d'elles.
 
 Nous commencerons par aborder la visualisation de données sur grille, puis dans un second temps nous nous concentrerons sur la représentation des particules.
@@ -120,7 +120,7 @@ v= \sum e^{-x}
 \end{equation}
 Et on pourra également être plus quantitatif en utilisant les vraies équations physiques de l'epaisseur optique faisant intervenir différents champs. % mais il faudra utiliser plusieurs champs simultanément. %TODO ref
 
-\item Et d'une manière générale, toute transformation permettant d'obtenir une seul valeur à partir d'une série.
+\item Et d'une manière générale, toute transformation permettant d'obtenir une seule valeur à partir d'une série.
 
 \end{itemize}
 
@@ -176,14 +176,14 @@ Cette seconde matrice sera finalement utilisée pour combler les trous de la pre
 %En prenant la moyenne des deux grille obtenues ont obtient finalement la projection sur le niveau $L=9$.
 %On pourra utiliser ce principe de manière récursive jusqu'à avoir projeter tout les niveaux.
 
-Dans le cas où le niveau de projection ne correspond pas au niveau maximum de l'\ac{AMR}, il suffira de modifier la pondération des niveau supérieurs au niveau de projection en utilisant:
+Dans le cas où le niveau de projection ne correspond pas au niveau maximum de l'\ac{AMR}, il suffira de modifier la pondération des niveaux supérieurs au niveau de projection en utilisant:
 \begin{equation}
-w = d \cdot \left( 2^{Lmax-L} \right)^3
+w = \rho \cdot \left( 2^{Lmax-L} \right)^3
 \end{equation}
-Ainsi toute les cellules se trouvant sur des niveaux supérieur aux niveaux de projection seront automatiquement prisent en compte.
+Ainsi toute les cellules se trouvant sur des niveaux supérieur aux niveaux de projection seront automatiquement prises en compte.
 
 Le principal inconvenant de la méthode des histogrammes est qu'il n'est possible de réaliser que des projection utilisant la moyenne.
-Or on voudra dans certain cas considérer d'autres réduction de ligne de visée.
+Or on voudra dans certain cas considérer d'autres réduction de lignes de visées.
 Dans le cas de la création d'une carte 2D de maximum par exemple, il est nécessaire de générer un cube avant de réaliser la projection.
 L'avantage est que cette méthode est aisément transposable à trois dimensions en utilisant des histogrammes 3D.
 
@@ -193,13 +193,13 @@ L'avantage est que cette méthode est aisément transposable à trois dimensions
 %La taille de l'histogramme augmentant en $2^{3L}$ les projections 3D seront généralement limité a $1024^3$ pour des questions de mémoire RAM. 
 
 
-J'ai utilisée cette méthode pour projeter quelques champs de données de la simulation CODA I- AMR.
+J'ai utilisé cette méthode pour projeter quelques champs de données de la simulation CODA I- AMR.
 Un exemple d'image réalisée est présenté sur la figure \ref{fig:ortho}.
 Pour réaliser cette image j'ai projeté une tranche de 8/h cMpc d'épaisseur sur le niveau de base (L=11).
-Cette projection a été effectuée trois fois, pour la température, la densité et l'état d'ionisation du gaz.
+Cette projection a été effectuée trois fois, pour la température, pour la densité et pour l'état d'ionisation du gaz.
 L'image finale est une composition RGB de ces trois champs.
 
-J'ai également généré des images de $16384^2$ pixels (256 Mégapixel), en découpant le cube en tranche sur lesquelles j'ai effectué une projection par moyenne.
+J'ai également généré des images de $16384^2$ pixels (256 Mégapixel), en découpant le cube en tranche sur lesquelles j'ai effectué une projection par moyenne sur le niveau maximum.
 J'ai ensuite réalisé un maximum sur les tranches obtenues pour générer l'image finale.
 
 %La quantité de données a gérée étant importante,
@@ -225,8 +225,8 @@ J'ai ensuite réalisé un maximum sur les tranches obtenues pour générer l'ima
 %blender
 
 Dans le cas de la projection en perspective, les lignes de visées ne sont plus parallèles, et il n'existe plus de façon directe de les récupérer.
-Il devient nécessaire d'avoir recours au lancé de rayon.
-Cette technique, permet de récupérer toute les cellules interceptée pas un segment de droite donné.
+Il devient nécessaire d'avoir recours au lancé de rayons.
+Cette technique, permet de récupérer toute les cellules interceptées pas un segment de droite donné.
 %Il existe différentes techniques de raycasting, j'ai pu en explorer plusieurs:
 
 \subsection{Raycasting}
@@ -263,8 +263,8 @@ Cette technique nécessite la génération de l'arbre sur la grille mais a l'ava
  		\label{fig:equirectangle}
 \end{figure}
 
-Indépendamment de la méthode de lancé de rayon, il est nécessaire de définir la caméra.
-C'est à dire qu'il faut localiser le point de départ (la position de la caméra) et les points d'arrivés (\ac{FOV} et profondeur de champs) des rayons.
+Indépendamment de la méthode de lancé de rayons, il est nécessaire de définir la caméra.
+C'est à dire qu'il faut localiser le point de départ (la position de la caméra) et les points d'arrivés (angle de vue \ac{FOV} et profondeur de champs) des rayons.
 Pour l'exemple présenté sur la figure \ref{fig:equirectangle}, la caméra est positionnée au centre d'un cube de densité de gaz $P_i = (0.5,0.5,0.5)$.
 J'ai ensuite défini une caméra sphérique avec HealPix (see Sec. \ref{sec:healpix}) pour lancer les rayons dans la sphère inscrite au cube.
 La projection a utilisée ici $786432$ rayons et chaque rayon à utilisé la réduction de l'équation \ref{eq:epop}.
@@ -283,7 +283,7 @@ y=\phi.
 La densité de point n’étant pas uniforme dans ce référentiel, il est nécessaire de réaliser une interpolation sur une matrice régulière pour obtenir l'image finale.
 Ce type d'images se prête bien à la vulgarisation, car le résultat final est léger et peut être utilisé avec un visualisateur de type Google Cardboard par exemple pour obtenir une visualisation interactive facile à diffuser.
 
-Il est également possible d'utiliser ce type de méthode à des fin plus quantitatives.
+Il est également possible d'utiliser ce type de méthode à des fins plus quantitatives.
 En fonction de la méthode de réduction des rayons, il peut être possible d'étudier, pour des halos spécifiques, la fraction d'échappement des photons ou les flux hydrodynamiques en fonction de la direction. 
 Il est également possible de créer des observatoires virtuels en simulant différents types d'instruments.
 
@@ -328,7 +328,7 @@ Le choix a été fait de réaliser la projection à la fin de chaque pas de temp
 %En écrivant ces lignes je me rends compte que le dt de projection devrait être lié au dx de projection. 
 
 Les simulations que j'ai pu réalisées comportaient environs un millier de pas temps, et généraient donc autant d'images ($N_{dt} \approx 10^3$).
-A 25 \ac{FPS} cela représente une durée d'environs 40 secondes de vidéo.
+A 25 images pas seconde cela représente une durée d'environs 40 secondes de vidéo.
 
 \section{Light cone}
 
@@ -340,7 +340,7 @@ Un "light cone" est une image aillant une dimension spatiale sur un axe, et une 
 %On parle de cone car en unités physique, la taille de la simulation augmente avec le temps, et donc, le parallélépipède s'élargit, formant un cone.
 
 %La création d'un "light cone" se fait a partir des images générer par le mode movie.
-En pratique, l'idée est de prendre des fines tranches successives dans les sorties movie.
+En pratique, l'idée est de prendre des fines tranches successives dans les sorties movie et des les juxtaposer pour former une nouvelle image.
 Considérons que les matrices en sorties ont une résolution $N_p=1024$ pixels carrés.
 On prendra alors une tranche d'une épaisseur $dx$ donnée suivant l'axe $y$ sur l'image du pas de temps $i_{dt}$, puis une deuxième tranche de la même épaisseur, mais décalée de $dx$ dans l'image $i_{dt+1}$, et ainsi de suite.
 La position du début $S_i$ et de la fin $S_f$ de la tranche dans l'image sera :
@@ -354,12 +354,12 @@ Le modulo sur la taille de l'image permet de gérer les conditions périodiques 
 On prendra également garde à utiliser une épaisseur de tranche qui soit un multiple entier du nombre de pixel de l'image de manière à respecter l’alignement au niveau des conditions périodiques.
 Le ratio d'aspect $\Phi$ est le rapport entre la hauteur et la longueur de l'image, et s'exprime :
 \begin{equation}
-\Phi = \frac{ N_{dt} * dx}{N_p}
+\Phi = \frac{ N_{dt} \times dx}{N_p}
 \end{equation}
 Étant donné que $N_{dt}$ et $N_p$ sont fixés par les paramètres de la simulation, il n'est possible de gérer le ratio d'aspect qu'en fonction de l'épaisseur de la tranche $dx$.
 Plus le ratio d'aspect sera important, plus les structure vont se répéter sur le light cone.
 
-Un light cone réalisé avec cette méthode et à partir d'une simulation présentée dans la partie \ref{sec:etoiles} est présenté sur la figure \ref{fig:lightcone}
+Un light cone réalisé avec cette méthode et à partir d'une simulation présentée dans la partie \ref{sec:etoiles} est présenté sur la figure \ref{fig:lightcone}.
 L'image résultante est un composite RGBA de la densité de matière noire, de la densité de gaz, de la température et de l'état d'ionisation.
 
 \begin{figure}

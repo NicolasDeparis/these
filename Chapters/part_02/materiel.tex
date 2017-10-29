@@ -4,22 +4,22 @@
 %Nous avons a ce stade un aperçu du type de calcul a effectuer, essayons d'estimer . 
 %De plus, les simulations cosmologiques ont pour principal défi de simuler d'important volume d'espace avec la meilleure résolution possible.
 
-Le défis des simulations de la réionisation est qu'elles doivent simuler un volume d'univers suffisant grand pour être représentatif de la variance cosmique( $\approx 100$ Mpc selon \cite{iliev_cosmological_2006}) tout en résolvant la formation stellaire (échelle $<1$ pc).
+Le défis des simulations de la réionisation est qu'elles doivent simuler un volume d'Univers suffisant grand pour être représentatives de la variance cosmique( $\approx 100$ Mpc selon \cite{iliev_cosmological_2006}) tout en résolvant la formation stellaire (échelle $<1$ pc).
 En première approximation, il nous faudrait donc échantillonner un tel volume par $\left( \frac{100Mpc}{1pc} = 10^7 \right) ^3 = 10^{21}$ éléments.
 Ce qui est totalement impossible à l'heure actuelle.
 %Nous verrons dans la prochaine partie que nous sommes encore loin de pouvoir résoudre la formation stellaire dans ce type de simulations. %TODO ref
-Nous avons vu que l'amélioration de certains algorithmes (passage de grilles fixe a grille adaptative, intégration du potentiel plutôt que somation N-corps directe, etc... voir chapitre \ref{ch:introduction}) a permis d'augmenter significativement la taille des simulations à puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
+Nous avons vu que l'amélioration de certains algorithmes (passage de grilles fixes à grilles adaptatives, intégration du potentiel plutôt que somation N-corps directe, etc... voir chapitre \ref{ch:introduction}) a permis d'augmenter significativement la taille des simulations à puissance de calcul identique, mais le principal facteur limitant reste au niveau du matériel.
 
 \section{Calcul hautes performances}
 
-Le \ac{HPC} est un domaine visant à utiliser au mieux les ressources de calculs disponibles.
+Le calcul hautes performance ou \ac{HPC} est un domaine visant à utiliser au mieux les ressources de calculs disponibles.
 Ces ressources peuvent être multiples et les utiliser conjointement de manière efficace représente un challenge en soit.
-Dans cette partie nous allons aborder une série de concepts liés au \ac{HPC} et utiles à la compréhension des simulations cosmologiques.
+Dans cette partie nous allons aborder une série de concepts liés au \ac{HPC}, utiles à la compréhension des simulations cosmologiques.
 
 
 \subsection{Loi de Moore et simulations}
 La loi de Moore \citep{moore1965cramming} propose un doublement du nombre de transistor par circuit intégré tout les 18 mois environs. (Fig \ref{fig:moore})
-Comme la puissance de calcul est étroitement liée a cette évolution, la taille -- le nombre d'éléments de résolution -- des simulations, suis également cette croissance exponentielle (Fig. \ref{fig:taillesimu}).
+Comme la puissance de calcul est étroitement liée à cette évolution, la taille -- le nombre d'éléments de résolution -- des simulations, suit également cette croissance exponentielle (Fig. \ref{fig:taillesimu}).
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/moorelaw.png} 
@@ -39,12 +39,13 @@ Comme la puissance de calcul est étroitement liée a cette évolution, la taill
 \subsection{Principes de parallélisation}
 
 A cause de limitations physiques comme la taille des atomes ou la capacité de refroidissement du silicium, on ne peut pas créer des processeurs aussi puissants que ce que l'on souhaite.
-La technique utilisée pour continuer à augmenter la puissance de calcul, consiste à en utiliser plusieurs en parallèle.
+La technique utilisée pour continuer à augmenter la puissance de calcul, consiste à en utiliser plusieurs en même temps.
 Dans le cas des simulations cosmologiques, la parallélisation est effectuée en découpant l'espace à simuler en un certain nombre de sous domaines chacun associé à une unité de calcul.
-Comme chaque sous domaine n'est pas isolé, mais appartient au même ensemble, les domaines vont devoir communiquer entre eux sur l'état de leurs voisin.
-Nous verrons en détail comment est effectué ce découpage dans la section \ref{sec:parasoft}.
-Mais voyons d'abord un aperçut des contraintes techniques de la parallélisation.
-Il existe différent type de parallélisation définis par la taxonomie de Flynn \citep{Flynn:1972:COE:1952456.1952459}: 
+Comme chaque sous domaine n'est pas isolé, mais appartient au même ensemble, les domaines vont devoir communiquer entre eux sur l'état de leurs voisins.
+Nous verrons en détails comment est effectué ce découpage dans la section \ref{sec:parasoft}.
+Mais voyons d'abord un aperçu des contraintes techniques de la parallélisation.
+
+Il existe différents types de parallélisations définis par la taxonomie de Flynn \citep{Flynn:1972:COE:1952456.1952459}: 
 
 \begin{itemize}
 \item SISD Single Instructions on Single Data.
@@ -71,15 +72,17 @@ Ce type de gestion mémoire est généralement associée à des systèmes plus p
 \end{itemize}
 \end{itemize}
 
+
+\subsection{Les calculateurs}
+\label{sec:titan}
+
 Il existe plusieurs niveaux de parallélisation, au niveau matériel.
-Par exemple, un processeur actuel dispose de plusieurs cœurs, capable de gérer chacun un processus (voir 2 dans le cas de l'hyperthreading).
+Par exemple, un processeur actuel dispose de plusieurs cœurs, capable de gérer chacun un processus (parfois plusieurs dans le cas de l'hyperthreading).
 Il est possible d'avoir plusieurs processeurs au sein d'un même ordinateur.
 Et il est possible d'utiliser conjointement plusieurs ordinateurs.
 Ce qui nous mène à la notion de centre de calcul.
 
-\subsection{Les calculateurs}
-\label{sec:titan}
-La production de simulation cosmologique à haute valeur scientifique se fait sur des centres de calcul.
+La production de simulations cosmologiques à haute valeur scientifique se fait sur des centres de calcul.
 %A la manière d'un télescope pour les observateurs, les supercalculateur sont les outils principaux des simulateurs.
 %Et a la manière des plus gros télescopes, ces calculateurs sont gigantesques.
 La figure \ref{fig:titan} présente le calculateur TITAN du Oak Ridge Leadership Computing Facility sur lequel ont été exécutées les simulations CoDa \citep{ocvirk_cosmic_2015} et CoDa I AMR (voir section \ref{sec:CODAEMMA}).
@@ -108,9 +111,9 @@ Sequoia  & États Unis &1,572,864 & 20,132.7 \\
 \end{table}
 
 Ce type de calculateur est composé d'un certain nombre de nœuds qui communiquent entre eux par l'intermédiaire d'un réseau.
-Un nœud est un élément conceptuellement proche d'un ordinateur personnel puisqu'il dispose d'une carte mère, avec un (ou plusieurs) \ac{CPU}, de la mémoire RAM, un \ac{SSD}/\ac{HDD} et parfois un \ac{GPU}.
+Un nœud est un élément conceptuellement proche d'un ordinateur personnel puisqu'il dispose d'une carte mère, avec un (ou plusieurs) processeur ou \ac{CPU}, de la mémoire RAM, un SSD/HDD et parfois un \ac{GPU}.
 D'une manière générale, plus des composants sont physiquement éloignés, plus leurs communications seront lentes (cf \ref{tab:debits}).
-La quantité d'information passant par une interface représente un certain coût et on cherchera à minimiser ce coût en optimisant le transfert des données à différents niveaux.
+La quantité d'informations passant par une interface représente un certain coût et on cherchera à minimiser ce coût en optimisant le transfert des données à différents niveaux.
 
 \begin{table}
 \begin{tabular}{ l l }
@@ -157,11 +160,11 @@ On cherchera à optimiser les communications utilisant les interfaces les plus l
 %Ces machines se composent d'un certain nombre de nœuds.
 
 Généralement, la mémoire est partagée au sein d'un nœud, et distribuée sur le réseau.
-C'est à dire que tout les processus au sein d'un même nœud pourront communiquer par l'intermédiaire de la RAM, ce type de communications est donc rapide.
+C'est à dire que tous les processus au sein d'un même nœud pourront communiquer par l'intermédiaire de la RAM, ce type de communications est donc rapides.
 Pour les communications entre les nœuds, l'information devra passer par le réseau et ce type de communications est donc plus lent.
 Et ce d'autant plus que les nœuds sont physiquement éloignés entre eux.
 
-\section{Parallélisation}
+\section{Implémentation du parallélisme}
 
 
 \subsection{Courbe de Peano-Hilbert}
@@ -178,7 +181,7 @@ Ce type de courbes fractale a la particularité de remplir l'espace en passant p
 Ainsi si l'on applique ce pavage aux cellules de notre grille, en associant un indice reliant une cellule à sa position sur la courbe de Hilbert, il suffit ensuite de découper la courbe en parties identiques pour définir quelles cellules seront associées à quels processus.
 Si l'on a par exemple 32 cellules à assigner sur 4 processeurs, la courbes sera découpée en 4 parties de 8 cellules.
 Chacune de ces parties sera en suite assignée à un processeur.
-Ce type de découpage minimise les interfaces entre domaine, en s'assurant d'une proximité spatiale entre tout les points de la courbe.
+Ce type de découpage minimise les interfaces entre domaines, en s'assurant d'une proximité spatiale entre tout les points de la courbe.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/courbe_Hilbert.jpeg} 
@@ -199,26 +202,8 @@ Ce type de découpage minimise les interfaces entre domaine, en s'assurant d'une
 
 Dans l'état actuel de EMMA, la courbe est calculée au début de la simulation, et seule la grille de base est prise en compte.
 La répartition des domaines est statique et n'évolue pas au cours de la simulation.
-Dans le cas ou un domaine raffine plus qu'un autre, la charge de travail y est plus importante.
+Dans le cas où un domaine raffine plus qu'un autre, la charge de travail y est plus importante.
 Dans le futur, l'objectif serait de calculer la courbe de Hilbert sur la totalité des cellules feuilles, pour ainsi pouvoir refaire le découpage et équilibrer la charge entre les processeurs, et réaliser un équilibrage de charge.
-
-\subsection{Courbe de Morton}
-
-Une des évolutions possible de EMMA, serait l'utilisation de courbe de Morton \citep{morton1966computer}.
-La courbe de Peano-Hilbert a le désavantage d'être relativement complexe à calculer.
-C'est a dire que l'opération nécessaire pour déterminer l'indice d'une cellule sur la courbe est coûteuse, et ce particulièrement sur \ac{GPU}.
-L'avantage la courbe de Morton (ou Z-order curve) est que la détermination de l'indice de la cellule et très simple et bien adapté aux \ac{GPU}.
-Il existe d'ores et déjà des code \ac{AMR} exécuté intégralement sur \ac{GPU} (voir eg \cite{2012ASPC..453..325B}) et présentant un facteur d'accélération important.
-Grâce à ce type de technique, la gestion de \ac{AMR} devient accessibles aux \ac{GPU}, évitant ainsi les coûteuses copies entre le \ac{CPU} et le \ac{GPU} (voir section \ref{sec:cpugpu}).
-Cette courbe perd cependant l'avantage de la compacité de la courbe de Hilbert pour le découpage des domaines (sauts spatiaux parfois importants),
-Une technique hybride Hilbert/Morton pourrait être envisagée.
-
-\begin{figure}
-        \includegraphics[width=.95\linewidth]{img/02/ZCurve.png} 
-        \caption[Courbe de Morton]{Principe de la courbe de Morton.
-        Ce type de courbe est mieux adaptée à l'utilisation de \ac{GPU} que la courbe de Hilbert.
- 		\label{fig:hilbert}}
-\end{figure}
 
 
 \subsection{Les domaines}
@@ -243,14 +228,14 @@ Ceci facilite grandement le gestion des conditions de bords.
 \label{sec:gpu}
 
 EMMA utilise un degré supplémentaire de parallélisation.
-Les calculs de chaque domaines sont accéléré en utilisant les capacités parallèle des processeurs graphiques récents.
-Les cartes graphiques, ou \ac{GPU} ont été détourné de leurs utilisation principale d'affichage il y a une dizaine d'années et offre une capacité de parallélisation importante. 
+Les calculs de chaque domaines sont accélérés en utilisant les capacités parallèles des processeurs graphiques récents.
+Les cartes graphiques, ou \ac{GPU} ont été détournées de leur utilisation principale d'affichage il y a une dizaine d'années et offre une capacité de parallélisation importante. 
 
-A l'inverse des \ac{CPU} actuels qui disposent d'un nombre réduit de cœurs, les \ac{GPU} disposent d'une nombre beaucoup plus important de cœurs.
+À l'inverse des \ac{CPU} actuels qui disposent d'un nombre réduit de cœurs, les \ac{GPU} disposent d'une nombre beaucoup plus important de cœurs.
 Par exemple un AMD Opteron 6300 de TITAN dispose de 16 cœurs, contre 2880 cœurs pour une NVIDIA Tesla k40c.
-Un  \ac{CPU} peut exécuter des taches différentes sur chacun de ses cœurs (MIMD) tandis ce que les \ac{GPU} utilise un mode de parallélisation de type SIMD (Fig \ref{fig:cpugpu}).
+Un \ac{CPU} peut exécuter des taches différentes sur chacun de ses cœurs (MIMD) tandis ce que les \ac{GPU} utilisent un mode de parallélisation de type SIMD (Fig \ref{fig:cpugpu}).
 Ce mode de parallélisation en font des unités de calculs efficaces dans l'application d'un traitement identique sur un grand nombre d'informations en parallèle.
-Elle sont donc toutes indiquées dans le cas des simulations numérique ou il s'agit d'appliquer un traitement identique à un grand nombre de cellules.
+Elle sont donc toutes indiquées dans le cas des simulations numériques où l'objectif est justement d'appliquer un traitement identique à un grand nombre de cellules.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/cpu_vs_gpu.png} 
@@ -263,9 +248,6 @@ De plus, il existe au niveau matériel, deux avantages des \ac{GPU} par rapport 
 Premièrement leurs meilleurs ratio puissance de calcul sur coup (flop/€).
 Et également un meilleur ratio puissance de calcul sur puissance électrique (flop/W) ce qui réduit les besoins de refroidissement et permet des économies supplémentaires.
 
-Cependant \ac{CPU} et \ac{GPU} sont indissociables est doivent être utilisé conjointement pour tirer le meilleurs parti des capacités de calcul offerte par une machine hybride.
-Une code hybride est découpé en deux parties, une partie séquentielle exécutée sur le \ac{CPU} et une partie parallèle exécutée sur le \ac{GPU}.
-La programmation sur carte graphique impose de gérer les différents espaces mémoire le passage de \ac{CPU} à \ac{GPU} va nécessiter des communications.
 % utilise une approche proche du concept de mémoire distribuée, c'est à dire que leurs espaces mémoire ne sont pas commun.
 
 
@@ -289,6 +271,10 @@ La programmation sur carte graphique impose de gérer les différents espaces m�
 \subsection{Les communications CPU/GPU}
 \label{sec:cpugpu}
 
+\ac{CPU} et \ac{GPU} sont indissociables est doivent être utilisé conjointement pour tirer le meilleurs parti des capacités de calcul offertes par une machine hybride.
+Une code hybride est découpé en deux parties, une partie séquentielle exécutée sur le \ac{CPU} et une partie parallèle exécutée sur le \ac{GPU}.
+La programmation sur carte graphique impose de gérer les différents espaces mémoire le passage de \ac{CPU} à \ac{GPU} va nécessiter des communications.
+
 Les \ac{CPU} sont capable d'accéder rapidement aux informations en mémoire, quel que soient leurs organisations.
 Le \ac{GPU} sont quant à eux sensibles à la segmentation des données.
 C'est à dire que les calculs sur ac{GPU} seront plus performants si les données sont organisées de façons à ce que leurs accès mémoire consécutifs soient physiquement proches.
@@ -298,7 +284,7 @@ C'est à dire que les calculs sur ac{GPU} seront plus performants si les donnée
 %Ce choix est motivé par le fait qu'une structure mémoire bien organisée peux amener a des gains conséquents.
 Par exemple dans CUDATON \citep{aubert_radiative_2008} un code de transfert radiatif sur grille fixe, le gain de la parallélisation \ac{GPU} est de l'ordre de $80$ car la structure mémoire est optimisée.
 
-La difficulté est que l'arbre \ac{AMR} ne respecte pas cette organisation, et la mémoire peut être extrêmement fragmentée à cause de la liste chaînée.
+La difficulté est que l'arbre \ac{AMR} ne respecte pas cette organisation, et la mémoire peut être extrêmement fragmentée à cause de la liste chaînée (voir section \ref{sec:listechainee}).
 Pour limiter l'impact de la fragmentation, le choix a été fait d'organiser les données sur le CPU, avant de les envoyer dans l'espace mémoire du \ac{GPU}.
 Cette opération sera appelée "gather" (cf Fig. \ref{fig:gatherscatter}).
 Les données organisées sont envoyés sur le \ac{GPU}, pour effectuer les calculs.
@@ -315,9 +301,9 @@ Dans le cas où les calculs sont réalisés sur le \ac{CPU}, cette opération es
 
 Le pari est ici que la perte de temps générée par les opérations de gather/scatter sera compensé par l'accélération du \ac{GPU} .
 
-En pratique l'opération de gather consiste a rassembler toutes les informations nécessaire au calcul de l'état d'une cellule.
-Par exemple pour le calcul du potentiel (cf sec. \ref{sec:gravity}) les données nécessaires seront: la densité locale, le potentiel local, le potentiel des 6 cellules voisines suivant les axes principaux.
-Ces données sont rassemblées dans une structure, puis une série de structure est stockée dans un tableau.
+En pratique l'opération de gather consiste à rassembler toutes les informations nécessaire au calcul de l'état d'une cellule.
+Par exemple pour le calcul du potentiel (cf sec. \ref{sec:solverDM}) les données nécessaires seront: la densité locale, le potentiel local, le potentiel des 6 cellules voisines suivant les axes principaux.
+Ces données sont rassemblées dans une structure, puis une série de structures est stockée dans un tableau.
 Cette opération sera réalisée par paquet de $N$ cellules pour chaque cellule de la grille.
 
 On peut observer ici que les copies ont beaucoup de redondance.
@@ -338,27 +324,47 @@ La principale limitation ne provenant plus de la quantité de calculs mais des o
 \end{figure}
 
 
-Dans le but de réduire le nombre de copies et accélérer l'exécution du code, j'ai modifié les opérations de gather/scatter pour diminuer la redondance des copies.
+Dans le but de réduire le nombre de copies et d'accélérer l'exécution du code, j'ai modifié les opérations de gather/scatter pour diminuer la redondance des copies.
 Au lieu de traiter les cellules unes par unes, l'idée est de traiter les octs.
-Dans ce cas les cellules sont traitées par 8 et les voisinages au sein d'un oct n'ont pas besoin d'être copiés plusieurs fois.
+Dans ce cas les cellules sont alors traitées par 8 et les voisinages au sein d'un oct n'ont pas besoin d'être copiés plusieurs fois.
 On copie donc 8 cellules d'intérêt et 4 cellules de bord par face du cube, soit 24 cellules.
 Le ratio utile/nécessaire passe donc à $8/24 = 1/3$.
-La quantité de copies redondante a donc été divisé par 2 par rapport au cas précédent.
+La quantité de copies redondantes a donc été divisée par 2 par rapport au cas précédent.
 
-Vu que la surface d'un cube augmente avec le carré de son coté, alors que son volume augmente avec son cube, plus grand sera la nombre de cellule d'intérêt, meilleur sera la ratio.
+Vu que la surface d'un cube augmente avec le carré de son coté, alors que son volume augmente avec son cube, plus grand sera la nombre de cellules d'intérêts, meilleur sera le ratio.
 En étendant ce principe, j'ai développé une méthode qui permet de manière récursive d'envoyer une portion d'\ac{AMR} contenue dans un OCT de niveau arbitraire.
-Cependant les résultats ne sont pas a la hauteur des espérances, et l'accélération n'est pas proportionnelle au ratio de données utiles.
+Cependant les résultats ne sont pas à la hauteur des espérances, et l'accélération n'est pas proportionnelle au ratio de données utiles.
 
-IL existe cependant des pistes pour améliorer ce goulot d'étranglement.
+Il existe cependant des pistes pour améliorer ce goulot d'étranglement.
 Une possibilité est de séparer la gestion de l'arbre de la physique.
-En l'état actuel, les données physique sont stockées en mémoire avec la même structure que l'arbre.
-L'idée serait de stocker dans l'arbre, des indices de cellules permettant de retrouver l'information physique dans des vecteurs plat (cf Fig. \ref{fig:gatherscatter}).
-Ainsi les vecteurs pourraient être en permanence sur le \ac{GPU}, et seul l'information sur leurs position dans l'AMR devrait être transmise.
+En l'état actuel, les données physiques sont stockées en mémoire avec la même structure que l'arbre.
+L'idée serait de stocker dans l'arbre, des indices de cellules permettant de retrouver l'information physique dans des vecteurs plats (cf Fig. \ref{fig:gatherscatter}).
+Ainsi les vecteurs pourraient être en permanence sur le \ac{GPU}, et seul l'information sur leurs positions dans l'\ac{AMR} devrait être transmise.
 Un grand nombre de copies seraient alors évitées. 
 
 Une autre possibilité serait de placer l'intégralité de l'arbre sur le \ac{GPU}.
 Dans ce cas, toutes les copies seraient supprimées mais c'est le \ac{GPU} qui devra gérer l'évolution de l'arbre. 
-Il existe des techniques optimisé de gestion d'arbre sur \ac{GPU} à base de "Z-order curves", mais son implémentation nécessite une refonte en profondeur du code.
+%Il existe des techniques optimisé de gestion d'arbre sur \ac{GPU} à base de "Z-order curves"
+
+\subsection{Courbe de Morton}
+
+Une des évolutions possible de EMMA, serait l'utilisation de courbe de Morton ou Z-order curve \citep{morton1966computer}.
+La courbe de Peano-Hilbert présente le désavantage d'être relativement complexe à calculer.
+C'est a dire que l'opération nécessaire pour déterminer l'indice d'une cellule sur la courbe est coûteuse, et ce particulièrement sur \ac{GPU}.
+L'avantage la courbe de Morton est que la détermination de l'indice de la cellule et très simple et bien adaptée aux \ac{GPU}.
+Il existe d'ores et déjà des codes \ac{AMR} exécutés intégralement sur \ac{GPU} (voir eg \cite{2012ASPC..453..325B}) et présentant un facteur d'accélération important.
+Grâce à ce type de techniques, la gestion de l'\ac{AMR} devient accessible aux \ac{GPU}, évitant ainsi les coûteuses copies entre le \ac{CPU} et le \ac{GPU}.
+Cette courbe perd cependant l'avantage de la compacité de la courbe de Hilbert pour le découpage des domaines (sauts spatiaux parfois importants),
+Une technique hybride Hilbert/Morton pourrait être envisagée, mais son implémentation nécessite une refonte en profondeur du code.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/02/ZCurve.png} 
+        \caption[Courbe de Morton]{Principe de la courbe de Morton.
+        Ce type de courbe est mieux adaptée à l'utilisation de \ac{GPU} que la courbe de Hilbert.
+ 		\label{fig:hilbert}}
+\end{figure}
+
+
 
 %optimisation matérielle -> les prochaines générations de GPU
 
@@ -374,17 +380,17 @@ Il existe des techniques optimisé de gestion d'arbre sur \ac{GPU} à base de "Z
 
 Durant ma thèse la simulation CoDa I AMR (voir partie \ref{sec:CODAEMMA}) a été réalisée avec EMMA.
 Cette simulation fait partie des plus grosse simulation de la réionisation exécutée à l'heure actuelle avec un nombre de particules de matière noire, et donc une grille de base, de $2048^3$ éléments.
-Ces données devront être stockées et écrites sur disque dur or si l'on se réfère à la table \ref{tab:debits} on observe que les débits d'accès disques sont les plus faibles.
+Ces données devront être stockées et écrites sur disque dur or si l'on se réfère à la table \ref{tab:debits} on observe que les débits d'accès disques font partie des débits les plus faibles.
 
 Pour se faire une idée de la quantité de données en jeu faisons une estimation : 
 
 \begin{itemize}
 \item Pour les particules:
 En considérant qu'un flottant est codé sur 4 octets, chaque champs représente $2048^3 \cdot 4 = 32$Go.
-Comme il y a une dizaine de champs en sortie (3 positions, 3 vitesses, etc) les particules représentes environs $320$Go.
+Comme il y a une dizaine de champs en sortie (3 positions, 3 vitesses, etc) les particules représentes environs $320$Go par pas de temps.
 
 \item Pour la grille :
-En considérant que la quantité de cellule peut être multipliée par 3 à cause du raffinement, chaque champ (densité, température, composante de la vitesse, etc..) représente environ $32 \cdot 3 \approx 100$Go.
+En considérant que la quantité de cellules peut être multipliée par 3 à cause du raffinement, chaque champ (densité, température, vitesse, etc..) représente environ $32 \cdot 3 \approx 100$Go.
 Il y a au total un cinquantaine de champs calculés à l'exécution de la simulation mais en pratique environ une vingtaine en sortie.
 Chaque écriture de la grille représente donc $100\cdot 20 =2$To.
 
@@ -392,12 +398,11 @@ Chaque écriture de la grille représente donc $100\cdot 20 =2$To.
 C'est très variable car dépend directement du nombre d'étoile à l'instant donné, qui dépend lui même du paramètre de résolution en masse.
 \end{itemize}
 
-Ce qui représente au total environ 2,3 To de données générée par pas de temps de sortie.
-Mais on voudrait évidemment avoir accès a l'état de la simulation à différents instant, cette simulation a au final générée 170 snapshot.
-Au final le volume de donnée de la simulation représente près de 400 To.
+Ce qui représente au total environ 2,3 To de données générées par pas de temps de sortie.
+Mais on voudrait évidemment avoir accès à l'état de la simulation à différents instant, cette simulation a au final écrit 170 pas de temps, représentent au final un volume de données de près de 400 To.
 %De plus, ces données sont stockées sur \ac{HDD}, et si l'on se réfère à la table \ref{tab:debits} on observe que les débits d'accès disques sont les plus faibles.
 Étant donné la quantité de données en jeu, une bonne gestion des Entrées/Sorties peut donc permettre un gain de temps appréciable.
-De plus, ces données sont généralement calculé sur des machines distante et améliorer leur compacité peut permettre de gagner du temps au moment du transfert vers des machines locales, ou simplement au moment de la lecture pour analyse.
+De plus, ces données sont généralement calculé sur des machines distantes et améliorer leur compacité peut permettre de gagner du temps au moment du transfert vers des machines locales, ou simplement au moment de la lecture pour analyse.
 
 %Les entrées/sorties sont des étapes relativement longues et l'écriture sur disque d'une telle quantité de données demande du temps et ralentit l'exécution de la simulation.
 % leurs rapatriement sur des machine locales peut également être coûteux en temps.
@@ -413,14 +418,14 @@ Les OCTs étaient écrit les uns à la suite des autres avec toute l'information
 L'information étaient exacte et complète, mais le volume de données était considérable.
 De plus chaque processeur écrivait un fichier indépendant, ce qui pouvait rapidement faire exploser le nombre de fichiers et être problématique selon le système de fichiers des calculateurs car il est possible d'avoir une limite sur le nombre de fichiers par utilisateur.
 
-Dans la même optique que ce qui a été abordé dans la section \ref{sec:cpugpu}, j'ai mis en place un modèle visant a manipuler les données avant leurs transferts.
+Dans la même optique que ce qui a été abordé dans la section \ref{sec:cpugpu}, j'ai mis en place un modèle visant à manipuler les données avant leurs transferts.
 L'objectif est de sortir les données de l'arbre en se basant sur une notion de tableau de champs pour faciliter leurs traitement.
 Dans ce nouveau modèle, seules les feuilles (les cellules non raffinées) sont écrites sur le disque, ce qui permet de réduire le volume et la redondance des données.
 
 Les champs sont maintenant traités individuellement (cf figure \ref{fig:data}) et il est possible de choisir de les écrire ou non en fonction des besoins.
-Les champs sont séparés dans des fichiers distincts, et les processeurs écrivent conjointement dans le même fichier grâce a l'utilisation de la librairie hdf5.
-Le nombre total de fichiers ne dépend plus du nombre de processeurs sur lequel a tourné la simulation.
-Et lors d'un transfert entre machine, il est possible de ne rapatrier que les données nécessaire, et ainsi économiser du temps et de la bande passante.
+Les champs sont séparés dans des fichiers distincts, et les processeurs écrivent conjointement dans le même fichier grâce à l'utilisation de la librairie HDF5.
+Le nombre total de fichiers ne dépend plus du nombre de processeurs sur lequel a tournée la simulation.
+Et lors d'un transfert entre machines, il est possible de ne rapatrier que les données nécessaires, et ainsi économiser du temps et de la bande passante.
 
 Malgré la quantité de données réduite, le temps passé dans la fonction de sortie n'en est que très peu affecté.
 Le gain réalisé au moment de l'écriture est compensé par la charge de calculs supplémentaires due à l'extraction des données de l'arbre.

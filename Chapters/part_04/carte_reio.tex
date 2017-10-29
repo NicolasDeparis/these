@@ -28,10 +28,10 @@ Nous avons abordé dans la partie précédente une étude centrée sur les halos
 Nous nous intéressons dans cette section à un aspect complémentaire, l'état d'ionisation de l'\ac{IGM}, qui lui est représentatif de la plus grande partie du volume.
 
 Cette section fait référence au travail en cours présenté en annexe\,\ref{pap:c}, et on cherche ici a étudier l’évolution de la fraction ionisée en analysant l'évolution des bulles ionisées.
-Cette étude se base sur les cartes de redshift de réionisation, un outil qui permet de condenser toute l'histoire d'ionisation d'une simulation.
+Cette étude se base sur les cartes de redshift de réionisation, un outil qui permet de condenser en un seul champs, toute l'histoire d'ionisation d'une simulation.
 A partir de cet outil, il est possible de quantifier la vitesse à laquelle les fronts d'ionisation se propage dans l'\ac{IGM}.
 
-Dans ce chapitre, l'objectif est d'explorer l'impact de la \ac{RSLA} (voir section \ref{sec:RSLA}), sur la propagation de l'ionisation dans les simulations.
+Dans ce chapitre, nous cherchons à explorer l'impact de la \ac{RSLA} (voir section \ref{sec:RSLA}), sur la propagation de l'ionisation dans les simulations.
 La \ac{RSLA} permettant d'obtenir des gains substantiels au niveau du coût de calcul de la radiation \citep{rosdahl_ramsesrt_2013, aubert_radiative_2008, 2001NewA....6..437G}, il est essentiel de quantifier dans quelle mesure cette approximation est correcte.
 %J'ai comparé une série de simulations identiques à l'exception de la vitesse de la lumière réduite et observé que cette dernière a un impact sur l'histoire de réionisation.
 Je présenterai comment j'ai implémenté le calcul des cartes de redshift de réionisation à la volée dans EMMA ainsi qu'une méthode de calcul de la vitesse des fronts d'ionisation.
@@ -57,7 +57,7 @@ Nous allons voir dans cette section comment elles sont calculées.
 
 En première approximation, il est possible de considérer l'état d'ionisation comme binaire.
 La fraction ionisée évoluant très rapidement en présence de rayonnement, l'\ac{IGM} est soit presque exclusivement neutre soit presque exclusivement ionisé (voir figure \ref{fig:xionmap}).
-Ceci est dû au fait qu'à nos résolutions les gradients d'ionisation au niveau des fronts ne sont faiblement résolus voir pas du tout.
+Ceci est dû au fait qu'à nos résolutions les gradients d'ionisation au niveau des fronts sont faiblement résolus voir ne le sont pas du tout.
 En gardant l'information du passage entre ces deux états, il est possible de créer une carte, en 3 dimensions, contenant l’information de toute l'histoire d'ionisation de l'\ac{IGM}.
 
 
@@ -69,8 +69,8 @@ En gardant l'information du passage entre ces deux états, il est possible de cr
 \end{figure}
 
 L'instant à conserver sera défini comme l'instant de passage de la fraction d'ionisation de la cellule par un seuil.
-Le passage d'un état à l'autre étant rapide, la valeur de ce seuil a un impact réduit et ce seuil sera définis par la suite à 50\%.
-Cette valeur de seuil est régulièrement utilisée dans la litérature \citep{iliev_cosmological_2006, doi:10.1111/j.1365-2966.2011.18219.x, 2012A&A...548A...9C}.
+Le passage d'un état à l'autre étant rapide, la valeur de ce seuil a un impact réduit sur l'instant déterminée.
+Cette valeur de seuil sera définie par la suite à 50\%, valeur régulièrement utilisée dans la litérature \citep{iliev_cosmological_2006, doi:10.1111/j.1365-2966.2011.18219.x, 2012A&A...548A...9C}.
 Il s'avère également que c'est le taux d'ionisation considérer dans les études du \ac{CMB} pour déterminer le redshift de réionisation de l'Univers.
 
 Comme certaines des cellules les plus denses peuvent recombiner, il existe deux façons de définir un redshift de réionisation: il est possible de considérer soit la première, soit la dernière ionisation.
@@ -114,8 +114,8 @@ Un exemple de carte de première réionisation obtenue est présenté sur le fig
 %Cette carte a été générée a partir d'une simulation présentant des caractéristiques similaires à celles des simulation présentées au chapitre précédent (voir section \ref{sec:pres_simu}).
 %Elle a un volume de $\left( 8h^{-1} \mathrm{cMpc} \right) ^3$ et 
 Il s'agit de la même tranche (une cellule d’épaisseur - $45$ ckpc) que celle présentée sur la figure \ref{fig:xionmap}, on y retrouve le contour des bulles à $z=10$.
-On y observe différentes zones ionisées à redshift élevé ($z>10$), localisant les sources de radiation et donc les zones de densités élevées.
-Autour des sources ce trouve des motifs concentriques, fortement anisotrope, en forme de "papillons".
+On y observe différentes zones ionisées à redshift élevé ($z>10$), localisant les sources de rayonnement et donc les zones de densités élevées.
+Autour des sources ce trouvent des motifs concentriques, fortement anisotropes, en forme de "papillons".
 Il sont dû à la non homogénéité de l'\ac{IGM}, la propagation du rayonnement étant ralentie par la présence de filaments de densité élevée.
 Enfin on mesure de grandes étendues ayant un redshift de réionisation similaire ($z<8$), il s'agit des régions sous-denses, où le rayonnement peut se propager quasi librement, et peux donc ioniser un vaste volume dans un intervalle de temps restreint.
 
@@ -131,10 +131,10 @@ D'un point de vue technique, la méthode de calcul des cartes proposée ici se b
 Le problème peut être abordé sous un autre angle en utilisant une carte de réionisation Lagrangienne, se basant sur les particules de matière noire et permettant d'obtenir une information complémentaire à la carte actuelle.
 Ce type de carte permettrait d'obtenir l'information de réionisation, instantanément après la recherche de halos, facilitant grandement l'analyse des simulations de grandes tailles similaire à celle que nous traiterons dans le chapitre \ref{sec:z0}.
 
-\section{Calcul de la vitesse des fronts d’ionisation à partir des cartes de redshift}
+\section{Calcul de la vitesse des fronts d’ionisation à partir des cartes de redshifts de réionisation}
 \label{sec:vreio}
 
-Partant du principe que les cartes de redshift d'ionisation contiennent l'information d'une grande partie de l'évolution de la fraction d'ionisation dans la simulation, il est possible d'en extraire la vitesse de propagation des fronts d'ionisation.
+Partant du principe que les cartes de redshifts de réionisation contiennent l'information d'une grande partie de l'évolution de la fraction d'ionisation dans la simulation, il est possible d'en extraire la vitesse de propagation des fronts d'ionisation.
 %À partir des cartes de redshift de réionisation
 %L'idée est la suivante:
 %En utilisant le fait que ces cartes représentent un temps pour chaque point de l'espace, il est possible de déterminer quel est le temps qu'il s'est écouler entre la réionisation de deux cellules adjacentes, et donc de connaître la vitesse à laquelle le front d'ionisation les a traversé.
@@ -350,19 +350,19 @@ De ce fait, le taux de photo-ionisation $\Gamma = c \sigma n_\gamma$ augmente av
 \label{sec:compfrontspeep}
 
 Dans les sections \ref{sec:zmapcompute} et \ref{sec:vreio}, nous avons associé à chaque cellule un redshift d'ionisation et une vitesse de front.
-En utilisant la méthode du gradient pour calculer la vitesses des fronts d'ionisation en fonction du redshift dans l'ensemble des simulations, nous allons quantifier l'influence de la \ac{RSLA} sur la propagation de l'ionisation.
+En utilisant la méthode du gradient pour calculer la vitesse des fronts d'ionisation en fonction du redshift dans l'ensemble des simulations, nous allons quantifier l'influence de la \ac{RSLA} sur la propagation de l'ionisation.
 
 %En représentant l'une de ces grandeur par rapport à l'autre (voir figures \ref{fig:vreioz1} et \ref{fig:vreioz2}),
 
 La figure \ref{fig:vreioz_avg} représente l'évolution de la vitesse moyenne des fronts d'ionisation en fonction du redshift.
 En ne considérant tout d'abord que le cas  $\tilde{c}=1$, on y observe que la vitesse moyenne présente tout d'abord une première phase constante pour les redshift $z>8$, puis un seconde où elle augmente.
-La première phase a lieu lorsque le rayonnement travaille à sortir des région dense : dans ce régime les bulles sont isolées et c'est surtout l'accroissement du taux de formation stellaire qui leur permet de croître, les fronts ont une vitesse moyenne constante.
-Dans la seconde phase, le rayonnement s'échappent des régions dense et la lumière atteint l'\ac{IGM}, le milieu devient par nature plus facile à ioniser et la percolation des bulles entre elles accélère cet effet.
+La première phase a lieu lorsque le rayonnement travaille à sortir des régions denses : dans ce régime les bulles sont isolées et c'est surtout l'accroissement du taux de formation stellaire qui leur permet de croître, les fronts ont une vitesse moyenne constante.
+Dans la seconde phase, le rayonnement s'échappent des régions denses et la lumière atteint l'\ac{IGM}, le milieu devient par nature plus facile à ioniser et la percolation des bulles entre elles accélère cet effet.
 Les fronts peuvent atteindre des vitesses plus élevées faisant augmenter la moyenne.
 %Dans les régions sous-denses, les fronts d'ionisations peuvent atteindre une vitesse proche de celle de la lumière.
 
-Si on diminue $\tilde{c}$, on mesure que lors de la seconde phase ($z<8$), la vitesse est fortement impactée : plus la vitesse de la lumière est réduite, plus la vitesse des fronts l'est également.
-Cette décroissance peut être expliquée si une partie des fronts ont une vitesse limitée par la \ac{RSLA}, faisant baiser la moyenne globale.
+Si on diminue $\tilde{c}$, on mesure que lors de la seconde phase ($z<8$), la vitesse est fortement impactée : plus la vitesse de la lumière est réduite, plus la vitesse moyenne des fronts l'est également.
+Cette décroissance peut être expliquée si une partie des fronts ont une vitesse limitée par la \ac{RSLA}, faisant baisser la moyenne globale.
 %Dans cette phase une partie des fronts doit avoir une vitesse supérieure à $\tilde{c}$ et la vitesse de la lumière réduite, réduit également la vitesse des fronts
 %Dans les régions sous-dense, les fronts se déplace à une vitesse proche de celle de la lumière, et limité cette dernière va également limité la vitesse des fronts.
 
@@ -371,9 +371,9 @@ Quand la \ac{RSLA} devient trop limitante et que la vitesse de la lumière est t
 % car des fronts a des vitesses supérieures y sont présents.
 
 Pour explorer cet effet plus en détail, les histogrammes des vitesses en fonction du redshift sont présentés sur la figure \ref{fig:vreioz}, pour différentes valeurs de $\tilde{c}$.
-Lorsque la vitesse n'est pas réduite ($\tilde{c}=1$), on mesure que la gamme de vitesse des fronts dans la phase constante ( $z>8$) est comprise entre $\approx 10^{-4}c$ et $\approx 10^{-1}c$.
-Cette phase est suivie d'un pic de vitesse correspondant à une nette accélération des fronts.
-Lors de cette phase, une partie des fronts atteint des vitesses comparable à la vitesse de la lumière.
+Lorsque la vitesse n'est pas réduite ($\tilde{c}=1$), on mesure que la gamme de vitesse des fronts dans la phase constante ($z>8$) est comprise entre $\approx 10^{-4}c$ et $\approx 10^{-1}c$.
+Cette phase est suivie d'un pic de vitesses correspondant à une nette accélération des fronts.
+Lors de cette phase, une partie des fronts atteint des vitesses comparables à la vitesse de la lumière.
 Puis au final, lorsque toutes les cellules ont été réionisées, il n'est plus possible de calculer une vitesse.
 %La première phase correspond à l'ionisation des zones sur-dense lorsque le rayonnement s'échappe des zones de formations stellaire.
 %La seconde correspond à l'ionisation des zones sous-denses lorsque le rayonnement atteint les vides.
@@ -432,36 +432,35 @@ Nous mesurons ici ce problème de détection lors de la percolation des bulles d
 \clearpage
 \section{Conclusion}
 
-Les carte de redshift de réionisation contiennent une grande quantité d'information et sont des outils essentiels pour étudier la propagation de l'ionisation dans l'\ac{IGM}.
-Dans ce chapitre j'ai présenté la méthode de calcul à la volée des cartes de redshift d'ionisation que j'ai implémenté dans EMMA.
-A partir de ces cartes j'ai établi une méthode d’estimation de la vitesses des fronts d'ionisation a posteriori.
+Les cartes de redshifts de réionisation contiennent une grande quantité d'information et sont des outils essentiels pour étudier la propagation de l'ionisation dans l'\ac{IGM}.
+Dans ce chapitre j'ai présenté la méthode de calcul à la volée des cartes de redshift d'ionisation que j'ai implémenté dans EMMA et à partir de ces cartes j'ai établi une méthode d’estimation de la vitesses des fronts d'ionisation a posteriori.
 
 %En utilisant cette méthode, j'ai montré qu'il existe une corrélation entre la vitesse d'un front et sont accélération: plus un front est rapide, plus il accélère suggérant que la réionisation est un processus exponentiel.
 En utilisant cette méthode, j'ai mis en évidence que la réionisation est un processus qui s’exécute en deux temps.
 Premièrement une phases où les fronts ont une vitesse quasi constante, suivie d'une seconde phase accélérée.
-La première a lieu lorsque le rayonnement travail à sortir des région dense, la seconde phase, lorsque le rayonnement atteint les régions sous-denses et que les bulles percolent.
+La première a lieu lorsque le rayonnement travail à sortir des régions denses, la seconde phase, lorsque le rayonnement atteint les régions sous-denses et que les bulles percolent.
 Dans la seconde phase, les fronts d'ionisations peuvent atteindre une vitesse proche de celle de la lumière.
 
 La \ac{RSLA} n'a pas d'impact sur la \ac{SFH} cosmique et le budget de photon est conservé, mais elle limite la vitesse de propagation des fronts.
 Pour les vitesses supérieures à 5\% de la vitesse de la lumière réelle, l'impact ce concentre sur la seconde partie de la réionisation.
-Dans le cas ou la vitesse de la lumière réduite est inférieure à 5\% de la vitesse de la lumière réelle, la limitation de vitesse apparaît dès la démarrage et le rayonnement 
+Dans le cas où la vitesse de la lumière réduite est inférieure à 5\% de la vitesse de la lumière réelle, la limitation de vitesse apparaît dès le début de la réionisation. % et le rayonnement 
 
 On prendra garde, en fonction de ce que l'on cherche à étudier, à l'influence de la \ac{RSLA}.
-Dans tout les cas, réduire la vitesse de la lumière à moins de 5\% de se vraie valeur mène à sous estimer la vitesse des fronts, indépendamment du redshift.
+Dans tous les cas, réduire la vitesse de la lumière à moins de 5\% de se vraie valeur mène à sous estimer la vitesse des fronts, indépendamment du redshift.
 A l'inverse, pour les valeur de $\tilde{c} > 0.05$ la vitesse des fronts n'est pas impactée dans la première phase à des redshifts $z>8$, ce qui permet d'étudier la façon dont le rayonnent s’échappe des zones sur-dense sans être biaisé par la \ac{RSLA}.
 
 Enfin une vitesse réduite à 30\% de la valeur réelle présente une évolution quasi similaire à $\tilde{c}=1$ tout en réduisant la coût numérique de la radiation d'un facteur 3.
 Cette valeur semble être à privilégiée, plutôt qu'une valeur de $\tilde{c}=0.1$ plus couramment employée.
 
-Le lien entre la vitesse des fronts et la densité de baryon pourrait être explorée plus en détail en conservant en mémoire, en plus de l'instant d'ionisation, la densité de la cellule à cet instant.
+Le lien entre la vitesse des fronts et la densité baryonique pourrait être exploré plus en détails en conservant en mémoire, en plus de l'instant d'ionisation, la densité de la cellule à cet instant.
 
-Les volumes considérés dans cette étude étant relativement petits, les sources lumineuse et les régions sous-denses ne sont pas entièrement représentées statistiquement.
-Dans un volume plus grand, il est possible que les conclusions soient différentes.
+Les volumes considérés dans cette étude étant relativement petits, les sources ionisantes et les régions sous-denses ne sont pas entièrement représentées statistiquement.
+Dans un volume plus grand, il est probable que les conclusions soient différentes.
 Par exemple, comme les régions sous-denses sont sous représentées ici, l'effet de la seconde phase à vitesses élevées risque d'être encore plus important dans des simulations présentant des régions sous-denses plus étendues.
 
 Au final, l'outil de calcul de la vitesse des fronts d'ionisation a été appliqué ici au cas de l'étude de la \ac{RSLA} mais pourrait être utilisée pour tirer des conclusions plus astrophysique.
 %Comme une réionisation interne a des conséquences sur la distribution radiale de galaxies satellites \citep{2011MNRAS.417L..93O}
-Par exemple, \citep{2011MNRAS.417L..93O} ont montré à l'aide d'un modèle semi analytique, qu'une réionisation rapide est signe d'une réionisation externe et qu'a l'inverse une réionisation plus lente à tendance à signifier une réionisation interne.
+Par exemple, \citep{2011MNRAS.417L..93O} ont montré à l'aide d'un modèle semi analytique, qu'une réionisation rapide est signe d'une réionisation externe et qu'à l'inverse, une réionisation plus lente à tendance à signifier une réionisation interne.
 %Ils ont également montré que le timing d'ionisation à une influence sur la distribution radiale des satéllite
 Ils ont également montré qu'une réionisation interne a des conséquences sur la distribution radiale de galaxies satellites 
 Avec la méthode présentée ici, il serait possible de tester cette hypothèse à l'aide de simulations entièrement couplées et d'étudier le lien entre la vitesse des fronts sortant d'une galaxie et le timing de photon-évaporation de ces satellites.

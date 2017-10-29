@@ -83,11 +83,11 @@ On cherchera ensuite à y associer les baryons formant les galaxies.
 Pour se faire j'ai utilisé un KD-tree, un arbre permettant d'effectuer des recherches spatiales de manière optimisées.
 A l'aide d'un arbre généré sur les étoiles, j'ai associé à chaque halo toutes les étoiles à une distance inférieur à son $R_{200}$ autour de son centre de masse.
 Comme il est également intéressant d'obtenir des informations sur les champs physique contenus dans la grille \ac{AMR}, il sera possible d'utiliser un KD-tree sur la grille pour déterminer quelles sont les cellules qui se trouvent dans le $R_{200}$ du halo.
-Il suffit pour cela de générer un arbre sur les centres des cellules à la place de la position des étoiles.
+Il suffit pour cela de générer un arbre sur les centres des cellules.% à la place de la position des étoiles.
 %Comme les particules de matière noire  données par FoF ne represente pas le meme volume, dans un soucis de cohérence, on appliquera cette méthodes a la matière noire également.
 À ce stade nous avons donc la possibilité de connaître pour chaque halo toutes les grandeurs physiques comprises dans son $R_{200}$.
 
-\subsection{Le problème de la forme des halos}
+%\subsection{Le problème de la forme des halos}
 
 %Fortement non viriallisé a z=6\\
 %beaucoup de dynamique et merger dans les filemments
@@ -99,9 +99,9 @@ Il suffit pour cela de générer un arbre sur les centres des cellules à la pla
 %Dans ce cas, la sur-densité détectées par \ac{FOF} est loin d'être sphérique, et l'approximation du $R_{200}$ n'est pas valide.
 %Du fait de l'effondrement hiérarchique de la matière noire, changer la longueur de lissage ne changera pas le problème et ne ferait que le reporter à d'autres échelles.
 
-Il arrive que \ac{FOF} ait certaine difficultés à séparer les différentes sous-parties d'une même sur-densité.
+Il arrive que \ac{FOF} ait certaines difficultés à séparer les différentes sous-parties d'une même surdensité.
 Par exemple, la figure \ref{fig:part_halo} illustre particulièrement bien ce problème.
-Plusieurs halos sont en interaction à un distance inférieure a la longueur de lien et \ac{FOF} les détecte comme un halo unique. 
+Plusieurs halos sont en interaction à une distance inférieure à la longueur de lien et \ac{FOF} les détecte comme un halo unique. 
 Dans ce cas, le halo détecté est loin d'être sphérique, et l'approximation du $R_{200}$ n'est pas valide.
 %\ac{FOF} détecte 
 
@@ -182,7 +182,7 @@ De plus on observe dans la densité des coquilles dues aux vents générés, aut
 \subsection{Les fonctions de masse}
 \label{sec:hmf}
 
-Sur la figure \ref{fig:ghmf} sont présentées les \ac{HMF}, représentées ici en cumulative (n>M) et comparées à un modèle analytique \citep{1999MNRAS.308..119S}.
+Sur la figure \ref{fig:ghmf} sont présentées les fonction de masse des halos ou \ac{HMF}, représentées ici en cumulative (n>M) et comparées à un modèle analytique \citep{1999MNRAS.308..119S}.
 %Le calcul de la \ac{GMF} ne considère que la masse des étoiles et non la totalité de la masse baryonique.
 On observe un léger décrochage de la \ac{HMF} pour les plus petits halos ( $M< \mathrm{qq} 10^8 M_\odot$), ce décrochage est attendus et apparaît pour les halos résolus avec moins de 100 particules.
 Du coté des hautes masses, la \ac{HMF} devient bruitée à partir de $M \approx 10^{10} M_\odot$, du fait de la taille restreinte des simulations analysées $\left( 8\cdot h^{-1} \mathrm{cMpc} \right)^3$.
@@ -218,10 +218,10 @@ La formation stellaire peux être analysée de deux façons.
 Dans un cas l'objectif est de déterminer la \ac{SFR} moyenne d'un halo en fonction de sa masse, dans l'autre on cherche à mesurer la contribution d'une classe de masse donnée à la \ac{SFR} globale.
 Le lien entre les deux, n'est autre que la \ac{HMF} présentée à la section \ref{sec:hmf}.
 Les résultats obtenus sont présentés sur la figure \ref{fig:sfr_halo}.
-On observe que pour le feedback cinétique, la \ac{SFR} moyenne est réduite pour les halos les plus lourd, ce qui n'est pas le cas pour le feedback thermique où la \ac{SFR} a tendance à être réduite pour les petites masses de halos.
-Sur les courbes de \ac{SFR} totale, on observe que les halos de masses $M\approx10^{10}M_\odot$ contribuent le plus à la formation stellaire dans ces simulations.
+On observe que pour le feedback cinétique, le \ac{SFR} moyen est réduit pour les halos les plus lourds, ce qui n'est pas le cas pour le feedback thermique où le \ac{SFR} a tendance à être réduit pour les petites masses de halos.
+Sur les courbes de \ac{SFR} total, on observe que les halos de masses $M\approx10^{10}M_\odot$ contribuent le plus à la formation stellaire dans ces simulations.
 On remarquera également que la chute de \ac{SFR} n'est pas franche, et est en faveur d'un problème de non convergence dans la taille des simulations.
-Si la \ac{HMF} couvrait une gamme de masses plus large, elle chuterait assez rapidement pour couper la \ac{SFR} cumulée des halos les plus massifs.
+Si la \ac{HMF} couvrait une gamme de masses plus large, elle chuterait assez rapidement pour couper le \ac{SFR} cumulé des halos les plus massifs.
 Ces simulations présentent donc une manque au niveau des sources de photons les plus intenses.
 
 \begin{figure}
@@ -244,15 +244,15 @@ La fraction baryonique est définie comme étant le rapport de la masse de baryo
 \begin{equation}
 f_b = \frac{M_* + M_{gas} }{M_{DM} + M_* + M_{gas} }
 \end{equation}
-La figure \ref{fig:bfrac} présente les résultats obtenus en unité de fraction baryonique universelle : $U_{bf}= \Omega_b/\Omega_m \approx 0,15$.
+La figure \ref{fig:bfrac} présente les résultats obtenus en unités de fraction baryonique universelle : $U_{bf}= \Omega_b/\Omega_m \approx 0,15$.
 L'association fine est utilisée.
 Sans feedback, les halos les plus massifs ont une fraction baryonique qui tend vers la fraction baryonique universelle.
 On observe une décroissance de la fraction baryonique avec le feedback.
 Cette décroissance est particulièrement marquée pour les halos les plus massifs avec le feedback cinétique.
-Comme nous avons vu (section \ref{sec:hmf}) que la \ac{HMF} n'est pas impactée par le feedback, la diminution de la fraction baryonique observée ici est en fait une diminution de la quantité de baryon dans les halos.
+Comme nous avons vu (section \ref{sec:hmf}) que la \ac{HMF} n'est pas impactée par le feedback, la diminution de la fraction baryonique observée ici est en fait une diminution de la quantité de baryons dans les halos.
 Les baryons sont expulsés hors des halos par le feedback, ce qui conduit à un \ac{SFR} réduit.
 %Cette décroissance peux être liée à celle observée sur la figure \ref{fig:sfr_halo}.
-La \ac{SFR} est réduite car les baryons sont expulsés par le feedback.
+Le \ac{SFR} est réduit car les baryons sont expulsés par le feedback.
 
 %TODO parler de la résolution en masse pour les petites masses
 
@@ -271,9 +271,9 @@ La \ac{SFR} est réduite car les baryons sont expulsés par le feedback.
 \section{Étude des halos à leur rayon du Viriel}
 
 Nous venons d'observer que le feedback de supernovae a un impact sur la composition interne des halos et nous avons interprété ce changement par une expulsion du gaz en dehors des halos.
-Nous cherchons ici à quantifier les flux entrants et sortant des halos en fonction de leurs masses.
+Nous cherchons ici à quantifier les flux entrants et sortants des halos en fonction de leurs masses.
 Je présenterai la méthodologie utilisée pour la détection des flux, ainsi que les résultats obtenus pour les flux hydrodynamiques.
-Dans le but de comprendre pourquoi l'histoire d'ionisation n'est pas impactée par le feedback (voir section \ref{sec:pbfesc}), une étude similaire sera réalisée sur les flux radiatifs.
+Dans le but de comprendre pourquoi l'histoire d'ionisation n'est pas impactée par le feedback, une étude similaire sera réalisée sur les flux radiatifs.
 %Une question importante dans l’étude de réionisation est la quantité de rayonnement ionisant sortant des halos.
 %Nous avons vu que le rayonnement interagit avec les baryons, et nous verrons qu'il existe un liens entre la fraction baryonique déterminée plus haut (sec. \ref{sec:baryon_frac}) et les flux radiatif.
 
@@ -355,7 +355,7 @@ Le photo-chauffage va limiter l'accrétion par effet thermique, le gaz au centre
 Également, la dispersion des valeurs moyennes est plus grande, signifiant que la radiation agit sur une large gamme de halos.
 
 Avec l'introduction des supernovae (figure \ref{fig:R200speed2}), il y a apparition d'une nouvelle population dans la partie haute du diagramme.
-Cette population possède des étoiles ayant déjà explosé en supernovae, ce qui suggère un effet provenant de l'intérieur.
+Cette population possède des étoiles ayant déjà explosées en supernovae, ce qui suggère un effet provenant de l'intérieur.
 On observe que les halos possédant des vitesses positives peuvent avoir des masses plus élevées que dans le cas du simple feedback radiatif.
 De plus, le feedback cinétique permet de générer des flux sortant sur des halos plus massifs que dans le cas du feedback thermique.
 Les vitesses moyennes sont proches de la vitesse d'échappement.
@@ -367,13 +367,15 @@ Dans ces modèles de feedback le gaz est expulsé des halos, mais toujours gravi
 \subsection{Le flux radiatif au $R_{200}$}
 \label{sec:radflow}
 
+Dans le but de mieux cerner comment une production de photons différente peut mener à une réionisation identique, l'objectif est ici d'étudier la quantité de rayonnement sortant des halos, au niveau de leur $R_{200}$.
+Cette étude va permettre déterminer si cette mesure est due à un effet interne ou externe aux halos.
 Comme dans ces simulations la lumière est décrite comme un fluide (cf section \autoref{sec:rad_solver}), un travail identique à celui de la section précédente peux être réalisé sur les flux radiatifs.
 La figure \ref{fig:R200rad} présente les résultats obtenus.
-On observe que seuls les halos avec des étoiles jeunes ont un flux de radiation sortant, que tous les halos de $M>2 \cdot 10^9 M_\odot$ ont un flux radiatif sortant et que le flux est d'autant plus important que ceux ci sont massifs.
-Il n'y a pas de différences notables, dans la façon dont la radiation s'échappe des halos, entre les différents types de feedback, 
+On observe que seuls les halos avec des étoiles jeunes ont un flux radiatif sortant, que tous les halos de $M>2 \cdot 10^9 M_\odot$ ont un flux radiatif sortant et que le flux est d'autant plus important que ceux ci sont massifs.
+Il n'y a pas de différences notables, dans la façon dont le rayonnement s'échappe des halos, entre les différents types de feedback.
 Cette observation est en accord avec les mesures réalisées plus tôt, nous avons vu que l'évolution de la fraction ionisée ne dépend pas de  méthode d'injection d'énergie malgré une importante variation du \ac{SFR} .
 Nous observons ici que la quantité de photon s'échappant des halos ne dépend pas de la méthode d'injection.
-Le nombre de photon utile à l'ionisation de l'\ac{IGM} étant constant, cela explique pourquoi l’évolution de la fraction d'ionisée n'est pas impactée.
+Le nombre de photons utiles à l'ionisation de l'\ac{IGM} étant constant, cela explique pourquoi l’évolution de la fraction d'ionisée n'est pas impactée.
 La différence est donc située entre les régions de formation stellaire internes aux halos et leurs $R_{200}$.
 
 Les tirets représentent la masse d'un halo ayant un $R_{200}$ de taille équivalente à la résolution radiative.
@@ -381,7 +383,7 @@ En effet le transport des photons étant réalisé sur la grille de base (voir s
 % car le raffinement n'agit pas sur la radiation.
 Il a déjà été observé qu'une partie des halos de moins de quelques $10^9 M_\odot$ voyaient leurs \ac{SFR} impactés par le rayonnement. %TODO ref
 Malheureusement, cette limite en résolution correspond aussi à la taille limite des halos présentant un flux net entrant.
-Des simulations à plus hautes résolution sont nécessaires pour déterminer si la limite en flux entrant n'est pas due à un effet de résolution.
+Des simulations à plus hautes résolutions sont nécessaires pour déterminer si la limite en flux entrant n'est pas due à un effet de résolution.
 Cependant, tous les halos ayant des étoiles jeunes, même en dessous de cette limite, ont un flux sortant (points bleus foncés), et il existe une certaine continuité dans distribution de la population  au passage de la limite de résolution (la pente est conservée).
 Ces effets sont donc malgré tout est en faveur d'une résolution radiative suffisante, car si ce n'était pas le cas la population des points bleus foncé sous la limite serait certainement plus bruitée.
 
@@ -402,12 +404,12 @@ Ces effets sont donc malgré tout est en faveur d'une résolution radiative suff
 La balance entre les quelques halos massifs émettant beaucoup de photons et les très nombreux halos peu lumineux, est explorée dans cette section.
 Connaissant les flux radiatifs des halos, il est possible de déterminer la répartition du budget de photon en fonction de la masse des halos.
 L'objectif est de déterminer quels sont les halos qui contribuent le plus à ioniser effectivement l'\ac{IGM} dans les simulations.
-La figure \ref{fig:budget} présente les résultats obtenus en faisant la somme des flux sortant de tous les halos d'une certaine classe de masse.
+La figure \ref{fig:budget} présente les résultats obtenus en faisant la somme des flux sortants de tous les halos d'une certaine classe de masses.
 Seuls les flux sortants sont considérés, la calcul est réalisé sur les 3072 points Healpix de tous les halos et non sur les moyennes globales calculées en section \ref{sec:radflow}).
 Nous faisons ici la même constatation que précédemment, le budget de photon n'est globalement pas impacté par les supernovae dans nos modèles.
 Dans ces simulations, se sont les halos de masses autour de $10^{10} M_\odot$ qui contribuent le plus au budget de photons global.
-Il est intéressant de remarquer que cette gamme de masses de halos et représentative des galaxies de type Voie Lactée.
-Comme il a été mentionné dans la section \ref{sec:sfr_halo}, cette partie de la \ac{HMF} est à la limite de la convergence du fait de la taille restreinte des simulations considérées ici, et la taille de ces simulations joue peut être un rôle dans ces conclusion.
+Il est intéressant de remarquer que à ce redshift, cette gamme de masses de halos est représentative des galaxies de type Voie Lactée.
+Comme il a été mentionné dans la section \ref{sec:sfr_halo}, cette partie de la \ac{HMF} est à la limite de la convergence du fait de la taille restreinte des simulations considérées ici, et la taille de ces simulations joue sûrement un rôle dans ces conclusion.
 Il est possible que dans des simulations plus grandes, disposant de halos plus massifs, le maximum du budget de photon soit décalé vers des masses plus importantes.
 
 \begin{figure}
@@ -425,7 +427,7 @@ Il est possible que dans des simulations plus grandes, disposant de halos plus m
 En comparant la quantité de photons produite au sein du halo au flux de radiation sortant, il est possible de quantifier une grandeur centrale dans l'étude de la réionisation : la fraction d'échappement des photons $f_{esc}$.
 La fraction d'échappement fait le lien entre ce qu'il est possible d'observer et la physique interne au halo.
 %Le rapport de la quantité de photon produite sur la quantité de photon sortante, est la fraction d'échappement .
-Nous avons vu que le taux de formation stellaire et donc le taux de production de photon, dépend du modèle de supernovae (vois section \ref{sec:sfr_halo}).
+Nous avons vu que le taux de formation stellaire et donc le taux de production de photons, dépend du modèle de supernovae (vois section \ref{sec:sfr_halo}).
 Mais nous avons vu que le flux de radiation sortant, lui ne dépend pas du modèle de supernovae.
 La fraction d'échappement doit donc varier pour expliquer ce phénomène.
 Les $f_{esc}$ obtenues sont présentées sur la figure \ref{fig:fesc}.
@@ -436,7 +438,7 @@ f_{esc} = \frac{ F_{200}} {\sum \dot{N}_{\left( t-\frac{R_{200}}{\tilde{c} } \ri
 \end{equation}
 Pour les halos en dessous de la limite en résolution radiative (cf section \ref{sec:radflow}) l'interprétation est difficile, mais il semble que la $f_{esc}$ ne dépende pas du modèle de supernovae.
 
-On mesure une nette augmentation de la fraction d'échappement pour les halos massifs, lors de l'introduction de supernovæ cinétique.
+On mesure une nette augmentation de la fraction d'échappement pour les halos massifs, lors de l'introduction de supernovæ cinétiques.
 En effet, comme le flux radiatif sortant des halos ne semble pas impacté par le feedback (cf section \ref{sec:radflow}) mais que la production interne est significativement réduite (cf section\ref{sec:sfr_halo}), le fraction d'échappement ne peut qu'augmenter.
 Cette augmentation de $f_{esc}$ menant à une histoire d'ionisation similaire malgré le changement significatif des taux de formation stellaire internes aux halos.
 
@@ -455,24 +457,24 @@ Cette augmentation de $f_{esc}$ menant à une histoire d'ionisation similaire ma
 
 Nous avons comparé dans cette partie deux méthodes pour gérer les supernovae dans les simulations cosmologique.
 L'objectif est de réaliser des simulations de type échantillons, dans le but de mieux cerner les processus actifs dans les simulations plus grandes de type CoDa.
-Nous avons vu (sections \ref{sec:snmethod} et \ref{sec:snegy}) que la formation stellaire est fortement couplée à la méthode et à la quantité d'énergie injectée.
+Nous avons vu que la formation stellaire est fortement couplée à la méthode (section \ref{sec:snmethod}) et à la quantité d'énergie injectée (section \ref{sec:snegy}).
 Une injection d'énergie sous forme cinétique sera plus efficace pour réguler la formation stellaire qu'une méthode par injection thermique, et plus la quantité d'énergie injectée sera élevée, meilleure sera la régulation.
-La formation stellaire ne dépend que de la quantité de gaz présent dans la cellule (section \ref{sec:schmidt-kennicut}).
-Sa régulation se fait par l'intermédiaire de l'expulsion des baryons des halos, qui est visible sur les cartes de champs (section \ref{sec:snmaps}), au sein des halos (section \ref{sec:baryon_frac}) et au niveau du $R_{200}$ (section \ref{sec:snvitesses}), privant ainsi les zone de formation stellaire de matière première.
-Comme se sont les particules stellaires jeunes qui émettent du rayonnement ionisant (section \ref{sec:etoilerad}), la formation stellaire est directement liée a la quantité de radiation produite au sein des halos.
+La formation stellaire ne dépend que de la quantité de gaz présente dans la cellule (section \ref{sec:schmidt-kennicut}).
+Sa régulation se fait par l'intermédiaire de l'expulsion des baryons des halos, qui est visible sur les cartes de champs (section \ref{sec:snmaps}), au sein des halos (section \ref{sec:baryon_frac}) et au niveau du $R_{200}$ (section \ref{sec:snvitesses}), privant ainsi les zones de formation stellaire de matière première.
+Comme se sont les particules stellaires jeunes qui émettent du rayonnement ionisant (section \ref{sec:etoilerad}), la formation stellaire est directement liée a la quantité de rayonnement produite au sein des halos.
 La production de photons est réduite en même temps que le \ac{SFR}.
 En ayant moins de photons produit, le milieu devrait ioniser moins vite, ce qui devrait être visible sur l'évolution de la fraction d'ionisation.
-Or nous avons observé en section \ref{sec:pbfesc} que ce n'est pas le cas, l'histoire d'ionisation est presque indépendante de la méthode d'injection d'énergie de supernovae, alors que le budget de photon lui est impacté.
+Or nous avons mesuré que ce n'est pas le cas, l'histoire d'ionisation est presque indépendante de la méthode d'injection d'énergie de supernovae, alors que le budget de photon lui est impacté.
 Nous avons expliqué cet effet en observant que les flux de radiation à la surface des halos ne semble pas impactés par le modèle d'injection d'énergie (section \ref{sec:radflow}).
 Dans le cas du feedback cinétique, comme le flux sortant est inchangé alors que la production interne diminue, la fraction d'échappement augmente (section \ref{sec:fesc}).
 
 Au final cette augmentation de la fraction d'échappement peut être expliquée par la diminution de la fraction baryonique.
-En effet, comme la \ac{HMF} n'est pas impactée par le feedback (section \ref{sec:hmf}), la quantité de baryon dans les halos diminue avec l'introduction de supernovae.
-Or, cette diminution de la quantité de baryon, permet à la radiation de s'échapper plus facilement.
+En effet, comme la \ac{HMF} n'est pas impactée par le feedback (section \ref{sec:hmf}) mais que la fraction baryonique l'est (section \ref{sec:baryon_frac}), la quantité de baryons dans les halos diminue avec l'introduction de supernovae.
+Or, cette diminution de la quantité de baryon, permet au rayonnement de s'échapper plus facilement.
 
 Aux résolutions considérées dans cette étude, c'est a dire la résolution des plus grosses simulations de la réionisation de type CODA,  %TODO ref.
 la compétition entre la diminution du taux de production de photon et l'augmentation de la fraction d'échappement semble se neutraliser.
-De plus, plus les supernovae sont puissantes, plus le pas de temps est réduit, et plus le coût global de la simulation augmente.
+De plus, plus les supernovae sont puissantes, plus la vitesse maximum du gaz augmente, plus le pas de temps hydrodynamique est réduit, et plus le coût global de la simulation augmente.
 
 Si une telle simulation est exécutée dans le but d'étudier l'état d'ionisation de l'\ac{IGM}, l'introduction des supernovae n'est pas fondamentale puisqu'elle n'a que peu d'influence sur l'évolution de l'ionisation dans la simulation.
 A l'inverse, si l’intérêt est plus porté sur la morphologie des galaxies pendant la réionisation, il n'est plus possible de se passer de l'introduction du feedback, car la distribution des baryons au sein des halos peut être grandement influencée.
@@ -480,7 +482,7 @@ A l'inverse, si l’intérêt est plus porté sur la morphologie des galaxies pe
 %De plus nous observons que le budget de photons est principalement gouverné par les halos de masses intermédiaire autour de $10^{10} M_\odot$.
 
 Un changement de comportement dans la formation stellaire est attendu autour de $M \approx 10^9M_\odot$ (voir eg \cite{2001PhR...349..125B}).
-La résolution des simulations actuelles n'est pas suffisante et il me semble nécessaire d'augmenter la résolution en masse ainsi que la résolution radiative de un voir deux ordres de grandeurs, pour résoudre la physique des halos jusqu'à des masses de l'ordre de $M \approx 10^8M_\odot$ et ainsi étudier ce changement de régime de manière plus assuré, tout en gardant un volume simulé suffisamment grand de l'ordre de $\left( 100 \cdot h^{-1} \mathrm{cMpc} \right)^3$.
+La résolution des simulations actuelles n'est pas suffisante et il me semble nécessaire d'augmenter la résolution en masse ainsi que la résolution radiative de un voir deux ordres de grandeurs, pour résoudre la physique des halos jusqu'à des masses de l'ordre de $M \approx 10^8M_\odot$ et ainsi étudier ce changement de régime de manière plus assurée, tout en gardant un volume simulé suffisamment grand de l'ordre de $\left( 100 \cdot h^{-1} \mathrm{cMpc} \right)^3$.
 Quelques années seront encore nécessaire pour réunir ces conditions.
 %à la fois une résolution radiative suffisante et .
 
