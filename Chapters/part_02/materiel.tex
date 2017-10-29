@@ -4,7 +4,7 @@
 %Nous avons a ce stade un aperçu du type de calcul a effectuer, essayons d'estimer . 
 %De plus, les simulations cosmologiques ont pour principal défi de simuler d'important volume d'espace avec la meilleure résolution possible.
 
-Le défis des simulations de la réionisation est qu'elles doivent simuler un volume d'Univers suffisant grand pour être représentatives de la variance cosmique( $\approx 100$ Mpc selon \cite{iliev_cosmological_2006}) tout en résolvant la formation stellaire (échelle $<1$ pc).
+Le défis des simulations de la réionisation est qu'elles doivent simuler un volume d'Univers suffisant grand pour être représentatives de la variance cosmique et converger sur la taille des régions HII ($\approx 100$ Mpc selon \cite{iliev_cosmological_2006}) tout en résolvant la formation stellaire (échelle $<1$ pc).
 En première approximation, il nous faudrait donc échantillonner un tel volume par $\left( \frac{100Mpc}{1pc} = 10^7 \right) ^3 = 10^{21}$ éléments.
 Ce qui est totalement impossible à l'heure actuelle.
 %Nous verrons dans la prochaine partie que nous sommes encore loin de pouvoir résoudre la formation stellaire dans ce type de simulations. %TODO ref
@@ -38,10 +38,10 @@ Comme la puissance de calcul est étroitement liée à cette évolution, la tail
 
 \subsection{Principes de parallélisation}
 
-A cause de limitations physiques comme la taille des atomes ou la capacité de refroidissement du silicium, on ne peut pas créer des processeurs aussi puissants que ce que l'on souhaite.
-La technique utilisée pour continuer à augmenter la puissance de calcul, consiste à en utiliser plusieurs en même temps.
-Dans le cas des simulations cosmologiques, la parallélisation est effectuée en découpant l'espace à simuler en un certain nombre de sous domaines chacun associé à une unité de calcul.
-Comme chaque sous domaine n'est pas isolé, mais appartient au même ensemble, les domaines vont devoir communiquer entre eux sur l'état de leurs voisins.
+A cause de limitations physiques comme la taille des atomes ou la capacité de refroidissement du silicium, on ne peut pas créer des processeurs arbitrairement denses en transistors et aussi puissants que ce que l'on souhaite.
+La technique utilisée pour continuer à augmenter la puissance de calcul consiste à en utiliser plusieurs en même temps.
+Dans le cas des simulations cosmologiques, la parallélisation est effectuée en découpant l'espace à simuler en un certain nombre de sous-domaines chacun associé à une unité de calcul.
+Comme chaque sous-domaine n'est pas isolé, mais appartient au même ensemble, les domaines vont devoir communiquer entre eux sur l'état de leurs voisins.
 Nous verrons en détails comment est effectué ce découpage dans la section \ref{sec:parasoft}.
 Mais voyons d'abord un aperçu des contraintes techniques de la parallélisation.
 
@@ -159,8 +159,8 @@ On cherchera à optimiser les communications utilisant les interfaces les plus l
 %
 %Ces machines se composent d'un certain nombre de nœuds.
 
-Généralement, la mémoire est partagée au sein d'un nœud, et distribuée sur le réseau.
-C'est à dire que tous les processus au sein d'un même nœud pourront communiquer par l'intermédiaire de la RAM, ce type de communications est donc rapides.
+Généralement, la mémoire est partagée au sein d'un nœud et distribuée sur le réseau.
+C'est-à-dire que tous les processus au sein d'un même nœud pourront communiquer par l'intermédiaire de la RAM, ce type de communications est donc rapides.
 Pour les communications entre les nœuds, l'information devra passer par le réseau et ce type de communications est donc plus lent.
 Et ce d'autant plus que les nœuds sont physiquement éloignés entre eux.
 
@@ -172,7 +172,7 @@ Et ce d'autant plus que les nœuds sont physiquement éloignés entre eux.
 
 %https://books.google.fr/books?id=sbQqBgAAQBAJ&pg=PA26&lpg=PA26&dq=peano+hilbert+mpi&source=bl&ots=HgSw0Jpf7d&sig=vXTb2JkDixd1gcDGANoARIYHAG0&hl=fr&sa=X&ved=0ahUKEwilofzKoerSAhUF6RQKHXzQDC4Q6AEIGjAA#v=onepage&q=peano%20hilbert%20mpi&f=false
 
-Dans EMMA la distribution des domaines utilisés pour la parallélisation est réalisée à l'aide d'une courbe de Peano-Hilbert.
+Dans EMMA la distribution des domaines utilisés pour la parallélisation est réalisée à l'aide d'une courbe de remplissante d'espace.
 %Durant le développement d'un code HPC, on cherchera a minimiser les communications
 %, et plus spécifiquement celle par le réseau qui sont nombreuse et relativement lentes.
 %Warren et Salmon
@@ -181,7 +181,7 @@ Ce type de courbes fractale a la particularité de remplir l'espace en passant p
 Ainsi si l'on applique ce pavage aux cellules de notre grille, en associant un indice reliant une cellule à sa position sur la courbe de Hilbert, il suffit ensuite de découper la courbe en parties identiques pour définir quelles cellules seront associées à quels processus.
 Si l'on a par exemple 32 cellules à assigner sur 4 processeurs, la courbes sera découpée en 4 parties de 8 cellules.
 Chacune de ces parties sera en suite assignée à un processeur.
-Ce type de découpage minimise les interfaces entre domaines, en s'assurant d'une proximité spatiale entre tout les points de la courbe.
+Ce type de découpage minimise les interfaces entre domaines, en s'assurant d'une certaine proximité spatiale entre tout les points de la courbe.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/courbe_Hilbert.jpeg} 
@@ -203,7 +203,8 @@ Ce type de découpage minimise les interfaces entre domaines, en s'assurant d'un
 Dans l'état actuel de EMMA, la courbe est calculée au début de la simulation, et seule la grille de base est prise en compte.
 La répartition des domaines est statique et n'évolue pas au cours de la simulation.
 Dans le cas où un domaine raffine plus qu'un autre, la charge de travail y est plus importante.
-Dans le futur, l'objectif serait de calculer la courbe de Hilbert sur la totalité des cellules feuilles, pour ainsi pouvoir refaire le découpage et équilibrer la charge entre les processeurs, et réaliser un équilibrage de charge.
+Dans le futur, l'objectif serait de calculer la courbe de Hilbert sur la totalité des cellules feuilles, pour ainsi pouvoir refaire le découpage et équilibrer la charge entre les processeurs.
+%, et réaliser un équilibrage de charge.
 
 
 \subsection{Les domaines}
@@ -245,8 +246,10 @@ Elle sont donc toutes indiquées dans le cas des simulations numériques où l'o
 \end{figure} 
 
 De plus, il existe au niveau matériel, deux avantages des \ac{GPU} par rapport aux \ac{CPU}.
-Premièrement leurs meilleurs ratio puissance de calcul sur coup (flop/€).
-Et également un meilleur ratio puissance de calcul sur puissance électrique (flop/W) ce qui réduit les besoins de refroidissement et permet des économies supplémentaires.
+\begin{itemize}
+\item Premièrement leurs meilleurs ratio puissance de calcul sur coup (flop/€).
+\item Et également un meilleur ratio puissance de calcul sur puissance électrique (flop/W) ce qui réduit les besoins de refroidissement et permet des économies supplémentaires.
+\end{itemize}
 
 % utilise une approche proche du concept de mémoire distribuée, c'est à dire que leurs espaces mémoire ne sont pas commun.
 
@@ -277,7 +280,7 @@ La programmation sur carte graphique impose de gérer les différents espaces m�
 
 Les \ac{CPU} sont capable d'accéder rapidement aux informations en mémoire, quel que soient leurs organisations.
 Le \ac{GPU} sont quant à eux sensibles à la segmentation des données.
-C'est à dire que les calculs sur ac{GPU} seront plus performants si les données sont organisées de façons à ce que leurs accès mémoire consécutifs soient physiquement proches.
+C'est à dire que les calculs sur \ac{GPU} seront plus performants si les données sont organisées de façons à ce que leurs accès mémoire consécutifs soient physiquement proches.
 %Prenons l'exemple d'une différence finie. 
 %Pour calculer le nouvel état d'une cellule, il est nécessaire de connaitre sont état actuel, et celui de sa voisine.
 %L'accès mémoire sera plus rapide si l'information est situer sur un espace mémoire adjacent.
@@ -339,7 +342,7 @@ Il existe cependant des pistes pour améliorer ce goulot d'étranglement.
 Une possibilité est de séparer la gestion de l'arbre de la physique.
 En l'état actuel, les données physiques sont stockées en mémoire avec la même structure que l'arbre.
 L'idée serait de stocker dans l'arbre, des indices de cellules permettant de retrouver l'information physique dans des vecteurs plats (cf Fig. \ref{fig:gatherscatter}).
-Ainsi les vecteurs pourraient être en permanence sur le \ac{GPU}, et seul l'information sur leurs positions dans l'\ac{AMR} devrait être transmise.
+Ainsi les vecteurs pourraient être en permanence sur le \ac{GPU}, et seule l'information sur leurs positions dans l'\ac{AMR} devrait être transmise.
 Un grand nombre de copies seraient alors évitées. 
 
 Une autre possibilité serait de placer l'intégralité de l'arbre sur le \ac{GPU}.
@@ -348,10 +351,10 @@ Dans ce cas, toutes les copies seraient supprimées mais c'est le \ac{GPU} qui d
 
 \subsection{Courbe de Morton}
 
-Une des évolutions possible de EMMA, serait l'utilisation de courbe de Morton ou Z-order curve \citep{morton1966computer}.
+Une des évolutions en cours de EMMA, serait l'utilisation de courbe de Morton ou Z-order curve \citep{morton1966computer}.
 La courbe de Peano-Hilbert présente le désavantage d'être relativement complexe à calculer.
 C'est a dire que l'opération nécessaire pour déterminer l'indice d'une cellule sur la courbe est coûteuse, et ce particulièrement sur \ac{GPU}.
-L'avantage la courbe de Morton est que la détermination de l'indice de la cellule et très simple et bien adaptée aux \ac{GPU}.
+L'avantage la courbe de Morton est que la détermination de l'indice de la cellule est bien adaptée aux \ac{GPU} et est réalisé avec des lois triviales reliant niveaux de raffinement, positions et lien hiérarchiques entre les cellules.
 Il existe d'ores et déjà des codes \ac{AMR} exécutés intégralement sur \ac{GPU} (voir eg \cite{2012ASPC..453..325B}) et présentant un facteur d'accélération important.
 Grâce à ce type de techniques, la gestion de l'\ac{AMR} devient accessible aux \ac{GPU}, évitant ainsi les coûteuses copies entre le \ac{CPU} et le \ac{GPU}.
 Cette courbe perd cependant l'avantage de la compacité de la courbe de Hilbert pour le découpage des domaines (sauts spatiaux parfois importants),
@@ -402,7 +405,7 @@ Ce qui représente au total environ 2,3 To de données générées par pas de te
 Mais on voudrait évidemment avoir accès à l'état de la simulation à différents instant, cette simulation a au final écrit 170 pas de temps, représentent au final un volume de données de près de 400 To.
 %De plus, ces données sont stockées sur \ac{HDD}, et si l'on se réfère à la table \ref{tab:debits} on observe que les débits d'accès disques sont les plus faibles.
 Étant donné la quantité de données en jeu, une bonne gestion des Entrées/Sorties peut donc permettre un gain de temps appréciable.
-De plus, ces données sont généralement calculé sur des machines distantes et améliorer leur compacité peut permettre de gagner du temps au moment du transfert vers des machines locales, ou simplement au moment de la lecture pour analyse.
+De plus, ces données sont généralement calculées sur des machines distantes et améliorer leur compacité peut permettre de gagner du temps au moment du transfert vers des machines locales, ou simplement au moment de la lecture pour analyse.
 
 %Les entrées/sorties sont des étapes relativement longues et l'écriture sur disque d'une telle quantité de données demande du temps et ralentit l'exécution de la simulation.
 % leurs rapatriement sur des machine locales peut également être coûteux en temps.

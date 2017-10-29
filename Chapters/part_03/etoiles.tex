@@ -25,7 +25,7 @@ Ce chapitre fait écho à la publication présentée en annexe \ref{pap:feedback
 \section{Considérations de résolution}
 %En fonction des echelles de travail, nous considererons soit les etoiles individuelles soit une population stellaire.
 
-Une des difficultés majeures dans les simulations de la réionisation, est l'impossibilité d'obtenir des résolutions suffisantes pour suivre la formation des sources de radiation individuellement, tout en simulant un volume suffisamment important.
+Une des difficultés majeures dans les simulations de la réionisation, est l'impossibilité d'obtenir des résolutions suffisantes pour suivre la formation des sources de rayonnement individuellement, tout en simulant un volume suffisamment important.
 %Il existe toujours ce conflit en réionisation entre simuler des grands volume, et obtenir la meilleur résolution possible.
 Actuellement les simulations de l'\ac{EoR} capables de suivre un volume d'Univers de l'ordre de $(100Mpc)^3$ atteignent un résolution de l'ordre du kilo-parsec.
 Or les échelles de formation stellaire sont de l'ordre de l'unité astronomique, soit un facteur $\approx 10^8$ plus petit.
@@ -79,8 +79,7 @@ t_{ff} < t_{sound},
 alors le milieu n'a pas le temps de résister et le nuage s'effondre sur lui même.
 
 $t_{ff}$ fait intervenir la densité, plus le milieu est dense plus il aura tendance à s'effondrer sur lui même.
-Et de l'autre coté intervient aussi la vitesse du son $c_s$, elle même dépendante de la température $\left( c_s \propto \sqrt{T} \right)$.
-Plus le gaz sera chaud, plus le nuage va résister à son effondrement.
+Et de l'autre coté intervient aussi la vitesse du son $c_s$, elle même dépendante de la température $\left( c_s \propto \sqrt{T} \right)$ : plus le gaz sera chaud, plus le nuage va résister à son effondrement.
 %\subsection{Population III}
 %tres peu de ligne de refroisdissment
 %étoiles plus grosse
@@ -120,7 +119,7 @@ Toutes les cellules plus denses qu'un certain seuil sont autorisées à créer d
 
 Ce type de critère est utilisé par la grande majorité des codes de simulations cosmologiques \citep{kay_including_2002}.
 Cette densité de seuil $\rho_{thresh}$ peux être définie arbitrairement, et comme toute densité, elle est dépendante de la résolution.
-De plus il en possible de définir une densité en unités physiques ou en unités commobiles (voir section \ref{sec:supercomobil}).
+De plus il en possible de définir une densité en unités physiques ou en unités comobiles (voir section \ref{sec:supercomobil}).
 Un seuil en densité physique sera plus représentatif de se qui se passe réellement.
 Mais à haut redshift, la densité était importante en tout points, et un seuil en unités comobiles est utile pour limiter l'apparition des premières étoiles à un redshift donné.
 En pratique on pourra définir ces deux seuils, et le seuil final sera le plus contraignant des deux.
@@ -144,7 +143,7 @@ $\delta_{in}$ est exprimé en unité comobile et est donc constant dans le temps
 %rho 1.5\\
 %temps de free fall\\
 
-Maintenant que nous avons définis où former des étoiles, il nous faut en calculer la quantité.
+Maintenant que nous avons défini où former des étoiles, il nous faut en calculer la quantité.
 \cite{1959ApJ...129..243S} propose que le \ac{SFR} d'une galaxie évolue comme une fonction de la densité de gaz dans cette galaxie, et plus précisément comme une loi de puissance.
 \cite{1998ApJ...498..541K} mesure cette loi pour les galaxies extérieures en fonction de leurs densité surfacique observée.
 
@@ -165,24 +164,23 @@ Il est toutefois nécessaire de mentionner que ce modèle n'est valable qu'aux �
 
 Le taux de formation stellaire s'exprime généralement en $M_\odot \cdot cMpc^{-3} \cdot yr^{-1}$  
 Ce qui est homogène à une densité divisée par un temps.
-En pratique divisera $\rho_g$ la densité locale de gaz par le temps de chute libre (equation \ref{eq:tff}), qui est en théorie le temps nécessaire à un nuage de gaz pour s'effondrer si il n'y avait aucune résistance.
+En pratique on divisera $\rho_g$ la densité locale de gaz par le temps de chute libre (equation \ref{eq:tff}), qui est en théorie le temps nécessaire à un nuage de gaz pour s'effondrer si il n'y avait aucune résistance.
 Au final, le \ac{SFR} prend la forme:
 \begin{equation}
 	SFR = \epsilon_{sf} \frac{\rho_g}{t_{ff}} \propto \rho_g^{1.5}
     \label{eq_sfr}
 \end{equation}
 avec  $\epsilon_{sf}$ le paramètre d'efficacité de formation stellaire.
-Observationellement, $\epsilon_{sf}$  est de l'ordre du \%. %TODO ref
-
 Il est également possible de considérer le temps caractéristique de formation stellaire:
 \begin{equation}
-t_{sf} =  \frac{t_{ff}}{ \epsilon_{sf} },
+t_{sf} =  \frac{t_{ff}}{\epsilon_{sf}},
 \end{equation}
-qui est de l'ordre de quelques milliards d'années.
+
+
+Observationellement, la formation stellaire est relativement inefficace et $t_{sf}$ est de l'ordre de quelques milliards d'années menant à un $\epsilon_{sf}$ de l'ordre du \% \citep{krumholz_universal_2012}.
+Ceci est dû à des phénomènes complexes comme la turbulence ou les champs magnétiques qui ont une importance prépondérante aux échelles de l'unité astronomique (voir par exemple \cite{2015MNRAS.450.4035F}).
 
 %Ce qui signifie que la formation stellaire est relativement inefficace.
-La formation stellaire est relativement inefficace car des phénomènes complexes comme la turbulence ou les champs magnétiques ont une importance prépondérante aux échelles de l'unité astronomique
-(voir par exemple \cite{2015MNRAS.450.4035F}).
 
 \subsection{Implémentation}
 
@@ -213,7 +211,7 @@ Où $\lambda$ correspond au nombre de particules moyen à créer dans la cellule
 \lambda = \frac{ M_{star}}{m_{star}}
 \end{equation}
 On obtiendra au final $N_{star}$ le nombre de quanta de masse d'étoiles à créer.
-Étant donné le grand nombre de tirages cette loi est en moyenne valide.
+%Étant donné le grand nombre de tirages cette loi est en moyenne valide.
 
 En pratique j'ai implémenté deux méthodes de transformations.
 Si  $N_{star}>1$ il est possible de créer : 
@@ -250,14 +248,15 @@ En pratique la création d'une particule stellaire consistera à prendre une nou
 \begin{itemize}
 
 \item La position sera choisie aléatoirement au sein de la cellule.
-La vitesse correspondra à la vitesse du gaz au moment de leurs création à laquelle on ajoutera une composante avec une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule \citep{rasera_history_2006}.
+La vitesse correspondra à la vitesse du gaz au moment de leur création à laquelle on ajoutera une composante avec une direction aléatoire et une amplitude aléatoirement comprise entre $\pm c_s$ la vitesse du son dans la cellule \citep{rasera_history_2006}.
 Ceci évitera à une cellule donnée de former, sur plusieurs pas de temps d'affilé plusieurs particules aillant toutes la même direction et la même vitesse, formant alors un effet de "collier".
 %Dans cette configuration, il est possible qu'une zone dense forme des étoiles pendant plusieurs pas de temps d'affilés.
 %Or au moment de leurs création les étoiles passe d'une physique collisionnelle (celle du gaz), à une physique non collisionnelle
 %%Pour éviter les effets de "collier", à cette vitesse sera ajoutée 
 %Pour minimiser cette effet on ajoutera à la vitesse initiale une composante, aillant u
 
-\item Contrairement aux particules de matière noire, les étoiles doivent avoir conserver l'information sur leurs ages. On associera un instant de création à la particule stellaire et non un age, pour ne pas avoir à remettre à jour cette valeur à chaque pas de temps.
+\item Contrairement aux particules de matière noire, les étoiles doivent conserver l'information sur leur instant de création.
+%On associera un instant de création à la particule stellaire et non un age, pour ne pas avoir à remettre à jour cette valeur à chaque pas de temps.
 %Pendant les analyses post-simulations, on prendra garde à définir l'age des étoiles comme étant l'instant associé au snapshot courant moins l'instant de création de la particule.
 
 
@@ -373,7 +372,7 @@ Le flux obtenu correspond au flux d'une population de $10^6M_\odot$, ces valeurs
 
 Cette émissivité sera ensuite pondérée par $f_{esc}$ un paramètre d'efficacité et $S'$ l'énergie effectivement rayonnée dans la simulation ne sera qu'une partie de $S$ l'énergie totale disponible : $S' = f_{esc} \cdot S$.
 Ce paramètre libre reflète l'impact d'une grande partie de la physique sous grille, sur le rayonnement.
-En effet, nous ne résolvons pas certains processus, comme par exemple l'absorption par la poussière, qui va empêcher la radiation de sortir de l’environnement de la population.
+En effet, nous ne résolvons pas certains processus, comme par exemple l'absorption par la poussière, qui va empêcher le rayonnement de sortir de l’environnement de la population.
 Ce paramètre est analogue à une fraction d'échappement intrinsèque et ne doit pas être confondu avec la fraction d'échappement des galaxies que nous aborderons par la suite (voir section \ref{sec:fesc}).
 
 %Il nous reste encore à caractériser le type de photons à émettre.

@@ -7,24 +7,24 @@
 %Du fait de l'avancée rapide des moyens de calculs, les simulations numérique sont des produits possédant une valeur se dépréciant rapidement et doivent être considérées comme éphémère.
 
 Nous avons vu dans la partie précédente qu'elles étaient les principales physiques à l’œuvre durant l'époque de réionisation.
-L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées et quelles sont les contraintes sur leurs implémentations.
+L'objectif de cette partie est d'expliquer comment ces physiques sont modélisées numériquement et quelles sont les contraintes sur leurs implémentations.
 On se concentrera particulièrement sur le cas du code de simulations numériques EMMA.
 
-EMMA est un code à grille adaptative ou \ac{AMR} capable de simuler l'évolution de la matière noire, du gaz et de la radiation de manière auto-cohérente et dans un contexte cosmologique.
+EMMA est un code à grille adaptative ou \ac{AMR} capable de simuler l'évolution de la matière noire, du gaz et du rayonnement de manière auto-cohérente et dans un contexte cosmologique.
 Son principal objectif est de simuler l'\ac{EoR} et sa description complète pourra être trouvée dans \cite{aubert_emma:_2015} en annexe \ref{pap:EMMA}.
-J'ai été amené à interagir avec toutes les parties d'EMMA, et à en modifier quelques unes.
+J'ai été amené à interagir avec toutes les parties d'EMMA.
 %Une de mes premières tâches à été l'introduction d'un modèle de formation et d'évolution stellaire (cf section \ref{sec:etoiles}).
 %Ce modèle de formation stellaire se trouve au carrefour entre toute les physiques gérées par EMMA.
 La première partie de ce chapitre sera consacrée à une rapide présentation générale du contexte dans lequel le développement d'EMMA est réalisé, puis à la présentation de la grille adaptative, qui va contraindre un certain nombre de choix par la suite.
-L'objectif de la seconde partie est de fournir un aperçu des différentes techniques et moteurs physiques utilisés pour mieux appréhender les résultats obtenus à l'aide de ce code.
-Dans la troisième partie je présenterai quelques contraintes matérielles dans l'exécution d'EMMA et également quelques développements que j'ai réalisé, entre autre une amélioration de la gestion des entrées/sorties.
+L'objectif de la seconde partie est de fournir un aperçu des différentes techniques et moteurs physiques utilisés.% pour mieux appréhender les résultats obtenus à l'aide de ce code.
+Dans la troisième partie je présenterai quelques contraintes matérielles dans l'exécution d'EMMA et également une sélection de développements que j'ai réalisé, entre autre une amélioration de la gestion des entrées/sorties.
 
 
 %Comment modéliser la reionization?
 
 \section{Aperçu des différents modèles numériques}
 \label{sec:gridpart}
-Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et la radiation ou encore le champs magnétique.
+Un code de simulation cosmologique a pour vocation principale de suivre l'évolution de différents "fluides", comme la matière noire, la gaz, les étoiles et le rayonnement ou encore le champ magnétique.
 Ces fluides sont de natures différentes et il n'y a pas de méthode unique permettant de suivre de manière optimale ces différentes physiques.
 %On distinguera principalement deux catégories de fluides: les collisionnels et les non-collisionnels.
 %La physique non-collisionnelle concerne les phénomènes qui n'interagissent pas par collision comme la matière noire, les étoiles ou la radiation. 
@@ -34,14 +34,14 @@ Il existe conceptuellement deux principales façons de suivre un fluide dans l'e
 %En lien direct avec ces deux familles de représentations physique, il existe deux principales familles de codes cosmologique% : les codes \ac{SPH} et les codes \ac{AMR}.
 
 \paragraph{La représentation Lagrangienne} consiste à se placer au point de vue du fluide.
-On considère une série d'éléments de fluide de masse fixe pouvant se déplacer et/ou se dilater dans l'espace.
+On considère une série d'éléments de fluide pouvant se déplacer et/ou se dilater dans l'espace.
 Les codes utilisant ce type de représentation seront généralement associés avec une gestion de la physique sous forme de \emph{particules}.
 Les codes dit \ac{SPH}, \ac{PIC} ou tree-code sont des représentants de cette catégorie.
 
 %\paragraph{\ac{SPH} : } représente le gaz sous forme de particule de masse constante mais de taille variable.
 %Notion d'arbre -> KDtree
 
-\paragraph{La représentation Eulérienne} consiste à se placer au point de vue de l'espace.
+\paragraph{La représentation Eulérienne} consiste à se placer du point de vue de l'espace.
 On considère un élément d'espace et le bilan de matière entrant et sortant de chacune de ses interfaces.
 On associera généralement les codes utilisant ce type de représentation avec une gestion de la physique sous forme de \emph{grille}.
 Si la grille a une résolution dynamiquement variable, on parlera de grille \ac{AMR}.
@@ -76,23 +76,22 @@ Parmi les représentants des codes \ac{AMR} on citera entre autre:
 \item FLASH \citep{0067-0049-131-1-273}
 \item RAMSES \citep{teyssier_cosmological_2002}
 \item ENZO \citep{bryan_enzo:_2014}
-\item EMMA \citep{aubert_emma:_2015}
 \end{itemize}
 
 Il existe un troisième type de code hybride utilisant une maille mobile et adaptative, un représentant majeur de cette technique est le code AREPO \citep{2010MNRAS.401..791S}.
 
-Il existe évidemment d'autre codes, et la majorité d'entre eux disposent de plusieurs déclinaisons en fonction de ce pour quoi ils sont utilisé.
+%Il existe évidemment d'autre codes, et la majorité d'entre eux disposent de plusieurs déclinaisons en fonction de ce pour quoi ils sont utilisé.
 
 Des projets comme le projet Santa Barbara \citep{1999ApJ...525..554F} ou le projet nIFTy \citep{sembolini_nifty_2015} visent à comparer les codes entre eux.
 Certain projets \citep{2007MNRAS.380..963A, oshea_comparing_2005} se focalisent sur la comparaison des méthodes.
 % les codes \ac{SPH} auront une meilleur conservation de la masse,
-D'une manière générale, il en ressort qu'un code \ac{AMR} offre une meilleur conservation de l’énergie et est plus apte à gérer les chocs et les instabilités mais pourra souffrir de problèmes de diffusion numérique.
+D'une manière générale, il en ressort qu'un code \ac{AMR} offre une meilleur conservation de l’énergie et est plus apte à gérer les chocs et les instabilités.% mais pourra souffrir de problèmes de diffusion numérique.
 Les codes \ac{SPH} auront plus de facilités à représenter de larges contrastes de densité, la où l'\ac{AMR} nécessitera un nombre important de niveaux, mais souffrira de bruit dans les régions sous-dense.
 
 EMMA utilise des concepts déjà existant, entre autre une gestion de la grille adaptative similaire à ART ou RAMSES (voir section \ref{sec_gestion_grille}).
 Les moteurs physiques (vois section \ref{sec:solvers}) ont également fait leurs preuves, par exemple la gravitation est gérée de manière comparable à ART, le moteur hydrodynamique est similaire à celui de RAMSES et le moteur radiatif est une réécriture de ATON \citep{aubert_radiative_2008}.
 EMMA a été développé dans l'idée d'utiliser les processeurs graphiques ou \ac{GPU} pour en utiliser au maximum leurs capacités de calculs.
-L'avantage par rapport aux codes plus anciens, est que cet objectif a été définis dès le départ, alors que les autres codes se sont adapté à cette évolution de matériel.
+%L'avantage par rapport aux codes plus anciens, est que cet objectif a été définis dès le départ, alors que les autres codes se sont adapté à cette évolution de matériel.
 Il en résulte l'utilisation de certaines techniques menant à une implémentation différente (voir section \ref{sec:gpu}).
 
 
@@ -140,7 +139,7 @@ Ces mécanismes vont totalement changer l'organisation de la grille.
 
 Un exemple de grille \ac{AMR} générée par EMMA est présenté sur la figure \ref{fig:AMR}).
 Un fonction de critères prédéfinis par l'utilisateur comme par exemple un seuil de densité la résolution de la grille peut être arbitrairement augmentée localement.
-L'avantage de ce type de grille est d'économiser des ressources de calcul par rapport au cas d'une grille fixe, ou il faudrait beaucoup plus de cellules pour obtenir une résolution équivalente.
+L'avantage de ce type de grille est d'économiser des ressources mémoire par rapport au cas d'une grille fixe, ou il faudrait beaucoup plus de cellules pour obtenir une résolution équivalente.
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/AMR.pdf} 
@@ -232,8 +231,8 @@ struct CELL{
 \subsubsection{La structure OCT}
 %Pour créer un lien entre elle, il est nécessaire de stocker l'information de voisinage.
 Les OCTs contiennent l'information relatives à la structure de la grille et permettent son raffinement.
-Un OCT se trouve toujours entre sa mère et ses filles : il contient nécessairement un pointeur vers sa CELL mère ainsi qu'un tableau de huit CELLs filles.
-Les OCTs contiennent également l'information sur le voisinage et chacun d'eux dispose de six pointeurs vers les CELLs voisines.
+Un OCT se trouve toujours entre sa cellule mère et ses cellule filles : il contient nécessairement un pointeur vers sa CELL mère ainsi qu'un tableau de huit CELLs filles.
+Les OCTs contiennent également l'information sur le voisinage et chacun d'eux dispose de six pointeurs vers les CELLs voisines de niveau L-1.
 La génération de conditions périodiques (généralement utilisées en cosmologie) se fait de manière naturelle en faisant pointer tous les voisins de l'OCT de la CELL racine vers lui même.
 La structure minimale d'un OCT de EMMA est présentée sur le listing \ref{lst:oct}.
 %L'information spatiale est aussi contenue dans les OCT, 
@@ -253,8 +252,9 @@ struct OCT{
 \label{sec:PART}
 
 Nous verrons dans la section \ref{sec:solverDM} qu'une partie de la physique est résolue sous forme de particule.
-Il est donc nécessaire d'ajouter un champs de particule à la grille \ac{AMR}.
-Comme les OCT, les particules utilisent une représentation sous forme de liste chaînée, et chaque cellule dispose de sa propre liste chaînée de particules.
+Il est donc nécessaire d'ajouter un champ de particules à la grille \ac{AMR}.
+Comme les OCT, les particules utilisent une représentation sous forme de liste chaînée.
+Chaque cellule dispose de sa propre liste chaînée de particules et plus précisément de la position en mémoire de la première particule de sa liste, permettant ensuite de toutes les retrouver.
 Lors de raffinement cette liste devra être découpée et distribuée entre les nouvelles cellules crées.
 Une particule est essentiellement caractérisée par sa position, sa masse et sa vitesse.
 On ajoutera à ceci son statut, qui sera utilisé pour différentier les particules de matière noire des particules stellaires. 
@@ -353,7 +353,7 @@ Un exemple de restriction consiste à moyenner une valeur de plusieurs cellules,
 \label{sec:voisins}
 
 Les processus physiques que l'on cherche à résoudre sont régis par des systèmes d'équations différentielles. (voir section \ref{sec:solvers})
-En analyse numérique, une dérivée de $u$ suivant $x$ est localement approximée (dans le cas d'une différence finie centrée) par une équation de la forme :
+En analyse numérique, une dérivée de $u$ suivant $x$ peut être localement approximée (dans le cas d'une différence finie centrée) par une équation de la forme :
 \begin{equation}
 \frac{d u}{dx} \approx \frac{u_{i+1}  - u_{i-1}}{2\Delta x}, 
 \end{equation}

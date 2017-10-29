@@ -26,13 +26,14 @@ Suite à cette étape, l'Univers était alors très homogène et ne disposait pa
 Sa dynamique était régie essentiellement par la lutte entre l'expansion et la gravitation et la compétition entre ces deux effets, couplée à de très légères perturbations observable dans les anisotropies du \ac{CMB} a menée à l'effondrement de certaines de ses parties.
 Il faudra alors attendre plusieurs centaines de million d'années pour voir apparaître des surdensités de gaz suffisamment compactes pour former les première étoiles.
 Ces premières sources lumineuses ont émis un puissant rayonnement ionisant qui a à nouveau séparé les protons et les électrons réunis lors de la recombinaison.
-Il a fallu encore plusieurs centaines de millions d'années supplémentaires pour que les sources de rayonnement soient suffisamment nombreuses pour que leurs photons remplissent l'Univers, et le fasse passer d'un état majoritairement neutre, à un état à nouveau majoritairement ionisé.
+Il a fallu encore plusieurs centaines de millions d'années supplémentaires pour que les sources de rayonnement soient suffisamment nombreuses pour que leurs photons remplissent l'Univers, et le fasse passer d'un état majoritairement neutre à un état à nouveau majoritairement ionisé.
+
 Cette transition s'appelle l’époque de la réionisation et est représenté sur la figure \ref{fig:frise}.
 Les premières étoiles se forment à des redshifts supérieurs à 50 et forment des bulles de gaz ionisé autour d'elles appelées régions HII.
 Avec l’effondrement des structures, la formation stellaire augmente, les sources de rayonnement augmentent en nombre et en intensité.
 Les bulles d'ionisation grossissent et d'autres apparaissent.
 Petit à petit les bulles fusionnent (ont dit qu'elles percolent) et le régions HII grandissent.
-La réionisation est finie à redshift $z\approx 6$ quand le rayonnement atteins les dernières régions neutres.
+La réionisation est finie à redshift $z\approx 6$ quand le rayonnement atteint les dernières régions neutres.
 
 L'objectif de cette section est de présenter quelques unes des preuves observationnelles qui confirment que la réionisation a bien eu lieu.
 Je présenterai également les grandes lignes des principes physiques en cours durant cette période.
@@ -60,7 +61,7 @@ Je présenterai également les grandes lignes des principes physiques en cours d
 \section{Preuves observationnelles}
 \label{sec_contraintes_obs}
 
-Dans cette section nous verrons quelles sont les principales observations en faveur de la réionisation de l'Univers.
+%Dans cette section nous verrons quelles sont les principales observations en faveur de la réionisation de l'Univers.
 
 \subsection{Spectres de quasars et épaisseur optique Lyman-alpha}
 
@@ -83,11 +84,11 @@ Les quasars sont des objets suffisamment brillants pour être observés à très
 
 L'énergie de la raie Lyman-alpha, transition de l'électron du premier état excité vers l’état fondamental, est de 1216 $\AA$, ce qui place cette émission dans l'Ultra Violet.
 Si un nuage de gaz neutre se trouve entre une source et l'observateur, le spectre réceptionné présentera une raie d'absorption à 1216 $\AA$.
-Maintenant considéreront des distances cosmologiques entre la source et l'observateur.
+%Maintenant considéreront des distances cosmologiques entre la source et l'observateur.
 Durant le parcours des photon, l'Univers aura subi une expansion et le spectre d'émission de la source sera décalé vers le rouge.
 Le spectre présentera des raies d’absorptions à différents endroits suivant le moment de rencontre des différents nuages de gaz neutre.
 C'est série de raies est très dense à haut redshift et est appelée forêt Lyman-alpha.
-Maintenant, si la source est à l’intérieur d'une zone neutre, la série de raies absorbées ne sera plus discrète mais continue.
+Si la source est à l’intérieur d'une zone neutre, la série de raies absorbées ne sera plus discrète mais continue.
 Ce continuum d’absorption est nommé tunnel Gunn-Peterson \citep{1965ApJ...141.1295S}
 La figure \ref{fig:spectre_quasar} montre une série d'observations de spectres de quasars, classés par redshift.
 Le tunnel Gunn-Peterson des plus éloignés est particulièrement visible.
@@ -107,12 +108,13 @@ Le tunnel Gunn-Peterson des plus éloignés est particulièrement visible.
 
 
 
-L’épaisseur optique traversée par les photons Lyman-alpha s'obtient à partir de ces spectres et de la formule suivante:
-\begin{equation}
-\tau_{GP} = \frac{\pi e^2}{m_e c} f_\alpha \lambda_\alpha H^{-1}(z) n_{HI},
-\end{equation}
-où $f_\alpha$ est la force d'oscillateur de la transition Lyman-alpha, $\lambda_\alpha = 1216 \AA$, $H(z)$ est la constante de Hubble, $n_{HI}$ la densité d'hydrogène neutre.
-En appliquant cette formule aux différents spectres observés (figure \ref{fig:spectre_quasar}), \cite{fan_constraining_2006} ont mesuré la variation d'épaisseur optique en fonction du redshift.
+%L’épaisseur optique traversée par les photons Lyman-alpha s'obtient à partir de ces spectres et de la formule suivante:
+%\begin{equation}
+%\tau_{GP} = \frac{\pi e^2}{m_e c} f_\alpha \lambda_\alpha H^{-1}(z) n_{HI},
+%\end{equation}
+%où $f_\alpha$ est la force d'oscillateur de la transition Lyman-alpha, $\lambda_\alpha = 1216 \AA$, $H(z)$ est la constante de Hubble, $n_{HI}$ la densité d'hydrogène neutre.
+%En appliquant cette formule aux différents spectres observés (figure \ref{fig:spectre_quasar}), 
+\cite{fan_constraining_2006} ont mesuré la variation d'épaisseur optique en fonction du redshift.
 Les résultats sont présentés sur la figure \ref{fig:epaisseur_optique_quasar}.
 Il apparaît clairement que l'épaisseur optique augmente avec le redshift.
 
@@ -142,7 +144,7 @@ On y observe une chute brutale dans la fraction de neutre à redshift $z\approx6
 \subsection{CMB et épaisseur optique Thomson}
 
 Une observation de la réionisation se trouve également dans les photons \ac{CMB}, car la réionisation constitue un avant-plan qui les a influencé. 
-Les photons émis lors de la recombinaisons ont été diffusés, par le grand nombre d'électrons libérés pendant la réionisation.
+Les photons émis lors de la recombinaisons ont été diffusés par le grand nombre d'électrons libérés pendant la réionisation.
 Cette succession de diffusions Thomson, se traduit par une épaisseur optique qui sera calculée de la manière suivante : 
 
 \begin{equation}
@@ -150,7 +152,7 @@ Cette succession de diffusions Thomson, se traduit par une épaisseur optique qu
 \end{equation}
 avec $\sigma_t$ la section efficace Thomson et $n_e (z)$ la densité d'électrons libres.
 
-L'épaisseur optique Thomson cesse d'augmenter en dessous d'un certain redshift du à l’absence d'électrons libres permettant les diffusions.
+L'épaisseur optique Thomson cesse d'augmenter en dessus d'un certain redshift du à l’absence d'électrons libres permettant les diffusions.
 Une représentation de cette contrainte, mesurée à partir des observations du satellite Planck se trouve sur la figure \ref{fig:epaisseur_optique_thomson}.
 Différents modèles de réionisation y sont également présentés.
 En utilisant un modèle de réionisation instantanée, \cite{planck_collaboration_planck_2016} estime le redshift de mi-réionisation à $z_r = 8.8 ^{+1.3}_{-1.2}$.
@@ -221,15 +223,19 @@ Lorsqu'une sur-densité s’effondre, elle va entraîner avec elle une certaine 
 La seconde étape est donc d’effondrer ce gaz pour mettre en place la formation stellaire.
 Or comme ce gaz est soumis à une compression, sa pression et sa température augmentent et s'opposent à la contraction.
 L'effondrement des structures est alors limité : le refroidissement doit être efficace pour pouvoir continuer à effondrer le gaz (voir eg \cite{2004ARA&A..42...79B}).
-Pour être en mesure de former des étoiles, un nuage de gaz doit avoir un temps dynamique :
+Pour être en mesure de former des étoiles, un nuage de gaz doit avoir un temps caractéristique de refroidissement :
 
-\begin{equation}
-t_{dyn} =\sqrt{\frac{3 \pi}{32 G \rho}},
-\end{equation}
-plus important que son temps caractéristique de refroidissement :
 \begin{equation}
 t_{cool} = \frac{3 nkT}{2 \Lambda(n,T)}.
 \end{equation}
+
+plus court que son temps de chauffage gravitationnel:
+
+\begin{equation}
+t_{dyn} =\sqrt{\frac{3 \pi}{32 G \rho}}.
+\end{equation}
+
+
 
 %\begin{equation}
 %T_{vir} = \frac{\mu \Delta c}{6k_B} \left( G M_{vir} H_{(z)} \right)^{2/3}
@@ -242,8 +248,9 @@ t_{cool} = \frac{3 nkT}{2 \Lambda(n,T)}.
  		\label{fig:refroidissement}}
 \end{figure}
 
-Dans notre cas, le taux de refroidissement $\Lambda(n,T)$ est gouverné par l'émission de rayonnement de l'hydrogène atomique ou moléculaire et de l’hélium (voir figure \ref{fig:refroidissement}).
+Globalement, le taux de refroidissement $\Lambda(n,T)$ est gouverné par l'émission de rayonnement de l'hydrogène atomique ou moléculaire et de l’hélium (voir figure \ref{fig:refroidissement}).
 Ces rayonnements permettent de dissiper suffisamment d'énergie pour que l'effondrement puisse se poursuivre \citep{2001PhR...349..125B}.
+Par la suite nous ne considérerons que le refroidissement dû à l'hydrogène atomique.
 
 Le type de processus de refroidissement majoritaire amène à distinguer les halos à refroidissement atomiques des halos à refroidissement moléculaire \citep{2002Sci...295...93A}.
 
@@ -317,7 +324,7 @@ Nous venons de voir un modèle idéalisé sensé représenter la croissance des 
 \item l'intensité des sources n'est pas constante. %Les étoiles évoluent et meurent, si il n'y a 
 \end{itemize}
 
-Dune manière générale, l'évolution de la fraction d'hydrogène ionisée dans l'Univers, dépend de la balance entre le taux d'ionisation et le taux recombinaison \citep{0004-637X-514-2-648, RevModPhys.81.1405} :
+Dune manière générale, l'évolution de la fraction d'hydrogène ionisée dans l'Univers, dépend de l'équilibre entre le taux d'ionisation et le taux recombinaison \citep{0004-637X-514-2-648, RevModPhys.81.1405} :
 \begin{equation}
 \frac{dQ_{HII}}{dt} = \frac{\dot{N}_{ion}}{ <n_H>} - \frac{Q_{HII}}{t_{rec}}.
 \label{eq:eqion}
@@ -376,7 +383,7 @@ où $\sigma$ est la section efficace de photo-ionisation de l'hydrogène, et $\g
 %TODO develope
 Il faudra donc que la formation stellaire ait produite suffisamment de photons pour réioniser tout l'Univers.
 Des contraintes sur le taux de photo-ionisation ont été déterminées à partir d'observations par \cite{2013MNRAS.436.1023B} (voir figure \ref{fig:photoionisationrate}).
-Il faut au minimum 1 photons ionisant par atomes, mais ce nombre est plus proche de 2 si l'on considère les effets liés à la recombinaison \citep{aubert_reionization_2010}.
+Il faut au minimum 1 photon ionisant par atomes, mais ce nombre est plus proche de quelques unités si l'on considère les effets liés à la recombinaison \citep{aubert_reionization_2010}.
 Une fois l'Univers réionisé, celui ci baigne dans un fond UV uniforme \citep{haardt_radiative_2012}.
 
 %$ <n_H>$ est la densité moyenne d'Hydrogène dans l'Univers, comme il dépend de $a$, ce terme contient l'information de l'expansion de l'Univers.

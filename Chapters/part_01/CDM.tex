@@ -31,7 +31,7 @@ Il en déduit qu'il existe d'autres galaxies que notre Voie Lactée (voir figure
 
 \begin{figure}
         \includegraphics[width=.9\linewidth]{img/01/hudf.jpeg} 
-        \caption[Hubble Ultra Deep Field]{Hubble Ultra Deep Field.
+        \caption[Hubble Ultra Deep Field]{Hubble Ultra Deep Field \citep{1538-3881-132-5-1729}.
         %2014.
         %Image NASA.
 		En 1926 E. Hubble observe pour la première fois qu'il existe d'autre galaxies.
@@ -165,27 +165,27 @@ Nous verrons dans la partie dédiée à la détermination des paramètres cosmol
 Ce qui s'exprime par $\Omega_{K,0} = 0$ et $\Omega_{\lambda,0} +  \Omega_{M,0} + \Omega_{r,0} =1$.
 La valeur de $\rho_c$ est déterminée avec l'équation \ref{eq:friedman1}, en considérant un Univers plat et statique ($\Lambda=0$).
 
-\paragraph{$\Omega_{M,0}$} est la densité d'énergie associée à la matière. % (matière noire que nous introduiront dans la suite et la matière baryonique)
+\paragraph{$\Omega_{M,0}$} est le paramètre de densité d'énergie associée à la matière. % (matière noire que nous introduiront dans la suite et la matière baryonique)
 Par simple effet de dilution, cette densité décroît avec le cube du facteur d'expansion.
-Un Univers constitué exclusivement de cette énergie serait nommé "Univers poussière"
+Un Univers dominée par cette énergie est nommé "Univers poussière".
 %C'est le cas actuellement.
 
-\paragraph{$\Omega_{r,0}$} représente la densité d'énergie radiative.
-La densité de photon décroît avec le cube du facteur d'expansion, mais du fait de l'allongement de la longueur d'onde avec $a$, la densité d'énergie associée a la radiation décroit avec la puissance $4$ de $a$.
-Un Univers constitué exclusivement de cette énergie serait nommé "Univers lumière".
-Cette approximation est valable pour un Univers majoritairement remplis de matière relativiste.
+\paragraph{$\Omega_{r,0}$} représente le paramètre de densité d'énergie relativiste.
+La densité de photon décroît avec le cube du facteur d'expansion, mais du fait de l'allongement de la longueur d'onde avec $a$, la densité d'énergie associée au rayonnement décroît avec la puissance $4$ de $a$.
+Un Univers dominée par cette énergie est nommé "Univers lumière".
+%Cette approximation est valable pour un Univers majoritairement remplis de matière relativiste.
 %C'était le cas avant l’émission du fond diffus cosmologique.
 
-\paragraph{$\Omega_{\Lambda,0}$} est la densité d’énergie du vide.
+\paragraph{$\Omega_{\Lambda,0}$} est le paramètre de densité d’énergie du vide.
 Cette énergie est associée à la constante cosmologique et à l'expansion de l'Univers et est constante dans le temps.
 
-\paragraph{$\Omega_{K,0}$} est la densité de courbure spatiale ou la densité d'énergie associée a la courbure de l'espace.
+\paragraph{$\Omega_{K,0}$} est le paramètre de densité de courbure spatiale ou la densité d'énergie associée a la courbure de l'espace.
 Selon l’équation \ref{eq:einstein}, l'énergie peut courber l'espace, mais si l'espace possède une courbure intrinsèque, elle est équivalente à une densité d'énergie.
 \begin{equation}
 \Omega_{K,0} = 1 - \Omega_{r,0} - \Omega_{M,0} - \Omega_{\lambda,0} 
 \end{equation}
 
-Comme ces densités d'énergies sont liées au facteur d'expansion, celles-ci évoluent avec le temps (cf Fig. \ref{fig:cosmoparamt}).
+Comme ces densités d'énergies sont liées au facteur d'expansion, celles-ci évoluent avec le temps (cf Fig. \ref{fig:cosmoparamt}) est dominent à différentes époques,
 
 \begin{figure}
         \includegraphics[width=.9\linewidth]{img/01/scale_t.jpg} 
@@ -209,8 +209,8 @@ Nous observons ici que la valeur des paramètres cosmologique contraint l'age ac
 %TODO dire que nous somme dans la courbe rouge
 %\cite{2003PhT....56d..53P}
 
-Le scénario actuellement admit est en faveur d'un Univers ouvert (courbe rouge).
-L'accélération de l'expansion de l'univers a été découverte à la fin du XXème siècle par 2 équipes simultanément, chacune aillant reçue le prix Nobel en 2011 :
+Le scénario actuellement admis est en faveur d'un Univers en accélération (courbe rouge).
+L'accélération de l'expansion de l'univers a été découverte à la fin du XXème siècle par 2 équipes simultanément, chacune ayant reçue le prix Nobel en 2011 :
 \begin{itemize}
 \item  High-Z supernovae search team \citep{1998AJ....116.1009R} %http://cdsads.u-strasbg.fr/abs/1998AJ....116.1009R
 \item  Supernova Cosmology Project \citep{1999ApJ...517..565P} % http://cdsads.u-strasbg.fr/abs/1999ApJ...517..565P
@@ -249,7 +249,7 @@ L'accélération de l'expansion de l'univers a été découverte à la fin du XX
 %la reionization
 
 Une fois établi que les galaxies s'éloignent de nous dans toutes les directions, plusieurs constats s'imposent.
-Premièrement, en remontant le temps elles devaient être plus proches les unes des autres, et en poussant ce constat à l’extrême, à un certain instant dans l'histoire de l'Univers, toute la matière était concentrée en un point (toutes les courbes de la figure \ref{fig:scale_t} passe par une taille nulle dans le passé).
+Premièrement, en remontant le temps elles devaient être plus proches les unes des autres, et en poussant ce constat à l’extrême, à un certain instant dans l'histoire de l'Univers, toute la matière était extrêmement dense.
 \cite{1927ASSB...47...49L} propose une théorie de l'atome primitif.
 Cette singularité a été baptisée Big-bang et donne son nom au modèle cosmologique actuel.
 
@@ -263,22 +263,23 @@ Cette singularité a été baptisée Big-bang et donne son nom au modèle cosmol
 \subsection{Nucléosynthèse primordiale}
 \label{sec:nucleosynthese_primordiale}
 %Dans le modèle du Big Bang, le début de l'Univers est suivis par une phase d'expansion rapide appelé inflation.
-Après le Big-bang, l'Univers est tellement chaud qu'il est composé d'un ensemble de particules élémentaires (quark, gluon, électron) qui vont former en se refroidissant les premiers protons et neutrons, qui vont à leur tour s'assembler pour former les premiers noyaux atomiques.
-La théorie de la nucléosynthèse primordiale a été présentée dans un article surnommé $\alpha \beta \gamma$ en référence aux initiales des noms de ses auteurs \citep{PhysRev.73.803}.
+Après le Big-bang, l'Univers est suffisamment chaud pour présenter une soupe de particules élémentaires (quarks, gluons, leptons) qui vont former en se refroidissant les premiers protons et neutrons, qui vont à leur tour s'assembler pour former les premiers noyaux atomiques.
+La théorie de la nucléosynthèse primordiale a été présentée par \citep{PhysRev.73.803} dans un article surnommé $\alpha \beta \gamma$ en référence aux initiales des noms de ses auteurs.
 Cette théorie permet d'expliquer avec precision l'abondance observée des différents atomes présent dans l'Univers.
-Il est aujourd'hui admis que la masse de l'Univers était originellement constituée de : 
+Il est aujourd'hui admis que l'abondance en masse de l'Univers est : 
 
 \begin{itemize}
 \item 73,9\% d’hydrogène,
 \item 24\% d’hélium,
-\item et 2.1\% de l'intégralité des autres éléments du tableau périodique  (nous nommerons ces éléments "métaux" par convention).
+\item et 2.1\% de l'intégralité des autres éléments du tableau périodique (nous nommerons ces éléments "métaux" par convention).
 \end{itemize}
 
+L'hydrogène est largement majoritaire et l'hélium et les métaux seront négligés dans la suite de cette étude.
 
 \subsection{Le fond diffus cosmologique}
 \label{sec:CMB}
 
-Tôt dans l'histoire de l'Univers, les noyaux atomiques sont découplés des électrons et l'Univers est dans un état ionisé, correspondant à un plasma proche de celui que l'on peut trouver dans une étoile.
+Tôt dans l'histoire de l'Univers, les noyaux atomiques sont découplés des électrons et l'Univers est dans un état ionisé. % correspondant à un plasma proche de celui que l'on peut trouver dans une étoile.
 Il faudra attendre $\approx 380 000$ ans pour que la température diminue suffisamment pour permettre l'apparition des premiers atomes neutres.
 Cette période est appelée "époque de recombinaison" (voir \cite{2009AN....330..657S} pour plus d'informations sur le sujet) et a donnée lieu à l'émission du fond diffus cosmologique ou \ac{CMB}.
 Durant cette transition, l'Univers a connu un changement d'état majeur puisque celui ci est passé d'un état globalement ionisé à un état globalement neutre.
@@ -402,10 +403,10 @@ En comparant le spectre de puissance théorique obtenu à celui du \ac{CMB} obse
 La figure \ref{fig:cmb_power_spectrum} représente la comparaison entre le meilleur ajustement actuel et les observations, 
 
 La détermination des abondances respectives des différents constituants, utilise conjointement plusieurs observables.
-Chacune de ces observables va pouvoir être lier à un modèle disposant de plusieurs paramètres libres.
+%Chacune de ces observables va pouvoir être lier à un modèle disposant de plusieurs paramètres libres.
 Les supernovæ considérées comme chandelle standard, suffisamment lointaines permettent d'obtenir de l'information sur l'accélération de l'expansion de l'Univers (un gamme de valeurs pour $\Omega_\Lambda$) (voir par exemple \cite{1999ApJ...517..565P} pour plus d'informations sur le sujet).
 %Ou encore la distribution actuelles des galaxies, en partie reliquat des oscillations acoustiques dans le plasma primordial, permet de contraindre les paramètres cosmologique.
-Ou encore l'abondance observée des amas de galaxies.
+Ou encore l'abondance observée des amas de galaxies permettent de contraindre $\Omega_m$.
 
 %A partir de différents observables,
 %En recoupant les données obtenues a partir d'observations comme , 
@@ -538,7 +539,7 @@ On remplacera la densité par la densité perturbée $\rho(x) = <\rho> + \delta(
 \end{equation}
 
 On cherchera alors une solution des équations régissant le fluide primordial, en utilisant l'approximation au premier ordre \citep{1999coph.book.....P}.
-Pour rester dans le domaine linéaire, cette quantité doit rester faible et représenter l'homogénéité de l'Univers aux grandes échelles.
+Pour rester dans le domaine linéaire, le contraste doit rester faible et représenter l'homogénéité de l'Univers aux grandes échelles.
 
 A partir de cette solution perturbée, \cite{1970A&A.....5...84Z} propose une approche dynamique (voir \cite{2014MNRAS.439.3630W} pour une revue récente) permettant la génération de conditions initiales utilisées dans les simulations numériques.
 En effet, arrivée à la fin du régime linéaire, il devient nécessaire d'utiliser des simulations numériques.

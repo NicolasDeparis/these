@@ -18,14 +18,14 @@ Elle permet une première approche qualitative qui va ensuite permettre de cible
 
 
 %pour qui?
-En fonction du publique auquel s'adresse la visualisation, l'information utile sera différente et l'accent sera mis sur différents aspects.
+En fonction du public auquel s'adresse la visualisation, l'information utile sera différente et l'accent sera mis sur différents aspects.
 %Il existe tout un panel de visualisations possible, et avant même de définir un but il faut définir une cible, car les outils ne seront pas les mêmes en fonction de la cible a laquelle ils s'adressent.
 On distinguera principalement trois catégories :
 
 \begin{itemize}
 \item Le grand public. 
  
-Il sera principalement touché par les images de vulgarisations que l'on peut trouver sur internet ou dans les magasine.
+Il sera principalement touché par les images de vulgarisations que l'on peut trouver sur internet ou dans les magazines.
 Ce type d'image n'a pour seul but que d'être artistique et agréable à regarder.
 
 \item L'éducation.
@@ -55,7 +55,7 @@ On pourra par exemple analyser différents champs physiques, sous différents an
 Le principal défi de la visualisation des simulations cosmologiques est la quantité de données qu'elles représentent.
 Si il est possible de faire des rendus pré-calculés d'images, il est encore impossible d'avoir une représentation en temps réel d'une simulation de taille moyenne.
 Pourtant il existe des techniques (dans le monde des jeux vidéo par exemple) permettant d'afficher dynamiquement des univers en 3 dimensions gigantesque de manière fluide sur des machines grand public.
-Je pense qu'il y a de quoi s'inspirer de ce coté la.
+%Je pense qu'il y a de quoi s'inspirer de ce coté la.
 
 Nous avons vu dans la section \ref{sec:gridpart} qu'il existe deux types de représentations de la physique dans la simulation : la grille et les particules.
 Ces deux représentations utilisent chacune des techniques de visualisations particulières.
@@ -145,7 +145,7 @@ L'idée est de considérer les cellules \ac{AMR} comme des particules et de les 
 %Une grille 2D quelconque est représenté par le couple $x,y$ étant les positions du bord inférieur gauche des cellules, $l$ étant le niveau des cellules et $d$ étant le champs a représenter (prenons par exemple la densité).
 
 Par exemple, prenons comme objectif de projeter la densité de gaz provenant d'une grille \ac{AMR} 3D de niveau de base $L_{0}=8$ sur une matrice 2D $256^2$.
-En réalisant un histogram 2D, sur les positions $x$ et $y$ des cellules, on obtient directement un projection suivant l'axe $z$ de la grille \ac{AMR}.
+En réalisant un histogramme 2D, sur les positions $x$ et $y$ des cellules, on obtient directement un projection suivant l'axe $z$ de la grille \ac{AMR}.
 Les valeurs de toutes les cellules ayant des positions comprises dans un intervalle (x+dx,y+dy) seront automatiquement ajoutées au pixel correspondant.
 
 Cependant, dans le cas d'une grille raffinée, il est nécessaire de prendre en compte une pondération pour les cellules raffinées.
@@ -180,9 +180,9 @@ Dans le cas où le niveau de projection ne correspond pas au niveau maximum de l
 \begin{equation}
 w = \rho \cdot \left( 2^{Lmax-L} \right)^3
 \end{equation}
-Ainsi toute les cellules se trouvant sur des niveaux supérieur aux niveaux de projection seront automatiquement prises en compte.
+Ainsi toute les cellules se trouvant sur des niveaux supérieurs au niveau de projection seront automatiquement prisent en compte.
 
-Le principal inconvenant de la méthode des histogrammes est qu'il n'est possible de réaliser que des projection utilisant la moyenne.
+Le principal inconvénient de la méthode des histogrammes est qu'il n'est possible de réaliser que des projection utilisant la moyenne.
 Or on voudra dans certain cas considérer d'autres réduction de lignes de visées.
 Dans le cas de la création d'une carte 2D de maximum par exemple, il est nécessaire de générer un cube avant de réaliser la projection.
 L'avantage est que cette méthode est aisément transposable à trois dimensions en utilisant des histogrammes 3D.
@@ -201,6 +201,7 @@ L'image finale est une composition RGB de ces trois champs.
 
 J'ai également généré des images de $16384^2$ pixels (256 Mégapixel), en découpant le cube en tranche sur lesquelles j'ai effectué une projection par moyenne sur le niveau maximum.
 J'ai ensuite réalisé un maximum sur les tranches obtenues pour générer l'image finale.
+Ces images sont visibles en ligne : \href{http://nicolasdeparis.github.io/maps/}{http://nicolasdeparis.github.io/maps/}.
 
 %La quantité de données a gérée étant importante,
 
@@ -208,18 +209,17 @@ J'ai ensuite réalisé un maximum sur les tranches obtenues pour générer l'ima
 %un logiciel permettant d générer des tuiles d'images et de les charger dynamiquement.
 %Ces images sont disponibles en lignes a l'adresse %TODO ref
 
-\begin{figure}
-        \includegraphics[width=.95\textwidth]{img/04/rgb-compose.jpeg} 
-        \caption[Projection orthogonale]{Projection orthogonale de la simulation CODA I - AMR sur une matrice $2048^2$.
-        La projection correspond à la moyenne sur une tranche de 8/h cMpc d'épaisseur. 
-        La composition RGB est réalisée avec dans l'ordre la température, la densité de gaz et la densité de gaz ionisé.
-		Les vaste zones rouges correspondent aux vides qui ont reçut du rayonnement plus tard et n'ont pas encore eu le temps de refroidir par détente adiabatique.  
-        }
- 		\label{fig:ortho}
-\end{figure}
+%\begin{figure}
+%        \includegraphics[width=.95\textwidth]{img/04/rgb-compose.jpeg} 
+%        \caption[Projection orthogonale]{Projection orthogonale de la simulation CODA I - AMR sur une matrice $2048^2$.
+%        La projection correspond à la moyenne sur une tranche de 8/h cMpc d'épaisseur. 
+%        La composition RGB est réalisée avec dans l'ordre la température, la densité de gaz et la densité de gaz ionisé.
+%		Les vaste zones rouges correspondent aux vides qui ont reçut du rayonnement plus tard et n'ont pas encore eu le temps de refroidir par détente adiabatique.  
+%        }
+% 		\label{fig:ortho}
+%\end{figure}
 
 
-\clearpage
 \section{Projection en perspective}
 %opengl
 %blender
@@ -229,7 +229,7 @@ Il devient nécessaire d'avoir recours au lancé de rayons.
 Cette technique, permet de récupérer toute les cellules interceptées pas un segment de droite donné.
 %Il existe différentes techniques de raycasting, j'ai pu en explorer plusieurs:
 
-\subsection{Raycasting}
+\subsection{Lancé de rayons}
 \subsubsection{L'algorithme de bressenham}
 J'ai utilisé l'algorithme de Bressenham (voir figure \ref{fig:bressenham}) pour lancer des rayons.
 C'est une technique optimisée qui consiste à manipuler des indices de cellules pour déterminer quelles cellules interceptent un segment arbitraire.
@@ -259,7 +259,7 @@ Cette technique nécessite la génération de l'arbre sur la grille mais a l'ava
 \begin{figure}
         \includegraphics[height=.95\textheight]{img/04/equi.png} 
         \caption[Projection equirectangle]{Projection equirectangle d'une cube de densité.
-        Ce type d'image représente une vue de $360°$ par $180°$ (d'où un ratio d'aspect de $2:1$) ici prise depuis le centre de la simulation.}
+        Ce type d'image représente une vue de 360° par 180° (d'où un ratio d'aspect de $2:1$) ici prise depuis le centre de la simulation.}
  		\label{fig:equirectangle}
 \end{figure}
 
@@ -363,12 +363,13 @@ Un light cone réalisé avec cette méthode et à partir d'une simulation prése
 L'image résultante est un composite RGBA de la densité de matière noire, de la densité de gaz, de la température et de l'état d'ionisation.
 
 \begin{figure}
-        \includegraphics[height=.90\textheight]{img/04/frise_wall.png} 
-        \caption[Light cone]{Light cone dans une simulation $(8/h Mpc)^3$. 
+	\centering
+        \includegraphics[height=.95\textheight]{img/04/frise_wall2.png} 
+        \caption[Light cone]{Light cone de la simulation CoDa I $(64/h Mpc)^3$. 
         Le temps se déroule de haut en bas sur plus de 700 Myrs.
-        Le voile blanc représente l'état d'ionisation du gaz.
-        L'apparition des bulles d'ionisation est clairement localisée autour des structures les plus denses.
-        Le rouge représente les températures de plus de $2\cdot 10^4K$ pour accentuer le chauffage du gaz par les supernovae. 
+        Le voile bleu représente l'état d'ionisation du gaz.
+        L'apparition des bulles d'ionisation est localisée autour des structures les plus denses.
+%        Le rouge représente les températures de plus de $2\cdot 10^4K$ pour accentuer le chauffage du gaz par les supernovae. 
  }
  		\label{fig:lightcone}
 \end{figure}
@@ -454,12 +455,12 @@ Les premiers pas de cet outil sont prometteurs, puisqu'il dispose déjà de modu
 \end{figure}
 
 
-\section{Conclusion}
-
-La visualisation de données de simulations cosmologiques représente un véritable challenge et peux s'adresser à un large public.
-%Il existe différentes technique en fonction de l'objectif.
-Les travaux présentés dans cette partie ne sont qu'un survol de ce qu'il est possible de faire.
-Il existe des méthodes, déjà développées dans d'autres domaines qu'il serait intéressant d'exploiter à des fins de recherches.
-
+%\section{Conclusion}
+%
+%La visualisation de données de simulations cosmologiques représente un véritable challenge et peux s'adresser à un large public.
+%%Il existe différentes technique en fonction de l'objectif.
+%Les travaux présentés dans cette partie ne sont qu'un survol de ce qu'il est possible de faire.
+%Il existe des méthodes, déjà développées dans d'autres domaines qu'il serait intéressant d'exploiter à des fins de recherches.
+%
 
 

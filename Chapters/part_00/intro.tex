@@ -71,7 +71,7 @@
 %Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement remplisse l'Univers, situant ainsi la fin de la période de réionisation à environ un milliard d'années après le Big-bang.
 %
 Cette thèse porte sur l'étude de l'époque de la réionisation \ac{EoR} à l'aide de simulations numériques.
-La réionisation à été produite par l'apparition des premières étoiles dans l'Univers alors qu'il était âgé d'environ 300 millions d'années. 
+La réionisation à été produite par l'apparition des premières sources de rayonnement ionisant dans l'Univers alors qu'il était âgé d'environ 300 millions d'années. 
 Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement remplisse l'Univers, situant ainsi la fin de la période de réionisation à environ un milliard d'années après le Big-bang.
 
 
@@ -110,7 +110,7 @@ Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement 
 
 
 \paragraph{}
-Voici un aperçu de ces questions que nous allons aborder dans cette thèse: 
+Voici un aperçu des questions qui nous intéressent dans cette thèse: 
 
 \begin{itemize}
 \item Quelles sont les physiques nécessaires à la bonne modélisation de l'époque de la réionisation, à quelles échelles ces phénomènes interviennent t-il et comment s'est propagée l'ionisation dans l'Univers ?
@@ -127,9 +127,8 @@ Mais l'utilisation des simulations introduit également quelques questions :
 
 \begin{itemize}
 \item Comment modéliser au mieux les différents physiques à l’œuvre ?
-\item Comment simuler la réionisation efficacement et comment tirer profit au maximum du matériel disponible ??
-\item De quelle résolution à t-on besoin ?
-\item Quels sont les compromis nécessaire ?
+\item Comment simuler la réionisation efficacement et comment tirer profit au maximum du matériel disponible pour que ces simulations aient un coût raisonnable ?
+\item De quelle résolution à t-on besoin et quels sont les compromis nécessaire ?
 \end{itemize}
 
 %\begin{itemize}
@@ -169,13 +168,14 @@ Mais l'utilisation des simulations introduit également quelques questions :
 
 \section*{Mes travaux}
 
-Dans l'objectif de répondre à certaine de ces questions, il est nécessaire de développer des outils.
+Dans l'objectif de répondre à certaines de ces questions, il est nécessaire de développer des outils.
 Mon principal objet d'étude durant cette thèse a été EMMA, un code de simulations cosmologiques dédié à l'étude de l'\ac{EoR}.
 J'y ai apporté différentes contributions, allant de l'implémentation de nouvelles physiques jusqu'à la simple résolution de conflits, en passant par l'optimisation de certaine parties.
 
 Une de mes principales contributions a été l'implémentation d'un modèle de formation et d'évolution stellaire et une étape importante de cette thèse a été sa calibration.
 Ce modèle dispose de plusieurs paramètres libres, et leurs valeurs étant directement fonction de la résolution, il a naturellement été choisi d'utiliser la résolution des plus grosses simulations réalisables aujourd'hui.
 Cette calibration a été une étape préliminaire à la réalisation de la simulation CODA I-AMR une des plus grosses simulations de l'\ac{EoR} à l'heure actuelle.
+Cette simulation a utilisée pour étudier l'histoire de réionisation des halos en fonction de leurs masses actuelles.
 % une simulation représentant un volume de $(100 cMpc)^3$ échantillonné par $2048^3$ éléments de résolutions et une résolution adaptative allant jusqu'à 500pc.
 %Les ressources de calculs étant limitées, il est nécessaire de faire certaines concessions, le choix doit être fait entre volume physique et résolution.
 %Les ressources de calculs étant limitées, il n'est pas possible de réaliser plusieurs de ces simulations.
@@ -189,8 +189,11 @@ Cette calibration a été une étape préliminaire à la réalisation de la simu
 Dans l'objectif de diminuer les concessions à réaliser sur la taille et la résolution des simulations, il existe différentes pistes : soit augmenter l'accès aux ressources de calculs, soit optimiser les codes de simulations.
 Un des mes but a été de mieux cerner l'ensemble des techniques utilisées dans un tel code pour être en mesure de cibler au mieux les points à optimiser.
 
-Il existe entre autre une technique consistant à diminuer numériquement la vitesse de la lumière pour réduire artificiellement, la charge de calcul.
-Je me suis posé la question du domaine de validité de cette approximation, et du gain maximum que l'on peut espérer grâce à cette technique tout en restant dans un domaine d'approximation raisonnable.
+J'ai développé une méthode pour mesurer la vitesse des fronts d'ionisation basée sur les cartes de redshifts de réionisation.
+Cette méthode permet de suivre l'évolution de l'ionisation dans les simulations et a été appliquée à l'étude de l'influence de l'approximation de la vitesse de la lumière réduite sur l'interprétation des résultats.
+
+%Il existe entre autre une technique consistant à diminuer numériquement la vitesse de la lumière pour réduire artificiellement, la charge de calcul.
+%Je me suis posé la question du domaine de validité de cette approximation, et du gain maximum que l'on peut espérer grâce à cette technique tout en restant dans un domaine d'approximation raisonnable.
 
 J'ai également consacré du temps au développement d'outils dédiés à visualisation des simulations produites.
 
