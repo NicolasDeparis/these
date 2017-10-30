@@ -34,11 +34,7 @@ Nous analyserons différentes propriétés des galaxies en fonction de la masse 
 %Quand on cherche a déterminer es propriétés des galaxies, un paramètre important est leur masse.
 %Comme le gaz suit la dynamique des baryons, les galaxies sont situées dans les surdensités de matière noire.
 
-
-
 \section{Association halos - galaxies}
-
-
 
 %Comme nous l'avons vu plus tôt (voir sec \ref{sec:solverDM}), le champ de matière noire utilise une représentation sous forme de particules.
 %L'objectif d'un halo finder est de détecter les surdensités dans ce champs de particule.
@@ -452,7 +448,7 @@ Cette augmentation de $f_{esc}$ menant à une histoire d'ionisation similaire ma
 \end{figure}
 
 
-\section{Conclusion}
+\section{Discussions}
 %fonction de luminosité 
 
 Nous avons comparé dans cette partie deux méthodes pour gérer les supernovae dans les simulations cosmologique.
@@ -481,10 +477,19 @@ A l'inverse, si l’intérêt est plus porté sur la morphologie des galaxies pe
 
 %De plus nous observons que le budget de photons est principalement gouverné par les halos de masses intermédiaire autour de $10^{10} M_\odot$.
 
-Un changement de comportement dans la formation stellaire est attendu autour de $M \approx 10^9M_\odot$ (voir eg \cite{2001PhR...349..125B}).
-La résolution des simulations actuelles n'est pas suffisante et il me semble nécessaire d'augmenter la résolution en masse ainsi que la résolution radiative de un voir deux ordres de grandeurs, pour résoudre la physique des halos jusqu'à des masses de l'ordre de $M \approx 10^8M_\odot$ et ainsi étudier ce changement de régime de manière plus assurée, tout en gardant un volume simulé suffisamment grand de l'ordre de $\left( 100 \cdot h^{-1} \mathrm{cMpc} \right)^3$.
+
+\section{Conclusions}
+
+Pour étudier la réionisation, un compromis entre la résolution et le volume des simulations doit être fait.
+Dans l'objectif de calibrer et d'anticiper les résultats des grandes simulations de l'\ac{EoR}, il est nécessaire de travailler sur des simulations plus petites permettant d'effectuer de nombreux tests irréalisables sinon. 
+Or nous avons vu ici que les petits volumes simulés ont une dynamique de densités restreinte. 
+Non seulement les grandes régions sous-denses ne sont pas suffisamment représentées, empêchant l'ionisation de se propager rapidement dans de larges volumes, mais les régions sur-denses le sont également menant à une limitation de la gamme de sources de rayonnement représentées et à un manque de sources très lumineuses.
+Ces deux effets font qu'il est difficile de calibrer les grandes simulations avec des petits volumes réalisés en amont.
+
+De plus, la résolution radiative de ces simulations est limitée et l'interprétation des mesures réalisées sur les plus petits halos ($M < 10^9M_\odot$) pour lesquels Uun changement de comportement dans la formation stellaire est attendu (voir eg \cite{2001PhR...349..125B}) peut être hasardeuse.
+
+La résolution des grandes simulations actuelles n'est pas suffisante et il me semble nécessaire d'augmenter la résolution en masse ainsi que la résolution radiative de un voir deux ordres de grandeurs, pour résoudre la physique des halos jusqu'à des masses de l'ordre de $M \approx 10^8M_\odot$ et ainsi étudier ce changement de régime de manière plus assurée, tout en gardant un volume simulé suffisamment grand de l'ordre de $\left( 100 \cdot h^{-1} \mathrm{cMpc} \right)^3$.
 Quelques années seront encore nécessaire pour réunir ces conditions.
-%à la fois une résolution radiative suffisante et .
 
 
 

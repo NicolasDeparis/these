@@ -430,7 +430,7 @@ où $|v_{max}|$ représente la vitesse de la particule la plus rapide (de l'ordr
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \clearpage
-\section{Hydrodynamique et la physique baryonique}
+\section{Hydrodynamique et physique baryonique}
 \label{sec:hydro}
 %solveur hydro
 %partie la plus intensive en calcul
@@ -460,8 +460,7 @@ Sa physique est régie par les équations d'Euler auto-gravitantes et le systèm
 %+ \rho^2 \Lambda
 %$\Lambda$ est la fonction de refroidissement.
 
-avec ;
-la densité $\rho = \rho(\vec{x},t)$,
+avec la densité $\rho = \rho(\vec{x},t)$,
 la vitesse $ \vec{v} = (u,v,w)^T$,
 $P$ la pression, $E$ l’énergie totale, et $\Phi$ le potentiel gravitationnel.
 Ce système exprime la conservation de la masse, de l'impulsion et de l'énergie.
@@ -1004,10 +1003,10 @@ La condition à respecter pour effectuer le calcul du pas de temps sera:
 D'une manière générale, le pas de temps global de la simulation sera le pas de temps le plus contraignant de toutes les physiques que l'on cherche à suivre et sera donc définie comme le minimum entre :
 
 \begin{itemize}
-\item le pas de temps cosmologique ($\Delta t_{cosmo}$ cf section \ref{sec:supercomobil}),
-\item le pas de temps gravitationnel ($\Delta t_{pic}$ cf section \ref{sec:dtgrav}),
-\item le pas de temps hydrodynamique ($\Delta t_{hydro}$ cf section \ref{sec:dthydro}),
-\item le pas de temps radiatif ($\Delta t_{rad}$ cf section \ref{sec:RSLA}).
+\item le pas de temps cosmologique $\Delta t_{cosmo}$ (cf section \ref{sec:supercomobil}),
+\item le pas de temps gravitationnel $\Delta t_{pic}$ (cf section \ref{sec:dtgrav}),
+\item le pas de temps hydrodynamique $\Delta t_{hydro}$ (cf section \ref{sec:dthydro}),
+\item le pas de temps radiatif $\Delta t_{rad}$ (cf section \ref{sec:RSLA}).
 \end{itemize}
 
 \subsection{Influence de l'AMR}

@@ -23,7 +23,7 @@
 % 1. Configure classicthesis for your needs here, e.g., remove "drafting" below 
 % in order to deactivate the time-stamp on the pages
 % ****************************************************************************************************
-\PassOptionsToPackage{eulerchapternumbers,listings,drafting,%
+\PassOptionsToPackage{eulerchapternumbers,listings,%drafting,%
 					 pdfspacing,floatperchapter,%linedheaders,%
 					 subfig,beramono,eulermath,parts}{classicthesis}                                        
 % ********************************************************************
@@ -52,7 +52,7 @@
 \newcommand{\myUni}{Put data here\xspace}
 \newcommand{\myLocation}{Strasbourg}
 \newcommand{\myTime}{8 Decembre 2017\xspace}
-\newcommand{\myVersion}{version 4.2\xspace}
+%\newcommand{\myVersion}{version 4.2\xspace}
 
 % ********************************************************************
 % Setup, finetuning, and useful commands
@@ -87,8 +87,8 @@
 
 \usepackage{csquotes}
 \PassOptionsToPackage{%
-    %backend=biber, %instead of bibtex
-	backend=bibtex8,bibencoding=ascii,%
+    backend=biber, %instead of bibtex
+	%backend=bibtex8,bibencoding=ascii,%
 	language=auto,%
 	%style=numeric-comp,%
     style=authoryear-comp, % Author 1999, 2010
