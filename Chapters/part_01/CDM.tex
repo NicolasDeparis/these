@@ -531,6 +531,7 @@ Cette masse évolue en fonction du redshift \citep{2016PhR...645....1B} :
 M_j \approx 6 \cdot 10 ^3 \left( \frac{1+z}{10} \right)^{3/2} M_\odot
 \end{equation}
 
+
 Pour étudier la croissance des fluctuations primordiales on utilisera la théorie des perturbations linéaires.
 On remplacera la densité par la densité perturbée $\rho(x) = <\rho> + \delta(x)$ où $\delta$ sera appelé le contraste de densité :
 
@@ -539,15 +540,63 @@ On remplacera la densité par la densité perturbée $\rho(x) = <\rho> + \delta(
 \end{equation}
 
 On cherchera alors une solution des équations régissant le fluide primordial, en utilisant l'approximation au premier ordre \citep{1999coph.book.....P}.
+Cette approche permet de prédire les oscillations acoustiques des baryons ou Baryonic Acoustic Oscillations (BAO) observées dans la distribution des galaxies \citep{2005ApJ...633..560E}.
 Pour rester dans le domaine linéaire, le contraste doit rester faible et représenter l'homogénéité de l'Univers aux grandes échelles.
 
 A partir de cette solution perturbée, \cite{1970A&A.....5...84Z} propose une approche dynamique (voir \cite{2014MNRAS.439.3630W} pour une revue récente) permettant la génération de conditions initiales utilisées dans les simulations numériques.
-En effet, arrivée à la fin du régime linéaire, il devient nécessaire d'utiliser des simulations numériques.
+En effet, arrivée à la fin du régime linéaire, il devient nécessaire d'utiliser des simulations numériques pour étudier la formation des structures en détails.
 Les simulations de croissances des structures réalisées avec les considérations exposées dans cette section donnent une excellente similarité avec les observations (voir figure \ref{fig:sdss}).
 
 \begin{figure}
         \includegraphics[width=.95\linewidth]{img/02/sdss_millenium.jpeg} 
-        \caption{Comparaison entre les structures à grandes échelles observées par le SDSS (en bleu) et celles reproduite dans la simulation millénium \citep{2005Natur.435..629S} (en rouge).
+        \caption[SDSS - Millennium]{Comparaison entre les structures à grandes échelles observées par le SDSS (en bleu) et celles reproduite dans la simulation Millennium \citep{2005Natur.435..629S} (en rouge).
 %http://wwwmpa.mpa-garching.mpg.de/millennium/
  		\label{fig:sdss}}
+\end{figure}
+
+\clearpage
+Malgré la forte non-linéarité de la croissance des structures, il est tout de même possible de faire quelques prescriptions analytiques.
+Notamment en considérant le cas idéal de l'effondrement d'une surdensité sphérique dans le cas d'un Univers en expansion.
+En cherchant les solutions de:
+\begin{equation}
+\frac{d^2r}{dt^2} = -\frac{GM}{r^2} + \frac{\Lambda}{3}r, 
+\end{equation}
+ou $M$ est la masse contenue au sein d'une coquille sphérique de rayon $r$, et en y appliquant le théorème du Viriel:
+\begin{equation}
+2T+U=0
+\end{equation}
+où $T$ est l'énergie cinétique et $U$ l'énergie interne, il est possible de déterminer $\Delta_{vir}$ la densité moyenne des structure en effondrement \citep{2010gfe..book.....M}.
+Dans le cas d'un Univers plat cette sur densité s'exprime :
+\begin{equation}
+\Delta_{vir} \approx (18 \pi ^2 + 82 (\Omega_m-1) - 39 (\Omega_m-1)^2)/ \Omega_m
+\end{equation}
+
+En pratique $\Delta_{vir}$ est de l'ordre de $\approx 200 \bar{\rho}$.
+Dans la suite on considérera $R_{200}$ le rayon d'une surdensité de $200 \bar{\rho}$ comme une approximation du rayon de Viriel $R_{vir}$:
+\begin{equation}
+R_{200} \approx R_{vir}
+\end{equation}
+
+Cet effondrement va mener à la formation de structures majoritairement composée de matière noire.
+Ces halos de matière noire vont former des puits de potentiel et entraîner les baryons qui formerons les galaxies.
+
+Ces halos auront différentes masses en fonction des fluctuation de densités initiales
+On définis le spectre de puissance des fluctuation de densité comme :
+
+\begin{equation}
+P(k) = \left< | \delta(x) |^2 \right>
+\end{equation}
+
+En analysant la variance de $P(k)$, \cite{1974ApJ...187..425P} ont déterminé $n$ le nombre halos ayant une masse comprissent en $M$ et $M+dM$
+\begin{equation}
+\frac{dn_{(M,t)}}{dM} = \sqrt{\frac{2}{\pi}} \left| \frac{\rho_0}{M^2} \right| \frac{d ln \sigma}{d ln M} \frac{\delta_0}{\sigma_{(M)}} exp \left[ - \frac{\delta_{0c}^2}{2\sigma_{(M)}^2} \right].
+\end{equation}
+
+Cette grandeur est appelée fonction de masse des halos ou \ac{HMF} et est représentée sur la figure \ref{fig:hmfpress}.
+
+\begin{figure}
+        \includegraphics[width=.95\linewidth]{img/01/press.jpg} 
+        \caption[HMF théorique]{Fonctions de masses théoriques de halos déterminées par \cite{1974ApJ...187..425P} à différents redshift.
+        Image issue de \href{ned.ipac.caltech.edu}{ned.ipac.caltech.edu}
+ 		\label{fig:hmfpress}}
 \end{figure}

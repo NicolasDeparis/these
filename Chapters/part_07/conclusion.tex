@@ -54,7 +54,7 @@ Voici les questions qui ont été posées en introduction :
 
 \begin{itemize}
 \item Quelles sont les physiques nécessaires à la bonne modélisation de l'époque de la réionisation, à quelles échelles ces phénomènes interviennent t-il et comment s'est propagée l'ionisation dans l'Univers ?
-\item Comment la formation stellaire des premières générations d'étoiles à impacté l'apparition des générations suivantes ? 
+\item Comment la formation stellaire des premières générations d'étoiles à impactée l'apparition des générations suivantes d'étoiles? 
 L'Univers a t-il été réionisé par quelques grosses sources très lumineuses ou par de nombreuses sources moins énergétiques ?
 Quel impact la réionisation a elle eu sur la formation des galaxies et y a t-il des marques dans l'Univers local ?
 \item Comment modéliser au mieux les différents physiques à l’œuvre ?
@@ -67,29 +67,28 @@ De quelle résolution à t-on besoin et quels sont les compromis nécessaire ?
 
 Pour tenter de répondre à ces questions, il faut développer des outils.
 Nous avons présenté EMMA nouveau un code de simulation cosmologique créé dans l'objectif d'étudier l'époque de réionisation.
-EMMA utilise un certain nombre de principes éprouvés mais reste encore jeune et l'introduction de technique comme la parallélisation GPU pose certains défis.
+EMMA utilise un certain nombre de principes éprouvés mais reste encore jeune et l'introduction de techniques comme la parallélisation \ac{GPU} pose certains défis.
 J'ai participé à différents aspects de son développement et acquis une vision complètes des principes numériques à l’œuvre.
 %Cette expertise m'a permis d'identifier certains points pouvant être améliorés.
 %J'ai par exemple modifié les fonctions d'entrées/sorties pour rendre leur gestion plus efficace.
 %J'ai également tenté d'améliorer les communication CPU/GPU.
 
 Une de mes contributions principales à été le développement et l'implémentation d'un modèle de formation et d'évolution stellaire.
-Ce modèle prend en compte une série de contraintes imposée par l’architecture d'EMMA et par les échelles que l'on cherche à étudier.
-Nous avons vu que dans ces modèles, la formation stellaire s'influe elle même par des mécanisme de retro-action.
-Ces mécanismes sont complexes et certain agissent à des échelles qui ne sont pas encore accessible aux simulations cosmologiques de la réionisation.
+Ce modèle prend en compte une série de contraintes imposées par l’architecture d'EMMA et par les échelles que l'on cherche à étudier.
+Nous avons vu que dans ces modèles, la formation stellaire s'influence elle même par des mécanismes de retro-action.
+Ces mécanismes sont complexes et certains agissent à des échelles qui ne sont pas encore accessibles aux simulations cosmologiques de la réionisation.
 Nous avons vu que dans nos modèles, les principaux contributeurs aux budget de photons étaient les halos avec des masses $M \approx 10^{10}M_\odot$ comparables à celle de la Voie Lactée à cette époque.
-Nous avons vu qu'aux échelles considérées, la diminution du budget de photon induit par la suppression de la formation stellaire par les supernovae, semblait peut être compensée par l'expulsion du gaz également par les supernovae, menant à une augmentation de la fraction d'échappement de photons.
+Nous avons vu qu'aux échelles considérées, la diminution du budget de photon induit par la suppression de la formation stellaire par les supernovae, semblait peut être compensée par l'expulsion du gaz également par les supernovae, menant à une augmentation de la fraction d'échappement des photons.
 
 %carte
-Une fois les sources mises en place, nous avons étudié comment l'ionisation se propage dans les simulations à l'aide des cartes de redshift de réionisation.
-Une première étude à permis la mise en place d'un outil servant à quantifier la vitesse de propagation des fronts d'ionisation dans les simulations.
-Cet outils a été utilisé pour mesurer l'influence de l'approximation de vitesse de la lumière réduite.
+Une fois les sources mises en place, nous avons étudié comment l'ionisation se propage dans les simulations à l'aide des cartes de redshifts de réionisation.
+La mise en place d'un outil servant à quantifier la vitesse de propagation des fronts d'ionisation dans les simulations a permis de mesurer l'influence de l'approximation de vitesse de la lumière réduite.
 %Nous avons vu que dans nos modèles, la réionisation a lieu en deux phases, et que différentes valeur de RSLA influent différemment sur ces phases. 
-La conclusion de cette étude est que une vitesse de la lumière réduite 30\% de sa vraie valeur permet un gain en terme de calcul d'un facteur 3 et a un impact très faible sur l'ensemble du processus.
+La conclusion de cette étude est qu'une vitesse de la lumière réduite à 30\% de sa vraie valeur permet un gain en terme de calcul d'un facteur 3 et a un impact très faible sur l'ensemble du processus.
 %Il faudra cependant prendre plus de précaution lors de l'utilisation de valeur plus faible.
 L'utilisation des cartes de réionisation sur la simulation CoDa I AMR a permis d'étudier l'histoire de réionisation en fonction de la masse des halos à z=0.
-Ceci a permis de mettre en évidence que l'histoire de reionisation d'un halo est corrélée avec sa masse.% les halos les plus massifs étant réionisé plus tôt, mais plus lentement que les halos moins massifs.
-L'application de cette au Groupe Local a permis d'appuyer la théorie selon  laquelle il se serait ionisé lui même, sans être influencé par les grande structure environnante.
+Ceci a permis de mettre en évidence que l'histoire de réionisation d'un halo est corrélée avec sa masse.% les halos les plus massifs étant réionisé plus tôt, mais plus lentement que les halos moins massifs.
+L'application de cette au Groupe Local a permis d'appuyer la théorie selon  laquelle il se serait ionisé lui même, sans être influencé par les grandes structures environnantes.
 %Ce constant à une importance sur la distribution des galaxies observées aujourd'hui, puisqu'une partie des halos ont vu leurs formation stellaire coupé par la réionisation.
 
 
@@ -112,15 +111,15 @@ Les travaux réalisés durant cette thèse ont ouvert la voie à un certain nomb
 %\section{Étude de résolution}
 Un des facteurs les plus limitant de cette étude est l'utilisation d'une résolution unique, celle qui est utilisée par les plus grandes simulations de la réionisation à l'heure actuelle. 
 Cette résolution est définie par l’équilibre entre les capacités de calculs disponibles et la taille nécessaire à la modélisation de l'\ac{IGM} et il s'agit sûrement du meilleur compromis actuellement.
-Cependant nous savons qu'un certain nombre de physique a l’œuvre sont modélisée par des modèles sous grille, trop simplistes pour représenter correctement la réalité.
-L'extrapolation de résultats issues de simulations à haute résolution (mais petit volume) tirer des conclusions sur la modélisation de la physique dans les simulations de grand volume (mais basse résolution) semble une piste intéressante à explorer.
+Cependant nous savons qu'un certain nombre de physiques à l’œuvre sont modélisées par des modèles sous-grille, trop simplistes pour représenter correctement la réalité.
+L'extrapolation de résultats issus de simulations à hautes résolutions (mais petits volumes) pour tirer des conclusions sur la modélisation de la physique dans les simulations de grands volumes (mais à basses résolutions) semble une piste intéressante à explorer.
 %Il serait intéressant de réaliser des simulations haute résolution et petites échelles pour en tirer des conclusions a basse résolution grandes échelles
 
 Il manque également un certain nombre de physiques dans ces études.
 
-Par exemple, les \ac{AGN} sont des sources rares mais suffisamment lumineuse pour être essentiels au processus de réionisation \citep{chardin_large-scale_2017}.
+Par exemple, les \ac{AGN} sont des sources rares mais suffisamment lumineuses pour être essentiels au processus de réionisation \citep{chardin_large-scale_2017}.
 L'introduction de cette physique supplémentaire dans les simulations constitue une piste intéressante pour l'avenir.
-Cependant les AGN étant extrêmement lumineux, les simulations doivent couvrir des volume encore plus grand que ceux considérer dans le cas de la formation stellaire.
+Cependant les \ac{AGN} étant extrêmement lumineux, les simulations doivent couvrir des volumes encore plus grands que ceux considéré dans le cas de la formation stellaire.
 
 Les études présentées ici utilisent un modèle de gaz constitué exclusivement d'hydrogène atomique.
 L'introduction des processus de refroidissement gouvernés par l'hydrogène moléculaire et l'hélium permettrait une meilleur modélisation des processus d’effondrement du gaz et une meilleure contrainte des processus de formation stellaire et permettrait d'étudier l'\ac{IGM} à $z<6$.
@@ -128,19 +127,19 @@ De la même manière, l'enrichissement en métaux par les supernovae n'a pas ét
 
 L'analyse de la propagation de l'ionisation de l'Univers utilise des cartes de redshifts de réionisation, ces cartes sont porteuses d'énormément d'information et ont à mon avis un grand potentiel.
 Les cartes de réionisation présentées ici sont des cartes Eulériennes car basées sur la grille.
-Il est en théorie possible de de créer une carte de réionisation Lagrangienne en associant un redshift de réionisation aux particules.
+Il est en théorie possible de créer une carte de réionisation Lagrangienne en associant un redshift de réionisation aux particules.
 Ce type de carte permettrait de compléter la représentation existante et de rendre bien plus rapide l'association avec les halos.
 
 Au niveau numérique, les perceptives se focalisent sur l'amélioration d'EMMA. 
 Ce code est encore jeune et des optimisation conséquentes sont possibles.
-Par exemple, l'utilisation de GPU est intéressante et offre déjà une accélération globale acceptable comparativement à une exécution purement CPU.
+Par exemple, l'utilisation de \ac{GPU} est intéressante et offre déjà une accélération globale acceptable comparativement à une exécution purement \ac{CPU}.
 Le facteur d'accélération global est de l'ordre 3 mais pris individuellement les solveurs ont un facteur d'accélération de l'ordre de 20.
-Cependant nous avons identifié un goulot d'étranglement conséquent qui pourrait être éliminé par un changement dans l'organisation de l'arbre AMR.
-Par exemple, l'utilisation de courbes de Morton permettrait une gestion efficace de l'arbre AMR rendant possible sa gestion par le GPU.
-Il serait alors possible de copier intégralement l'arbre dans la mémoire du GPU et évitant ainsi les manipulations et copies de données coûteuses en ressources.
+Cependant nous avons identifié un goulot d'étranglement conséquent qui pourrait être éliminé par un changement dans l'organisation de l'arbre \ac{AMR}.
+Par exemple, l'utilisation de courbes de Morton permettrait une gestion efficace de l'arbre \ac{AMR} rendant possible sa gestion par le \ac{GPU}.
+Il serait alors possible de copier intégralement l'arbre dans la mémoire du \ac{GPU} et évitant ainsi les manipulations et copies de données coûteuses en ressources.
 
-Les projet CoDa continue, et les simulations produites ont encore énormément de potentiel scientifique à exploiter.
-Nul doute qu'à l'avenir, les simulations vont continuer a modéliser des phénomènes de plus en plus complexe et et continuerons a tendre vers une meilleure description de la réalité.
+Le projet \ac{CoDa} continue, et les simulations produites ont encore énormément de potentiel scientifique à exploiter.
+Nul doute qu'à l'avenir, les simulations vont continuer à modéliser des phénomènes de plus en plus complexes et et continuerons à tendre vers une meilleure description de la réalité.
 
 
 %%\section{Influence post réionisation}
