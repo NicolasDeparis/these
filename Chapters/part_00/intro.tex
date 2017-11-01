@@ -70,8 +70,8 @@
 %La réionisation n'est pas un processus instantané, et il est estimé aujourd'hui que les premières étoiles sont apparues alors que l'Univers était âgé d'environ 300 millions d'années. 
 %Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement remplisse l'Univers, situant ainsi la fin de la période de réionisation à environ un milliard d'années après le Big-bang.
 %
-Cette thèse porte sur l'étude de l'époque de la réionisation \ac{EoR} à l'aide de simulations numériques.
-La réionisation à été produite par l'apparition des premières sources de rayonnement ionisant dans l'Univers alors qu'il était âgé d'environ 300 millions d'années. 
+Cette thèse porte sur l'étude de l'Époque de Réionisation ou \ac{EoR} à l'aide de simulations numériques.
+La réionisation a été produite par l'apparition des premières sources de rayonnement ionisant dans l'Univers alors qu'il était âgé d'environ 300 millions d'années. 
 Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement remplisse l'Univers, situant ainsi la fin de la période de réionisation à environ un milliard d'années après le Big-bang.
 
 
@@ -113,22 +113,23 @@ Il fallut alors 700 millions d'années supplémentaires pour que le rayonnement 
 Voici un aperçu des questions qui nous intéressent dans cette thèse: 
 
 \begin{itemize}
-\item Quelles sont les physiques nécessaires à la bonne modélisation de l'époque de la réionisation, à quelles échelles ces phénomènes interviennent t-il et comment s'est propagée l'ionisation dans l'Univers ?
-\item Comment la formation stellaire des premières générations d'étoiles à impactée l'apparition des générations suivantes d'étoiles ? %le déroulement de la réionisation ??
-Quel impact la réionisation a elle eu sur la formation des galaxies et y a t-il des marques dans l'Univers local ?
-\item L'Univers a t-il été réionisé par quelques grosses sources très lumineuses ou par de nombreuses sources moins énergétiques ?
+\item Quelles sont les physiques nécessaires à la bonne modélisation de l'\ac{EoR}, à quelles échelles ces phénomènes interviennent t-il et comment s'est propagée l'ionisation dans l'Univers ?
+\item Comment la formation stellaire des premières générations d'étoiles à impactée l'apparition des générations suivantes d'étoiles ? Quel influence la réionisation a-t-elle eu sur la formation des galaxies et y a-t-il des marques dans l'Univers local ?
+\item L'Univers a-t-il été réionisé par quelques grosses sources très lumineuses ou par de nombreuses sources moins énergétiques ?
 \end{itemize}
+
+\paragraph{}
 
 Pour étudier des phénomènes aussi fortement couplés que ceux considérés dans le cas de l'\ac{EoR}, il est nécessaire d'avoir recours à des simulations numériques. 
 %Le but de ces simulations est de reproduire les observations sur la distribution de matière dans l'Univers.
-À l'heure actuelle, il commence a être possible de simuler l'effondrement de structures cosmologiques, contenant du gaz, formant des étoiles, qui émettent du rayonnement, le tout de manière auto-cohérente.
+À l'heure actuelle, il commence à être possible de simuler l'effondrement de structures cosmologiques, contenant du gaz, formant des étoiles, qui émettent du rayonnement, le tout de manière auto-cohérente.
 %Ces simulations ont pour objectif d'aider à comprendre quelques unes des grandes questions en suspend dans l'étude de la réionisation.
 Mais l'utilisation des simulations introduit également quelques questions : 
 
 \begin{itemize}
-\item Comment modéliser au mieux les différents physiques à l’œuvre ?
+\item Comment modéliser au mieux les différentes physiques à l’œuvre ?
 \item Comment simuler la réionisation efficacement et comment tirer profit au maximum du matériel disponible pour que ces simulations aient un coût raisonnable ?
-\item De quelle résolution à t-on besoin et quels sont les compromis nécessaire ?
+\item De quelle résolution a-t-on besoin et quels sont les compromis nécessaires ?
 \end{itemize}
 
 %\begin{itemize}
@@ -175,7 +176,7 @@ J'y ai apporté différentes contributions, allant de l'implémentation de nouve
 Une de mes principales contributions a été l'implémentation d'un modèle de formation et d'évolution stellaire et une étape importante de cette thèse a été sa calibration.
 Ce modèle dispose de plusieurs paramètres libres, et leurs valeurs étant directement fonction de la résolution, il a naturellement été choisi d'utiliser la résolution des plus grosses simulations réalisables aujourd'hui.
 Cette calibration a été une étape préliminaire à la réalisation de la simulation CODA I-AMR une des plus grosses simulations de l'\ac{EoR} à l'heure actuelle.
-Cette simulation a utilisée pour étudier l'histoire de réionisation des halos en fonction de leurs masses actuelles.
+Cette simulation a été utilisée pour étudier l'histoire de réionisation des halos en fonction de leurs masses actuelles.
 % une simulation représentant un volume de $(100 cMpc)^3$ échantillonné par $2048^3$ éléments de résolutions et une résolution adaptative allant jusqu'à 500pc.
 %Les ressources de calculs étant limitées, il est nécessaire de faire certaines concessions, le choix doit être fait entre volume physique et résolution.
 %Les ressources de calculs étant limitées, il n'est pas possible de réaliser plusieurs de ces simulations.
@@ -195,7 +196,7 @@ Cette méthode permet de suivre l'évolution de l'ionisation dans les simulation
 %Il existe entre autre une technique consistant à diminuer numériquement la vitesse de la lumière pour réduire artificiellement, la charge de calcul.
 %Je me suis posé la question du domaine de validité de cette approximation, et du gain maximum que l'on peut espérer grâce à cette technique tout en restant dans un domaine d'approximation raisonnable.
 
-J'ai également consacré du temps au développement d'outils dédiés à visualisation des simulations produites.
+Pour finir j'ai également consacré du temps au développement d'outils dédiés à visualisation des simulations produites.
 
 %\textit{Quels sont les facteurs qui limitent la performance globale de EMMA et comment les améliorer?}
 %
@@ -233,7 +234,7 @@ Cette approche permettra au lecteur de mieux appréhender les résultats obtenus
 
 \paragraph{Modèle stellaire :}
 Comme l'étude du rayonnement émis dans l'Univers passe immanquablement par l'étude de la formation stellaire, je consacrerai le chapitre \ref{sec:etoiles} à détailler le modèle de formation et d'évolution stellaire de EMMA, ainsi que ses contraintes, ses limites, et les différents tests qui ont été exécutés pour sa calibration.
-Je présenterai ensuite dans le chapitre \ref{sec:galaxies} une étude menée à l'aide de ce modèle, visant à mieux comprendre les résultats obtenus a l'aide des grandes simulations de la réionisation.
+Je présenterai ensuite dans le chapitre \ref{sec:galaxies} une étude menée à l'aide de ce modèle, visant à mieux comprendre les résultats obtenus dans les grandes simulations de la réionisation.
 L'objectif est de comprendre quelles sont les galaxies qui contribuent à la réionisation dans nos modèles et quel est l'impact du feedback stellaire sur cette contribution aux résolutions qui nous intéressent.
 
 \paragraph{Propagation de l'ionisation :}
@@ -245,7 +246,7 @@ Le chapitre \ref{sec:intre:zreio} sera consacré à une étude sur la façon don
 Je présenterai une méthode que j'ai développé pour calculer la vitesse des fronts d'ionisation, en utilisant les cartes de redshifts de réionisation, outils dont l'implémentation dans EMMA sera également introduite dans cette partie.
 Cette méthode sera ensuite appliquée à une étude sur l'influence de l'approximation de la vitesse de la lumière réduite sur la propagation des fronts d'ionisation dans les simulations.
 
-Le chapitre \ref{sec:z0} sera dédié à l'étude des instants d'ionisation des halos à redshift $z=0$.
+Le chapitre \ref{sec:z0} sera dédié à l'étude des instants d'ionisation des halos en fonction de leurs masses à redshift $z=0$.
 Cette étude sera menée à l'aide d'une carte de redshifts de réionisation générée par la simulation "CoDa I AMR" que j'introduirai également.
 %présentation de la simulation . %, une des plus grosse simulation de la réionisation à l'heure actuelle.
 %J'y présenterai les premiers résultats obtenus à propos du liens entre la masse des halos contenus dans la simulation aujourd'hui et leurs histoires au moment de la réionisation.

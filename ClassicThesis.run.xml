@@ -41,36 +41,38 @@
   >
 ]>
 <requests version="1.0">
-  <internal package="biblatex" priority="9" active="1">
+  <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>ClassicThesis.bcf</file>
+      <file>ClassicThesis.aux</file>
+      <file>ClassicThesis-blx.bib</file>
     </provides>
     <requires type="dynamic">
       <file>ClassicThesis.bbl</file>
     </requires>
     <requires type="static">
-      <file>blx-dm.def</file>
       <file>blx-compat.def</file>
-      <file>biblatex.def</file>
+      <file>biblatex_legacy.def</file>
       <file>blx-natbib.def</file>
       <file>authoryear-comp.bbx</file>
       <file>authoryear.bbx</file>
       <file>standard.bbx</file>
       <file>authoryear-comp.cbx</file>
       <file>biblatex.cfg</file>
-      <file>english.lbx</file>
       <file>french.lbx</file>
+      <file>english.lbx</file>
     </requires>
   </internal>
-  <external package="biblatex" priority="5" active="1">
-    <generic>biber</generic>
+  <external package="biblatex" priority="5" active="0">
+    <generic>bibtex</generic>
     <cmdline>
-      <binary>biber</binary>
+      <binary>bibtex8</binary>
+      <option>--wolfgang</option>
+      <option>--min_crossrefs 2</option>
       <infile>ClassicThesis</infile>
     </cmdline>
     <input>
-      <file>ClassicThesis.bcf</file>
+      <file>ClassicThesis.aux</file>
     </input>
     <output>
       <file>ClassicThesis.bbl</file>
@@ -79,10 +81,14 @@
       <file>ClassicThesis.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>ClassicThesis.bcf</file>
+      <file>ClassicThesis.aux</file>
+      <file>ClassicThesis-blx.bib</file>
     </requires>
     <requires type="editable">
       <file>Bibliography.bib</file>
+    </requires>
+    <requires type="static">
+      <file>biblatex.bst</file>
     </requires>
   </external>
 </requests>
